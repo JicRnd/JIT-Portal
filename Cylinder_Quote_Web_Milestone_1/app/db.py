@@ -73,7 +73,7 @@ def _build_sqlite_engine(db_path: Path):
     @event.listens_for(engine, "connect")
     def _set_sqlite_pragma(dbapi_conn, _connection_record):
         dbapi_conn.execute("PRAGMA foreign_keys = ON")
-        dbapi_conn.execute("PRAGMA journal_mode = WAL")
+        dbapi_conn.execute("PRAGMA journal_mode = DELETE")
 
     return engine
 

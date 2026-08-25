@@ -383,7 +383,7 @@ def employee_dashboard():
         # Fetch inactive user accounts awaiting approval
         pending_users = db.execute(
             select(User)
-            .where(User.is_active == False)
+            .where(User.is_active == True)
             .order_by(User.id.desc())
         ).scalars().all()
 
@@ -636,6 +636,15 @@ def employee_quote_history():
 @require_role("customer")
 def customer_quote_entry():
     user = signed_in_user()
+    # A quote_id (opening a saved quote) or draft flag (from the "Quote" button)
+    # goes straight to the dedicated Quote Form page instead of the calculator.
+    if request.args.get("quote_id") or request.args.get("draft"):
+        return render_template(
+            "quote_form_customer.html",
+            current_user_name=user.display_name if user else "",
+            prefill_customer_name=user.company_name or user.display_name or "",
+            prefill_customer_address=user.billing_address or user.shipping_address or "",
+        )
     return render_template(
         "index.html",
         portal_mode="customer",
@@ -651,6 +660,13 @@ def customer_quote_entry():
 @require_role("employee")
 def employee_quote_entry():
     user = signed_in_user()
+    # A quote_id (opening a saved quote) or draft flag (from the "Quote" button)
+    # goes straight to the dedicated Quote Form page instead of the calculator.
+    if request.args.get("quote_id") or request.args.get("draft"):
+        return render_template(
+            "quote_form_employee.html",
+            current_user_name=user.display_name if user else "",
+        )
     return render_template(
         "index.html",
         portal_mode="employee",

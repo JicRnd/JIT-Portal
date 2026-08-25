@@ -1,0 +1,15 @@
+Your Daily Deployment Workflow
+Work Locally: Make and test your code changes on your local PC.
+
+Push to GitHub: At the end of the day (or whenever you complete a feature), commit and push your work:
+
+git add .
+git commit -m "Describe your changes here"
+git push origin main
+
+
+Pull to PythonAnywhere: Open your PythonAnywhere Bash console and pull down the updates:
+cd ~/JIT-Portal
+git pull origin main
+
+Reload the Server: Go to the Web tab on PythonAnywhere and click the green Reload button.

@@ -1,0 +1,8 @@
+To search a project folder for a keyword and output only the unique file names containing that match, use grep with the -r (recursive) and -l (files-with-matches) flags.
+
+Get-ChildItem -Path "C:\Users\Kane\Documents\Projects\Cylinder_Quote_To_HTML\Cylinder_Quote_Web_Milestone_1" -Recurse -File | Select-String -Pattern "quote-entry" | Select-Object -Unique Path
+If you are already inside your project folder in the terminal, simply run:
+
+grep -rl "YOUR_KEYWORD" .
+
+

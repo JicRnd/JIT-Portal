@@ -79,6 +79,13 @@ def create_app() -> Flask:
     @app.get("/quote-entry")
     def index():
         current_user = get_or_create_current_user(request)
+        # A quote_id (opening a saved quote) or draft flag (from the "Quote" button)
+        # goes straight to the dedicated Quote Form page instead of the calculator.
+        if request.args.get("quote_id") or request.args.get("draft"):
+            return render_template(
+                "quote_form_employee.html",
+                current_user_name=getattr(current_user, "display_name", "") or "",
+            )
         return render_template(
             "index.html",
             portal_mode="employee",

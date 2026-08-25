@@ -144,11 +144,16 @@ def test_quote_preview_flow_create_get_patch_preserves_breakdown(temp_db):
 
 
 def test_index_page_renders_quote_preview(temp_db):
-    """The quote-entry template still renders without Jinja errors and contains
-    the Quote Form controls."""
+    """The calculator still renders without Jinja errors, and the Quote Form
+    controls now live on the dedicated Quote Form page reached via ?draft=1."""
     client = temp_db.test_client()
     resp = client.get("/quote-entry")
     assert resp.status_code == 200
     text = resp.get_data(as_text=True)
-    assert "Quote Form" in text
-    assert "Order Now" in text
+    assert "Quote" in text
+
+    preview_resp = client.get("/quote-entry?draft=1")
+    assert preview_resp.status_code == 200
+    preview_text = preview_resp.get_data(as_text=True)
+    assert "Quote Form" in preview_text
+    assert "Order Now" in preview_text
