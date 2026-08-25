@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JIT Order Form</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='order_form.css') }}">
+</head>
+<body>
+  <main class="order-page" data-quote-id="{{ quote_id }}">
+    <div class="order-toolbar">
+      <a href="/" class="toolbar-button">← Quote Entry</a>
+      <a href="/employee/dashboard" class="toolbar-button">Dashboard</a>
+      <span id="orderStatus" class="status-pill">Loading…</span>
+      <span id="orderMessage" class="toolbar-message" role="status" aria-live="polite"></span>
+      <button id="approveOrderButton" class="approve-button" type="button">Approve Order</button>
+    </div>
+
+    <form id="employeeOrderForm" class="order-sheet" autocomplete="off">
+      <header class="order-header">
+        <img src="{{ url_for('static', filename='quote_form_logo.png') }}" alt="JIT Cylinders" class="order-logo">
+        <h1>Order Form</h1>
+        <div class="quote-meta">
+          <label>Quote # <input data-field="quote_number"></label>
+        </div>
+        <div class="order-meta" id="orderMetaSection">
+          <label>Order # <input data-field="order_number"></label>
+          <label>Date: <input data-field="order_date"></label>
+          <label>Terms: <input data-field="terms"></label>
+        </div>
+      </header>
+
+      <section class="address-grid">
+        <div class="address-block ship-to">
+          <span class="address-label">Ship To:</span>
+          <div>
+            <input data-field="ship_to_1" aria-label="Ship to line 1">
+            <input data-field="ship_to_2" aria-label="Ship to line 2">
+            <input data-field="ship_to_3" aria-label="Ship to line 3">
+            <input data-field="ship_to_4" aria-label="Ship to line 4">
+          </div>
+        </div>
+        <div class="shipping-fields">
+          <label>PO # <input data-field="po_number"></label>
+          <label>Tag <input data-field="tag"></label>
+          <label>Ship <input data-field="ship_method"></label>
+          <label>Ship Date <input data-field="ship_date"></label>
+          <label>Contact <input data-field="contact"></label>
+        </div>
+        <div class="address-block bill-to">
+          <span class="address-label">Bill To:</span>
+          <div>
+            <input data-field="bill_to_1" aria-label="Bill to line 1">
+            <input data-field="bill_to_2" aria-label="Bill to line 2">
+            <input data-field="bill_to_3" aria-label="Bill to line 3">
+            <input data-field="bill_to_4" aria-label="Bill to line 4">
+          </div>
+        </div>
+      </section>
+
+      <section class="order-summary">
+        <div class="summary-cylinder">
+          <div class="summary-heading">Cylinder Description</div>
+          <label class="summary-description-row"><span>Description</span><input data-field="description"></label>
+        </div>
+        <label>Qty <input data-field="quantity" type="number" min="0" step="1"></label>
+        <label>Net <input data-field="net_each" type="number" min="0" step="0.01"></label>
+        <label>Discount <input data-field="discount" type="number" min="0" step="0.01"></label>
+        <label>Total <input data-field="order_total" type="number" min="0" step="0.01"></label>
+      </section>
+
+      <section class="order-body">
+        <div class="cylinder-panel">
+          <label><span>Model Code</span><input data-field="model_code"></label>
+          <label><span>Bore Size (&quot;)</span><input data-field="bore"></label>
+          <label><span>Mount</span><input data-field="mount"></label>
+          <label><span>Rod Size (&quot;)</span><input data-field="rod_diameter"></label>
+          <label><span>Cushions</span><input data-field="cushion"></label>
+          <label><span>Ports</span><input data-field="ports"></label>
+          <label><span>Stroke (&quot;)</span><input data-field="stroke"></label>
+          <label><span>Rod Thread</span><input data-field="rod_thread"></label>
+          <label><span>Seals</span><input data-field="seals"></label>
+          <label class="includes-row"><span>Includes:</span><textarea data-field="includes" rows="3"></textarea></label>
+          <div class="accessory-row"><label>Rod Clevis <input data-field="rod_clevis"></label><label>Pivot Pin <input data-field="pivot_pin"></label></div>
+          <div class="assembly-fields">
+            <label>Assembled By: <input data-field="assembled_by"></label>
+            <label>Date Passed Test: <input data-field="date_passed_test"></label>
+          </div>
+        </div>
+
+        <div class="parts-panel">
+          <div class="parts-header"><span>Part #</span><span>Description</span><span>Cost</span><span>On Hand</span><span>Allocated</span></div>
+          <div id="orderPartsRows" class="parts-rows"></div>
+          <div class="parts-total"><span>Parts Total</span><input data-field="parts_total" type="number" step="0.01"></div>
+        </div>
+      </section>
+
+      <section class="testing-panel">
+        <div class="testing-title">Testing Data</div>
+        <div class="testing-grid testing-head"><span>Part</span><span>Bore / Diameter</span><span>Length</span><span>Thread</span><span>Stop Tube/ET</span></div>
+        <div id="testingRows" class="testing-rows"></div>
+      </section>
+    </form>
+  </main>
+  <script src="{{ url_for('static', filename='order_form.js') }}"></script>
+</body>
+</html>

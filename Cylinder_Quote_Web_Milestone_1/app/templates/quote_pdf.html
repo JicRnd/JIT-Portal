@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quote {{ quote.quote_number }} rev{{ quote.revision }}</title>
+  <style>
+    @page { size: letter; margin: 0.6in; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 11pt; color: #111; }
+    .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0c2b6f; padding-bottom: 10px; margin-bottom: 14px; }
+    .brand { font-size: 18pt; font-weight: bold; color: #0c2b6f; }
+    .quote-meta { text-align: right; font-size: 10pt; }
+    .quote-meta td { padding: 2px 0 2px 12px; }
+    .quote-meta td:first-child { font-weight: bold; text-align: left; }
+    h2 { font-size: 13pt; color: #0c2b6f; border-bottom: 1px solid #ccc; padding-bottom: 4px; margin: 14px 0 8px; }
+    .customer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 20px; }
+    .field { display: flex; flex-direction: column; }
+    .field label { font-size: 9pt; font-weight: bold; color: #555; }
+    .field span { font-size: 11pt; }
+    .field.full { grid-column: 1 / -1; }
+    .cyl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 14px; }
+    .cyl-item { display: flex; justify-content: space-between; border-bottom: 1px dotted #bbb; padding: 3px 0; }
+    .cyl-item span { font-weight: bold; color: #444; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    table.breakdown { width: 100%; border-collapse: collapse; }
+    table.breakdown td { border: 1px solid #ccc; padding: 5px 8px; }
+    table.breakdown td:first-child { font-weight: bold; background: #f7f7f7; }
+    table.breakdown td:last-child { text-align: right; font-weight: bold; }
+    table.breakdown tr.highlight td { background: #e5f4ff; }
+    table.line-items { width: 100%; border-collapse: collapse; margin-top: 6px; }
+    table.line-items th { border: 1px solid #999; background: #f2f2f2; padding: 5px 8px; font-size: 10pt; text-align: left; }
+    table.line-items td { border: 1px solid #ccc; padding: 5px 8px; }
+    table.line-items td.numeric { text-align: right; }
+    .no-items { font-style: italic; color: #666; margin-top: 6px; }
+    .footer { margin-top: 24px; font-size: 9pt; color: #555; border-top: 1px solid #ccc; padding-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">JIT Cylinder Quote</div>
+    <table class="quote-meta">
+      <tr><td>Quote #</td><td>{{ quote.quote_number }}</td></tr>
+      <tr><td>Revision</td><td>{{ quote.revision }}</td></tr>
+      <tr><td>Status</td><td>{{ quote.status }}</td></tr>
+      <tr><td>Date</td><td>{{ quote.created_at.strftime('%Y-%m-%d') }}</td></tr>
+      <tr><td>Pricing Version</td><td>{{ quote.pricing_version }}</td></tr>
+    </table>
+  </div>
+
+  <h2>Customer / Reference</h2>
+  <div class="customer-grid">
+    <div class="field"><label>Customer</label><span>{{ quote.customer_name or '—' }}</span></div>
+    <div class="field"><label>Contact</label><span>{{ quote.customer_contact or '—' }}</span></div>
+    <div class="field"><label>Address</label><span>{{ quote.customer_address or '—' }}</span></div>
+    <div class="field"><label>Reference</label><span>{{ quote.customer_reference or '—' }}</span></div>
+    <div class="field full"><label>Comments</label><span>{{ quote.comments or '—' }}</span></div>
+  </div>
+
+  <h2>Cylinder Configuration</h2>
+  {% set inputs = quote.cylinder_inputs_snapshot or {} %}
+  <div class="cyl-grid">
+    <div class="cyl-item"><span>Model Code</span><span>{{ quote.model_code or '—' }}</span></div>
+    <div class="cyl-item"><span>Series</span><span>{{ inputs.series or '—' }}</span></div>
+    <div class="cyl-item"><span>Mount</span><span>{{ inputs.mount or '—' }}</span></div>
+    <div class="cyl-item"><span>Bore</span><span>{{ inputs.bore or '—' }}</span></div>
+    <div class="cyl-item"><span>Stroke</span><span>{{ inputs.stroke or '—' }}</span></div>
+    <div class="cyl-item"><span>Rod</span><span>{{ inputs.rod_diameter or '—' }}</span></div>
+    <div class="cyl-item"><span>Style</span><span>{{ inputs.rod_style or '—' }}</span></div>
+    <div class="cyl-item"><span>Cushion</span><span>{{ inputs.cushion or '—' }}</span></div>
+    <div class="cyl-item"><span>Ports</span><span>{{ inputs.port_code or '—' }}</span></div>
+    <div class="cyl-item"><span>Seal</span><span>{{ inputs.seal_code or '—' }}</span></div>
+    <div class="cyl-item"><span>DRE</span><span>{{ 'Y' if inputs.dre else 'N' }}</span></div>
+    <div class="cyl-item"><span>Discount</span><span>{{ "%.2f"|format((quote.discount or 0) * 100) }}%</span></div>
+  </div>
+
+  <div class="two-col">
+    <section>
+      <h2>Price Breakdown</h2>
+      {% set bd = quote.price_breakdown_snapshot or {} %}
+      <table class="breakdown">
+        <tr><td>Base Price</td><td>${{ "%0.2f"|format((bd.base_price or 0)|float) }}</td></tr>
+        <tr><td>Stroke + Cushion</td><td>${{ "%0.2f"|format((bd.stroke_cushion or 0)|float) }}</td></tr>
+        <tr><td>Modifications</td><td>${{ "%0.2f"|format((bd.modifications or 0)|float) }}</td></tr>
+        <tr><td>Accessories</td><td>${{ "%0.2f"|format((bd.accessories or 0)|float) }}</td></tr>
+        <tr><td>Special Parts</td><td>${{ "%0.2f"|format((bd.special_parts or 0)|float) }}</td></tr>
+        <tr><td>Position Sensing</td><td>${{ "%0.2f"|format((bd.position_sensing or 0)|float) }}</td></tr>
+        <tr><td>VA Total</td><td>${{ "%0.2f"|format((bd.va_total or 0)|float) }}</td></tr>
+        <tr><td>DRE Surcharge</td><td>${{ "%0.2f"|format((bd.dre_surcharge or 0)|float) }}</td></tr>
+        <tr><td>Pre-discount Subtotal</td><td>${{ "%0.2f"|format((bd.pre_discount_subtotal or 0)|float) }}</td></tr>
+        <tr class="highlight"><td>List Price</td><td>${{ "%0.2f"|format((bd.quote_list_price or 0)|float) }}</td></tr>
+        <tr class="highlight"><td>Net Each</td><td>${{ "%0.2f"|format((bd.quote_net_each or 0)|float) }}</td></tr>
+        <tr><td>Expedited</td><td>${{ "%0.2f"|format((bd.expedited_price or 0)|float) }}</td></tr>
+        <tr><td>Emergency</td><td>${{ "%0.2f"|format((bd.emergency_price or 0)|float) }}</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>Manual Line Items</h2>
+      {% if customer_line_items %}
+      <table class="line-items">
+        <thead>
+          <tr>
+            <th>Ref</th>
+            <th>Description</th>
+            <th class="numeric">Qty</th>
+            <th class="numeric">Unit Price</th>
+            <th class="numeric">Extended</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in customer_line_items %}
+          <tr>
+            <td>{{ item.reference_part_number or '' }}</td>
+            <td>{{ item.description }}</td>
+            <td class="numeric">{{ "%.2f"|format(item.quantity|float) }}</td>
+            <td class="numeric">${{ "%0.2f"|format(item.unit_price|float) }}</td>
+            <td class="numeric">${{ "%0.2f"|format(item.extended_price|float) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p class="no-items">No additional line items.</p>
+      {% endif %}
+    </section>
+  </div>
+
+  <div class="footer">
+    Generated by {{ quote.created_by.display_name if quote.created_by else '—' }}
+    on {{ quote.created_at.strftime('%Y-%m-%d %H:%M') if quote.created_at else '—' }}.
+    All prices in USD. Pricing engine {{ quote.pricing_version }}.
+  </div>
+</body>
+</html>

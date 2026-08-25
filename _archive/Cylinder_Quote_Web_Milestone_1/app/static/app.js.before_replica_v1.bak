@@ -1,0 +1,90 @@
+let catalog = null;
+let specialPartRows = 0;
+const $ = id => document.getElementById(id);
+
+function fillSelect(el, values, labeler = x => x) {
+  el.innerHTML = '';
+  values.forEach(v => {
+    const opt = document.createElement('option');
+    if (typeof v === 'object') { opt.value = v.value; opt.textContent = v.label; }
+    else { opt.value = v; opt.textContent = labeler(v); }
+    el.appendChild(opt);
+  });
+}
+function fmtMoney(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n.toLocaleString('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2}) : '—';
+}
+function updateMountsForSeries() {
+  const s = $('series').value;
+  const previous = $('mount').value;
+  const mounts = (catalog.series_mounts || {})[s] || [];
+  fillSelect($('mount'), mounts);
+  if (mounts.includes(previous)) $('mount').value = previous;
+}
+function updateBores() {
+  const s = $('series').value;
+  const bores = Object.keys(catalog.series[s] || {}).sort((a,b)=>Number(a)-Number(b));
+  fillSelect($('bore'), bores); updateRods();
+}
+function updateRods() {
+  const s=$('series').value, b=$('bore').value;
+  const rods=Object.keys((catalog.series[s]||{})[b]||{}).sort((a,b)=>Number(a)-Number(b));
+  fillSelect($('rod_diameter'), rods);
+}
+function addSpecialPart() {
+  if (specialPartRows >= 6) return;
+  specialPartRows++;
+  const row=document.createElement('div'); row.className='special-row';
+  const sel=document.createElement('select'); sel.className='special-part-name';
+  const blank=document.createElement('option'); blank.value=''; blank.textContent='Select part…'; sel.appendChild(blank);
+  catalog.special_parts.forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p;sel.appendChild(o);});
+  const qty=document.createElement('input'); qty.type='number';qty.min='0';qty.step='1';qty.value='1';qty.className='special-part-qty';
+  const del=document.createElement('button');del.type='button';del.className='secondary';del.textContent='×';del.addEventListener('click',()=>{row.remove();specialPartRows--;});
+  row.append(sel,qty,del); $('specialParts').appendChild(row);
+}
+function payload() {
+  const p = {
+    series:$('series').value,bore:$('bore').value,rod_diameter:$('rod_diameter').value,mount:$('mount').value,
+    stroke:$('stroke').value,cushion:$('cushion').value,port_code:$('port_code').value,seal_code:$('seal_code').value,
+    rod_style:Number($('rod_style').value),discount:Number($('discount_pct').value||0)/100,
+    dre:$('dre').checked,standard_rod_boot_qty:$('standard_rod_boot_qty').value,
+    accessory_quantities:{},special_parts:{}
+  };
+  ['rod_extension','stop_tube','extra_thread','air_bleed_qty','prox_switch_qty','extra_port_qty','extra_tie_rod_qty','thick_head_qty'].forEach(k=>p[k]=$(k).value);
+  ['stainless_rod','chrome_bore','rod_gland_drain','brass_wiper','ultraox','transducer','prepped_for_transducer','sensor_cover','valve_manifold'].forEach(k=>p[k]=$(k).checked);
+  document.querySelectorAll('[data-accessory]').forEach(inp=>{if(Number(inp.value)>0)p.accessory_quantities[inp.dataset.accessory]=inp.value;});
+  document.querySelectorAll('.special-row').forEach(row=>{const n=row.querySelector('.special-part-name').value,q=row.querySelector('.special-part-qty').value;if(n&&Number(q)>0)p.special_parts[n]=q;});
+  return p;
+}
+function showResult(r) {
+  $('model_code').textContent=r.model_code;
+  ['quote_list_price','quote_net_each','expedited_price','emergency_price','base_price','stroke_cushion','modifications','accessories','special_parts','position_sensing','va_total','dre_surcharge','pre_discount_subtotal','working_net_each'].forEach(k=>$(k).textContent=fmtMoney(r[k]));
+  $('display_discount').textContent=(Number($('discount_pct').value||0)).toFixed(2)+'%';
+  const box=$('warningsBox'), list=$('warnings'); list.innerHTML='';
+  (r.warnings||[]).forEach(w=>{const li=document.createElement('li');li.textContent=w;list.appendChild(li);}); box.hidden=!(r.warnings||[]).length;
+}
+function resetOptions() {
+  document.querySelectorAll('input[type=checkbox]').forEach(x=>x.checked=false);
+  ['rod_extension','stop_tube','extra_thread','air_bleed_qty','prox_switch_qty','extra_port_qty','extra_tie_rod_qty','thick_head_qty','standard_rod_boot_qty'].forEach(k=>$(k).value='0');
+  document.querySelectorAll('[data-accessory]').forEach(x=>x.value='0');
+  $('specialParts').innerHTML=''; specialPartRows=0; addSpecialPart();
+  $('errorMessage').textContent='';
+}
+async function init() {
+  try {
+    const res=await fetch('/api/catalog'); if(!res.ok) throw new Error('Catalog request failed'); catalog=await res.json();
+    fillSelect($('series'),Object.keys(catalog.series));
+    fillSelect($('cushion'),catalog.cushions); fillSelect($('port_code'),catalog.port_codes,x=>x||'(blank)'); fillSelect($('seal_code'),catalog.seal_codes,x=>x||'(blank)'); fillSelect($('rod_style'),catalog.rod_styles);
+    catalog.accessories.forEach(name=>{const l=document.createElement('label');l.textContent=name;const i=document.createElement('input');i.type='number';i.min='0';i.step='1';i.value='0';i.dataset.accessory=name;l.appendChild(i);$('accessoryGrid').appendChild(l);});
+    $('series').addEventListener('change',()=>{updateMountsForSeries();updateBores();}); $('bore').addEventListener('change',updateRods);
+    updateMountsForSeries(); updateBores(); addSpecialPart(); $('engineStatus').textContent='Pricing Engine v1.2 · Catalog loaded';
+  } catch(e) { $('engineStatus').textContent='Catalog unavailable'; $('errorMessage').textContent=e.message; }
+}
+$('quoteForm').addEventListener('submit',async e=>{
+  e.preventDefault(); $('errorMessage').textContent=''; $('calculateButton').disabled=true; $('calculateButton').textContent='Calculating…';
+  try { const res=await fetch('/api/calculate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload())}); const body=await res.json(); if(!res.ok||!body.ok)throw new Error(body.error||'Calculation failed'); showResult(body.result); }
+  catch(e){$('errorMessage').textContent=e.message;} finally{$('calculateButton').disabled=false;$('calculateButton').textContent='Calculate Quote';}
+});
+$('addPart').addEventListener('click',addSpecialPart); $('resetButton').addEventListener('click',resetOptions);
+init();

@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ 'JIT Cylinder Calculator' if portal_mode|default('employee') == 'customer' else 'JIT Crew Pricing Calculator' }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link id="pricingCalculatorStylesheet" rel="stylesheet" href="{{ url_for('static', filename='pricing_calculator.css') }}">
+  <link id="quoteFormStylesheet" rel="stylesheet" href="{{ url_for('static', filename='quote_form.css') }}">
+  {% if portal_mode|default('employee') == 'customer' %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='customer_quote.css') }}">
+  {% endif %}
+</head>
+<body class="{{ portal_mode|default('employee') }}-mode" data-portal-mode="{{ portal_mode|default('employee') }}" data-current-user-name="{{ current_user_name|default('') }}" data-prefill-customer-name="{{ prefill_customer_name|default('') }}" data-prefill-customer-address="{{ prefill_customer_address|default('') }}" data-assigned-promo-code="{{ assigned_promo_code|default('') }}" data-assigned-discount-percent="{{ assigned_discount_percent if assigned_discount_percent is not none else '' }}">
+  <main class="orderentry-window" aria-label="JIT Crew Pricing Calculator">
+    <div class="window-titlebar">
+      <strong>{{ 'JIT Cylinder Calculator' if portal_mode|default('employee') == 'customer' else 'JIT Crew Pricing Calculator' }}</strong>
+      <span class="window-close" aria-hidden="true">×</span>
+    </div>
+
+    <div id="orderEntryView" class="view active">
+    <form id="quoteForm" class="orderentry-form">
+      <section class="customer-area">
+        <label for="customer_name">Customer</label>
+        <div class="customer-control">
+          <input id="customer_name" type="text" autocomplete="off" list="customerNameList" value="{{ prefill_customer_name|default('') }}">
+          <button type="button" class="combo-arrow" tabindex="-1" aria-label="Customer suggestions">▼</button>
+        </div>
+        <datalist id="customerNameList"></datalist>
+        <label for="customer_address">Address</label>
+        <input id="customer_address" type="text" autocomplete="off" value="{{ prefill_customer_address|default('') }}">
+      </section>
+
+      <section class="cylinder-row" aria-label="Cylinder definition">
+        <label class="c-series">Series<select id="series" required></select></label>
+        <label class="c-mount">Mount<select id="mount" required></select></label>
+        <label class="c-bore">Bore<select id="bore" required></select></label>
+        <label class="c-stroke">Stroke<input id="stroke" type="number" min="0" step="0.001" value="" required></label>
+        <label class="c-rod">Rod<select id="rod_diameter" required></select></label>
+        <label class="c-style">Style<select id="rod_style" required></select></label>
+        <label class="c-cushion">Cushion<select id="cushion"></select></label>
+        <label class="c-ports">Ports<select id="port_code"></select></label>
+        <label class="c-seal">Seal<select id="seal_code"></select></label>
+        <label class="c-dre">DRE (Y)<input id="dre_input" type="text" maxlength="1" autocomplete="off"></label>
+      </section>
+
+      <section class="middle-area">
+        <div class="options-panel legacy-panel">
+          <div class="tabs" role="tablist" aria-label="OrderEntry options">
+            <button type="button" class="tab active" data-tab="specialsPanel">Specials (#)</button>
+            <button type="button" class="tab" data-tab="optionsPanel">Options (y)</button>
+            <button type="button" class="tab" data-tab="smartPanel">Smart Options</button>
+          </div>
+
+          <div id="specialsPanel" class="tab-panel active">
+            <div class="special-columns">
+              <div class="legacy-option-row"><span>Rod Extension (#)</span><input id="rod_extension" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Rod Boot (#)</span><input id="standard_rod_boot_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Stop Tube (#)</span><input id="stop_tube" type="number" min="0" step="0.001" value=""></div>
+              <div class="legacy-option-row"><span>Air Bleed (#)</span><input id="air_bleed_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Extra/Boss Ports (#)</span><input id="extra_port_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Thread Ext (#)</span><input id="extra_thread" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Extend Tie Rod (#)</span><input id="extra_tie_rod_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Prox Switch (#)</span><input id="prox_switch_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Add Money($)</span><input id="legacy_post_discount_add" type="number" min="0" step="1" value=""></div>
+            </div>
+          </div>
+
+          <div id="optionsPanel" class="tab-panel">
+            <div class="yes-no-grid">
+              <label><span>Stainless Rod</span><select id="stainless_rod"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Chrome Bore</span><select id="chrome_bore"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Rod Gland Drain</span><select id="rod_gland_drain"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Brass Wiper</span><select id="brass_wiper"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>UltraOx</span><select id="ultraox"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Thick Head (#)</span><input id="thick_head_qty" type="number" min="0" step="1" value=""></label>
+            </div>
+          </div>
+
+          <div id="smartPanel" class="tab-panel">
+            <div class="yes-no-grid">
+              <label><span>Transducer</span><select id="transducer"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Prepped for Transducer</span><select id="prepped_for_transducer"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Sensor Cover</span><select id="sensor_cover"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Valve Manifold</span><select id="valve_manifold"><option value="">N</option><option value="Y">Y</option></select></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="parts-panel" aria-label="Special parts">
+          <div class="parts-header"><span>Parts</span><span>Description</span><span>Qty</span><span>Price</span></div>
+          <div id="specialParts" class="parts-rows"></div>
+        </div>
+
+        <div class="manual-items-area" aria-label="Manual special-order items">
+          <div class="parts-header oe-manual-header">
+            <span>Ref</span>
+            <span>Description</span>
+            <span>Qty</span>
+            <span>Unit Price</span>
+            <span>Extended</span>
+            <span>Note</span>
+            <span></span>
+          </div>
+          <div id="orderEntryManualItems" class="manual-items"></div>
+          <button type="button" id="addOrderEntryManualItemButton" class="add-manual-item-btn">+ Add Manual Item</button>
+        </div>
+      </section>
+
+      <section class="bottom-area">
+        <div class="accessory-panel legacy-panel">
+          <div class="tabs" role="tablist" aria-label="Accessory end selection">
+            <button type="button" class="tab active" data-tab="rodEndPanel">Rod End</button>
+            <button type="button" class="tab" data-tab="capEndPanel">Cap End</button>
+          </div>
+          <div id="rodEndPanel" class="tab-panel active accessory-tab-grid">
+            <div class="legacy-option-row"><span>Rod Clevis (#)</span><input type="number" min="0" step="1" value="" data-accessory="Rod Clevis"></div>
+            <div class="legacy-option-row"><span>Safe Coupler (#)</span><input type="number" min="0" step="1" value="" data-accessory="Safety Coupler"></div>
+            <div class="legacy-option-row"><span>Rod Eye (#)</span><input type="number" min="0" step="1" value="" data-accessory="Rod Eye"></div>
+            <div class="legacy-option-row"><span>Rod Stud (#)</span><input type="number" min="0" step="1" value="" data-accessory="Rod Stud"></div>
+            <div class="legacy-option-row"><span>Pivot Pin (#)</span><input type="number" min="0" step="1" value="" data-accessory="Pivot Pin"></div>
+            <div class="legacy-option-row"><span>Weld Plate (#)</span><input type="number" min="0" step="1" value="" data-accessory="Weld Plate"></div>
+            <div class="legacy-option-row"><span>SA Male Eye (#)</span><input type="number" min="0" step="1" value="" data-accessory="Self-Aligning Male Eye"></div>
+            <div class="legacy-option-row"><span>Jam Nut (#)</span><input type="number" min="0" step="1" value="" data-accessory="Jam Nut"></div>
+            <div class="legacy-option-row"><span>Male Rod Eye (#)</span><input type="number" min="0" step="1" value="" data-accessory="Male Rod Eye"></div>
+            <div class="legacy-option-row"><span>Align Coupler (#)</span><input type="number" min="0" step="1" value="" data-accessory="Alignment Coupler"></div>
+          </div>
+          <div id="capEndPanel" class="tab-panel accessory-tab-grid">
+            <div class="legacy-option-row"><span>SA Clevis Bracket (#)</span><input type="number" min="0" step="1" value="" data-accessory="SA - Clevis Bracket"></div>
+            <div class="legacy-option-row"><span>Eye Bracket (#)</span><input type="number" min="0" step="1" value="" data-accessory="Eye Bracket"></div>
+            <div class="legacy-option-row"><span>Clevis Bracket (#)</span><input type="number" min="0" step="1" value="" data-accessory="Clevis Bracket"></div>
+            <div class="legacy-option-row"><span>SA Pivot Pin (#)</span><input type="number" min="0" step="1" value="" data-accessory="SA - Pivot Pin"></div>
+          </div>
+        </div>
+
+        <div class="engineering-panel">
+          <div class="pressure-row"><label>Pressure<select id="pressure"><option value=""></option><option>100</option><option>250</option><option>500</option><option>1000</option></select></label></div>
+          <div class="force-row"><span class="blue-label">XI (MT4)</span><input id="xi_mt4" type="text"><input id="force_display" type="text" value="" readonly></div>
+          <div class="tie-row"><span class="blue-label wide">Tie Rod Set</span><label>Diameter<select id="tie_rod_diameter"><option value=""></option></select></label><label>Length<input id="tie_rod_length" type="number" value=""></label><label>Cost<input id="tie_rod_cost" type="text" value="" readonly></label></div>
+          <div class="pricing-rows">
+            <div class="coupon-row">
+              <label for="coupon_code">{{ 'Enter Promo Code' if portal_mode|default('employee') == 'customer' else 'Coupon' }}</label>
+              <div class="coupon-entry">
+                <input id="coupon_code" type="text" value="" autocomplete="off" placeholder="Coupon code">
+                <button id="applyCouponButton" type="button">Apply</button>
+              </div>
+            </div>
+            <div id="couponMessage" class="coupon-message" role="status" aria-live="polite"></div>
+            <label>Discount<input id="discount_pct" type="number" min="0" max="99" step="1" value=""></label>
+            <label><span class="blue-label">{{ 'Total for Each' if portal_mode|default('employee') == 'customer' else 'Net Each' }}</span><input id="quote_net_each" type="text" value="$0.00" readonly></label>
+            <label>Profit<input id="profit_display" type="text" value="$0.00" readonly></label>
+          </div>
+          <button id="calculateButton" class="quote-button" type="submit">Quote</button>
+        </div>
+      </section>
+
+      <p id="errorMessage" class="error" role="alert"></p>
+    </form>
+    </div>
+
+    <div id="quotePreviewView" class="view hidden">
+      <div class="qf-toolbar">
+        <button type="button" id="backToOrderEntryButton" class="preview-btn">← Quote Entry</button>
+        <button type="button" id="newQuoteButton" class="preview-btn primary">New Quote</button>
+        <span class="quote-zoom-controls" aria-label="Quote Form zoom controls">
+          <button type="button" id="quoteZoomOutButton" class="preview-btn zoom-icon-btn" aria-label="Zoom Quote Form out"><span aria-hidden="true">&#128269;</span><span aria-hidden="true">−</span></button>
+          <output id="quoteZoomLevel" class="quote-zoom-level" aria-live="polite">100%</output>
+          <button type="button" id="quoteZoomInButton" class="preview-btn zoom-icon-btn" aria-label="Zoom Quote Form in"><span aria-hidden="true">&#128269;</span><span aria-hidden="true">+</span></button>
+        </span>
+        <button type="button" id="verifyQuoteButton" class="preview-btn">Verify</button>
+        <button type="button" id="employeeSaveButton" class="preview-btn">Save</button>
+        <button type="button" id="saveQuoteButton" class="preview-btn primary">Order Now</button>
+        <span class="qf-toolbar-meta">Status <strong id="pv_status">—</strong> · Created by <span id="pv_created_by">—</span></span>
+        <span id="verifyMessage" class="verify-message" role="status" aria-live="polite"></span>
+        <span id="previewErrorMessage" class="error" role="alert"></span>
+        <a href="{{ url_for('portal.employee_dashboard') if portal_mode|default('employee') == 'employee' else url_for('portal.customer_history') }}" id="employeeDashboardButton" class="preview-btn qf-toolbar-dashboard">Dashboard</a>
+      </div>
+
+      <div class="excel-quote-sheet" aria-label="Cylinder Quote Form">
+        <header class="xq-header">
+          <div class="xq-logo-wrap">
+            <img class="xq-logo" src="/static/quote_form_logo.png" alt="JIT Cylinders">
+          </div>
+          <h1>Quote Form</h1>
+        </header>
+
+        <section class="xq-customer">
+          <div class="xq-customer-fields">
+            <label>Customer</label><input id="pv_customer_name" type="text" autocomplete="off">
+            <label>Address:</label><input id="pv_customer_address" type="text" autocomplete="off">
+            <label>Phone/Email:</label><input id="pv_customer_contact" type="text" autocomplete="off">
+            <label>Attn:</label><input id="pv_customer_attn" type="text" autocomplete="off">
+          </div>
+          <div class="xq-meta-stack">
+            <table class="xq-meta-table xq-quote-meta">
+              <tr><th>Quote</th><td id="pv_quote_number">—</td></tr>
+              <tr><th>Date</th><td id="pv_created_at">—</td></tr>
+              <tr><th>Terms</th><td><input id="pv_terms" value="Net 30" aria-label="Terms"></td></tr>
+            </table>
+            <table class="xq-meta-table xq-side-table">
+              <tr><th>Days:</th><td><input id="pv_days" type="number" min="0" value="30" aria-label="Quoted delivery days"></td></tr>
+              <tr><th>Ref:</th><td><input id="pv_reference_notes" type="text" autocomplete="off"></td></tr>
+              <tr><th>FOB</th><td><input id="pv_fob" value="Hartselle, AL" aria-label="FOB location"></td></tr>
+            </table>
+          </div>
+        </section>
+
+        <section class="xq-grid">
+          <div class="xq-head xq-desc-head">Description</div>
+          <div class="xq-head xq-qty-head">Qty</div>
+          <div class="xq-head xq-list-head">List</div>
+          <div class="xq-head xq-discount-head">Discount</div>
+          <div class="xq-head xq-net-head">Net Each</div>
+
+          <div class="xq-label row-series">Series</div>
+          <div class="xq-value row-series" id="pv_series_desc">—</div>
+          <div class="xq-qty row-series"><input id="pv_quantity" type="number" min="1" step="1" value="1" aria-label="Cylinder quantity"></div>
+          <div class="xq-list row-series" id="pv_quote_list_price">—</div>
+          <div class="xq-discount row-series" id="pv_discount">—</div>
+          <div class="xq-net row-series"><span id="pv_quote_net_each">—</span> - <span id="pv_net_days">30</span> Days</div>
+
+          <div class="xq-label row-model">Model Code</div>
+          <div class="xq-value row-model" id="pv_model_code">—</div>
+          <div class="xq-label row-expedited">Expedited - Emergency</div>
+          <div class="xq-wide-price row-expedited"><span id="pv_expedited_price">—</span> (<span id="pv_expedited_days">15</span> Days) &nbsp; <span id="pv_emergency_price">—</span> (NOW)</div>
+
+          <div class="xq-label row-bore">Bore Size (&quot;)</div>
+          <div class="xq-value row-bore" id="pv_bore">—</div>
+          <div class="xq-label row-cares-price">JIT Foster Care Program*</div>
+          <div class="xq-wide-price row-cares-price"><span id="pv_cares_price">—</span> - <span id="pv_cares_days">30</span> Days</div>
+
+          <div class="xq-label row-mount">Mount</div>
+          <div class="xq-value row-mount" id="pv_mount">—</div>
+          <div class="xq-repair row-repair">
+            <div class="xq-repair-title">Recommended Cylinder Components</div>
+            <label>Piston &amp; Rod Assembly<input id="pv_repair_assembly" value="N/A"></label>
+            <label><span id="pv_repair_rod_label">Hyd Rod Seal Kit</span><input id="pv_repair_rod_kit" value="N/A"></label>
+            <label><span id="pv_repair_piston_label">Hyd Piston Seal Kit</span><input id="pv_repair_piston_kit" value="N/A"></label>
+            <label><span id="pv_repair_gland_label">Hyd Gland Seal Kit</span><input id="pv_repair_gland_kit" value="N/A"></label>
+            <label>Cylinder Weight<input id="pv_weight" placeholder="—"></label>
+            <label><span>Push @ <span id="pv_pressure_push">0</span> PSI</span><span id="pv_push_lbs">0 lbs</span></label>
+            <label><span>Pull @ <span id="pv_pressure_pull">0</span> PSI</span><span id="pv_pull_lbs">0 lbs</span></label>
+          </div>
+
+          <div class="xq-label row-rod">Rod Size (&quot;)</div><div class="xq-value row-rod" id="pv_rod_diameter">—</div>
+          <div class="xq-label row-cushions">Cushions</div><div class="xq-value row-cushions" id="pv_cushion">—</div>
+          <div class="xq-label row-ports">Ports</div><div class="xq-value row-ports" id="pv_port_code">—</div>
+          <div class="xq-label row-stroke">Stroke (&quot;)</div><div class="xq-value row-stroke" id="pv_stroke">—</div>
+          <div class="xq-label row-thread">Rod Thread</div><div class="xq-value row-thread" id="pv_rod_style">—</div>
+          <div class="xq-label row-seals">Seals</div><div class="xq-value row-seals" id="pv_seal_code">—</div>
+          <div class="xq-label row-includes">Includes:</div><div class="xq-value xq-includes row-includes" id="pv_includes">—</div>
+
+          <div class="xq-diagram row-diagram" aria-label="Cylinder dimension diagram">
+            <div class="xq-drawing-wrap">
+              <img src="/static/quote_form_cylinder.png" alt="Front and side cylinder dimension drawing">
+            </div>
+            <div class="xq-dimensions">
+              <div class="xq-dim-left">
+                <label>E = <input id="pv_dim_e" placeholder="—"></label>
+                <label>G = <input id="pv_dim_g" placeholder="—"></label>
+                <label>J = <input id="pv_dim_j" placeholder="—"></label>
+                <label>LB = <input id="pv_dim_lb" placeholder="—"></label>
+                <label><span class="sr-only">Additional dimension 1</span><input id="pv_dim_extra_1" value="0"></label>
+                <label><span class="sr-only">Additional dimension 2</span><input id="pv_dim_extra_2" value="0"></label>
+              </div>
+              <strong>Cylinder<br>Dimensions</strong>
+              <div class="xq-dim-right">
+                <label>A = <input id="pv_dim_a" placeholder="—"></label>
+                <label>WF = <input id="pv_dim_wf" placeholder="—"></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="xq-comments row-comments">
+            <label for="pv_comments">Comments:</label>
+            <textarea id="pv_comments" rows="5"></textarea>
+            <div class="xq-quoted-by">Quoted by <span id="pv_created_by_footer">—</span></div>
+          </div>
+        </section>
+
+        <section class="xq-manual-section">
+          <h2>Additional Quoted Items</h2>
+          <div class="parts-header manual-header">
+            <span>Ref</span><span>Description</span><span>Qty</span><span>Unit Price</span><span>Extended</span><span>Show</span><span>Note</span><span></span>
+          </div>
+          <div id="previewManualItems" class="manual-items"></div>
+          <button type="button" id="addManualItemButton" class="preview-btn secondary">+ Add Line Item</button>
+        </section>
+
+        <section class="xq-special-section">
+          <label for="pv_special_instructions">Special Instructions / Questions</label>
+          <textarea id="pv_special_instructions" rows="5"></textarea>
+        </section>
+
+        <footer class="xq-footer">
+          <div class="xq-footer-valid">*Quote is valid for 60 Days</div>
+          <div class="xq-footer-emergency">- For Emergency orders please call to verify achievable delivery.</div>
+          <div class="xq-footer-orders">- Orders of $25K+ are subject to JIT Progress Payment Terms</div>
+          <div class="xq-signature"><input id="pv_prepared_by" value="Matt McComb" aria-label="Prepared by"><span> - </span><input id="pv_prepared_title" value="Cylinder Application Eng." aria-label="Prepared by title"></div>
+          <div class="xq-terms">JIT Terms of Sale are available at www.jitindustries.com/terms.html</div>
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="quoteResultDialog" class="quote-dialog">
+    <form method="dialog" class="quote-dialog-inner">
+      <div class="dialog-title">Quote Result</div>
+      <div class="dialog-model"><span>Model</span><strong id="model_code">—</strong></div>
+      <div class="dialog-grid">
+        <div><span>List</span><strong id="quote_list_price">—</strong></div>
+        <div><span>Discount</span><strong id="display_discount">—</strong></div>
+        <div><span>Net Each</span><strong id="dialog_net_each">—</strong></div>
+        <div><span>Expedited</span><strong id="expedited_price">—</strong></div>
+        <div><span>Emergency</span><strong id="emergency_price">—</strong></div>
+      </div>
+      <details>
+        <summary>Pricing Breakdown</summary>
+        <dl class="breakdown-list">
+          <div><dt>Base Price</dt><dd id="base_price">—</dd></div>
+          <div><dt>Stroke + Cushion</dt><dd id="stroke_cushion">—</dd></div>
+          <div><dt>Modifications</dt><dd id="modifications">—</dd></div>
+          <div><dt>Accessories</dt><dd id="accessories">—</dd></div>
+          <div><dt>Special Parts</dt><dd id="special_parts">—</dd></div>
+          <div><dt>Position Sensing</dt><dd id="position_sensing">—</dd></div>
+          <div><dt>VA Total</dt><dd id="va_total">—</dd></div>
+          <div><dt>DRE Surcharge</dt><dd id="dre_surcharge">—</dd></div>
+          <div><dt>Pre-discount Subtotal</dt><dd id="pre_discount_subtotal">—</dd></div>
+          <div><dt>Working Net Each</dt><dd id="working_net_each">—</dd></div>
+        </dl>
+      </details>
+      <div id="warningsBox" class="warnings" hidden><strong>Legacy compatibility notes</strong><ul id="warnings"></ul></div>
+      <button class="dialog-close" value="close">Close</button>
+    </form>
+  </dialog>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <script src="{{ url_for('static', filename='portal_quote_bridge.js') }}"></script>
+</body>
+</html>

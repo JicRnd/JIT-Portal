@@ -1,0 +1,30 @@
+﻿rule_id,business_name,source_sheets,applicable_series,input_cells,trigger,calculation,rate_1_name,rate_2_name,rate_1_col,rate_2_col
+rod_extension,Rod Extension,H2|IH2,H|HM|W|MH / IH|IHM|IMH,Data!B11,quantity > 0,per_length * quantity,per_length,,C,
+stop_tube,Stop Tube,H2|IH2,H|HM|W|MH / IH|IHM|IMH,Data!B12,quantity > 0.1,base + per_length * quantity,base,per_length,D,E
+stainless_rod,Chrome Plated Stainless Steel Piston Rod,H2|IH2,H|HM|W|MH / IH|IHM|IMH,Data!B17; Data!B8,B17 = Y,base + per_stroke * stroke,base,per_stroke,F,G
+chrome_bore,Chromed Bore,H2|IH2,H|HM|W|MH / IH|IHM|IMH,Data!B21; Data!B8,B21 = Y,base + per_stroke * stroke,base,per_stroke,H,I
+extra_thread,Thread Extension,H2|IH2,H|HM|W|MH / IH|IHM|IMH,Data!B27,quantity > 0,per_length * quantity,per_length,,J,
+rod_gland_drain,Rod Gland Drain,H3|IH3,H|HM|W|MH / IH|IHM|IMH,Data!B20,B20 = Y,fixed,fixed,,C,
+air_bleed,Air Bleed / Non-Adjust Cushion,H3|IH3,H|HM|W|MH / IH|IHM|IMH,Data!B23,quantity > 0.1,fixed_each * quantity,fixed_each,,D,
+prox_switch,Prox Switch,H3|IH3,H|HM|W|MH / IH|IHM|IMH,Data!B19,quantity > 0.01,fixed_each * quantity,fixed_each,,E,
+brass_wiper,Brass Wiper,H3|IH3,H|HM|W|MH / IH|IHM|IMH,Data!B15,B15 = Y,fixed,fixed,,F,
+viton_seals,Viton Seal,H3,H|HM|W|MH,Data!B10,B10 = V,rod + piston,rod,piston,G,H
+viton_highload_metric,Viton / High Load Seal,IH3,IH|IHM|IMH,Data!B10,B10 = V or H,V: rod+piston; H: 2*(rod+piston),rod,piston,G,H
+extra_port,Extra Port,H3|IH3,H|HM|W|MH / IH|IHM|IMH,Data!B13,quantity > 0.1,fixed_each * quantity,fixed_each,,I,
+light_duty_mill,Light Duty Mill,H3,HM only,Data!B3,series = HM,fixed,fixed,,K,
+flange_port,Flange Ports,H4|IH4,H-family / IH-family,Data!D2; Data!B13,D2 = F,fixed_each * (2 + extra_port_qty),fixed_each,,C,
+extra_tie_rod,Extra Tie Rod,H4|IH4,H-family / IH-family,Data!B25,quantity > 0.1,per_length * 4 * quantity,per_length,,D,
+cipr,CIPR,H4|IH4,H-family / IH-family,Data!B10,B10 = C,fixed,fixed,,E,
+ultraox,UltraOx,H4|IH4,H-family / IH-family,Data!B16; Data!B8,B16 = Y,base + per_stroke * stroke,base,per_stroke,F,G
+buna_highload_seals,Buna N / High Load Seals,H4|IH4,H-family / IH-family,Data!B10,B10 = B or L,buna + high_load,buna,high_load,H,I
+thick_head,Thicker Head,H4|IH4,H-family / IH-family,Data!I58,quantity/value present,fixed_each * Data!I58,fixed_each,,J,
+rod_extension,Rod Extension,A2,A|LH,Data!B11,quantity > 0,per_length * quantity,per_length,,C,
+stop_tube,Stop Tube,A2,A|LH,Data!B12,quantity > 0.1,base + per_length * quantity,base,per_length,D,E
+stainless_rod,Chrome Plated Stainless Steel Piston Rod,A2,A|LH,Data!B17; Data!B8,B17 = Y,base + per_stroke * stroke,base,per_stroke,F,G
+extra_thread,Thread Extension,A2,A|LH,Data!B27,quantity > 0,per_length * quantity,per_length,,H,
+air_bleed,Air Bleed,A3,A|LH,Data!B23,quantity > 0.1,fixed_each * quantity,fixed_each,,C,
+prox_switch,Prox Switch,A3,A|LH,Data!B19,quantity > 0,fixed_each * quantity,fixed_each,,D,
+viton_seals,Viton Seal / High Load,A3,A|LH,Data!B10,B10 = V,rod_related + piston,rod_related,piston,F,G
+extra_port,Extra Port,A3,A|LH,Data!B13,quantity > 0.1,fixed_each * quantity,fixed_each,,H,
+extra_tie_rod,Extra Tie Rod,A4,A|LH,Data!B25,quantity > 0.1,per_length * 4 * quantity,per_length,,C,
+ultraox,UltraOx,A4,A|LH,Data!B16; Data!B8,B16 = Y,base + per_stroke * stroke,base,per_stroke,D,E

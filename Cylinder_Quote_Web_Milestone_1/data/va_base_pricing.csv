@@ -1,0 +1,15 @@
+﻿series_family,series_aliases,bore,rod_diameter,standard_thread,oversize_thread,base_price,stroke_rate,stroke_unit,lifting_eye,source_sheet,source_row,base_price_source,stroke_source,lifting_eye_source
+VA,VA,2.5,"5/8""",7/16-20,1/2-20,360,12,inch,100,VA,5,VA!E5,VA!F5,VA!G5
+VA,VA,3.25,"1""",3/4-16,7/8-14,420,13,inch,,VA,6,VA!E6,VA!F6,VA!G6
+VA,VA,4,"1""",7/16-20,1/2-20,510,15,inch,,VA,7,VA!E7,VA!F7,VA!G7
+VA,VA,5,"1""",3/4-16,7/8-14,600,18,inch,,VA,8,VA!E8,VA!F8,VA!G8
+VA,VA,6,"1""",1-14,1 1/4-12,690,21,inch,,VA,9,VA!E9,VA!F9,VA!G9
+VA,VA,7,"1""",7/16-20,1/2-20,900,28,inch,,VA,10,VA!E10,VA!F10,VA!G10
+VA,VA,8,"1""",3/4-16,7/8-14,960,39,inch,,VA,11,VA!E11,VA!F11,VA!G11
+VA,VA,10,"1""",3/4-16,7/8-14,1200,51,inch,,VA,12,VA!E12,VA!F12,VA!G12
+VA,VA,12,"1 3/8""",1-14,1 1/4-12,2100,68,inch,,VA,13,VA!E13,VA!F13,VA!G13
+VA,VA,14,"1 3/8""",1-14,1 1.4-12,2800,72,inch,,VA,14,VA!E14,VA!F14,VA!G14
+VA,VA,16,"1 3/4""",1-14,1 1/4-12,5400,258,inch,,VA,15,VA!E15,VA!F15,VA!G15
+VA,VA,18,"2""",1 1/2-12,1 3/4-12,9000,317,inch,,VA,16,VA!E16,VA!F16,VA!G16
+VA,VA,20,"2""",1 1/2-12,1 3/4-12,9500,399,inch,,VA,17,VA!E17,VA!F17,VA!G17
+VA,VA,22,"2 1/2""",1 7/8-12,2 1/4-12,10000,511,inch,,VA,18,VA!E18,VA!F18,VA!G18

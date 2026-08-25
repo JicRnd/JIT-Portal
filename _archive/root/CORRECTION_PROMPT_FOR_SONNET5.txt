@@ -1,0 +1,34 @@
+STOP. Do not implement the previously proposed broader plan.
+
+The project scope has been deliberately reduced before any code changes were made.
+
+I have replaced AGENTS.md and PROJECT_SPEC.md with corrected versions.
+
+Re-read BOTH files completely now and treat them as the new authoritative instructions, overriding the earlier plan you reported in this chat.
+
+Important scope correction:
+- NO Quote History / qhistory work.
+- NO quote search/retrieval UI.
+- NO Data1 work.
+- NO Raspberry Pi integration.
+- NO approval workflow or Approve button.
+- NO outbound HTTP transmission.
+- NO email or SMTP.
+- NO PDF generation or Playwright setup.
+- NO external integrations.
+
+For now I only want:
+1. finish/stabilize the existing OrderEntry calculator while preserving Pricing Engine v1.2;
+2. make the Quote button perform authoritative server-side recalculation and open an editable HTML Quote Form that resembles the Excel Quote Form;
+3. support catalog and manual special-order line items transferring into that Quote Form;
+4. add a local SQLite database and Save Quote button that saves the complete quote snapshot with a unique transactional quote number;
+5. support New Quote returning to a blank OrderEntry form after saving when the user chooses it.
+
+Nothing should be sent anywhere outside the local browser/Flask application in this milestone.
+
+Before coding, reply with ONLY:
+A. confirmation that you re-read the revised AGENTS.md and PROJECT_SPEC.md;
+B. the revised implementation phases you will follow;
+C. confirmation that Quote History, Data1, approval, email, PDF, and external transmission are out of scope.
+
+Do not modify code until I approve that corrected plan.

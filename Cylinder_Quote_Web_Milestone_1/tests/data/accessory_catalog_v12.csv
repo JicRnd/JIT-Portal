@@ -1,0 +1,158 @@
+﻿lookup_type,lookup_key,part_type,part_number,price,source_sheet,source_row,source_price_cell,legacy_note
+thread,7/16-20,Rod Clevis,RC044,60,Acc,5,Acc!C5,
+thread,1/2-20,Rod Clevis,RC050,70,Acc,6,Acc!C6,
+thread,3/4-16,Rod Clevis,RC075,80,Acc,7,Acc!C7,
+thread,7/8-14,Rod Clevis,RC087,110,Acc,8,Acc!C8,
+thread,1-14,Rod Clevis,RC100,125,Acc,9,Acc!C9,
+thread,1 1/4-12,Rod Clevis,RC125,175,Acc,10,Acc!C10,
+thread,1 1/2-12,Rod Clevis,RC150,225,Acc,11,Acc!C11,
+thread,1 3/4-12,Rod Clevis,RC175,350,Acc,12,Acc!C12,
+thread,1 7/8-12,Rod Clevis,RC187,395,Acc,13,Acc!C13,
+thread,2 1/4-12,Rod Clevis,RC225,600,Acc,14,Acc!C14,
+thread,2 1/2-12,Rod Clevis,RC250,900,Acc,15,Acc!C15,
+thread,3-12,Rod Clevis,RC275,1300,Acc,16,Acc!C16,
+thread,3 1/4-12,Rod Clevis,RC325,1500,Acc,17,Acc!C17,
+thread,3 1/2-12,Rod Clevis,RC350,1700,Acc,18,Acc!C18,
+thread,4-12,Rod Clevis,RC400,1900,Acc,19,Acc!C19,
+thread,7/16-20,Rod Eye,FE044,40,Acc,5,Acc!G5,
+thread,1/2-20,Rod Eye,FE050,45,Acc,6,Acc!G6,
+thread,3/4-16,Rod Eye,FE075,50,Acc,7,Acc!G7,
+thread,7/8-14,Rod Eye,FE087,60,Acc,8,Acc!G8,
+thread,1-14,Rod Eye,FE100,70,Acc,9,Acc!G9,
+thread,1 1/4-12,Rod Eye,FE125,110,Acc,10,Acc!G10,
+thread,1 1/2-12,Rod Eye,FE150,140,Acc,11,Acc!G11,
+thread,1 3/4-12,Rod Eye,FE175,160,Acc,12,Acc!G12,
+thread,1 7/8-12,Rod Eye,FE187,190,Acc,13,Acc!G13,
+thread,2 1/4-12,Rod Eye,FE225,390,Acc,14,Acc!G14,
+thread,2 1/2-12,Rod Eye,FE250,430,Acc,15,Acc!G15,
+thread,3-12,Rod Eye,FE275,550,Acc,16,Acc!G16,
+thread,3 1/4-12,Rod Eye,FE325,1100,Acc,17,Acc!G17,
+thread,3 1/2-12,Rod Eye,FE350,1300,Acc,18,Acc!G18,
+thread,4-12,Rod Eye,FE400,1450,Acc,19,Acc!G19,
+thread,7/16-20,Self-Aligning Male Eye,SAE044,125,Acc,22,Acc!C22,
+thread,3/4-16,Self-Aligning Male Eye,SAE075,175,Acc,24,Acc!C24,
+thread,1-14,Self-Aligning Male Eye,SAE100,225,Acc,26,Acc!C26,
+thread,1 1/4-12,Self-Aligning Male Eye,SAE125,275,Acc,27,Acc!C27,
+thread,1 1/2-12,Self-Aligning Male Eye,SAE150,500,Acc,28,Acc!C28,
+thread,1 7/8-12,Self-Aligning Male Eye,SAE187,750,Acc,30,Acc!C30,
+thread,7/16-20,SA - Clevis Bracket,SCB044,120,Acc,22,Acc!E22,
+thread,1/2-20,SA - Clevis Bracket,SCB050,160,Acc,23,Acc!E23,
+thread,3/4-16,SA - Clevis Bracket,SCB075,175,Acc,24,Acc!E24,
+thread,1-14,SA - Clevis Bracket,SCB100,225,Acc,26,Acc!E26,
+thread,1 1/4-12,SA - Clevis Bracket,SCB125,275,Acc,27,Acc!E27,
+thread,1 1/2-12,SA - Clevis Bracket,SCB150,475,Acc,28,Acc!E28,
+thread,1 7/8-12,SA - Clevis Bracket,SCB187,525,Acc,30,Acc!E30,
+thread,7/16-20,Alignment Coupler,AC044,80,Acc,22,Acc!I22,
+thread,1/2-20,Alignment Coupler,AC050,90,Acc,23,Acc!I23,
+thread,3/4-16,Alignment Coupler,AC075,108,Acc,24,Acc!I24,
+thread,7/8-14,Alignment Coupler,AC087,125,Acc,25,Acc!I25,
+thread,1-14,Alignment Coupler,AC100,158,Acc,26,Acc!I26,
+thread,1 1/4-12,Alignment Coupler,AC125,175,Acc,27,Acc!I27,
+thread,1 1/2-12,Alignment Coupler,AC150,448,Acc,28,Acc!I28,
+thread,1 3/4-12,Alignment Coupler,AC175,550,Acc,29,Acc!I29,
+thread,1 7/8-12,Alignment Coupler,AC187,665,Acc,30,Acc!I30,
+thread,2 1/4-12,Alignment Coupler,AC225,1466,Acc,31,Acc!I31,
+thread,2 1/2-12,Alignment Coupler,AC250,1879,Acc,32,Acc!I32,
+thread,7/16-20,Male Rod Eye,ME044,305,Acc,22,Acc!K22,
+thread,1/2-20,Male Rod Eye,ME050,318,Acc,23,Acc!K23,
+thread,3/4-16,Male Rod Eye,ME075,324,Acc,24,Acc!K24,
+thread,7/8-14,Male Rod Eye,ME087,329,Acc,25,Acc!K25,
+thread,1-14,Male Rod Eye,ME100,335,Acc,26,Acc!K26,
+thread,1 1/4-12,Male Rod Eye,ME125,380,Acc,27,Acc!K27,
+thread,1 1/2-12,Male Rod Eye,ME150,386,Acc,28,Acc!K28,
+thread,1 3/4-12,Male Rod Eye,ME175,431,Acc,29,Acc!K29,
+thread,1 7/8-12,Male Rod Eye,ME187,445,Acc,30,Acc!K30,
+thread,2 1/4-12,Male Rod Eye,ME225,1024,Acc,31,Acc!K31,
+thread,2 1/2-12,Male Rod Eye,ME250,1247,Acc,32,Acc!K32,
+thread_group,7/16-20,Eye Bracket,EB050,60,Acc,5,Acc!E5,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,7/16-20,Pivot Pin,PP050,20,Acc,5,Acc!K5,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1/2-20,Eye Bracket,EB050,60,Acc,5,Acc!E5,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1/2-20,Pivot Pin,PP050,20,Acc,5,Acc!K5,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,3/4-16,Eye Bracket,EB075,90,Acc,6,Acc!E6,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,3/4-16,Pivot Pin,PP075,25,Acc,6,Acc!K6,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,7/8-14,Eye Bracket,EB100,120,Acc,7,Acc!E7,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,7/8-14,Pivot Pin,PP100,30,Acc,7,Acc!K7,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1-14,Eye Bracket,EB100,120,Acc,7,Acc!E7,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1-14,Pivot Pin,PP100,30,Acc,7,Acc!K7,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1 1/4-12,Eye Bracket,EB138,170,Acc,8,Acc!E8,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1 1/4-12,Pivot Pin,PP138,40,Acc,8,Acc!K8,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1 1/2-12,Eye Bracket,EB175,350,Acc,9,Acc!E9,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1 1/2-12,Pivot Pin,PP175,50,Acc,9,Acc!K9,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1 3/4-12,Eye Bracket,EB200,410,Acc,10,Acc!E10,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1 3/4-12,Pivot Pin,PP200,75,Acc,10,Acc!K10,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1 7/8-12,Eye Bracket,EB200,410,Acc,10,Acc!E10,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,1 7/8-12,Pivot Pin,PP200,75,Acc,10,Acc!K10,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,2 1/4-12,Eye Bracket,EB250,570,Acc,11,Acc!E11,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,2 1/4-12,Pivot Pin,PP250,125,Acc,11,Acc!K11,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,2 1/2-12,Eye Bracket,EB300,800,Acc,12,Acc!E12,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,2 1/2-12,Pivot Pin,PP300,175,Acc,12,Acc!K12,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,2 3/4-12,Eye Bracket,EB350,1500,Acc,13,Acc!E13,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,2 3/4-12,Pivot Pin,PP350,225,Acc,13,Acc!K13,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,3 1/4-12,Eye Bracket,EB350,1500,Acc,13,Acc!E13,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,3 1/4-12,Pivot Pin,PP350,225,Acc,13,Acc!K13,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,3 1/2-12,Eye Bracket,EB350,1500,Acc,13,Acc!E13,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,3 1/2-12,Pivot Pin,PP350,225,Acc,13,Acc!K13,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,4-12,Eye Bracket,EB400,1700,Acc,14,Acc!E14,Selected through Acc!S5:S14 grouped-thread formulas.
+thread_group,4-12,Pivot Pin,PP400,300,Acc,14,Acc!K14,Selected through Acc!S5:S14 grouped-thread formulas.
+rod_diameter,0.625,Safety Coupler,SC062,175,Acc,36,Acc!C36,
+rod_diameter,0.625,Weld Plate,WP062,194,Acc,36,Acc!E36,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,0.625,Rod Stud,RS044,20,Acc,36,Acc!I36,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,0.625,Jam Nut,JN044,6,Acc,36,Acc!K36,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,1,Safety Coupler,SC100,185,Acc,37,Acc!C37,
+rod_diameter,1,Weld Plate,WP100,208,Acc,37,Acc!E37,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,1,Rod Stud,RS050,35,Acc,37,Acc!I37,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,1,Jam Nut,JN050,7,Acc,37,Acc!K37,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,1.375,Safety Coupler,SC138,195,Acc,38,Acc!C38,
+rod_diameter,1.375,Weld Plate,WP138,241,Acc,38,Acc!E38,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,1.375,Rod Stud,RS075,40,Acc,38,Acc!I38,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,1.375,Jam Nut,JN075,10,Acc,38,Acc!K38,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,1.75,Safety Coupler,SC175,275,Acc,39,Acc!C39,
+rod_diameter,1.75,Weld Plate,WP175,340,Acc,39,Acc!E39,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,1.75,Rod Stud,RS087,55,Acc,39,Acc!I39,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,1.75,Jam Nut,JN087,11,Acc,39,Acc!K39,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,2,Safety Coupler,SC200,300,Acc,40,Acc!C40,
+rod_diameter,2,Weld Plate,WP200,534,Acc,40,Acc!E40,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,2,Rod Stud,RS100,80,Acc,40,Acc!I40,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,2,Jam Nut,JN100,12,Acc,40,Acc!K40,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,2.5,Safety Coupler,SC250,325,Acc,41,Acc!C41,
+rod_diameter,2.5,Weld Plate,WP250,384,Acc,41,Acc!E41,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,2.5,Rod Stud,RS125,100,Acc,41,Acc!I41,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,2.5,Jam Nut,JN125,13,Acc,41,Acc!K41,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,3,Safety Coupler,SC300,450,Acc,42,Acc!C42,
+rod_diameter,3,Weld Plate,WP300,527,Acc,42,Acc!E42,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,3,Rod Stud,RS150,125,Acc,42,Acc!I42,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,3,Jam Nut,JN150,15,Acc,42,Acc!K42,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,3.5,Safety Coupler,SC350,550,Acc,43,Acc!C43,
+rod_diameter,3.5,Weld Plate,WP350,673,Acc,43,Acc!E43,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,3.5,Rod Stud,RS175,150,Acc,43,Acc!I43,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,3.5,Jam Nut,JN175,30,Acc,43,Acc!K43,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,4,Safety Coupler,SC400,600,Acc,44,Acc!C44,
+rod_diameter,4,Weld Plate,WP400,740,Acc,44,Acc!E44,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,4,Rod Stud,RS187,170,Acc,44,Acc!I44,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,4,Jam Nut,JN187,51,Acc,44,Acc!K44,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,4.5,Safety Coupler,SC450,750,Acc,45,Acc!C45,
+rod_diameter,4.5,Weld Plate,WP450,872,Acc,45,Acc!E45,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,4.5,Rod Stud,RS250,370,Acc,45,Acc!I45,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,4.5,Jam Nut,JN250,121,Acc,45,Acc!K45,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,5,Safety Coupler,SC500,850,Acc,46,Acc!C46,
+rod_diameter,5,Weld Plate,WP500,891,Acc,46,Acc!E46,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,5,Rod Stud,RS300,500,Acc,46,Acc!I46,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,5,Jam Nut,JN300,159,Acc,46,Acc!K46,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter,5.5,Safety Coupler,SC550,995,Acc,47,Acc!C47,
+rod_diameter,5.5,Weld Plate,WP550,1050,Acc,47,Acc!E47,Weld Plate quantity is a presence trigger only in Data!H21.
+rod_diameter_legacy,5.5,Rod Stud,RS325,600,Acc,47,Acc!I47,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+rod_diameter_legacy,5.5,Jam Nut,JN325,210,Acc,47,Acc!K47,"Legacy Acc!S/T formulas gate this row by Data!B6 rod diameter, not Data!D9 thread."
+bore_mount_bucket,T5,Clevis Bracket,CB050,125,Acc,5,Acc!I5,Bucket selected by Acc!T5:T12 series/bore/mount formulas.
+bore_mount_bucket,T6,Clevis Bracket,CB075,175,Acc,6,Acc!I6,Bucket selected by Acc!T5:T12 series/bore/mount formulas.
+bore_mount_bucket,T7,Clevis Bracket,CB100,225,Acc,7,Acc!I7,Bucket selected by Acc!T5:T12 series/bore/mount formulas.
+bore_mount_bucket,T8,Clevis Bracket,CB138,300,Acc,8,Acc!I8,Bucket selected by Acc!T5:T12 series/bore/mount formulas.
+bore_mount_bucket,T9,Clevis Bracket,CB175,500,Acc,9,Acc!I9,Bucket selected by Acc!T5:T12 series/bore/mount formulas.
+bore_mount_bucket,T10,Clevis Bracket,CB200,600,Acc,10,Acc!I10,Bucket selected by Acc!T5:T12 series/bore/mount formulas.
+bore_mount_bucket,T11,Clevis Bracket,CB250,750,Acc,11,Acc!I11,Bucket selected by Acc!T5:T12 series/bore/mount formulas.
+bore_mount_bucket,T12,Clevis Bracket,CB300,1200,Acc,12,Acc!I12,Bucket selected by Acc!T5:T12 series/bore/mount formulas.
+bore_mount_bucket,T5,SA - Pivot Pin,PP050S,20,Acc,22,Acc!G22,"Bucket selected by Acc!T5:T10, independent of D9."
+bore_mount_bucket,T6,SA - Pivot Pin,PP075S,30,Acc,23,Acc!G23,"Bucket selected by Acc!T5:T10, independent of D9."
+bore_mount_bucket,T7,SA - Pivot Pin,PP100S,50,Acc,24,Acc!G24,"Bucket selected by Acc!T5:T10, independent of D9."
+bore_mount_bucket,T8,SA - Pivot Pin,PP138S,60,Acc,25,Acc!G25,"Bucket selected by Acc!T5:T10, independent of D9."
+bore_mount_bucket,T9,SA - Pivot Pin,PP175S,70,Acc,26,Acc!G26,"Bucket selected by Acc!T5:T10, independent of D9."
+bore_mount_bucket,T10,SA - Pivot Pin,PP200S,80,Acc,27,Acc!G27,"Bucket selected by Acc!T5:T10, independent of D9."

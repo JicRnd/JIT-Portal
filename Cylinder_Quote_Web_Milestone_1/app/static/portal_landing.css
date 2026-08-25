@@ -1,0 +1,54 @@
+.landing-page {
+  min-height: 100vh;
+  background: #a40e12;
+  color: #fff;
+}
+
+.landing-page header {
+  padding: 1rem 4vw;
+}
+
+.landing-page nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.landing-page nav a {
+  color: #fff;
+  font-weight: 700;
+}
+
+.landing-page h1 {
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 4rem);
+  margin: 3rem 0;
+}
+
+.landing-card {
+  width: min(620px, 92vw);
+  margin: auto;
+  padding: 3rem;
+  text-align: center;
+  background: #fff;
+  color: #222;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px #590000;
+}
+
+.landing-card img {
+  max-width: 290px;
+  width: 70%;
+}
+
+.landing-card p {
+  font-size: 1.25rem;
+}
+
+.landing-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}

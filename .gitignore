@@ -1,0 +1,14 @@
+# Added by code-review-graph
+.code-review-graph/
+
+# Runtime / sensitive data (repo-wide)
+Cylinder_Quote_Web_Milestone_1/Databases/
+Cylinder_Quote_Web_Milestone_1/instance copy/
+**/.venv/
+**/__pycache__/
+**/*.pyc
+**/instance/
+**/*.db
+**/*.db-wal
+**/*.db-shm
+**/.env

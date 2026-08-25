@@ -1,0 +1,10 @@
+html,body{min-height:100%;overflow:auto}
+.approval-page{margin:0;padding:32px 18px;background:#e7ecef;font-family:Arial,Helvetica,sans-serif;color:#111}
+.approval-card{width:min(680px,100%);margin:0 auto;padding:30px;background:#fff;border:1px solid #8d8d8d;box-shadow:0 4px 18px #0003;text-align:center}
+.approval-logo{display:block;max-width:190px;max-height:90px;margin:0 auto 18px;object-fit:contain}
+.approval-card h1{margin:0 0 18px;color:#0c2b6f;font-size:32px}
+.approval-quote{font-size:20px}.approval-note{margin:18px 0;color:#444}
+.approval-actions{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:28px 0 16px}
+.approval-button{min-width:170px;padding:13px 22px;border:1px solid #666;font-size:18px;font-weight:700;cursor:pointer}
+.approval-button.approve{background:#dff2df;color:#155724}.approval-button.deny{background:#f7dada;color:#842029}
+.approval-placeholder{margin:18px 0 0;color:#666;font-size:13px}

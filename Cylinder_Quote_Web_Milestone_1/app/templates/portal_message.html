@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+  <title>{{ title }}</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='portal_common.css') }}"
+  >
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='portal_auth.css') }}"
+  >
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <h1>{{ title }}</h1>
+    <p>{{ message }}</p>
+
+    <button
+      class="portal-button"
+      onclick="history.back()"
+    >
+      ← Go Back
+    </button>
+  </main>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>New Customer Account</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='portal_common.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='portal_auth.css') }}">
+</head>
+<body class="auth-page">
+  <main class="auth-card wide">
+    <a class="back-link" href="{{ return_to if return_to else url_for('portal.customer_login') }}">
+      ← Back
+    </a>
+
+    <h1>New Customer Account</h1>
+
+    {% if error %}
+      <p class="form-error">{{ error }}</p>
+    {% endif %}
+
+    <form method="post" class="signup-grid">
+      <input type="hidden" name="return_to" value="{{ return_to or '' }}">
+
+      <label>
+        Full Name
+        <input name="display_name" value="{{ prefill_name or '' }}" required>
+      </label>
+
+      <label>
+        Company
+        <input name="company_name" value="{{ prefill_name or '' }}">
+      </label>
+
+      <label>
+        Email
+        <input name="email" type="email" value="{{ prefill_email or '' }}" required>
+      </label>
+
+      <label>
+        Password
+        <input
+          name="password"
+          type="password"
+          required
+          autocomplete="new-password"
+        >
+      </label>
+
+      <label>
+        Phone
+        <input name="phone" type="tel" value="{{ prefill_phone or '' }}">
+      </label>
+
+      <label class="extension-check-label">
+        Extension
+        <span class="extension-check-control">
+          <input id="hasExtensionCheckbox" type="checkbox">
+          <span>Check if you have an extension</span>
+        </span>
+      </label>
+      <input type="hidden" name="phone_extension" id="hiddenExtension" value="">
+
+      <label>
+        Billing Street Address
+        <input name="billing_street_address">
+      </label>
+
+      <label>
+        City State, Zip
+        <input name="billing_city_state_zip">
+      </label>
+
+      <div class="full shipping-same-toggle">
+        <button
+          type="button"
+          class="portal-button secondary"
+          onclick="document.getElementById('shippingSameFlag').value='true';"
+        >
+          Same
+        </button>
+        <button
+          type="button"
+          class="portal-button secondary"
+          onclick="openShippingModal();"
+        >
+          Different
+        </button>
+      </div>
+      <input
+        type="hidden"
+        name="shipping_same_as_billing"
+        id="shippingSameFlag"
+        value="true"
+      >
+
+      <!-- Modal Dialog -->
+      <dialog id="shippingModal" class="shipping-dialog">
+        <div class="dialog-content">
+          <h3>Shipping Address</h3>
+
+          <label>
+            Ship To Name / Attn
+            <input type="text" id="modal_shipping_to" name="shipping_to">
+          </label>
+
+          <label>
+            Shipping Street Address
+            <input type="text" id="modal_shipping_street" name="shipping_street_address">
+          </label>
+
+          <label>
+            Shipping City, State, Zip
+            <input type="text" id="modal_shipping_csz" name="shipping_city_state_zip">
+          </label>
+
+          <div class="dialog-actions">
+            <button type="button" class="portal-button" onclick="saveShippingAddress();">Save Address</button>
+            <button type="button" class="portal-button secondary" onclick="closeShippingModal();">Cancel</button>
+          </div>
+        </div>
+      </dialog>
+
+      <button class="portal-button full" type="submit">
+        Submit
+      </button>
+    </form>
+
+    <!-- Phone Extension Dialog -->
+    <dialog id="extensionDialog" class="extension-dialog">
+      <h2>Phone Extension</h2>
+      <label>
+        Extension
+        <input id="extensionInput" type="text">
+      </label>
+      <div class="extension-dialog-actions">
+        <button id="saveExtension" class="portal-button" type="button">
+          OK
+        </button>
+      </div>
+    </dialog>
+
+    <script>
+      (function () {
+        const checkbox = document.getElementById("hasExtensionCheckbox");
+        const dialog = document.getElementById("extensionDialog");
+        const input = document.getElementById("extensionInput");
+        const hidden = document.getElementById("hiddenExtension");
+
+        document.getElementById("saveExtension").addEventListener("click", () => {
+          hidden.value = input.value.trim();
+          dialog.close();
+        });
+
+        checkbox.addEventListener("change", () => {
+          if (checkbox.checked) {
+            dialog.showModal();
+            input.focus();
+          } else {
+            hidden.value = "";
+            input.value = "";
+          }
+        });
+      })();
+
+      function openShippingModal() {
+        document.getElementById('shippingSameFlag').value = 'false';
+        document.getElementById('shippingModal').showModal();
+      }
+
+      function saveShippingAddress() {
+        document.getElementById('shippingModal').close();
+      }
+
+      function closeShippingModal() {
+        document.getElementById('shippingModal').close();
+      }
+    </script>
+  </main>
+</body>
+</html>

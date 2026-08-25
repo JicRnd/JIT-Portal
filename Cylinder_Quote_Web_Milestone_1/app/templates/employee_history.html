@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+  <title>Employee Order History</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='portal_common.css') }}"
+  >
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='portal_history.css') }}"
+  >
+</head>
+<body>
+  <header class="portal-header">
+    <div>{{ user.display_name }}</div>
+    <h1>My Order History</h1>
+    <a href="{{ url_for('portal.employee_dashboard') }}">
+      Dashboard
+    </a>
+  </header>
+
+  <main class="portal-shell">
+    <div class="page-actions">
+      <a
+        class="small-button"
+        href="{{ url_for('portal.employee_dashboard') }}"
+      >
+        ← Dashboard
+      </a>
+
+      <button
+        class="portal-button new-quote"
+        data-standard="{{ url_for('portal.employee_quote_entry') }}"
+        data-metric="{{ url_for('portal.metric_coming_soon') }}"
+      >
+        + New Quote
+      </button>
+    </div>
+
+    <form class="search-form" method="get">
+      <label for="orderHistorySearch">
+        Search orders by number, model code, customer or address
+      </label>
+
+      <div>
+        <input
+          id="orderHistorySearch"
+          name="q"
+          value="{{ query }}"
+          autocomplete="off"
+          placeholder="Start typing to search..."
+        >
+
+        <button class="portal-button" type="submit">
+          Search
+        </button>
+      </div>
+
+      <div
+        id="searchSuggestions"
+        class="suggestions"
+        hidden
+      ></div>
+    </form>
+
+    {% set entry_url=url_for('portal.employee_quote_entry') %}
+
+{% if rows %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Model Code</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for quote, total, status in rows %}
+          <tr>
+            <td>{{ (quote.order_form_snapshot or {}).get('order_number') or quote.quote_number }}</td>
+            <td>{{ quote.model_code or '—' }}</td>
+            <td>{{ quote.customer_name or '—' }}</td>
+
+            <td>
+              {{
+                quote.created_at.strftime('%b %d, %Y')
+                if quote.created_at
+                else '—'
+              }}
+            </td>
+
+            <td>${{ '%.2f'|format(total) }}</td>
+
+            <td>
+              <span class="status {{
+                'approved'
+                if status == 'Approved'
+                else 'pending'
+              }}">
+                {{ status }}
+              </span>
+            </td>
+
+            <td>
+              {% set has_order = (status == 'Approved') or ((quote.order_form_snapshot or {}).get('order_number')) %}
+              <a
+                class="small-button"
+                href="{{ '/order-form' if has_order else entry_url }}?quote_id={{ quote.id }}"
+              >
+                Open
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="empty-state">
+    No saved quotes or orders yet.
+  </div>
+{% endif %}
+
+  </main>
+
+  <div class="quote-modal" hidden>
+    <div>
+      <h2>Select Measurement Type</h2>
+
+      <button class="portal-button standard-choice">
+        Standard
+      </button>
+
+      <button class="portal-button secondary metric-choice">
+        Metric
+      </button>
+
+      <button class="text-button modal-close">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <script
+    src="{{ url_for('static', filename='portal.js') }}"
+  ></script>
+</body>
+</html>

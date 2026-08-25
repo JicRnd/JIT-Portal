@@ -1,0 +1,59 @@
+﻿thread_size,part_type,part_number,price,source_sheet,source_row,part_source,price_source
+7/16-20,Rod Clevis,RC044,60,Acc,5,Acc!B5,Acc!C5
+7/16-20,Eye Bracket,EB050,60,Acc,5,Acc!D5,Acc!E5
+7/16-20,Female Rod Eye,FE044,40,Acc,5,Acc!F5,Acc!G5
+7/16-20,Clevis Bracket,CB050,125,Acc,5,Acc!H5,Acc!I5
+7/16-20,Pivot Pin,PP050,20,Acc,5,Acc!J5,Acc!K5
+1/2-20,Rod Clevis,RC050,70,Acc,6,Acc!B6,Acc!C6
+1/2-20,Eye Bracket,EB075,90,Acc,6,Acc!D6,Acc!E6
+1/2-20,Female Rod Eye,FE050,45,Acc,6,Acc!F6,Acc!G6
+1/2-20,Clevis Bracket,CB075,175,Acc,6,Acc!H6,Acc!I6
+1/2-20,Pivot Pin,PP075,25,Acc,6,Acc!J6,Acc!K6
+3/4-16,Rod Clevis,RC075,80,Acc,7,Acc!B7,Acc!C7
+3/4-16,Eye Bracket,EB100,120,Acc,7,Acc!D7,Acc!E7
+3/4-16,Female Rod Eye,FE075,50,Acc,7,Acc!F7,Acc!G7
+3/4-16,Clevis Bracket,CB100,225,Acc,7,Acc!H7,Acc!I7
+3/4-16,Pivot Pin,PP100,30,Acc,7,Acc!J7,Acc!K7
+7/8-14,Rod Clevis,RC087,110,Acc,8,Acc!B8,Acc!C8
+7/8-14,Eye Bracket,EB138,170,Acc,8,Acc!D8,Acc!E8
+7/8-14,Female Rod Eye,FE087,60,Acc,8,Acc!F8,Acc!G8
+7/8-14,Clevis Bracket,CB138,300,Acc,8,Acc!H8,Acc!I8
+7/8-14,Pivot Pin,PP138,40,Acc,8,Acc!J8,Acc!K8
+1-14,Rod Clevis,RC100,125,Acc,9,Acc!B9,Acc!C9
+1-14,Eye Bracket,EB175,350,Acc,9,Acc!D9,Acc!E9
+1-14,Female Rod Eye,FE100,70,Acc,9,Acc!F9,Acc!G9
+1-14,Clevis Bracket,CB175,500,Acc,9,Acc!H9,Acc!I9
+1-14,Pivot Pin,PP175,50,Acc,9,Acc!J9,Acc!K9
+1 1/4-12,Rod Clevis,RC125,175,Acc,10,Acc!B10,Acc!C10
+1 1/4-12,Eye Bracket,EB200,410,Acc,10,Acc!D10,Acc!E10
+1 1/4-12,Female Rod Eye,FE125,110,Acc,10,Acc!F10,Acc!G10
+1 1/4-12,Clevis Bracket,CB200,600,Acc,10,Acc!H10,Acc!I10
+1 1/4-12,Pivot Pin,PP200,75,Acc,10,Acc!J10,Acc!K10
+1 1/2-12,Rod Clevis,RC150,225,Acc,11,Acc!B11,Acc!C11
+1 1/2-12,Eye Bracket,EB250,570,Acc,11,Acc!D11,Acc!E11
+1 1/2-12,Female Rod Eye,FE150,140,Acc,11,Acc!F11,Acc!G11
+1 1/2-12,Clevis Bracket,CB250,750,Acc,11,Acc!H11,Acc!I11
+1 1/2-12,Pivot Pin,PP250,125,Acc,11,Acc!J11,Acc!K11
+1 3/4-12,Rod Clevis,RC175,350,Acc,12,Acc!B12,Acc!C12
+1 3/4-12,Eye Bracket,EB300,800,Acc,12,Acc!D12,Acc!E12
+1 3/4-12,Female Rod Eye,FE175,160,Acc,12,Acc!F12,Acc!G12
+1 3/4-12,Clevis Bracket,CB300,1200,Acc,12,Acc!H12,Acc!I12
+1 3/4-12,Pivot Pin,PP300,175,Acc,12,Acc!J12,Acc!K12
+1 7/8-12,Rod Clevis,RC187,395,Acc,13,Acc!B13,Acc!C13
+1 7/8-12,Eye Bracket,EB350,1500,Acc,13,Acc!D13,Acc!E13
+1 7/8-12,Female Rod Eye,FE187,190,Acc,13,Acc!F13,Acc!G13
+1 7/8-12,Clevis Bracket,CB350,2000,Acc,13,Acc!H13,Acc!I13
+1 7/8-12,Pivot Pin,PP350,225,Acc,13,Acc!J13,Acc!K13
+2 1/4-12,Rod Clevis,RC225,600,Acc,14,Acc!B14,Acc!C14
+2 1/4-12,Eye Bracket,EB400,1700,Acc,14,Acc!D14,Acc!E14
+2 1/4-12,Female Rod Eye,FE225,390,Acc,14,Acc!F14,Acc!G14
+2 1/4-12,Clevis Bracket,CB400,2300,Acc,14,Acc!H14,Acc!I14
+2 1/4-12,Pivot Pin,PP400,300,Acc,14,Acc!J14,Acc!K14
+2 1/2-12,Rod Clevis,RC250,900,Acc,15,Acc!B15,Acc!C15
+2 1/2-12,Female Rod Eye,FE250,430,Acc,15,Acc!F15,Acc!G15
+3-12,Rod Clevis,RC275,1300,Acc,16,Acc!B16,Acc!C16
+3-12,Female Rod Eye,FE275,550,Acc,16,Acc!F16,Acc!G16
+3 1/4-12,Rod Clevis,RC325,1500,Acc,17,Acc!B17,Acc!C17
+3 1/4-12,Female Rod Eye,FE325,1100,Acc,17,Acc!F17,Acc!G17
+3 1/2-12,Rod Clevis,RC350,1700,Acc,18,Acc!B18,Acc!C18
+3 1/2-12,Female Rod Eye,FE350,1300,Acc,18,Acc!F18,Acc!G18

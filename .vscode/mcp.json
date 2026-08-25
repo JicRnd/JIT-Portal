@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "code-review-graph": {
+      "command": "C:\\Users\\Kane\\.tools\\crg\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "code_review_graph",
+        "serve"
+      ],
+      "cwd": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML",
+      "type": "stdio"
+    }
+  }
+}

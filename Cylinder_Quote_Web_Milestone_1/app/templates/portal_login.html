@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+  <title>{{ role|title }} Login</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='portal_common.css') }}"
+  >
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='portal_auth.css') }}"
+  >
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a
+      class="back-link"
+      href="{{ url_for('portal.landing') }}"
+    >
+      ← JIT Landing Page
+    </a>
+
+    <img
+      src="{{ url_for('static', filename='quote_form_logo.png') }}"
+      alt="JIT Cylinders"
+    >
+
+    <h1>{{ role|title }} Login</h1>
+
+    {% if error %}
+      <p class="form-error">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+      <label>
+        Username or Email
+        <input
+          name="identity"
+          autocomplete="username"
+          required
+          autofocus
+        >
+      </label>
+
+      <label>
+        Password
+        <input
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
+      </label>
+
+      <button
+        class="portal-button"
+        type="submit"
+      >
+        Login
+      </button>
+    </form>
+
+    <a href="{{ url_for('portal.forgot_access') }}">
+      Forgot username or password?
+    </a>
+
+    <hr>
+
+    <a
+      class="portal-button secondary"
+      href="{{ url_for(
+        'portal.customer_signup'
+        if role == 'customer'
+        else 'portal.employee_signup'
+      ) }}"
+    >
+      {{
+        'New Customer Sign Up'
+        if role == 'customer'
+        else 'New Employee'
+      }}
+    </a>
+  </main>
+</body>
+</html>

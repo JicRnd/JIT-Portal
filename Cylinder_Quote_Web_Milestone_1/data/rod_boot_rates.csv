@@ -1,0 +1,16 @@
+﻿rod_diameter,base_price,per_stroke_rate,source_sheet,source_row,base_source,rate_source,formula_source
+0.625,415,15,Acc,54,Acc!B54,Acc!C54,Acc!D54
+1,415,15,Acc,55,Acc!B55,Acc!C55,Acc!D55
+1.375,420,15,Acc,56,Acc!B56,Acc!C56,Acc!D56
+1.75,420,15,Acc,57,Acc!B57,Acc!C57,Acc!D57
+2,420,15,Acc,58,Acc!B58,Acc!C58,Acc!D58
+2.5,420,15,Acc,59,Acc!B59,Acc!C59,Acc!D59
+3,453,16,Acc,60,Acc!B60,Acc!C60,Acc!D60
+3.5,453,16,Acc,61,Acc!B61,Acc!C61,Acc!D61
+4,453,16,Acc,62,Acc!B62,Acc!C62,Acc!D62
+4.5,522,16,Acc,63,Acc!B63,Acc!C63,Acc!D63
+5,600,17,Acc,64,Acc!B64,Acc!C64,Acc!D64
+5.5,678,19,Acc,65,Acc!B65,Acc!C65,Acc!D65
+7,758,20,Acc,66,Acc!B66,Acc!C66,Acc!D66
+8,835,21,Acc,67,Acc!B67,Acc!C67,Acc!D67
+10,916,21,Acc,68,Acc!B68,Acc!C68,Acc!D68

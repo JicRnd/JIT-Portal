@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JIT Cylinder Quote Calculator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">JIT Industries</p>
+        <h1>Cylinder Quote Calculator</h1>
+        <p class="subtitle">Web milestone 1 · Pricing Engine v1.2</p>
+      </div>
+      <div class="status" id="engineStatus">Loading pricing catalog…</div>
+    </header>
+
+    <section class="layout">
+      <form id="quoteForm" class="panel form-panel">
+        <div class="section-heading">
+          <h2>Cylinder Definition</h2>
+          <span>Required</span>
+        </div>
+        <div class="grid four">
+          <label>Series<select id="series" required></select></label>
+          <label>Bore<select id="bore" required></select></label>
+          <label>Rod Diameter<select id="rod_diameter" required></select></label>
+          <label>Mount<select id="mount" required></select></label>
+        </div>
+        <div class="grid four">
+          <label>Stroke<input id="stroke" type="number" min="0" step="0.001" value="12" required></label>
+          <label>Cushion<select id="cushion"></select></label>
+          <label>Port Code<select id="port_code"></select></label>
+          <label>Seal Code<select id="seal_code"></select></label>
+        </div>
+        <div class="grid four">
+          <label>Rod Style<select id="rod_style"></select></label>
+          <label>Discount %<input id="discount_pct" type="number" min="0" max="99.99" step="0.01" value="0"></label>
+          <label class="check"><input id="dre" type="checkbox"> Double Rod End (DRE)</label>
+          <label>Rod Boot Qty<input id="standard_rod_boot_qty" type="number" min="0" step="1" value="0"></label>
+        </div>
+
+        <details>
+          <summary>Common Modifications</summary>
+          <div class="grid four details-grid">
+            <label>Rod Extension<input id="rod_extension" type="number" min="0" step="0.001" value="0"></label>
+            <label>Stop Tube<input id="stop_tube" type="number" min="0" step="0.001" value="0"></label>
+            <label>Extra Thread<input id="extra_thread" type="number" min="0" step="0.001" value="0"></label>
+            <label>Air Bleed Qty<input id="air_bleed_qty" type="number" min="0" step="1" value="0"></label>
+            <label>Prox Switch Qty<input id="prox_switch_qty" type="number" min="0" step="1" value="0"></label>
+            <label>Extra Port Qty<input id="extra_port_qty" type="number" min="0" step="1" value="0"></label>
+            <label>Extra Tie Rod Qty<input id="extra_tie_rod_qty" type="number" min="0" step="1" value="0"></label>
+            <label>Thick Head Qty<input id="thick_head_qty" type="number" min="0" step="1" value="0"></label>
+            <label class="check"><input id="stainless_rod" type="checkbox"> Stainless Rod</label>
+            <label class="check"><input id="chrome_bore" type="checkbox"> Chrome Bore</label>
+            <label class="check"><input id="rod_gland_drain" type="checkbox"> Rod Gland Drain</label>
+            <label class="check"><input id="brass_wiper" type="checkbox"> Brass Wiper</label>
+            <label class="check"><input id="ultraox" type="checkbox"> UltraOx</label>
+          </div>
+        </details>
+
+        <details>
+          <summary>Position Sensing</summary>
+          <div class="grid four details-grid">
+            <label class="check"><input id="transducer" type="checkbox"> Transducer</label>
+            <label class="check"><input id="prepped_for_transducer" type="checkbox"> Prepped for Transducer</label>
+            <label class="check"><input id="sensor_cover" type="checkbox"> Sensor Cover</label>
+            <label class="check"><input id="valve_manifold" type="checkbox"> Valve Manifold</label>
+          </div>
+        </details>
+
+        <details>
+          <summary>Accessories</summary>
+          <div id="accessoryGrid" class="grid three details-grid"></div>
+        </details>
+
+        <details>
+          <summary>Special Parts</summary>
+          <p class="hint">Add up to six catalog part numbers, matching the legacy OrderEntry special-option rows.</p>
+          <div id="specialParts" class="special-list"></div>
+          <button type="button" class="secondary" id="addPart">+ Add special part</button>
+        </details>
+
+        <div class="actions">
+          <button id="calculateButton" type="submit">Calculate Quote</button>
+          <button id="resetButton" type="button" class="secondary">Reset Options</button>
+        </div>
+        <p id="errorMessage" class="error" role="alert"></p>
+      </form>
+
+      <aside class="panel results-panel">
+        <div class="section-heading"><h2>Quote Result</h2><span>Live API</span></div>
+        <div class="model-card">
+          <span>Model</span>
+          <strong id="model_code">—</strong>
+        </div>
+        <div class="price-grid">
+          <div><span>List</span><strong id="quote_list_price">—</strong></div>
+          <div><span>Discount</span><strong id="display_discount">—</strong></div>
+          <div class="primary-price"><span>Net Each</span><strong id="quote_net_each">—</strong></div>
+          <div><span>Expedited</span><strong id="expedited_price">—</strong></div>
+          <div><span>Emergency</span><strong id="emergency_price">—</strong></div>
+        </div>
+        <details class="breakdown" open>
+          <summary>Pricing Breakdown</summary>
+          <dl>
+            <div><dt>Base Price</dt><dd id="base_price">—</dd></div>
+            <div><dt>Stroke + Cushion</dt><dd id="stroke_cushion">—</dd></div>
+            <div><dt>Modifications</dt><dd id="modifications">—</dd></div>
+            <div><dt>Accessories</dt><dd id="accessories">—</dd></div>
+            <div><dt>Special Parts</dt><dd id="special_parts">—</dd></div>
+            <div><dt>Position Sensing</dt><dd id="position_sensing">—</dd></div>
+            <div><dt>VA Total</dt><dd id="va_total">—</dd></div>
+            <div><dt>DRE Surcharge</dt><dd id="dre_surcharge">—</dd></div>
+            <div><dt>Pre-discount Subtotal</dt><dd id="pre_discount_subtotal">—</dd></div>
+            <div><dt>Working Net Each</dt><dd id="working_net_each">—</dd></div>
+          </dl>
+        </details>
+        <div id="warningsBox" class="warnings" hidden>
+          <strong>Legacy compatibility notes</strong>
+          <ul id="warnings"></ul>
+        </div>
+        <p class="scope-note">Milestone 1 is calculation-only. Quotes are not saved and quote numbers are not assigned yet.</p>
+      </aside>
+    </section>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

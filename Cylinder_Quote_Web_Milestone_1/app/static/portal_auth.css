@@ -1,0 +1,118 @@
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #a51115, #5e0709);
+}
+
+.auth-card {
+  width: min(460px, 94vw);
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px #450000;
+}
+
+.auth-card.wide {
+  width: min(760px, 96vw);
+}
+
+.auth-card img {
+  display: block;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.auth-card h1 {
+  text-align: center;
+}
+
+.auth-card form {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.auth-card label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 700;
+}
+
+.auth-card input,
+.auth-card textarea {
+  width: 100%;
+  font: inherit;
+  padding: 0.7rem;
+  border: 1px solid #899199;
+  border-radius: 5px;
+}
+
+.auth-card textarea {
+  min-height: 75px;
+}
+
+.auth-card hr {
+  margin: 1.5rem 0;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.signup-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.signup-grid .full {
+  grid-column: 1 / -1;
+}
+
+.extension-check-control {
+  min-height: 43px;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 400;
+}
+
+.extension-check-control input {
+  width: 20px;
+  height: 20px;
+}
+
+.extension-dialog {
+  width: min(360px, 90vw);
+  padding: 1.5rem;
+  border: 1px solid #777;
+  border-radius: 10px;
+  box-shadow: 0 12px 35px #0008;
+}
+
+.extension-dialog::backdrop {
+  background: #0008;
+}
+
+.extension-dialog label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 700;
+}
+
+.extension-dialog-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .signup-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .signup-grid .full {
+    grid-column: auto;
+  }
+}

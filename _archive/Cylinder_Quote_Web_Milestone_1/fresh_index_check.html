@@ -1,0 +1,276 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JIT 2026 Pricing Calculator</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="orderentry-window" aria-label="JIT 2026 Pricing Calculator">
+    <div class="window-titlebar">
+      <strong>JIT 2026 Pricing Calculator</strong>
+      <span class="window-close" aria-hidden="true">×</span>
+    </div>
+
+    <div id="orderEntryView" class="view active">
+    <form id="quoteForm" class="orderentry-form">
+      <section class="customer-area">
+        <label for="customer_name">Customer</label>
+        <div class="customer-control">
+          <input id="customer_name" type="text" autocomplete="off">
+          <button type="button" class="combo-arrow" tabindex="-1" aria-label="Customer list unavailable in this milestone">▼</button>
+        </div>
+        <label for="customer_address">Address</label>
+        <input id="customer_address" type="text" autocomplete="off">
+      </section>
+
+      <section class="cylinder-row" aria-label="Cylinder definition">
+        <label class="c-series">Series<select id="series" required></select></label>
+        <label class="c-mount">Mount<select id="mount" required></select></label>
+        <label class="c-bore">Bore<select id="bore" required></select></label>
+        <label class="c-stroke">Stroke<input id="stroke" type="number" min="0" step="0.001" value="" required></label>
+        <label class="c-rod">Rod<select id="rod_diameter" required></select></label>
+        <label class="c-style">Style<select id="rod_style" required></select></label>
+        <label class="c-cushion">Cushion<select id="cushion"></select></label>
+        <label class="c-ports">Ports<select id="port_code"></select></label>
+        <label class="c-seal">Seal<select id="seal_code"></select></label>
+        <label class="c-dre">DRE (Y)<input id="dre_input" type="text" maxlength="1" autocomplete="off"></label>
+      </section>
+
+      <section class="middle-area">
+        <div class="options-panel legacy-panel">
+          <div class="tabs" role="tablist" aria-label="OrderEntry options">
+            <button type="button" class="tab active" data-tab="specialsPanel">Specials (#)</button>
+            <button type="button" class="tab" data-tab="optionsPanel">Options (y)</button>
+            <button type="button" class="tab" data-tab="smartPanel">Smart Options</button>
+          </div>
+
+          <div id="specialsPanel" class="tab-panel active">
+            <div class="special-columns">
+              <div class="legacy-option-row"><span>Rod Extension (#)</span><input id="rod_extension" type="number" min="0" step="0.001" value=""></div>
+              <div class="legacy-option-row"><span>Rod Boot (#)</span><input id="standard_rod_boot_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Stop Tube (#)</span><input id="stop_tube" type="number" min="0" step="0.001" value=""></div>
+              <div class="legacy-option-row"><span>Air Bleed (#)</span><input id="air_bleed_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Extra/Boss Ports (#)</span><input id="extra_port_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Thread Ext (#)</span><input id="extra_thread" type="number" min="0" step="0.001" value=""></div>
+              <div class="legacy-option-row"><span>Extend Tie Rod (#)</span><input id="extra_tie_rod_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Prox Switch (#)</span><input id="prox_switch_qty" type="number" min="0" step="1" value=""></div>
+              <div class="legacy-option-row"><span>Add Money($)</span><input id="legacy_post_discount_add" type="number" min="0" step="0.01" value=""></div>
+            </div>
+          </div>
+
+          <div id="optionsPanel" class="tab-panel">
+            <div class="yes-no-grid">
+              <label><span>Stainless Rod</span><select id="stainless_rod"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Chrome Bore</span><select id="chrome_bore"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Rod Gland Drain</span><select id="rod_gland_drain"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Brass Wiper</span><select id="brass_wiper"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>UltraOx</span><select id="ultraox"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Thick Head (#)</span><input id="thick_head_qty" type="number" min="0" step="1" value=""></label>
+            </div>
+          </div>
+
+          <div id="smartPanel" class="tab-panel">
+            <div class="yes-no-grid">
+              <label><span>Transducer</span><select id="transducer"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Prepped for Transducer</span><select id="prepped_for_transducer"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Sensor Cover</span><select id="sensor_cover"><option value="">N</option><option value="Y">Y</option></select></label>
+              <label><span>Valve Manifold</span><select id="valve_manifold"><option value="">N</option><option value="Y">Y</option></select></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="parts-panel" aria-label="Special parts">
+          <div class="parts-header"><span>Parts</span><span>Description</span><span>Qty</span><span>Price</span></div>
+          <div id="specialParts" class="parts-rows"></div>
+        </div>
+
+        <div class="manual-items-area" aria-label="Manual special-order items">
+          <div class="parts-header oe-manual-header">
+            <span>Ref</span>
+            <span>Description</span>
+            <span>Qty</span>
+            <span>Unit Price</span>
+            <span>Extended</span>
+            <span>Note</span>
+            <span></span>
+          </div>
+          <div id="orderEntryManualItems" class="manual-items"></div>
+          <button type="button" id="addOrderEntryManualItemButton" class="add-manual-item-btn">+ Add Manual Item</button>
+        </div>
+      </section>
+
+      <section class="bottom-area">
+        <div class="accessory-panel legacy-panel">
+          <div class="tabs" role="tablist" aria-label="Accessory end selection">
+            <button type="button" class="tab active" data-tab="rodEndPanel">Rod End</button>
+            <button type="button" class="tab" data-tab="capEndPanel">Cap End</button>
+          </div>
+          <div id="rodEndPanel" class="tab-panel active accessory-tab-grid">
+            <div class="legacy-option-row"><span>Rod Clevis (#)</span><input type="number" min="0" step="1" value="" data-accessory="Rod Clevis"></div>
+            <div class="legacy-option-row"><span>Safe Coupler (#)</span><input type="number" min="0" step="1" value="" data-accessory="Safety Coupler"></div>
+            <div class="legacy-option-row"><span>Rod Eye (#)</span><input type="number" min="0" step="1" value="" data-accessory="Rod Eye"></div>
+            <div class="legacy-option-row"><span>Rod Stud (#)</span><input type="number" min="0" step="1" value="" data-accessory="Rod Stud"></div>
+            <div class="legacy-option-row"><span>Pivot Pin (#)</span><input type="number" min="0" step="1" value="" data-accessory="Pivot Pin"></div>
+            <div class="legacy-option-row"><span>Weld Plate (#)</span><input type="number" min="0" step="1" value="" data-accessory="Weld Plate"></div>
+            <div class="legacy-option-row"><span>SA Male Eye (#)</span><input type="number" min="0" step="1" value="" data-accessory="Self-Aligning Male Eye"></div>
+            <div class="legacy-option-row"><span>Jam Nut (#)</span><input type="number" min="0" step="1" value="" data-accessory="Jam Nut"></div>
+            <div class="legacy-option-row"><span>Male Rod Eye (#)</span><input type="number" min="0" step="1" value="" data-accessory="Male Rod Eye"></div>
+            <div class="legacy-option-row"><span>Align Coupler (#)</span><input type="number" min="0" step="1" value="" data-accessory="Alignment Coupler"></div>
+          </div>
+          <div id="capEndPanel" class="tab-panel accessory-tab-grid">
+            <div class="legacy-option-row"><span>SA Clevis Bracket (#)</span><input type="number" min="0" step="1" value="" data-accessory="SA - Clevis Bracket"></div>
+            <div class="legacy-option-row"><span>Eye Bracket (#)</span><input type="number" min="0" step="1" value="" data-accessory="Eye Bracket"></div>
+            <div class="legacy-option-row"><span>Clevis Bracket (#)</span><input type="number" min="0" step="1" value="" data-accessory="Clevis Bracket"></div>
+            <div class="legacy-option-row"><span>SA Pivot Pin (#)</span><input type="number" min="0" step="1" value="" data-accessory="SA - Pivot Pin"></div>
+          </div>
+        </div>
+
+        <div class="engineering-panel">
+          <div class="pressure-row"><label>Pressure<select id="pressure"><option value=""></option><option>100</option><option>250</option><option>500</option><option>1000</option></select></label></div>
+          <div class="force-row"><span class="blue-label">XI (MT4)</span><input id="xi_mt4" type="text"><input id="force_display" type="text" value="" readonly></div>
+          <div class="tie-row"><span class="blue-label wide">Tie Rod Set</span><label>Diameter<select id="tie_rod_diameter"><option value=""></option></select></label><label>Length<input id="tie_rod_length" type="number" value=""></label><label>Cost<input id="tie_rod_cost" type="text" value="" readonly></label></div>
+          <div class="pricing-rows">
+            <label>Discount<input id="discount_pct" type="number" min="0" max="99.99" step="0.01" value=""></label>
+            <label><span class="blue-label">Net Each</span><input id="quote_net_each" type="text" value="$0.00" readonly></label>
+            <label>Profit<input id="profit_display" type="text" value="$0.00" readonly></label>
+          </div>
+          <button id="calculateButton" class="quote-button" type="submit">Quote</button>
+        </div>
+      </section>
+
+      <p id="errorMessage" class="error" role="alert"></p>
+    </form>
+    </div>
+
+    <div id="quotePreviewView" class="view hidden">
+      <div class="quote-preview">
+        <div class="preview-titlebar">
+          <strong>Quote Form</strong>
+          <div class="preview-toolbar">
+            <button type="button" id="backToOrderEntryButton" class="preview-btn">Back to Order Entry</button>
+            <button type="button" id="newQuoteButton" class="preview-btn primary">New Quote</button>
+          </div>
+        </div>
+
+        <div class="preview-header">
+          <div class="preview-meta"><span>Quote #</span><strong id="pv_quote_number">—</strong></div>
+          <div class="preview-meta"><span>Revision</span><strong id="pv_revision">—</strong></div>
+          <div class="preview-meta"><span>Status</span><strong id="pv_status">—</strong></div>
+          <div class="preview-meta"><span>Pricing Version</span><strong id="pv_pricing_version">—</strong></div>
+          <div class="preview-meta"><span>Created By</span><strong id="pv_created_by">—</strong></div>
+          <div class="preview-meta"><span>Created At</span><strong id="pv_created_at">—</strong></div>
+        </div>
+
+        <section class="preview-section">
+          <h3>Customer / Reference</h3>
+          <div class="preview-customer-grid">
+            <label>Customer<input id="pv_customer_name" type="text" autocomplete="off"></label>
+            <label>Address<input id="pv_customer_address" type="text" autocomplete="off"></label>
+            <label>Contact<input id="pv_customer_contact" type="text" autocomplete="off"></label>
+            <label>Reference<input id="pv_reference_notes" type="text" autocomplete="off"></label>
+            <label class="wide">Comments<textarea id="pv_comments" rows="2"></textarea></label>
+          </div>
+        </section>
+
+        <section class="preview-section">
+          <h3>Cylinder Configuration</h3>
+          <div class="preview-cyl-grid">
+            <div class="preview-cyl-item"><span>Model Code</span><strong id="pv_model_code">—</strong></div>
+            <div class="preview-cyl-item"><span>Series</span><span id="pv_series">—</span></div>
+            <div class="preview-cyl-item"><span>Mount</span><span id="pv_mount">—</span></div>
+            <div class="preview-cyl-item"><span>Bore</span><span id="pv_bore">—</span></div>
+            <div class="preview-cyl-item"><span>Stroke</span><span id="pv_stroke">—</span></div>
+            <div class="preview-cyl-item"><span>Rod</span><span id="pv_rod_diameter">—</span></div>
+            <div class="preview-cyl-item"><span>Style</span><span id="pv_rod_style">—</span></div>
+            <div class="preview-cyl-item"><span>Cushion</span><span id="pv_cushion">—</span></div>
+            <div class="preview-cyl-item"><span>Ports</span><span id="pv_port_code">—</span></div>
+            <div class="preview-cyl-item"><span>Seal</span><span id="pv_seal_code">—</span></div>
+            <div class="preview-cyl-item"><span>DRE</span><span id="pv_dre">—</span></div>
+            <div class="preview-cyl-item"><span>Discount</span><span id="pv_discount">—</span></div>
+          </div>
+        </section>
+
+        <div class="preview-two-col">
+          <section class="preview-section">
+            <h3>Price Breakdown</h3>
+            <table class="preview-table">
+              <tbody>
+                <tr><td>Base Price</td><td id="pv_base_price">—</td></tr>
+                <tr><td>Stroke + Cushion</td><td id="pv_stroke_cushion">—</td></tr>
+                <tr><td>Modifications</td><td id="pv_modifications">—</td></tr>
+                <tr><td>Accessories</td><td id="pv_accessories">—</td></tr>
+                <tr><td>Special Parts</td><td id="pv_special_parts">—</td></tr>
+                <tr><td>Position Sensing</td><td id="pv_position_sensing">—</td></tr>
+                <tr><td>VA Total</td><td id="pv_va_total">—</td></tr>
+                <tr><td>DRE Surcharge</td><td id="pv_dre_surcharge">—</td></tr>
+                <tr><td>Pre-discount Subtotal</td><td id="pv_pre_discount_subtotal">—</td></tr>
+                <tr class="highlight"><td>List Price</td><td id="pv_quote_list_price">—</td></tr>
+                <tr class="highlight"><td>Net Each</td><td id="pv_quote_net_each">—</td></tr>
+                <tr><td>Expedited</td><td id="pv_expedited_price">—</td></tr>
+                <tr><td>Emergency</td><td id="pv_emergency_price">—</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="preview-section">
+            <h3>Manual Line Items</h3>
+            <div class="parts-header manual-header">
+              <span>Ref</span>
+              <span>Description</span>
+              <span>Qty</span>
+              <span>Unit Price</span>
+              <span>Extended</span>
+              <span>Show</span>
+              <span>Note</span>
+              <span></span>
+            </div>
+            <div id="previewManualItems" class="manual-items"></div>
+            <button type="button" id="addManualItemButton" class="preview-btn secondary">+ Add Line Item</button>
+          </section>
+        </div>
+
+        <div class="preview-actions">
+          
+          <button type="button" id="saveQuoteButton" class="preview-btn primary">Save to Database</button>
+          <span id="previewErrorMessage" class="error" role="alert"></span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <dialog id="quoteResultDialog" class="quote-dialog">
+    <form method="dialog" class="quote-dialog-inner">
+      <div class="dialog-title">Quote Result</div>
+      <div class="dialog-model"><span>Model</span><strong id="model_code">—</strong></div>
+      <div class="dialog-grid">
+        <div><span>List</span><strong id="quote_list_price">—</strong></div>
+        <div><span>Discount</span><strong id="display_discount">—</strong></div>
+        <div><span>Net Each</span><strong id="dialog_net_each">—</strong></div>
+        <div><span>Expedited</span><strong id="expedited_price">—</strong></div>
+        <div><span>Emergency</span><strong id="emergency_price">—</strong></div>
+      </div>
+      <details>
+        <summary>Pricing Breakdown</summary>
+        <dl class="breakdown-list">
+          <div><dt>Base Price</dt><dd id="base_price">—</dd></div>
+          <div><dt>Stroke + Cushion</dt><dd id="stroke_cushion">—</dd></div>
+          <div><dt>Modifications</dt><dd id="modifications">—</dd></div>
+          <div><dt>Accessories</dt><dd id="accessories">—</dd></div>
+          <div><dt>Special Parts</dt><dd id="special_parts">—</dd></div>
+          <div><dt>Position Sensing</dt><dd id="position_sensing">—</dd></div>
+          <div><dt>VA Total</dt><dd id="va_total">—</dd></div>
+          <div><dt>DRE Surcharge</dt><dd id="dre_surcharge">—</dd></div>
+          <div><dt>Pre-discount Subtotal</dt><dd id="pre_discount_subtotal">—</dd></div>
+          <div><dt>Working Net Each</dt><dd id="working_net_each">—</dd></div>
+        </dl>
+      </details>
+      <div id="warningsBox" class="warnings" hidden><strong>Legacy compatibility notes</strong><ul id="warnings"></ul></div>
+      <button class="dialog-close" value="close">Close</button>
+    </form>
+  </dialog>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
