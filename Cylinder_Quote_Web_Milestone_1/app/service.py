@@ -10,6 +10,8 @@ from cylinder_quote_engine import QuoteInputs, QuotePricingEngine
 from cylinder_quote_engine.data import parse_dimension
 from cylinder_quote_engine.engine import excel_roundup
 
+from dimensions.cylinder_dimension_tables import get_cylinder_dimensions
+
 D = Decimal
 
 
@@ -150,11 +152,27 @@ def decimal_to_json(value: Any) -> Any:
     return value
 
 
+def _calculate_dimensions(series: str, bore: Decimal, stroke: Decimal) -> dict[str, Any]:
+    """Return cylinder dimensions from the authoritative Python lookup table."""
+    missing = {
+        "e": None, "g": None, "j": None, "lb": None,
+        "tf": None, "r": None, "fb": None, "f": None,
+        "warning": "No dimension data for this series/bore",
+    }
+    try:
+        dims = get_cylinder_dimensions(series, bore, stroke)
+    except ValueError:
+        return missing
+
+    return {k: decimal_to_json(v) for k, v in dims.items()}
+
+
 def calculate_payload(engine: QuotePricingEngine, payload: dict[str, Any]) -> dict[str, Any]:
     inputs = quote_inputs_from_payload(payload)
     result = engine.calculate(inputs)
     out = {k: decimal_to_json(v) for k, v in asdict(result).items()}
     out["profit"] = decimal_to_json(compute_profit(result.working_net_each))
+    out["dimensions"] = _calculate_dimensions(inputs.series, inputs.bore, inputs.stroke)
     return out
 
 

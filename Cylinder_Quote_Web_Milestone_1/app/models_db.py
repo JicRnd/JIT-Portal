@@ -48,6 +48,9 @@ class User(Base):
 
     # JIT portal account/profile fields.
     role: Mapped[str] = mapped_column(String(20), default="employee", nullable=False)
+    access_level: Mapped[str] = mapped_column(
+        String(20), default="standard", nullable=False
+    )
     company_name: Mapped[str | None] = mapped_column(String(255), nullable=True)
     phone: Mapped[str | None] = mapped_column(String(60), nullable=True)
     phone_extension: Mapped[str | None] = mapped_column(String(20), nullable=True)
@@ -59,6 +62,16 @@ class User(Base):
     assigned_promo_code: Mapped[str | None] = mapped_column(String(40), nullable=True)
     assigned_discount_percent: Mapped[int | None] = mapped_column(Integer, nullable=True)
 
+    approval_status: Mapped[str | None] = mapped_column(
+        String(20), default="approved", nullable=True
+    )
+    # Set when an employee approves/holds/denies the account request.
+    approval_decided_at: Mapped[datetime | None] = mapped_column(
+        DateTime, nullable=True
+    )
+    approval_decided_by_user_id: Mapped[int | None] = mapped_column(
+        Integer, nullable=True
+    )
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=utc_now, nullable=False
@@ -105,6 +118,150 @@ class Customer(Base):
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime, default=utc_now, onupdate=utc_now, nullable=False
+    )
+
+
+class PartFamily(Base):
+    """Admin-defined part family: one image plus one reusable description template."""
+
+    __tablename__ = "part_families"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    family_code: Mapped[str] = mapped_column(String(40), unique=True, nullable=False)
+    display_name: Mapped[str] = mapped_column(String(120), nullable=False)
+    material: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    part_type: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    # Filename only, relative to app/static/family_images (never a caller-supplied path).
+    image_path: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    description_template: Mapped[str | None] = mapped_column(Text, nullable=True)
+    size_rule: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    auto_description_enabled: Mapped[bool] = mapped_column(
+        Boolean, default=False, nullable=False
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, default=utc_now, nullable=False
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=utc_now, onupdate=utc_now, nullable=False
+    )
+
+
+class CatalogPart(Base):
+    """Imported master part row, stored only in Pricing.db."""
+
+    __tablename__ = "catalog_parts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    part_number: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # Links a part to PartFamily.family_code (same database, no DB-level FK
+    # so legacy imported rows stay valid while unassigned).
+    family_code: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    # Explicit category for the traditional catalog index/sections; legacy rows
+    # without one are categorized on the fly from their description.
+    category: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    unit_cost: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    sell_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    sell_price_source: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    inventory_cost_values: Mapped[str | None] = mapped_column(Text, nullable=True)
+    shipvia_sell_values: Mapped[str | None] = mapped_column(Text, nullable=True)
+    acc_sell_values: Mapped[str | None] = mapped_column(Text, nullable=True)
+    all_descriptions: Mapped[str | None] = mapped_column(Text, nullable=True)
+    source_locations: Mapped[str | None] = mapped_column(Text, nullable=True)
+    review_needed: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    review_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
+    active: Mapped[str | None] = mapped_column(String(20), nullable=True)
+
+
+class BaseAssemblyPrice(Base):
+    """Imported base-cylinder and piston/rod assembly price row."""
+
+    __tablename__ = "base_assembly_prices"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    pricing_type: Mapped[str] = mapped_column(String(80), nullable=False)
+    series: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    bore: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    rod: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    mount_group: Mapped[str | None] = mapped_column(Text, nullable=True)
+    base_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    base_price_raw: Mapped[str | None] = mapped_column(Text, nullable=True)
+    cushion_base: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    cushion_base_raw: Mapped[str | None] = mapped_column(Text, nullable=True)
+    per_unit_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    per_unit_price_raw: Mapped[str | None] = mapped_column(Text, nullable=True)
+    cushion_per_end: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    cushion_per_end_raw: Mapped[str | None] = mapped_column(Text, nullable=True)
+    rod_thread_std: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    rod_thread_oversize: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    unit: Mapped[str | None] = mapped_column(String(30), nullable=True)
+    source_sheet: Mapped[str] = mapped_column(String(60), nullable=False)
+    source_row: Mapped[int] = mapped_column(Integer, nullable=False)
+    source_import_index: Mapped[int] = mapped_column(Integer, unique=True, nullable=False)
+
+
+class CommonModificationPrice(Base):
+    """Imported common-modification price row."""
+
+    __tablename__ = "common_modification_prices"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    series: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    bore: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    rod: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    option_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    base_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    base_price_raw: Mapped[str | None] = mapped_column(Text, nullable=True)
+    per_unit_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    per_unit_price_raw: Mapped[str | None] = mapped_column(Text, nullable=True)
+    unit: Mapped[str | None] = mapped_column(String(30), nullable=True)
+    source_sheet: Mapped[str] = mapped_column(String(60), nullable=False)
+    source_row: Mapped[int] = mapped_column(Integer, nullable=False)
+    source_import_index: Mapped[int] = mapped_column(Integer, unique=True, nullable=False)
+
+
+class PhVaPrice(Base):
+    """Imported PH and VA price row."""
+
+    __tablename__ = "ph_va_prices"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    pricing_group: Mapped[str] = mapped_column(String(80), nullable=False)
+    series: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    bore: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    rod: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    option_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    base_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    base_price_raw: Mapped[str | None] = mapped_column(Text, nullable=True)
+    per_unit_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    per_unit_price_raw: Mapped[str | None] = mapped_column(Text, nullable=True)
+    unit: Mapped[str | None] = mapped_column(String(30), nullable=True)
+    source_sheet: Mapped[str] = mapped_column(String(60), nullable=False)
+    source_row: Mapped[int] = mapped_column(Integer, nullable=False)
+    source_import_index: Mapped[int] = mapped_column(Integer, unique=True, nullable=False)
+
+
+class PriceChangeLog(Base):
+    """Audit trail for admin pricing-catalog edits, stored in Pricing.db."""
+
+    __tablename__ = "price_change_log"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    table_name: Mapped[str] = mapped_column(String(60), nullable=False)
+    row_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    field_name: Mapped[str] = mapped_column(String(60), nullable=False)
+    record_label: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    record_description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    old_value: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    new_value: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    change_type: Mapped[str] = mapped_column(String(20), nullable=False, default="individual")
+    # Groups every row touched by one bulk operation.
+    batch_id: Mapped[str | None] = mapped_column(String(40), nullable=True)
+    batch_summary: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    changed_by_user_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    changed_by_name: Mapped[str | None] = mapped_column(String(120), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, default=utc_now, nullable=False
     )
 
 

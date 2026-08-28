@@ -22,6 +22,7 @@
       </span>
       <button type="button" id="verifyQuoteButton" class="preview-btn">Verify</button>
       <button type="button" id="employeeSaveButton" class="preview-btn">Save</button>
+      <button type="button" id="emailCustomerButton" class="preview-btn">Email Customer</button>
       <button type="button" id="saveQuoteButton" class="preview-btn primary">Order Now</button>
       <span class="qf-toolbar-meta">Status <strong id="pv_status">&mdash;</strong> &middot; Created by <span id="pv_created_by">&mdash;</span></span>
       <span id="verifyMessage" class="verify-message" role="status" aria-live="polite"></span>
@@ -108,13 +109,17 @@
             <img src="/static/Quoteformdrawing.png" alt="Front and side cylinder dimension drawing">
           </div>
           <div class="xq-dimensions">
-            <div class="xq-dim-left">
-              <label>E = <input id="pv_dim_e" placeholder="&mdash;"></label>
-              <label>G = <input id="pv_dim_g" placeholder="&mdash;"></label>
-              <label>J = <input id="pv_dim_j" placeholder="&mdash;"></label>
-              <label>LB = <input id="pv_dim_lb" placeholder="&mdash;"></label>
-              <label><span class="sr-only">Additional dimension 1</span><input id="pv_dim_extra_1" value="0"></label>
-              <label><span class="sr-only">Additional dimension 2</span><input id="pv_dim_extra_2" value="0"></label>
+            <div class="xq-dim-left-wrap">
+              <div class="xq-dim-left">
+                <label>E = <input id="pv_dim_e" readonly placeholder="&mdash;"></label>
+                <label>G = <input id="pv_dim_g" readonly placeholder="&mdash;"></label>
+                <label>J = <input id="pv_dim_j" readonly placeholder="&mdash;"></label>
+                <label>LB = <input id="pv_dim_lb" readonly placeholder="&mdash;"></label>
+                <label>TF = <input id="pv_dim_tf" readonly placeholder="&mdash;"></label>
+                <label>R = <input id="pv_dim_r" readonly placeholder="&mdash;"></label>
+                <label>FB = <input id="pv_dim_fb" readonly placeholder="&mdash;"></label>
+                <label>F = <input id="pv_dim_f" readonly placeholder="&mdash;"></label>
+              </div>
             </div>
             <strong>Cylinder<br>Dimensions</strong>
             <div class="xq-dim-right">
@@ -134,7 +139,7 @@
       <section class="xq-manual-section">
         <h2>Additional Quoted Items</h2>
         <div class="parts-header manual-header">
-          <span>Ref</span><span>Description</span><span>Qty</span><span>Unit Price</span><span>Extended</span><span>Show</span><span>Note</span><span></span>
+          <span>Ref</span><span>Description</span><span>Qty</span><span>Unit Price</span><span>Extended</span><span></span>
         </div>
         <div id="previewManualItems" class="manual-items"></div>
         <button type="button" id="addManualItemButton" class="preview-btn secondary">+ Add Line Item</button>
@@ -154,6 +159,18 @@
       </footer>
     </div>
   </main>
+
+  <dialog id="emailAttachmentDialog" class="email-attachment-dialog" aria-labelledby="emailAttachmentDialogTitle">
+    <form method="dialog" class="email-attachment-dialog-inner">
+      <h2 id="emailAttachmentDialogTitle">Attach?</h2>
+      <label><input id="attachQuoteForm" type="checkbox"> Attach Quote Form</label>
+      <label><input id="attachReportImage" type="checkbox"> Attach Report Image</label>
+      <div class="email-attachment-actions">
+        <button type="button" id="cancelEmailAttachmentButton" class="preview-btn">Cancel</button>
+        <button type="button" id="continueEmailButton" class="preview-btn primary">Continue</button>
+      </div>
+    </form>
+  </dialog>
 
   <script src="{{ url_for('static', filename='quote_form.js') }}"></script>
 </body>

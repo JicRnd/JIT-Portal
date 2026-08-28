@@ -30,10 +30,17 @@ DEFAULT_ORDERS_DATABASE_PATH = str(
     Path(__file__).resolve().parents[1] / "Databases" / "Order.db"
 )
 
+# Imported pricing-catalog data is intentionally isolated from quote snapshots,
+# orders, accounts, and the protected calculator's normalized source files.
+DEFAULT_PRICING_DATABASE_PATH = str(
+    Path(__file__).resolve().parents[1] / "Databases" / "Pricing.db"
+)
+
 _engine = None
 _accounts_engine = None
 _quotes_engine = None
 _orders_engine = None
+_pricing_engine = None
 _Session = None
 
 
@@ -55,6 +62,11 @@ def _resolve_quotes_database_path() -> str:
 def _resolve_orders_database_path() -> str:
     """Resolve the orders database path from the environment each time."""
     return os.environ.get("ORDERS_DATABASE_PATH", DEFAULT_ORDERS_DATABASE_PATH)
+
+
+def _resolve_pricing_database_path() -> str:
+    """Resolve the pricing-catalog database path from the environment each time."""
+    return os.environ.get("PRICING_DATABASE_PATH", DEFAULT_PRICING_DATABASE_PATH)
 
 
 def _build_sqlite_engine(db_path: Path):
@@ -110,6 +122,14 @@ def get_orders_engine():
     return _orders_engine
 
 
+def get_pricing_engine():
+    """Return the singleton engine for the dedicated Pricing.db file."""
+    global _pricing_engine
+    if _pricing_engine is None:
+        _pricing_engine = _build_sqlite_engine(Path(_resolve_pricing_database_path()))
+    return _pricing_engine
+
+
 def get_session_factory():
     """Return the singleton sessionmaker, creating it on first call."""
     global _Session
@@ -126,6 +146,12 @@ def get_session_factory():
             models_db.ApprovalSubmission: quotes_engine,
             quote_numbering.QuoteNumberSequence: quotes_engine,
             models_db.Order: get_orders_engine(),
+            models_db.CatalogPart: get_pricing_engine(),
+            models_db.PartFamily: get_pricing_engine(),
+            models_db.BaseAssemblyPrice: get_pricing_engine(),
+            models_db.CommonModificationPrice: get_pricing_engine(),
+            models_db.PhVaPrice: get_pricing_engine(),
+            models_db.PriceChangeLog: get_pricing_engine(),
         }
 
         _Session = sessionmaker(
@@ -154,6 +180,7 @@ def init_db():
     accounts_engine = get_accounts_engine()
     quotes_engine = get_quotes_engine()
     orders_engine = get_orders_engine()
+    pricing_engine = get_pricing_engine()
 
     user_tables = [models_db.User.__table__]
     quote_tables = [
@@ -165,15 +192,24 @@ def init_db():
         quote_numbering.QuoteNumberSequence.__table__,
     ]
     order_tables = [models_db.Order.__table__]
+    pricing_tables = [
+        models_db.CatalogPart.__table__,
+        models_db.PartFamily.__table__,
+        models_db.BaseAssemblyPrice.__table__,
+        models_db.CommonModificationPrice.__table__,
+        models_db.PhVaPrice.__table__,
+        models_db.PriceChangeLog.__table__,
+    ]
     other_tables = [
         table
         for table in Base.metadata.sorted_tables
-        if table not in user_tables and table not in quote_tables and table not in order_tables
+        if table not in user_tables and table not in quote_tables and table not in order_tables and table not in pricing_tables
     ]
 
     Base.metadata.create_all(bind=accounts_engine, tables=user_tables)
     Base.metadata.create_all(bind=quotes_engine, tables=quote_tables)
     Base.metadata.create_all(bind=orders_engine, tables=order_tables)
+    Base.metadata.create_all(bind=pricing_engine, tables=pricing_tables)
     Base.metadata.create_all(bind=engine, tables=other_tables)
 
     # Lightweight SQLite migration for accounts created before the current schema.
@@ -181,6 +217,7 @@ def init_db():
         user_columns = {row[1] for row in connection.exec_driver_sql("PRAGMA table_info(users)")}
         required_user_columns = {
             "role": "VARCHAR(20) NOT NULL DEFAULT 'employee'",
+            "access_level": "VARCHAR(20) NOT NULL DEFAULT 'standard'",
             "company_name": "VARCHAR(255)",
             "phone": "VARCHAR(60)",
             "phone_extension": "VARCHAR(20)",
@@ -190,12 +227,23 @@ def init_db():
             "shipping_same_as_billing": "BOOLEAN",
             "assigned_promo_code": "VARCHAR(40)",
             "assigned_discount_percent": "INTEGER",
+            "approval_status": "VARCHAR(20) DEFAULT 'approved'",
+            "approval_decided_at": "DATETIME",
+            "approval_decided_by_user_id": "INTEGER",
         }
         for column_name, column_type in required_user_columns.items():
             if column_name not in user_columns:
                 connection.exec_driver_sql(
                     f"ALTER TABLE users ADD COLUMN {column_name} {column_type}"
                 )
+        connection.exec_driver_sql(
+            """
+            UPDATE users
+            SET approval_status = 'pending'
+            WHERE is_active = 0
+              AND (approval_status IS NULL OR approval_status = 'approved')
+            """
+        )
 
     # Lightweight SQLite migration for projects created before Special Instructions.
     with quotes_engine.begin() as connection:
@@ -233,6 +281,15 @@ def init_db():
                 connection.exec_driver_sql(
                     f"ALTER TABLE quotes ADD COLUMN {column_name} {column_type}"
                 )
+
+    # Lightweight SQLite migration for catalog parts created before the
+    # dedicated category column existed.
+    with pricing_engine.begin() as connection:
+        catalog_part_columns = {row[1] for row in connection.exec_driver_sql("PRAGMA table_info(catalog_parts)")}
+        if "category" not in catalog_part_columns:
+            connection.exec_driver_sql("ALTER TABLE catalog_parts ADD COLUMN category VARCHAR(80)")
+        if "family_code" not in catalog_part_columns:
+            connection.exec_driver_sql("ALTER TABLE catalog_parts ADD COLUMN family_code VARCHAR(40)")
 
     # Customer directory column rename: contact -> phone, plus email.
     with engine.begin() as connection:

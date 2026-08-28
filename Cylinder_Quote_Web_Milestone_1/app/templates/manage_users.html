@@ -58,6 +58,8 @@
                             <th>Email / Username</th>
                             <th>Phone</th>
                             <th>Role</th>
+                            <th>Access Level</th>
+                            <th>Password</th>
                             <th class="text-end px-3">Actions</th>
                         </tr>
                     </thead>
@@ -76,6 +78,25 @@
                                     {{ u.role|capitalize }}
                                 </span>
                             </td>
+                            <td style="min-width: 180px;">
+                                {% if u.role == 'employee' %}
+                                <form method="POST" action="{{ url_for('portal.update_user_access_level', user_id=u.id) }}" class="d-flex gap-2 align-items-center">
+                                    <select name="access_level" class="form-select form-select-sm" aria-label="Access level for {{ u.display_name }}">
+                                        <option value="standard" {% if (u.access_level or 'standard') == 'standard' %}selected{% endif %}>Standard User</option>
+                                        <option value="admin" {% if u.access_level == 'admin' %}selected{% endif %}>Admin User</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+                                </form>
+                                {% else %}
+                                <span class="text-muted">Customer</span>
+                                {% endif %}
+                            </td>
+                            <td style="min-width: 260px;">
+                                <form method="POST" action="{{ url_for('portal.update_user_password', user_id=u.id) }}" class="d-flex gap-2 align-items-center">
+                                    <input name="new_password" type="password" class="form-control form-control-sm" placeholder="New password" autocomplete="new-password" aria-label="New password for {{ u.display_name }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Set</button>
+                                </form>
+                            </td>
                             <td class="text-end px-3">
                                 <form method="POST" action="{{ url_for('portal.delete_user', user_id=u.id) }}" onsubmit="return confirm('Are you sure you want to permanently delete {{ u.display_name }}?');" class="d-inline">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -86,7 +107,7 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">No approved users found.</td>
+                            <td colspan="8" class="text-center text-muted py-4">No approved users found.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

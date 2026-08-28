@@ -33,11 +33,15 @@ def temp_db(tmp_path, monkeypatch):
     db_path = tmp_path / "test_quote_preview_flow.db"
     monkeypatch.setenv("DATABASE_PATH", str(db_path))
     monkeypatch.setenv("ACCOUNTS_DATABASE_PATH", str(tmp_path / "test_quote_preview_flow_accounts.db"))
+    monkeypatch.setenv("QUOTES_DATABASE_PATH", str(tmp_path / "test_quote_preview_flow_quotes.db"))
+    monkeypatch.setenv("ORDERS_DATABASE_PATH", str(tmp_path / "test_quote_preview_flow_orders.db"))
 
     import app.db as db_mod
 
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._quotes_engine = None
+    db_mod._orders_engine = None
     db_mod._Session = None
     init_db()
 
@@ -47,6 +51,8 @@ def temp_db(tmp_path, monkeypatch):
 
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._quotes_engine = None
+    db_mod._orders_engine = None
     db_mod._Session = None
 
 
@@ -157,3 +163,25 @@ def test_index_page_renders_quote_preview(temp_db):
     preview_text = preview_resp.get_data(as_text=True)
     assert "Quote Form" in preview_text
     assert "Order Now" in preview_text
+    assert "Email Customer" in preview_text
+    assert "Attach Quote Form" in preview_text
+    assert "Attach Report Image" in preview_text
+    assert "Attach Report Images" not in preview_text
+
+    order_resp = client.get("/order-form?quote_id=1")
+    assert order_resp.status_code == 200
+    order_text = order_resp.get_data(as_text=True)
+    assert "Order Form" in order_text
+    assert "Email Customer" in order_text
+    assert "Attach Quote Form" in order_text
+    assert "Attach Report Images" in order_text
+
+
+def test_quote_form_page_omits_internal_note_controls(temp_db):
+    """The dedicated quote form no longer exposes internal note/show toggles for manual items."""
+    client = temp_db.test_client()
+    resp = client.get("/quote-entry?draft=1")
+    assert resp.status_code == 200
+    text = resp.get_data(as_text=True)
+    assert "Internal note" not in text
+    assert "Show" not in text

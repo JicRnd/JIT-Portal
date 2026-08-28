@@ -23,6 +23,9 @@
       </span>
       <button type="button" id="verifyQuoteButton" class="preview-btn">Verify</button>
       <button type="button" id="employeeSaveButton" class="preview-btn">Save</button>
+      <button type="button" id="emailCustomerButton" class="preview-btn">Email Customer</button>
+      <button type="button" class="preview-btn secondary" disabled title="Attachment workflow has not been implemented yet.">Attach Quote Form</button>
+      <button type="button" class="preview-btn secondary" disabled title="Attachment workflow has not been implemented yet.">Attach Report Images</button>
       <button type="button" id="saveQuoteButton" class="preview-btn primary">Order Now</button>
       <span class="qf-toolbar-meta">Status <strong id="pv_status">&mdash;</strong> &middot; Created by <span id="pv_created_by">&mdash;</span></span>
       <span id="verifyMessage" class="verify-message" role="status" aria-live="polite"></span>
@@ -135,7 +138,7 @@
       <section class="xq-manual-section">
         <h2>Additional Quoted Items</h2>
         <div class="parts-header manual-header">
-          <span>Ref</span><span>Description</span><span>Qty</span><span>Unit Price</span><span>Extended</span><span>Show</span><span>Note</span><span></span>
+          <span>Ref</span><span>Description</span><span>Qty</span><span>Unit Price</span><span>Extended</span><span></span>
         </div>
         <div id="previewManualItems" class="manual-items"></div>
         <button type="button" id="addManualItemButton" class="preview-btn secondary">+ Add Line Item</button>

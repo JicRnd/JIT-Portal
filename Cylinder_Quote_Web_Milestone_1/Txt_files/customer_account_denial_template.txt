@@ -1,0 +1,10 @@
+Subject: Customer Account Request Not Approved
+
+Hello [First Name],
+
+Thank you for submitting a request to open a customer account with [Company Name].
+
+After review, we are unable to approve your request at this time. If you have questions or believe the submitted information needs to be corrected, please contact [support email] or [phone number].
+
+Thank you,
+[Company Name]

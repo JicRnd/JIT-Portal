@@ -95,9 +95,26 @@ def create_app() -> Flask:
     @app.get("/order-approval")
     @app.get("/order-form")
     def order_approval():
+        quote_id = (request.args.get("quote_id") or "").strip()
+        current_user = get_or_create_current_user(request)
+
+        if quote_id.isdigit():
+            with get_session() as session:
+                quote = session.get(Quote, int(quote_id))
+                if (
+                    quote
+                    and quote.status == "pending_approval"
+                    and quote.assigned_employee_user_id != current_user.id
+                ):
+                    return render_template(
+                        "portal_message.html",
+                        title="Accept Required",
+                        message="Accept the pending order before opening it.",
+                    ), 403
+
         return render_template(
             "order_form.html",
-            quote_id=(request.args.get("quote_id") or "").strip(),
+            quote_id=quote_id,
         )
 
     @app.get("/api/health")

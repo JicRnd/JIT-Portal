@@ -20,24 +20,21 @@
   <header class="portal-header">
     <div>{{ user.display_name }} · Employee</div>
     <h1>JIT Operations Dashboard</h1>
-    <a href="{{ url_for('portal.logout') }}">Log Out</a>
+    <div class="header-right">
+      <div class="header-stats">
+        <div class="header-stats-month">{{ current_month_label }}</div>
+        <div class="header-stats-grid">
+          <span>Quoted</span>
+          <span>Approved</span>
+          <strong>{{ quotes_this_month }}</strong>
+          <strong>{{ approved_orders_count_this_month }}</strong>
+        </div>
+      </div>
+      <a href="{{ url_for('portal.logout') }}">Log Out</a>
+    </div>
   </header>
 
   <main class="portal-shell">
-    <div
-      class="dashboard-stats"
-      style="display:flex; justify-content:flex-end; gap:1.5rem; margin-bottom:0.5rem; font-size:0.95rem;"
-    >
-      <div>
-        <span style="color:#555;">Quotes this month</span>
-        <strong>{{ quotes_this_month }}</strong>
-      </div>
-      <div>
-        <span style="color:#555;">Approved orders</span>
-        <strong>{{ approved_orders_count_this_month }}</strong>
-      </div>
-    </div>
-
     <div class="dashboard-actions">
       <button
         class="portal-button new-quote"
@@ -69,22 +66,35 @@
         Customers
       </button>
      
-      <a href="{{ url_for('portal.manage_users') }}" class="btn btn-primary">
+      <a
+        class="portal-button secondary"
+        href="{{ url_for('portal.manage_users') }}"
+      >
         Manage Users
       </a>
+      {% if user.access_level == "admin" %}
+      <a
+        class="portal-button secondary"
+        href="{{ url_for('portal.parts_catalog') }}"
+      >
+        Parts Catalog
+      </a>
+      {% endif %}
     </div>
 
     <section class="pending-queue-section" style="margin-bottom:1.5rem;">
       <h2>Pending Approvals</h2>
 
-      {% if pending_queue %}
+      {% if pending_queue or pending_users %}
         <div class="table-wrap">
           <table id="pendingQueueTable">
             <thead>
               <tr>
-                <th>Quote ID</th>
+                <th>Type</th>
+                <th>Reference</th>
+                <th>Customer Name</th>
                 <th>Model Code</th>
-                <th>Customer</th>
+                <th>Status</th>
                 <th>Submitted</th>
                 <th></th>
               </tr>
@@ -93,9 +103,11 @@
             <tbody>
               {% for item in pending_queue %}
                 <tr data-pending-id="{{ item.id }}">
+                  <td>Quote</td>
                   <td>{{ item.quote_id }}</td>
-                  <td>{{ item.model_code or '—' }}</td>
                   <td>{{ item.customer_name or '—' }}</td>
+                  <td>{{ item.model_code or '—' }}</td>
+                  <td>Pending</td>
 
                   <td>
                     {{
@@ -123,6 +135,52 @@
                       </button>
                       <span class="accept-message" style="margin-left:0.5rem; font-size:0.85rem; color:#8b4513;"></span>
                     {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+
+              {% for user in pending_users %}
+                <tr>
+                  <td>{{ user.role|capitalize }} Request</td>
+                  <td>{{ user.display_name }}</td>
+                  <td>{{ user.company_name or '—' }}</td>
+                  <td>{{ user.email or user.username or '—' }}</td>
+                  <td>{{ (user.approval_status or 'pending')|title }}</td>
+                  <td>
+                    {{
+                      user.created_at.strftime('%b %d, %Y')
+                      if user.created_at
+                      else '—'
+                    }}
+                  </td>
+                  <td>
+                    <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">
+                      <button
+                        class="small-button details-pending-user-button"
+                        type="button"
+                        data-user-role="{{ user.role }}"
+                        data-user-name="{{ user.display_name }}"
+                        data-user-email="{{ user.email or user.username or '' }}"
+                        data-user-company="{{ user.company_name or '' }}"
+                        data-user-phone="{{ user.phone or '' }}"
+                        data-user-phone-extension="{{ user.phone_extension or '' }}"
+                        data-user-username="{{ user.username or '' }}"
+                        data-user-created-at="{{ user.created_at.strftime('%b %d, %Y %I:%M %p') if user.created_at else '' }}"
+                        data-user-shipping-address="{{ user.shipping_address or '' }}"
+                        data-user-billing-address="{{ user.billing_address or '' }}"
+                      >
+                        Details
+                      </button>
+                      <form method="post" action="{{ url_for('portal.approve_user', user_id=user.id, decision='approve') }}">
+                        <button class="small-button" type="submit">Approve</button>
+                      </form>
+                      <form method="post" action="{{ url_for('portal.approve_user', user_id=user.id, decision='hold') }}">
+                        <button class="small-button" type="submit">Hold</button>
+                      </form>
+                      <form method="post" action="{{ url_for('portal.approve_user', user_id=user.id, decision='deny') }}">
+                        <button class="small-button" type="submit">Deny</button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               {% endfor %}
@@ -220,6 +278,9 @@
                 <th>Phone</th>
                 <th>Email</th>
                 <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
 
@@ -230,6 +291,27 @@
                   <td>{{ customer.address or '—' }}</td>
                   <td>{{ customer.phone or '—' }}</td>
                   <td>{{ customer.email or '—' }}</td>
+
+                  <td>
+                    {% if customer.email %}
+                      <a
+                        class="small-button"
+                        href="mailto:{{ customer.email|urlencode }}"
+                      >
+                        Email Customer
+                      </a>
+                    {% else %}
+                      <button class="small-button" type="button" disabled>No Email</button>
+                    {% endif %}
+                  </td>
+
+                  <td>
+                    <button class="small-button" type="button" disabled title="Attachment workflow has not been implemented yet.">Attach Quote Form</button>
+                  </td>
+
+                  <td>
+                    <button class="small-button" type="button" disabled title="Attachment workflow has not been implemented yet.">Attach Report Images</button>
+                  </td>
 
                   <td>
                     <a
@@ -310,6 +392,50 @@
 
     {% endif %}
   </main>
+
+  <dialog id="pendingUserDetailsDialog" style="min-width:min(560px,90vw);max-width:min(560px,90vw);border:1px solid #d0d7de;border-radius:14px;padding:0;box-shadow:0 18px 38px rgba(16,24,40,0.18);">
+    <form method="dialog" style="padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.9rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem; border-bottom:1px solid #e5e7eb; padding-bottom:0.6rem; margin-bottom:0.15rem;">
+        <h3 style="margin:0; font-size:1.15rem; color:#1f2937;">Account Details</h3>
+        <button class="small-button" type="submit">Close</button>
+      </div>
+
+      <div style="display:grid; gap:0.7rem; font-size:0.95rem; color:#262b30;">
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Role:</strong><span id="pendingUserRole">—</span>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Name:</strong><span id="pendingUserName">—</span>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Company:</strong><span id="pendingUserCompany">—</span>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Email:</strong><span id="pendingUserEmail">—</span>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Username:</strong><span id="pendingUserUsername">—</span>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Phone:</strong><span id="pendingUserPhone">—</span>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Extension:</strong><span id="pendingUserPhoneExtension">—</span>
+        </div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Submitted:</strong><span id="pendingUserCreatedAt">—</span>
+        </div>
+        <div style="padding:0.55rem 0.6rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Shipping Address:</strong>
+          <div id="pendingUserShippingAddress" style="margin-top:0.35rem; white-space:pre-wrap; color:#374151;">—</div>
+        </div>
+        <div style="padding:0.55rem 0.6rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;">
+          <strong>Billing Address:</strong>
+          <div id="pendingUserBillingAddress" style="margin-top:0.35rem; white-space:pre-wrap; color:#374151;">—</div>
+        </div>
+      </div>
+    </form>
+  </dialog>
 
   <div class="quote-modal" hidden>
     <div>
@@ -399,6 +525,9 @@
               <th></th>
               <th></th>
               <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody id="customerLookupResults"></tbody>
@@ -469,6 +598,34 @@
           style="padding:0.4rem; width:100%; margin-top:0.25rem;"
         >
       </label>
+
+      <div style="display:flex; gap:0.5rem;">
+        <button
+          id="customerEditEmailButton"
+          class="portal-button secondary"
+          type="button"
+        >
+          Email Customer
+        </button>
+
+        <button
+          class="portal-button secondary"
+          type="button"
+          disabled
+          title="Attachment workflow has not been implemented yet."
+        >
+          Attach Quote Form
+        </button>
+
+        <button
+          class="portal-button secondary"
+          type="button"
+          disabled
+          title="Attachment workflow has not been implemented yet."
+        >
+          Attach Report Images
+        </button>
+      </div>
 
       <div style="display:flex; gap:0.5rem;">
         <button
@@ -556,6 +713,41 @@
   <script>
   (function () {
     const $ = (id) => document.getElementById(id);
+    const pendingUserDialog = $("pendingUserDetailsDialog");
+    const pendingUserButtons = document.querySelectorAll(".details-pending-user-button");
+
+    pendingUserButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const normalize = (value) => (value && value.trim()) ? value.trim() : "—";
+        const formatRole = (value) => {
+          const text = normalize(value);
+          return text === "—" ? text : text.charAt(0).toUpperCase() + text.slice(1);
+        };
+
+        const setText = (id, value) => {
+          const el = $(id);
+          if (el) {
+            el.textContent = normalize(value);
+          }
+        };
+
+        setText("pendingUserRole", formatRole(button.dataset.userRole));
+        setText("pendingUserName", button.dataset.userName);
+        setText("pendingUserCompany", button.dataset.userCompany);
+        setText("pendingUserEmail", button.dataset.userEmail);
+        setText("pendingUserUsername", button.dataset.userUsername);
+        setText("pendingUserPhone", button.dataset.userPhone);
+        setText("pendingUserPhoneExtension", button.dataset.userPhoneExtension);
+        setText("pendingUserCreatedAt", button.dataset.userCreatedAt);
+        setText("pendingUserShippingAddress", button.dataset.userShippingAddress);
+        setText("pendingUserBillingAddress", button.dataset.userBillingAddress);
+
+        if (pendingUserDialog && pendingUserDialog.showModal) {
+          pendingUserDialog.showModal();
+        }
+      });
+    });
+
     const dialog = $("customerLookupDialog");
     const input = $("customerLookupInput");
     const tbody = $("customerLookupResults");
@@ -574,7 +766,7 @@
       currentCustomers = customers;
       tbody.innerHTML = "";
       if (!customers.length) {
-        tbody.innerHTML = '<tr><td colspan="9">No matches.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="12">No matches.</td></tr>';
         return;
       }
       customers.forEach((c) => {
@@ -582,6 +774,32 @@
         [c.name, c.address || "—", c.city_state_zip || "—", c.phone || "—", c.email || "—", c.status || "—"].forEach((text) => {
           const td = document.createElement("td");
           td.textContent = text;
+          tr.appendChild(td);
+        });
+
+        const emailTd = document.createElement("td");
+        const emailButton = document.createElement(c.email ? "a" : "button");
+        emailButton.className = "portal-button secondary small-button";
+        emailButton.textContent = c.email ? "Email Customer" : "No Email";
+        if (c.email) {
+          emailButton.href = `mailto:${encodeURIComponent(c.email)}`;
+          emailButton.style.textDecoration = "none";
+        } else {
+          emailButton.type = "button";
+          emailButton.disabled = true;
+        }
+        emailTd.appendChild(emailButton);
+        tr.appendChild(emailTd);
+
+        ["Attach Quote Form", "Attach Report Images"].forEach((label) => {
+          const td = document.createElement("td");
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "portal-button secondary small-button";
+          button.textContent = label;
+          button.disabled = true;
+          button.title = "Attachment workflow has not been implemented yet.";
+          td.appendChild(button);
           tr.appendChild(td);
         });
 
@@ -696,6 +914,15 @@
         editMessage.textContent = "Network error. Please try again.";
       }
     }
+
+    $("customerEditEmailButton").addEventListener("click", () => {
+      const email = editEmail.value.trim();
+      if (!email) {
+        editMessage.textContent = "No customer email is available.";
+        return;
+      }
+      window.location.href = `mailto:${encodeURIComponent(email)}`;
+    });
 
     async function search(term) {
       if (!term) {

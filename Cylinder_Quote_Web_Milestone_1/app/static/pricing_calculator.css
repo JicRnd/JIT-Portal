@@ -14,6 +14,7 @@ body{padding:8px}
 button,input,select{font:inherit;color:#111}
 .orderentry-window{width:min(100%,1360px);margin:0 auto;background:linear-gradient(#d7ffff,#c1fbfb);border:2px solid #888;box-shadow:0 1px 4px rgba(0,0,0,.25)}
 .window-titlebar{height:46px;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#f1f6f8,#dce8ed);border-bottom:1px solid #8d8d8d;color:var(--title);font-size:22px}
+.dashboard-button{margin-right:10px;padding:4px 10px;font-size:14px;font-weight:700;color:#111;text-decoration:none;background:#e9e9e9;border:1px solid #8e8e8e;border-radius:3px}
 .window-close{font-size:30px;font-weight:400;color:#111;line-height:1}
 .orderentry-form{padding:16px 18px 10px}
 .customer-area{display:grid;grid-template-columns:105px 1fr;gap:10px 10px;align-items:center;margin-bottom:12px}

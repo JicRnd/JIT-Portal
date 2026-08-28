@@ -35,6 +35,28 @@ function formatQuoteDate(iso) {
     return `${month}-${d.getDate()} (${hh}:${mm})`;
   } catch { return iso; }
 }
+function emailFromText(text) {
+  const match = String(text || '').match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+  return match ? match[0] : '';
+}
+function openCustomerEmail() {
+  const contact = $('pv_customer_contact');
+  const email = emailFromText((contact && contact.value) || (currentQuote && currentQuote.customer_contact) || '');
+  if (!email) {
+    $('previewErrorMessage').textContent = 'No customer email is available for this quote.';
+    return;
+  }
+  window.location.href = `mailto:${encodeURIComponent(email)}`;
+}
+function openEmailAttachmentDialog() {
+  const dialog = $('emailAttachmentDialog');
+  if (dialog) dialog.showModal();
+}
+function continueCustomerEmail() {
+  const dialog = $('emailAttachmentDialog');
+  if (dialog) dialog.close();
+  openCustomerEmail();
+}
 function excelRoundUpPositive(value) {
   return Math.ceil(Math.max(Number(value) || 0, 0));
 }
@@ -113,9 +135,16 @@ function renderQuotePreview(quote) {
   const inputs = quote.cylinder_inputs_snapshot || {};
   const series = String(inputs.series || '').toUpperCase();
   const bore = Number(inputs.bore || 0), rod = Number(inputs.rod_diameter || 0), stroke = Number(inputs.stroke || 0);
-  const dim = (series === 'H' || series === 'HM' || series === 'MH') ? H_DIMS[bore] : A_DIMS[bore];
   const rodDim = ROD_DIMS[rod];
   const putInput = (id, value) => { const el=$(id); if(el) el.value=value; };
+  const dims = (quote.price_breakdown_snapshot || {}).dimensions || {};
+  const dimValue = key => {
+    const v = dims[key];
+    if (v == null || v === '') return '—';
+    const n = Number(v);
+    if (key === 'lb') return `${n.toFixed(3)}"`;
+    return `${Number(n.toFixed(2))}"`;
+  };
   $('pv_series_desc').textContent = SERIES_LABELS[series] || (series ? `${series} Series Cylinder` : 'Cylinder');
   $('pv_model_code').textContent = quote.model_code || '—';
   $('pv_mount').textContent = inputs.mount ? `${MOUNT_LABELS[String(inputs.mount).toUpperCase()] || String(inputs.mount)} (${String(inputs.mount).toUpperCase()})` : '—';
@@ -144,10 +173,14 @@ function renderQuotePreview(quote) {
   $('pv_push_lbs').textContent = `${forces.push.toLocaleString('en-US')} lbs`;
   $('pv_pull_lbs').textContent = `${forces.pull.toLocaleString('en-US')} lbs`;
 
-  if (dim) {
-    putInput('pv_dim_e', `${dim[0]}"`); putInput('pv_dim_g', `${dim[1]}"`); putInput('pv_dim_j', `${dim[2]}"`);
-    putInput('pv_dim_lb', `${Math.round((dim[3] + stroke) * 1000) / 1000}"`);
-  } else { ['pv_dim_e','pv_dim_g','pv_dim_j','pv_dim_lb'].forEach(id => putInput(id, '—')); }
+  putInput('pv_dim_e', dimValue('e'));
+  putInput('pv_dim_g', dimValue('g'));
+  putInput('pv_dim_j', dimValue('j'));
+  putInput('pv_dim_lb', dimValue('lb'));
+  putInput('pv_dim_tf', dimValue('tf'));
+  putInput('pv_dim_r', dimValue('r'));
+  putInput('pv_dim_fb', dimValue('fb'));
+  putInput('pv_dim_f', dimValue('f'));
   putInput('pv_dim_a', rodDim ? `${Math.round((rodDim[0] + Number(inputs.extra_thread || 0)) * 1000) / 1000}" Male/Female` : '—');
   putInput('pv_dim_wf', rodDim ? `${Math.round((rodDim[1] + Number(inputs.rod_extension || 0)) * 1000) / 1000}"` : '—');
   putInput('pv_dim_extra_1', '0'); putInput('pv_dim_extra_2', '0');
@@ -186,7 +219,7 @@ function renderQuotePreview(quote) {
     if (!Number.isFinite(quantity) || quantity < 1) quantity = 1;
     quantityInput.value = String(quantity);
     $('pv_quote_list_price').textContent = fmtRoundedMoney(Number(bd.quote_list_price || 0) * quantity);
-    $('pv_quote_net_each').textContent = fmtRoundedMoney(standardNet * quantity);
+    $('pv_quote_net_each').textContent = fmtRoundedMoney(standardNet);
     $('pv_expedited_price').textContent = fmtRoundedMoney(standardNet * 1.35 * quantity);
     $('pv_emergency_price').textContent = fmtRoundedMoney(standardNet * 1.95 * quantity);
     $('pv_cares_price').textContent = fmtRoundedMoney(standardNet * 1.05 * quantity);
@@ -210,7 +243,7 @@ function renderManualItems(items) {
 }
 
 function addManualItemRow(item) {
-  item = item || { reference_part_number: '', description: '', quantity: 1, unit_price: 0, show_on_customer_quote: true, internal_note: '' };
+  item = item || { reference_part_number: '', description: '', quantity: 1, unit_price: 0 };
   const host = $('previewManualItems');
   const row = document.createElement('div'); row.className = 'manual-row';
   const ref = document.createElement('input'); ref.type = 'text'; ref.value = item.reference_part_number || ''; ref.placeholder = 'Part #'; ref.className = 'manual-ref';
@@ -218,13 +251,11 @@ function addManualItemRow(item) {
   const qty = document.createElement('input'); qty.type = 'number'; qty.min = '0'; qty.step = '1'; qty.value = item.quantity || 0; qty.className = 'manual-qty';
   const unit = document.createElement('input'); unit.type = 'number'; unit.min = '0'; unit.step = '0.01'; unit.value = item.unit_price || 0; unit.className = 'manual-unit';
   const ext = document.createElement('input'); ext.type = 'text'; ext.readOnly = true; ext.value = fmtMoney((Number(item.quantity || 0) * Number(item.unit_price || 0))); ext.className = 'manual-ext';
-  const show = document.createElement('input'); show.type = 'checkbox'; show.checked = item.show_on_customer_quote !== false; show.className = 'manual-show';
-  const note = document.createElement('input'); note.type = 'text'; note.value = item.internal_note || ''; note.placeholder = 'Internal note'; note.className = 'manual-note';
   const rm = document.createElement('button'); rm.type = 'button'; rm.textContent = '×'; rm.className = 'manual-remove'; rm.title = 'Remove line';
   function updateExt() { const q = Number(qty.value || 0), u = Number(unit.value || 0); ext.value = fmtMoney(q * u); }
   qty.addEventListener('input', updateExt); unit.addEventListener('input', updateExt);
   rm.addEventListener('click', () => { row.remove(); if (!host.children.length) addManualItemRow(); });
-  row.append(ref, desc, qty, unit, ext, show, note, rm); host.appendChild(row);
+  row.append(ref, desc, qty, unit, ext, rm); host.appendChild(row);
 }
 
 function manualItemsFromPreview() {
@@ -236,9 +267,7 @@ function manualItemsFromPreview() {
       reference_part_number: row.querySelector('.manual-ref').value.trim() || null,
       description: desc,
       quantity: Number(row.querySelector('.manual-qty').value || 0),
-      unit_price: Number(row.querySelector('.manual-unit').value || 0),
-      show_on_customer_quote: row.querySelector('.manual-show').checked,
-      internal_note: row.querySelector('.manual-note').value.trim() || null
+      unit_price: Number(row.querySelector('.manual-unit').value || 0)
     });
   });
   return out;
@@ -430,6 +459,12 @@ function wireQuoteFormEvents() {
   if (employeeSaveButton) employeeSaveButton.addEventListener('click', employeeSaveQuote);
   const verifyQuoteButton = $('verifyQuoteButton');
   if (verifyQuoteButton) verifyQuoteButton.addEventListener('click', verifyQuote);
+  const emailCustomerButton = $('emailCustomerButton');
+  if (emailCustomerButton) emailCustomerButton.addEventListener('click', openEmailAttachmentDialog);
+  const continueEmailButton = $('continueEmailButton');
+  if (continueEmailButton) continueEmailButton.addEventListener('click', continueCustomerEmail);
+  const cancelEmailAttachmentButton = $('cancelEmailAttachmentButton');
+  if (cancelEmailAttachmentButton) cancelEmailAttachmentButton.addEventListener('click', () => $('emailAttachmentDialog').close());
   $('addManualItemButton').addEventListener('click', () => addManualItemRow());
   $('backToOrderEntryButton').addEventListener('click', () => { window.location.assign(`/${PORTAL_MODE}/quote-entry`); });
   $('newQuoteButton').addEventListener('click', () => { window.location.assign(`/${PORTAL_MODE}/quote-entry`); });

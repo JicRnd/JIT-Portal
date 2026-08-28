@@ -1,0 +1,750 @@
+﻿pricing_type,series,bore,rod,mount_group,base_price,cushion_base,per_unit_price,cushion_per_end,rod_thread_std,rod_thread_oversize,unit,source_sheet,source_row
+base_cylinder,H/HM/W,1.5,0.625,MX0/MX1/MX2/MX3,642,,10,147,7/16-20,1/2-20,inch,H,7
+base_cylinder,H/HM/W,1.5,0.625,MF1/MF2/MS4,714,,10,147,7/16-20,1/2-20,inch,H,7
+base_cylinder,H/HM/W,1.5,0.625,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,775,,10,147,7/16-20,1/2-20,inch,H,7
+base_cylinder,H/HM/W,1.5,0.625,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,965,,10,147,7/16-20,1/2-20,inch,H,7
+piston_rod_assembly,H/HM/W,1.5,0.625,,161,308,9,,,,inch,H,7
+base_cylinder,H/HM/W,1.5,1,MX0/MX1/MX2/MX3,765,,12,147,3/4-16,7/8-14,inch,H,8
+base_cylinder,H/HM/W,1.5,1,MF1/MF2/MS4,837,,12,147,3/4-16,7/8-14,inch,H,8
+base_cylinder,H/HM/W,1.5,1,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,887,,12,147,3/4-16,7/8-14,inch,H,8
+base_cylinder,H/HM/W,1.5,1,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1110,,12,147,3/4-16,7/8-14,inch,H,8
+piston_rod_assembly,H/HM/W,1.5,1,,192,339,11,,,,inch,H,8
+base_cylinder,H/HM/W,2,1,MX0/MX1/MX2/MX3,765,,13,161,3/4-16,7/8-14,inch,H,9
+base_cylinder,H/HM/W,2,1,MF1/MF2/MS4,837,,13,161,3/4-16,7/8-14,inch,H,9
+base_cylinder,H/HM/W,2,1,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,910,,13,161,3/4-16,7/8-14,inch,H,9
+base_cylinder,H/HM/W,2,1,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1146,,13,161,3/4-16,7/8-14,inch,H,9
+piston_rod_assembly,H/HM/W,2,1,,192,353,12,,,,inch,H,9
+base_cylinder,H/HM/W,2,1.375,MX0/MX1/MX2/MX3,895,,14,161,1-14,1 1/4-12,inch,H,10
+base_cylinder,H/HM/W,2,1.375,MF1/MF2/MS4,966,,14,161,1-14,1 1/4-12,inch,H,10
+base_cylinder,H/HM/W,2,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1037,,14,161,1-14,1 1/4-12,inch,H,10
+base_cylinder,H/HM/W,2,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1263,,14,161,1-14,1 1/4-12,inch,H,10
+piston_rod_assembly,H/HM/W,2,1.375,,224,385,13,,,,inch,H,10
+base_cylinder,H/HM/W,2.5,1,MX0/MX1/MX2/MX3,815,,14,182,3/4-16,7/8-14,inch,H,11
+base_cylinder,H/HM/W,2.5,1,MF1/MF2/MS4,894,,14,182,3/4-16,7/8-14,inch,H,11
+base_cylinder,H/HM/W,2.5,1,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,962,,14,182,3/4-16,7/8-14,inch,H,11
+base_cylinder,H/HM/W,2.5,1,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1225,,14,182,3/4-16,7/8-14,inch,H,11
+piston_rod_assembly,H/HM/W,2.5,1,,204,386,13,,,,inch,H,11
+base_cylinder,H/HM/W,2.5,1.375,MX0/MX1/MX2/MX3,986,,15,182,1-14,1 1/4-12,inch,H,12
+base_cylinder,H/HM/W,2.5,1.375,MF1/MF2/MS4,1067,,15,182,1-14,1 1/4-12,inch,H,12
+base_cylinder,H/HM/W,2.5,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1142,,15,182,1-14,1 1/4-12,inch,H,12
+base_cylinder,H/HM/W,2.5,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1451,,15,182,1-14,1 1/4-12,inch,H,12
+piston_rod_assembly,H/HM/W,2.5,1.375,,247,429,14,,,,inch,H,12
+base_cylinder,H/HM/W,2.5,1.75,MX0/MX1/MX2/MX3,1115,,18,182,1 1/4-12,1 1/2-12,inch,H,13
+base_cylinder,H/HM/W,2.5,1.75,MF1/MF2/MS4,1190,,18,182,1 1/4-12,1 1/2-12,inch,H,13
+base_cylinder,H/HM/W,2.5,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1269,,18,182,1 1/4-12,1 1/2-12,inch,H,13
+base_cylinder,H/HM/W,2.5,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1594,,18,182,1 1/4-12,1 1/2-12,inch,H,13
+piston_rod_assembly,H/HM/W,2.5,1.75,,279,461,17,,,,inch,H,13
+base_cylinder,H/HM/W,3.25,1.375,MX0/MX1/MX2/MX3,1010,,18,210,1-14,1 1/4-12,inch,H,14
+base_cylinder,H/HM/W,3.25,1.375,MF1/MF2/MS4,1104,,18,210,1-14,1 1/4-12,inch,H,14
+base_cylinder,H/HM/W,3.25,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1217,,18,210,1-14,1 1/4-12,inch,H,14
+base_cylinder,H/HM/W,3.25,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1528,,18,210,1-14,1 1/4-12,inch,H,14
+piston_rod_assembly,H/HM/W,3.25,1.375,,253,463,17,,,,inch,H,14
+base_cylinder,H/HM/W,3.25,1.75,MX0/MX1/MX2/MX3,1226,,20,210,1 1/4-12,1 1/2-12,inch,H,15
+base_cylinder,H/HM/W,3.25,1.75,MF1/MF2/MS4,1330,,20,210,1 1/4-12,1 1/2-12,inch,H,15
+base_cylinder,H/HM/W,3.25,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1435,,20,210,1 1/4-12,1 1/2-12,inch,H,15
+base_cylinder,H/HM/W,3.25,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1766,,20,210,1 1/4-12,1 1/2-12,inch,H,15
+piston_rod_assembly,H/HM/W,3.25,1.75,,307,517,19,,,,inch,H,15
+base_cylinder,H/HM/W,3.25,2,MX0/MX1/MX2/MX3,1310,,23,210,1 1/2-12,1 3/4-12,inch,H,16
+base_cylinder,H/HM/W,3.25,2,MF1/MF2/MS4,1440,,23,210,1 1/2-12,1 3/4-12,inch,H,16
+base_cylinder,H/HM/W,3.25,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1559,,23,210,1 1/2-12,1 3/4-12,inch,H,16
+base_cylinder,H/HM/W,3.25,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1945,,23,210,1 1/2-12,1 3/4-12,inch,H,16
+piston_rod_assembly,H/HM/W,3.25,2,,328,538,21,,,,inch,H,16
+base_cylinder,H/HM/W,4,1.75,MX0/MX1/MX2/MX3,1260,,23,246,1 1/4-12,1 1/2-12,inch,H,17
+base_cylinder,H/HM/W,4,1.75,MF1/MF2/MS4,1368,,23,246,1 1/4-12,1 1/2-12,inch,H,17
+base_cylinder,H/HM/W,4,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1472,,23,246,1 1/4-12,1 1/2-12,inch,H,17
+base_cylinder,H/HM/W,4,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1871,,23,246,1 1/4-12,1 1/2-12,inch,H,17
+piston_rod_assembly,H/HM/W,4,1.75,,315,561,21,,,,inch,H,17
+base_cylinder,H/HM/W,4,2,MX0/MX1/MX2/MX3,1512,,26,246,1 1/2-12,1 3/4-12,inch,H,18
+base_cylinder,H/HM/W,4,2,MF1/MF2/MS4,1727,,26,246,1 1/2-12,1 3/4-12,inch,H,18
+base_cylinder,H/HM/W,4,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1727,,26,246,1 1/2-12,1 3/4-12,inch,H,18
+base_cylinder,H/HM/W,4,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2162,,26,246,1 1/2-12,1 3/4-12,inch,H,18
+piston_rod_assembly,H/HM/W,4,2,,378,624,24,,,,inch,H,18
+base_cylinder,H/HM/W,4,2.5,MX0/MX1/MX2/MX3,1673,,28,246,1 7/8-12,2 1/4-12,inch,H,19
+base_cylinder,H/HM/W,4,2.5,MF1/MF2/MS4,1794,,28,246,1 7/8-12,2 1/4-12,inch,H,19
+base_cylinder,H/HM/W,4,2.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1899,,28,246,1 7/8-12,2 1/4-12,inch,H,19
+base_cylinder,H/HM/W,4,2.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2335,,28,246,1 7/8-12,2 1/4-12,inch,H,19
+piston_rod_assembly,H/HM/W,4,2.5,,419,665,26,,,,inch,H,19
+base_cylinder,H/HM/W,5,2,MX0/MX1/MX2/MX3,1722,,31,272,1 1/2-12,1 3/4-12,inch,H,20
+base_cylinder,H/HM/W,5,2,MF1/MF2/MS4,1846,,31,272,1 1/2-12,1 3/4-12,inch,H,20
+base_cylinder,H/HM/W,5,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1990,,31,272,1 1/2-12,1 3/4-12,inch,H,20
+base_cylinder,H/HM/W,5,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2729,,31,272,1 1/2-12,1 3/4-12,inch,H,20
+piston_rod_assembly,H/HM/W,5,2,,431,703,29,,,,inch,H,20
+base_cylinder,H/HM/W,5,2.5,MX0/MX1/MX2/MX3,1983,,35,272,1 7/8-12,2 1/4-12,inch,H,21
+base_cylinder,H/HM/W,5,2.5,MF1/MF2/MS4,2117,,35,272,1 7/8-12,2 1/4-12,inch,H,21
+base_cylinder,H/HM/W,5,2.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,2250,,35,272,1 7/8-12,2 1/4-12,inch,H,21
+base_cylinder,H/HM/W,5,2.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2937,,35,272,1 7/8-12,2 1/4-12,inch,H,21
+piston_rod_assembly,H/HM/W,5,2.5,,496,768,33,,,,inch,H,21
+base_cylinder,H/HM/W,5,3,MX0/MX1/MX2/MX3,2214,,39,272,2 1/4-12,2 3/4-12,inch,H,22
+base_cylinder,H/HM/W,5,3,MF1/MF2/MS4,2412,,39,272,2 1/4-12,2 3/4-12,inch,H,22
+base_cylinder,H/HM/W,5,3,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,2494,,39,272,2 1/4-12,2 3/4-12,inch,H,22
+base_cylinder,H/HM/W,5,3,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,3240,,39,272,2 1/4-12,2 3/4-12,inch,H,22
+piston_rod_assembly,H/HM/W,5,3,,554,826,37,,,,inch,H,22
+base_cylinder,H/HM/W,5,3.5,MX0/MX1/MX2/MX3,2460,,45,272,2 1/2-12,3 1/4-12,inch,H,23
+base_cylinder,H/HM/W,5,3.5,MF1/MF2/MS4,2628,,45,272,2 1/2-12,3 1/4-12,inch,H,23
+base_cylinder,H/HM/W,5,3.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,2744,,45,272,2 1/2-12,3 1/4-12,inch,H,23
+base_cylinder,H/HM/W,5,3.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,3464,,45,272,2 1/2-12,3 1/4-12,inch,H,23
+piston_rod_assembly,H/HM/W,5,3.5,,615,887,42,,,,inch,H,23
+base_cylinder,H/HM/W,6,2.5,MX0/MX1/MX2/MX3,2687,,39,340,1 7/8-12,2 1/4-12,inch,H,24
+base_cylinder,H/HM/W,6,2.5,MF1/MF2/MS4,2796,,39,340,1 7/8-12,2 1/4-12,inch,H,24
+base_cylinder,H/HM/W,6,2.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,3057,,39,340,1 7/8-12,2 1/4-12,inch,H,24
+base_cylinder,H/HM/W,6,2.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,3818,,39,340,1 7/8-12,2 1/4-12,inch,H,24
+piston_rod_assembly,H/HM/W,6,2.5,,672,1012,37,,,,inch,H,24
+base_cylinder,H/HM/W,6,3,MX0/MX1/MX2/MX3,3116,,45,340,2 1/4-12,2 3/4-12,inch,H,25
+base_cylinder,H/HM/W,6,3,MF1/MF2/MS4,3313,,45,340,2 1/4-12,2 3/4-12,inch,H,25
+base_cylinder,H/HM/W,6,3,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,3497,,45,340,2 1/4-12,2 3/4-12,inch,H,25
+base_cylinder,H/HM/W,6,3,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,4304,,45,340,2 1/4-12,2 3/4-12,inch,H,25
+piston_rod_assembly,H/HM/W,6,3,,779,1119,42,,,,inch,H,25
+base_cylinder,H/HM/W,6,3.5,MX0/MX1/MX2/MX3,3473,,51,340,2 1/2-12,3 1/4-12,inch,H,26
+base_cylinder,H/HM/W,6,3.5,MF1/MF2/MS4,3537,,51,340,2 1/2-12,3 1/4-12,inch,H,26
+base_cylinder,H/HM/W,6,3.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,3763,,51,340,2 1/2-12,3 1/4-12,inch,H,26
+base_cylinder,H/HM/W,6,3.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,4743,,51,340,2 1/2-12,3 1/4-12,inch,H,26
+piston_rod_assembly,H/HM/W,6,3.5,,869,1209,48,,,,inch,H,26
+base_cylinder,H/HM/W,6,4,MX0/MX1/MX2/MX3,3688,,57,340,3-12,3 3/4-12,inch,H,27
+base_cylinder,H/HM/W,6,4,MF1/MF2/MS4,3791,,57,340,3-12,3 3/4-12,inch,H,27
+base_cylinder,H/HM/W,6,4,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,4085,,57,340,3-12,3 3/4-12,inch,H,27
+base_cylinder,H/HM/W,6,4,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,4829,,57,340,3-12,3 3/4-12,inch,H,27
+piston_rod_assembly,H/HM/W,6,4,,922,1262,54,,,,inch,H,27
+base_cylinder,H/HM/W,7,3,MX0/MX1/MX2/MX3,3589,,52,382,2 1/4-12,2 3/4-12,inch,H,28
+base_cylinder,H/HM/W,7,3,MF1/MF2/MS4,3948,,52,382,2 1/4-12,2 3/4-12,inch,H,28
+base_cylinder,H/HM/W,7,3,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,3955,,52,382,2 1/4-12,2 3/4-12,inch,H,28
+base_cylinder,H/HM/W,7,3,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,4437,,52,382,2 1/4-12,2 3/4-12,inch,H,28
+piston_rod_assembly,H/HM/W,7,3,,898,1280,49,,,,inch,H,28
+base_cylinder,H/HM/W,7,3.5,MX0/MX1/MX2/MX3,4030,,55,382,2 1/2-12,3 1/4-12,inch,H,29
+base_cylinder,H/HM/W,7,3.5,MF1/MF2/MS4,4415,,55,382,2 1/2-12,3 1/4-12,inch,H,29
+base_cylinder,H/HM/W,7,3.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,4415,,55,382,2 1/2-12,3 1/4-12,inch,H,29
+base_cylinder,H/HM/W,7,3.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,5641,,55,382,2 1/2-12,3 1/4-12,inch,H,29
+piston_rod_assembly,H/HM/W,7,3.5,,1008,1390,52,,,,inch,H,29
+base_cylinder,H/HM/W,7,4,MX0/MX1/MX2/MX3,4358,,62,382,3-12,3 3/4-12,inch,H,30
+base_cylinder,H/HM/W,7,4,MF1/MF2/MS4,4741,,62,382,3-12,3 3/4-12,inch,H,30
+base_cylinder,H/HM/W,7,4,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,4881,,62,382,3-12,3 3/4-12,inch,H,30
+base_cylinder,H/HM/W,7,4,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,5861,,62,382,3-12,3 3/4-12,inch,H,30
+piston_rod_assembly,H/HM/W,7,4,,1090,1472,58,,,,inch,H,30
+base_cylinder,H/HM/W,7,4.5,MX0/MX1/MX2/MX3,4440,,70,382,3 1/4-12,4 1/4-12,inch,H,31
+base_cylinder,H/HM/W,7,4.5,MF1/MF2/MS4,4821,,70,382,3 1/4-12,4 1/4-12,inch,H,31
+base_cylinder,H/HM/W,7,4.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,5103,,70,382,3 1/4-12,4 1/4-12,inch,H,31
+base_cylinder,H/HM/W,7,4.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,5946,,70,382,3 1/4-12,4 1/4-12,inch,H,31
+piston_rod_assembly,H/HM/W,7,4.5,,1110,1492,66,,,,inch,H,31
+base_cylinder,H/HM/W,7,5,MX0/MX1/MX2/MX3,4505,,75,382,3 1/2-12,4 3/4-12,inch,H,32
+base_cylinder,H/HM/W,7,5,MF1/MF2/MS4,4913,,75,382,3 1/2-12,4 3/4-12,inch,H,32
+base_cylinder,H/HM/W,7,5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,5260,,75,382,3 1/2-12,4 3/4-12,inch,H,32
+base_cylinder,H/HM/W,7,5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,6195,,75,382,3 1/2-12,4 3/4-12,inch,H,32
+piston_rod_assembly,H/HM/W,7,5,,1127,1509,71,,,,inch,H,32
+base_cylinder,H/HM/W,8,3.5,MX0/MX1/MX2/MX3,4655,,69,414,2 1/2-12,3 1/4-12,inch,H,33
+base_cylinder,H/HM/W,8,3.5,MF1/MF2/MS4,5088,,69,414,2 1/2-12,3 1/4-12,inch,H,33
+base_cylinder,H/HM/W,8,3.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,5088,,69,414,2 1/2-12,3 1/4-12,inch,H,33
+base_cylinder,H/HM/W,8,3.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,6012,,69,414,2 1/2-12,3 1/4-12,inch,H,33
+piston_rod_assembly,H/HM/W,8,3.5,,1164,1578,65,,,,inch,H,33
+base_cylinder,H/HM/W,8,4,MX0/MX1/MX2/MX3,5195,,74,414,3-12,3 3/4-12,inch,H,34
+base_cylinder,H/HM/W,8,4,MF1/MF2/MS4,5627,,74,414,3-12,3 3/4-12,inch,H,34
+base_cylinder,H/HM/W,8,4,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,5627,,74,414,3-12,3 3/4-12,inch,H,34
+base_cylinder,H/HM/W,8,4,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,6757,,74,414,3-12,3 3/4-12,inch,H,34
+piston_rod_assembly,H/HM/W,8,4,,1299,1713,70,,,,inch,H,34
+base_cylinder,H/HM/W,8,4.5,MX0/MX1/MX2/MX3,5538,,80,414,3 1/4-12,4 1/4-12,inch,H,35
+base_cylinder,H/HM/W,8,4.5,MF1/MF2/MS4,5978,,80,414,3 1/4-12,4 1/4-12,inch,H,35
+base_cylinder,H/HM/W,8,4.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,5978,,80,414,3 1/4-12,4 1/4-12,inch,H,35
+base_cylinder,H/HM/W,8,4.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,7578,,80,414,3 1/4-12,4 1/4-12,inch,H,35
+piston_rod_assembly,H/HM/W,8,4.5,,1385,1799,76,,,,inch,H,35
+base_cylinder,H/HM/W,8,5,MX0/MX1/MX2/MX3,5896,,92,414,3 1/2-12,4 3/4-12,inch,H,36
+base_cylinder,H/HM/W,8,5,MF1/MF2/MS4,6618,,92,414,3 1/2-12,4 3/4-12,inch,H,36
+base_cylinder,H/HM/W,8,5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,6812,,92,414,3 1/2-12,4 3/4-12,inch,H,36
+base_cylinder,H/HM/W,8,5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,7783,,92,414,3 1/2-12,4 3/4-12,inch,H,36
+piston_rod_assembly,H/HM/W,8,5,,1474,1888,87,,,,inch,H,36
+base_cylinder,H/HM/W,8,5.5,MX0/MX1/MX2/MX3,6422,,100,414,4-12,5 1/4-12,inch,H,37
+base_cylinder,H/HM/W,8,5.5,MF1/MF2/MS4,6880,,100,414,4-12,5 1/4-12,inch,H,37
+base_cylinder,H/HM/W,8,5.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,6880,,100,414,4-12,5 1/4-12,inch,H,37
+base_cylinder,H/HM/W,8,5.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,8390,,100,414,4-12,5 1/4-12,inch,H,37
+piston_rod_assembly,H/HM/W,8,5.5,,1606,2020,95,,,,inch,H,37
+base_cylinder,H/HM/W,10,4.5,MX0/MX1/MX2/MX3,7582,,141,471,3 1/4-12,4 1/4-12,inch,H,38
+base_cylinder,H/HM/W,10,4.5,MF1/MF2/MS4,8151,,141,471,3 1/4-12,4 1/4-12,inch,H,38
+base_cylinder,H/HM/W,10,4.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,8746,,141,471,3 1/4-12,4 1/4-12,inch,H,38
+base_cylinder,H/HM/W,10,4.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,10164,,141,471,3 1/4-12,4 1/4-12,inch,H,38
+piston_rod_assembly,H/HM/W,10,4.5,,1896,2367,133,,,,inch,H,38
+base_cylinder,H/HM/W,10,5,MX0/MX1/MX2/MX3,8565,,149,471,3 1/2-12,4 3/4-12,inch,H,39
+base_cylinder,H/HM/W,10,5,MF1/MF2/MS4,9530,,149,471,3 1/2-12,4 3/4-12,inch,H,39
+base_cylinder,H/HM/W,10,5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,9692,,149,471,3 1/2-12,4 3/4-12,inch,H,39
+base_cylinder,H/HM/W,10,5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,11002,,149,471,3 1/2-12,4 3/4-12,inch,H,39
+piston_rod_assembly,H/HM/W,10,5,,2142,2613,141,,,,inch,H,39
+base_cylinder,H/HM/W,10,5.5,MX0/MX1/MX2/MX3,8955,,155,471,4-12,5 1/4-12,inch,H,40
+base_cylinder,H/HM/W,10,5.5,MF1/MF2/MS4,10110,,155,471,4-12,5 1/4-12,inch,H,40
+base_cylinder,H/HM/W,10,5.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,10516,,155,471,4-12,5 1/4-12,inch,H,40
+base_cylinder,H/HM/W,10,5.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,11658,,155,471,4-12,5 1/4-12,inch,H,40
+piston_rod_assembly,H/HM/W,10,5.5,,2239,2710,147,,,,inch,H,40
+base_cylinder,H/HM/W,10,7,MX0/MX1/MX2/MX3,10654,,178,471,5 1/2-12,6 1/2-12,inch,H,41
+base_cylinder,H/HM/W,10,7,MF1/MF2/MS4,11180,,178,471,5 1/2-12,6 1/2-12,inch,H,41
+base_cylinder,H/HM/W,10,7,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,11818,,178,471,5 1/2-12,6 1/2-12,inch,H,41
+base_cylinder,H/HM/W,10,7,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,13408,,178,471,5 1/2-12,6 1/2-12,inch,H,41
+piston_rod_assembly,H/HM/W,10,7,,2664,3135,169,,,,inch,H,41
+base_cylinder,H/HM/W,12,5.5,MX0/MX1/MX2/MX3,11699,,195,655,4-12,5 1/4-12,inch,H,42
+base_cylinder,H/HM/W,12,5.5,MF1/MF2/MS4,13164,,195,655,4-12,5 1/4-12,inch,H,42
+base_cylinder,H/HM/W,12,5.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,13125,,195,655,4-12,5 1/4-12,inch,H,42
+base_cylinder,H/HM/W,12,5.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,15158,,195,655,4-12,5 1/4-12,inch,H,42
+piston_rod_assembly,H/HM/W,12,5.5,,2925,3580,185,,,,inch,H,42
+base_cylinder,H/HM/W,12,7,MX0/MX1/MX2/MX3,15052,,210,655,5-12,6 1/2-12,inch,H,43
+base_cylinder,H/HM/W,12,7,MF1/MF2/MS4,16470,,210,655,5-12,6 1/2-12,inch,H,43
+base_cylinder,H/HM/W,12,7,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,17172,,210,655,5-12,6 1/2-12,inch,H,43
+base_cylinder,H/HM/W,12,7,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,18708,,210,655,5-12,6 1/2-12,inch,H,43
+piston_rod_assembly,H/HM/W,12,7,,3763,4418,199,,,,inch,H,43
+base_cylinder,H/HM/W,12,8,MX0/MX1/MX2/MX3,16488,,234,655,5 3/4-12,7 1/2-12,inch,H,44
+base_cylinder,H/HM/W,12,8,MF1/MF2/MS4,17441,,234,655,5 3/4-12,7 1/2-12,inch,H,44
+base_cylinder,H/HM/W,12,8,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,18668,,234,655,5 3/4-12,7 1/2-12,inch,H,44
+base_cylinder,H/HM/W,12,8,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,20264,,234,655,5 3/4-12,7 1/2-12,inch,H,44
+piston_rod_assembly,H/HM/W,12,8,,4122,4777,222,,,,inch,H,44
+base_cylinder,H/HM/W,14,8,MX0/MX1/MX2/MX3,26390,,273,925,5 3/4-12,7 1/2-12,inch,H,45
+base_cylinder,H/HM/W,14,8,MF1/MF2/MS4,27544,,273,925,5 3/4-12,7 1/2-12,inch,H,45
+base_cylinder,H/HM/W,14,8,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,29118,,273,925,5 3/4-12,7 1/2-12,inch,H,45
+base_cylinder,H/HM/W,14,8,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,32224,,273,925,5 3/4-12,7 1/2-12,inch,H,45
+piston_rod_assembly,H/HM/W,14,8,,6598,7523,259,,,,inch,H,45
+base_cylinder,H/HM/W,14,10,MX0/MX1/MX2/MX3,26390,,340,925,7 1/4-12,9 1/2-12,inch,H,46
+base_cylinder,H/HM/W,14,10,MF1/MF2/MS4,27811,,340,925,7 1/4-12,9 1/2-12,inch,H,46
+base_cylinder,H/HM/W,14,10,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,30243,,340,925,7 1/4-12,9 1/2-12,inch,H,46
+base_cylinder,H/HM/W,14,10,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,32288,,340,925,7 1/4-12,9 1/2-12,inch,H,46
+piston_rod_assembly,H/HM/W,14,10,,6598,7523,323,,,,inch,H,46
+base_cylinder,H/HM/W,16,8,MX0/MX1/MX2/MX3,30276,,262,1200,5 3/4-12,7 1/2-12,inch,H,47
+base_cylinder,H/HM/W,16,8,MF1/MF2/MS4,30276,,262,1200,5 3/4-12,7 1/2-12,inch,H,47
+base_cylinder,H/HM/W,16,8,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,35952,,262,1200,5 3/4-12,7 1/2-12,inch,H,47
+base_cylinder,H/HM/W,16,8,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,49099,,262,1200,5 3/4-12,7 1/2-12,inch,H,47
+piston_rod_assembly,H/HM/W,16,8,,7569,8769,248,,,,inch,H,47
+base_cylinder,H/HM/W,16,10,MX0/MX1/MX2/MX3,35952,,359,1200,7 1/4-12,9 1/2-12,inch,H,48
+base_cylinder,H/HM/W,16,10,MF1/MF2/MS4,35952,,359,1200,7 1/4-12,9 1/2-12,inch,H,48
+base_cylinder,H/HM/W,16,10,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,43454,,359,1200,7 1/4-12,9 1/2-12,inch,H,48
+base_cylinder,H/HM/W,16,10,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,58893,,359,1200,7 1/4-12,9 1/2-12,inch,H,48
+piston_rod_assembly,H/HM/W,16,10,,8988,10188,341,,,,inch,H,48
+base_cylinder,H/HM/W,18,8,MX0/MX1/MX2/MX3,45295,,348,1400,5 3/4-12,7 1/2-12,inch,H,49
+base_cylinder,H/HM/W,18,8,MF1/MF2/MS4,45295,,348,1400,5 3/4-12,7 1/2-12,inch,H,49
+base_cylinder,H/HM/W,18,8,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,52826,,348,1400,5 3/4-12,7 1/2-12,inch,H,49
+base_cylinder,H/HM/W,18,8,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,71159,,348,1400,5 3/4-12,7 1/2-12,inch,H,49
+piston_rod_assembly,H/HM/W,18,8,,11324,12724,330,,,,inch,H,49
+base_cylinder,H/HM/W,18,10,MX0/MX1/MX2/MX3,47308,,372,1400,7 1/4-12,9 1/2-12,inch,H,50
+base_cylinder,H/HM/W,18,10,MF1/MF2/MS4,47308,,372,1400,7 1/4-12,9 1/2-12,inch,H,50
+base_cylinder,H/HM/W,18,10,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,54824,,372,1400,7 1/4-12,9 1/2-12,inch,H,50
+base_cylinder,H/HM/W,18,10,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,69455,,372,1400,7 1/4-12,9 1/2-12,inch,H,50
+piston_rod_assembly,H/HM/W,18,10,,11827,13227,353,,,,inch,H,50
+base_cylinder,H/HM/W,20,10,MX0/MX1/MX2/MX3,56666,,468,1400,7 1/4-12,9 1/2-12,inch,H,51
+base_cylinder,H/HM/W,20,10,MF1/MF2/MS4,56666,,468,1400,7 1/4-12,9 1/2-12,inch,H,51
+base_cylinder,H/HM/W,20,10,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,66209,,468,1400,7 1/4-12,9 1/2-12,inch,H,51
+base_cylinder,H/HM/W,20,10,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,83329,,468,1400,7 1/4-12,9 1/2-12,inch,H,51
+piston_rod_assembly,H/HM/W,20,10,,14167,15567,444,,,,inch,H,51
+base_cylinder,A/LH,1.5,0.625,MX0/MX1/MX2/MX3,472,,10,158,7/16-20,1/2-20,inch,A,6
+base_cylinder,A/LH,1.5,0.625,MF1/MF2/MS4,503,,10,158,7/16-20,1/2-20,inch,A,6
+base_cylinder,A/LH,1.5,0.625,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,534,,10,158,7/16-20,1/2-20,inch,A,6
+base_cylinder,A/LH,1.5,0.625,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,684,,10,158,7/16-20,1/2-20,inch,A,6
+piston_rod_assembly,A/LH,1.5,0.625,,118,276,9,,,,inch,A,6
+base_cylinder,A/LH,1.5,1,MX0/MX1/MX2/MX3,570,,11,158,3/4-16,7/8-14,inch,A,7
+base_cylinder,A/LH,1.5,1,MF1/MF2/MS4,622,,11,158,3/4-16,7/8-14,inch,A,7
+base_cylinder,A/LH,1.5,1,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,588,,11,158,3/4-16,7/8-14,inch,A,7
+base_cylinder,A/LH,1.5,1,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,727,,11,158,3/4-16,7/8-14,inch,A,7
+piston_rod_assembly,A/LH,1.5,1,,143,301,10,,,,inch,A,7
+base_cylinder,A/LH,2,0.625,MX0/MX1/MX2/MX3,511,,11,158,7/16-20,1/2-20,inch,A,8
+base_cylinder,A/LH,2,0.625,MF1/MF2/MS4,544,,11,158,7/16-20,1/2-20,inch,A,8
+base_cylinder,A/LH,2,0.625,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,571,,11,158,7/16-20,1/2-20,inch,A,8
+base_cylinder,A/LH,2,0.625,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,733,,11,158,7/16-20,1/2-20,inch,A,8
+piston_rod_assembly,A/LH,2,0.625,,128,286,10,,,,inch,A,8
+base_cylinder,A/LH,2,1,MX0/MX1/MX2/MX3,646,,12,158,3/4-16,7/8-14,inch,A,9
+base_cylinder,A/LH,2,1,MF1/MF2/MS4,679,,12,158,3/4-16,7/8-14,inch,A,9
+base_cylinder,A/LH,2,1,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,714,,12,158,3/4-16,7/8-14,inch,A,9
+base_cylinder,A/LH,2,1,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,858,,12,158,3/4-16,7/8-14,inch,A,9
+piston_rod_assembly,A/LH,2,1,,162,320,11,,,,inch,A,9
+base_cylinder,A/LH,2,1.375,MX0/MX1/MX2/MX3,679,,15,158,1-14,1 1/4-12,inch,A,10
+base_cylinder,A/LH,2,1.375,MF1/MF2/MS4,709,,15,158,1-14,1 1/4-12,inch,A,10
+base_cylinder,A/LH,2,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,771,,15,158,1-14,1 1/4-12,inch,A,10
+base_cylinder,A/LH,2,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,933,,15,158,1-14,1 1/4-12,inch,A,10
+piston_rod_assembly,A/LH,2,1.375,,170,328,14,,,,inch,A,10
+base_cylinder,A/LH,2.5,0.625,MX0/MX1/MX2/MX3,533,,11,158,7/16-20,1/2-20,inch,A,11
+base_cylinder,A/LH,2.5,0.625,MF1/MF2/MS4,581,,11,158,7/16-20,1/2-20,inch,A,11
+base_cylinder,A/LH,2.5,0.625,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,599,,11,158,7/16-20,1/2-20,inch,A,11
+base_cylinder,A/LH,2.5,0.625,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,770,,11,158,7/16-20,1/2-20,inch,A,11
+piston_rod_assembly,A/LH,2.5,0.625,,134,292,10,,,,inch,A,11
+base_cylinder,A/LH,2.5,1,MX0/MX1/MX2/MX3,679,,12,158,3/4-16,7/8-14,inch,A,12
+base_cylinder,A/LH,2.5,1,MF1/MF2/MS4,734,,12,158,3/4-16,7/8-14,inch,A,12
+base_cylinder,A/LH,2.5,1,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,747,,12,158,3/4-16,7/8-14,inch,A,12
+base_cylinder,A/LH,2.5,1,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,915,,12,158,3/4-16,7/8-14,inch,A,12
+piston_rod_assembly,A/LH,2.5,1,,170,328,11,,,,inch,A,12
+base_cylinder,A/LH,2.5,1.375,MX0/MX1/MX2/MX3,747,,16,158,1-14,1 1/4-12,inch,A,13
+base_cylinder,A/LH,2.5,1.375,MF1/MF2/MS4,786,,16,158,1-14,1 1/4-12,inch,A,13
+base_cylinder,A/LH,2.5,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,818,,16,158,1-14,1 1/4-12,inch,A,13
+base_cylinder,A/LH,2.5,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1000,,16,158,1-14,1 1/4-12,inch,A,13
+piston_rod_assembly,A/LH,2.5,1.375,,187,345,15,,,,inch,A,13
+base_cylinder,A/LH,2.5,1.75,MX0/MX1/MX2/MX3,797,,18,158,1 1/4-12,1 1/2-12,inch,A,14
+base_cylinder,A/LH,2.5,1.75,MF1/MF2/MS4,833,,18,158,1 1/4-12,1 1/2-12,inch,A,14
+base_cylinder,A/LH,2.5,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,924,,18,158,1 1/4-12,1 1/2-12,inch,A,14
+base_cylinder,A/LH,2.5,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1088,,18,158,1 1/4-12,1 1/2-12,inch,A,14
+piston_rod_assembly,A/LH,2.5,1.75,,200,358,17,,,,inch,A,14
+base_cylinder,A/LH,3.25,1,MX0/MX1/MX2/MX3,682,,17,191,3/4-16,7/8-14,inch,A,15
+base_cylinder,A/LH,3.25,1,MF1/MF2/MS4,745,,17,191,3/4-16,7/8-14,inch,A,15
+base_cylinder,A/LH,3.25,1,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,761,,17,191,3/4-16,7/8-14,inch,A,15
+base_cylinder,A/LH,3.25,1,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,982,,17,191,3/4-16,7/8-14,inch,A,15
+piston_rod_assembly,A/LH,3.25,1,,171,362,16,,,,inch,A,15
+base_cylinder,A/LH,3.25,1.375,MX0/MX1/MX2/MX3,907,,20,191,1-14,1 1/4-12,inch,A,16
+base_cylinder,A/LH,3.25,1.375,MF1/MF2/MS4,953,,20,191,1-14,1 1/4-12,inch,A,16
+base_cylinder,A/LH,3.25,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,965,,20,191,1-14,1 1/4-12,inch,A,16
+base_cylinder,A/LH,3.25,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1167,,20,191,1-14,1 1/4-12,inch,A,16
+piston_rod_assembly,A/LH,3.25,1.375,,227,418,19,,,,inch,A,16
+base_cylinder,A/LH,3.25,1.75,MX0/MX1/MX2/MX3,975,,23,191,1 1/4-12,1 1/2-12,inch,A,17
+base_cylinder,A/LH,3.25,1.75,MF1/MF2/MS4,1037,,23,191,1 1/4-12,1 1/2-12,inch,A,17
+base_cylinder,A/LH,3.25,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1053,,23,191,1 1/4-12,1 1/2-12,inch,A,17
+base_cylinder,A/LH,3.25,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1254,,23,191,1 1/4-12,1 1/2-12,inch,A,17
+piston_rod_assembly,A/LH,3.25,1.75,,244,435,21,,,,inch,A,17
+base_cylinder,A/LH,3.25,2,MX0/MX1/MX2/MX3,1059,,24,191,1 1/2-12,1 3/4-12,inch,A,18
+base_cylinder,A/LH,3.25,2,MF1/MF2/MS4,1125,,24,191,1 1/2-12,1 3/4-12,inch,A,18
+base_cylinder,A/LH,3.25,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1136,,24,191,1 1/2-12,1 3/4-12,inch,A,18
+base_cylinder,A/LH,3.25,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1350,,24,191,1 1/2-12,1 3/4-12,inch,A,18
+piston_rod_assembly,A/LH,3.25,2,,265,456,22,,,,inch,A,18
+base_cylinder,A/LH,4,1,MX0/MX1/MX2/MX3,811,,18,191,3/4-16,7/8-14,inch,A,19
+base_cylinder,A/LH,4,1,MF1/MF2/MS4,859,,18,191,3/4-16,7/8-14,inch,A,19
+base_cylinder,A/LH,4,1,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,876,,18,191,3/4-16,7/8-14,inch,A,19
+base_cylinder,A/LH,4,1,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1113,,18,191,3/4-16,7/8-14,inch,A,19
+piston_rod_assembly,A/LH,4,1,,203,394,17,,,,inch,A,19
+base_cylinder,A/LH,4,1.375,MX0/MX1/MX2/MX3,976,,21,191,1-14,1 1/4-12,inch,A,20
+base_cylinder,A/LH,4,1.375,MF1/MF2/MS4,1054,,21,191,1-14,1 1/4-12,inch,A,20
+base_cylinder,A/LH,4,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1074,,21,191,1-14,1 1/4-12,inch,A,20
+base_cylinder,A/LH,4,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1293,,21,191,1-14,1 1/4-12,inch,A,20
+piston_rod_assembly,A/LH,4,1.375,,244,435,19,,,,inch,A,20
+base_cylinder,A/LH,4,1.75,MX0/MX1/MX2/MX3,1054,,23,191,1 1/4-12,1 1/2-12,inch,A,21
+base_cylinder,A/LH,4,1.75,MF1/MF2/MS4,1129,,23,191,1 1/4-12,1 1/2-12,inch,A,21
+base_cylinder,A/LH,4,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1153,,23,191,1 1/4-12,1 1/2-12,inch,A,21
+base_cylinder,A/LH,4,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1439,,23,191,1 1/4-12,1 1/2-12,inch,A,21
+piston_rod_assembly,A/LH,4,1.75,,264,455,21,,,,inch,A,21
+base_cylinder,A/LH,4,2,MX0/MX1/MX2/MX3,1141,,24,191,1 1/2-12,1 3/4-12,inch,A,22
+base_cylinder,A/LH,4,2,MF1/MF2/MS4,1245,,24,191,1 1/2-12,1 3/4-12,inch,A,22
+base_cylinder,A/LH,4,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1241,,24,191,1 1/2-12,1 3/4-12,inch,A,22
+base_cylinder,A/LH,4,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1586,,24,191,1 1/2-12,1 3/4-12,inch,A,22
+piston_rod_assembly,A/LH,4,2,,286,477,22,,,,inch,A,22
+base_cylinder,A/LH,5,1,MX0/MX1/MX2/MX3,907,,23,196,3/4-16,7/8-14,inch,A,23
+base_cylinder,A/LH,5,1,MF1/MF2/MS4,987,,23,196,3/4-16,7/8-14,inch,A,23
+base_cylinder,A/LH,5,1,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1035,,23,196,3/4-16,7/8-14,inch,A,23
+base_cylinder,A/LH,5,1,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1328,,23,196,3/4-16,7/8-14,inch,A,23
+piston_rod_assembly,A/LH,5,1,,227,423,21,,,,inch,A,23
+base_cylinder,A/LH,5,1.375,MX0/MX1/MX2/MX3,1174,,24,196,1-14,1 1/4-12,inch,A,24
+base_cylinder,A/LH,5,1.375,MF1/MF2/MS4,1268,,24,196,1-14,1 1/4-12,inch,A,24
+base_cylinder,A/LH,5,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1316,,24,196,1-14,1 1/4-12,inch,A,24
+base_cylinder,A/LH,5,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1533,,24,196,1-14,1 1/4-12,inch,A,24
+piston_rod_assembly,A/LH,5,1.375,,294,490,22,,,,inch,A,24
+base_cylinder,A/LH,5,1.75,MX0/MX1/MX2/MX3,1246,,26,196,1 1/4-12,1 1/2-12,inch,A,25
+base_cylinder,A/LH,5,1.75,MF1/MF2/MS4,1335,,26,196,1 1/4-12,1 1/2-12,inch,A,25
+base_cylinder,A/LH,5,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1388,,26,196,1 1/4-12,1 1/2-12,inch,A,25
+base_cylinder,A/LH,5,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1608,,26,196,1 1/4-12,1 1/2-12,inch,A,25
+piston_rod_assembly,A/LH,5,1.75,,312,508,24,,,,inch,A,25
+base_cylinder,A/LH,5,2,MX0/MX1/MX2/MX3,1381,,30,196,1 1/2-12,1 3/4-12,inch,A,26
+base_cylinder,A/LH,5,2,MF1/MF2/MS4,1520,,30,196,1 1/2-12,1 3/4-12,inch,A,26
+base_cylinder,A/LH,5,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1527,,30,196,1 1/2-12,1 3/4-12,inch,A,26
+base_cylinder,A/LH,5,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1772,,30,196,1 1/2-12,1 3/4-12,inch,A,26
+piston_rod_assembly,A/LH,5,2,,346,542,28,,,,inch,A,26
+base_cylinder,A/LH,6,1.375,MX0/MX1/MX2/MX3,1232,,28,275,1-14,1 1/4-12,inch,A,27
+base_cylinder,A/LH,6,1.375,MF1/MF2/MS4,1321,,28,275,1-14,1 1/4-12,inch,A,27
+base_cylinder,A/LH,6,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1330,,28,275,1-14,1 1/4-12,inch,A,27
+base_cylinder,A/LH,6,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1837,,28,275,1-14,1 1/4-12,inch,A,27
+piston_rod_assembly,A/LH,6,1.375,,308,583,26,,,,inch,A,27
+base_cylinder,A/LH,6,1.75,MX0/MX1/MX2/MX3,1488,,30,275,1 1/4-12,1 1/2-12,inch,A,28
+base_cylinder,A/LH,6,1.75,MF1/MF2/MS4,1586,,30,275,1 1/4-12,1 1/2-12,inch,A,28
+base_cylinder,A/LH,6,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1595,,30,275,1 1/4-12,1 1/2-12,inch,A,28
+base_cylinder,A/LH,6,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1947,,30,275,1 1/4-12,1 1/2-12,inch,A,28
+piston_rod_assembly,A/LH,6,1.75,,372,647,28,,,,inch,A,28
+base_cylinder,A/LH,6,2,MX0/MX1/MX2/MX3,1593,,32,275,1 1/2-12,1 3/4-12,inch,A,29
+base_cylinder,A/LH,6,2,MF1/MF2/MS4,1697,,32,275,1 1/2-12,1 3/4-12,inch,A,29
+base_cylinder,A/LH,6,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1697,,32,275,1 1/2-12,1 3/4-12,inch,A,29
+base_cylinder,A/LH,6,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2066,,32,275,1 1/2-12,1 3/4-12,inch,A,29
+piston_rod_assembly,A/LH,6,2,,399,674,30,,,,inch,A,29
+base_cylinder,A/LH,6,2.5,MX0/MX1/MX2/MX3,1771,,37,275,1 7/8-12,2 1/4-12,inch,A,30
+base_cylinder,A/LH,6,2.5,MF1/MF2/MS4,1927,,37,275,1 7/8-12,2 1/4-12,inch,A,30
+base_cylinder,A/LH,6,2.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1877,,37,275,1 7/8-12,2 1/4-12,inch,A,30
+base_cylinder,A/LH,6,2.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2240,,37,275,1 7/8-12,2 1/4-12,inch,A,30
+piston_rod_assembly,A/LH,6,2.5,,443,718,35,,,,inch,A,30
+base_cylinder,A/LH,7,1.375,MX0/MX1/MX2/MX3,1392,,30,304,1-14,1 1/4-12,inch,A,31
+base_cylinder,A/LH,7,1.375,MF1/MF2/MS4,1446,,30,304,1-14,1 1/4-12,inch,A,31
+base_cylinder,A/LH,7,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1595,,30,304,1-14,1 1/4-12,inch,A,31
+base_cylinder,A/LH,7,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1944,,30,304,1-14,1 1/4-12,inch,A,31
+piston_rod_assembly,A/LH,7,1.375,,348,652,28,,,,inch,A,31
+base_cylinder,A/LH,7,1.75,MX0/MX1/MX2/MX3,1631,,33,304,1 1/4-12,1 1/2-12,inch,A,32
+base_cylinder,A/LH,7,1.75,MF1/MF2/MS4,1682,,33,304,1 1/4-12,1 1/2-12,inch,A,32
+base_cylinder,A/LH,7,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1855,,33,304,1 1/4-12,1 1/2-12,inch,A,32
+base_cylinder,A/LH,7,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2338,,33,304,1 1/4-12,1 1/2-12,inch,A,32
+piston_rod_assembly,A/LH,7,1.75,,408,712,31,,,,inch,A,32
+base_cylinder,A/LH,7,2,MX0/MX1/MX2/MX3,1654,,34,304,1 1/2-12,1 3/4-12,inch,A,33
+base_cylinder,A/LH,7,2,MF1/MF2/MS4,1705,,34,304,1 1/2-12,1 3/4-12,inch,A,33
+base_cylinder,A/LH,7,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1864,,34,304,1 1/2-12,1 3/4-12,inch,A,33
+base_cylinder,A/LH,7,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2433,,34,304,1 1/2-12,1 3/4-12,inch,A,33
+piston_rod_assembly,A/LH,7,2,,414,718,32,,,,inch,A,33
+base_cylinder,A/LH,7,2.5,MX0/MX1/MX2/MX3,2199,,52,344,1 7/8-12,2 1/4-12,inch,A,34
+base_cylinder,A/LH,7,2.5,MF1/MF2/MS4,2398,,52,344,1 7/8-12,2 1/4-12,inch,A,34
+base_cylinder,A/LH,7,2.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,2599,,52,344,1 7/8-12,2 1/4-12,inch,A,34
+base_cylinder,A/LH,7,2.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,3196,,52,344,1 7/8-12,2 1/4-12,inch,A,34
+piston_rod_assembly,A/LH,7,2.5,,550,894,49,,,,inch,A,34
+base_cylinder,A/LH,8,1.375,MX0/MX1/MX2/MX3,1654,,35,369,1-14,1 1/4-12,inch,A,35
+base_cylinder,A/LH,8,1.375,MF1/MF2/MS4,1819,,35,369,1-14,1 1/4-12,inch,A,35
+base_cylinder,A/LH,8,1.375,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1855,,35,369,1-14,1 1/4-12,inch,A,35
+base_cylinder,A/LH,8,1.375,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2462,,35,369,1-14,1 1/4-12,inch,A,35
+piston_rod_assembly,A/LH,8,1.375,,414,783,33,,,,inch,A,35
+base_cylinder,A/LH,8,1.75,MX0/MX1/MX2/MX3,2071,,37,369,1 1/4-12,1 1/2-12,inch,A,36
+base_cylinder,A/LH,8,1.75,MF1/MF2/MS4,2192,,37,369,1 1/4-12,1 1/2-12,inch,A,36
+base_cylinder,A/LH,8,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,2233,,37,369,1 1/4-12,1 1/2-12,inch,A,36
+base_cylinder,A/LH,8,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2739,,37,369,1 1/4-12,1 1/2-12,inch,A,36
+piston_rod_assembly,A/LH,8,1.75,,518,887,35,,,,inch,A,36
+base_cylinder,A/LH,8,2,MX0/MX1/MX2/MX3,2188,,38,369,1 1/2-12,1 3/4-12,inch,A,37
+base_cylinder,A/LH,8,2,MF1/MF2/MS4,2308,,38,369,1 1/2-12,1 3/4-12,inch,A,37
+base_cylinder,A/LH,8,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,2348,,38,369,1 1/2-12,1 3/4-12,inch,A,37
+base_cylinder,A/LH,8,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,2883,,38,369,1 1/2-12,1 3/4-12,inch,A,37
+piston_rod_assembly,A/LH,8,2,,547,916,36,,,,inch,A,37
+base_cylinder,A/LH,8,2.5,MX0/MX1/MX2/MX3,2354,,42,369,1 7/8-12,2 1/4-12,inch,A,38
+base_cylinder,A/LH,8,2.5,MF1/MF2/MS4,2482,,42,369,1 7/8-12,2 1/4-12,inch,A,38
+base_cylinder,A/LH,8,2.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,2517,,42,369,1 7/8-12,2 1/4-12,inch,A,38
+base_cylinder,A/LH,8,2.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,3059,,42,369,1 7/8-12,2 1/4-12,inch,A,38
+piston_rod_assembly,A/LH,8,2.5,,589,958,39,,,,inch,A,38
+base_cylinder,A/LH,10,1.75,MX0/MX1/MX2/MX3,2770,,52,416,1 1/4-12,1 1/2-12,inch,A,39
+base_cylinder,A/LH,10,1.75,MF1/MF2/MS4,2915,,52,416,1 1/4-12,1 1/2-12,inch,A,39
+base_cylinder,A/LH,10,1.75,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,2945,,52,416,1 1/4-12,1 1/2-12,inch,A,39
+base_cylinder,A/LH,10,1.75,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,3624,,52,416,1 1/4-12,1 1/2-12,inch,A,39
+piston_rod_assembly,A/LH,10,1.75,,693,1109,49,,,,inch,A,39
+base_cylinder,A/LH,10,2,MX0/MX1/MX2/MX3,3370,,53,416,1 1/2-12,1 3/4-12,inch,A,40
+base_cylinder,A/LH,10,2,MF1/MF2/MS4,3536,,53,416,1 1/2-12,1 3/4-12,inch,A,40
+base_cylinder,A/LH,10,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,3601,,53,416,1 1/2-12,1 3/4-12,inch,A,40
+base_cylinder,A/LH,10,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,3914,,53,416,1 1/2-12,1 3/4-12,inch,A,40
+piston_rod_assembly,A/LH,10,2,,843,1259,50,,,,inch,A,40
+base_cylinder,A/LH,10,2.5,MX0/MX1/MX2/MX3,3521,,57,416,1 7/8-12,2 1/4-12,inch,A,41
+base_cylinder,A/LH,10,2.5,MF1/MF2/MS4,3683,,57,416,1 7/8-12,2 1/4-12,inch,A,41
+base_cylinder,A/LH,10,2.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,3829,,57,416,1 7/8-12,2 1/4-12,inch,A,41
+base_cylinder,A/LH,10,2.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,4135,,57,416,1 7/8-12,2 1/4-12,inch,A,41
+piston_rod_assembly,A/LH,10,2.5,,881,1297,54,,,,inch,A,41
+base_cylinder,A/LH,10,3,MX0/MX1/MX2/MX3,3703,,63,416,2 1/4-12,2 3/4-12,inch,A,42
+base_cylinder,A/LH,10,3,MF1/MF2/MS4,3873,,63,416,2 1/4-12,2 3/4-12,inch,A,42
+base_cylinder,A/LH,10,3,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,4021,,63,416,2 1/4-12,2 3/4-12,inch,A,42
+base_cylinder,A/LH,10,3,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,4331,,63,416,2 1/4-12,2 3/4-12,inch,A,42
+piston_rod_assembly,A/LH,10,3,,926,1342,59,,,,inch,A,42
+base_cylinder,A/LH,10,3.5,MX0/MX1/MX2/MX3,3853,,69,416,2 1/2-12,3 1/4-12,inch,A,43
+base_cylinder,A/LH,10,3.5,MF1/MF2/MS4,4034,,69,416,2 1/2-12,3 1/4-12,inch,A,43
+base_cylinder,A/LH,10,3.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,4172,,69,416,2 1/2-12,3 1/4-12,inch,A,43
+base_cylinder,A/LH,10,3.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,4636,,69,416,2 1/2-12,3 1/4-12,inch,A,43
+piston_rod_assembly,A/LH,10,3.5,,964,1380,65,,,,inch,A,43
+base_cylinder,A/LH,12,2,MX0/MX1/MX2/MX3,3954,,83,536,1 1/2-12,1 3/4-12,inch,A,44
+base_cylinder,A/LH,12,2,MF1/MF2/MS4,4136,,83,536,1 1/2-12,1 3/4-12,inch,A,44
+base_cylinder,A/LH,12,2,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,4189,,83,536,1 1/2-12,1 3/4-12,inch,A,44
+base_cylinder,A/LH,12,2,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,5013,,83,536,1 1/2-12,1 3/4-12,inch,A,44
+piston_rod_assembly,A/LH,12,2,,989,1525,78,,,,inch,A,44
+base_cylinder,A/LH,12,2.5,MX0/MX1/MX2/MX3,4454,,88,536,1 7/8-12,2 1/4-12,inch,A,45
+base_cylinder,A/LH,12,2.5,MF1/MF2/MS4,4648,,88,536,1 7/8-12,2 1/4-12,inch,A,45
+base_cylinder,A/LH,12,2.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,4860,,88,536,1 7/8-12,2 1/4-12,inch,A,45
+base_cylinder,A/LH,12,2.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,5380,,88,536,1 7/8-12,2 1/4-12,inch,A,45
+piston_rod_assembly,A/LH,12,2.5,,1114,1650,83,,,,inch,A,45
+base_cylinder,A/LH,12,3,MX0/MX1/MX2/MX3,4622,,93,536,2 1/4-12,2 3/4-12,inch,A,46
+base_cylinder,A/LH,12,3,MF1/MF2/MS4,4815,,93,536,2 1/4-12,2 3/4-12,inch,A,46
+base_cylinder,A/LH,12,3,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,5034,,93,536,2 1/4-12,2 3/4-12,inch,A,46
+base_cylinder,A/LH,12,3,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,5414,,93,536,2 1/4-12,2 3/4-12,inch,A,46
+piston_rod_assembly,A/LH,12,3,,1156,1692,88,,,,inch,A,46
+base_cylinder,A/LH,12,3.5,MX0/MX1/MX2/MX3,4806,,100,536,2 1/2-12,3 1/4-12,inch,A,47
+base_cylinder,A/LH,12,3.5,MF1/MF2/MS4,5015,,100,536,2 1/2-12,3 1/4-12,inch,A,47
+base_cylinder,A/LH,12,3.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,5225,,100,536,2 1/2-12,3 1/4-12,inch,A,47
+base_cylinder,A/LH,12,3.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,5775,,100,536,2 1/2-12,3 1/4-12,inch,A,47
+piston_rod_assembly,A/LH,12,3.5,,1202,1738,95,,,,inch,A,47
+base_cylinder,A/LH,12,4,MX0/MX1/MX2/MX3,5038,,109,536,3-12,3 3/4-12,inch,A,48
+base_cylinder,A/LH,12,4,MF1/MF2/MS4,5246,,109,536,3-12,3 3/4-12,inch,A,48
+base_cylinder,A/LH,12,4,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,5457,,109,536,3-12,3 3/4-12,inch,A,48
+base_cylinder,A/LH,12,4,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,6031,,109,536,3-12,3 3/4-12,inch,A,48
+piston_rod_assembly,A/LH,12,4,,1260,1796,103,,,,inch,A,48
+base_cylinder,A/LH,14,2.5,MX0/MX1/MX2/MX3,5988,,99,761,1 7/8-12,2 1/4-12,inch,A,49
+base_cylinder,A/LH,14,2.5,MF1/MF2/MS4,6835,,99,761,1 7/8-12,2 1/4-12,inch,A,49
+base_cylinder,A/LH,14,2.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,7149,,99,761,1 7/8-12,2 1/4-12,inch,A,49
+base_cylinder,A/LH,14,2.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,7757,,99,761,1 7/8-12,2 1/4-12,inch,A,49
+piston_rod_assembly,A/LH,14,2.5,,1497,2258,94,,,,inch,A,49
+base_cylinder,A/LH,14,3,MX0/MX1/MX2/MX3,6905,,102,761,2 1/4-12,2 3/4-12,inch,A,50
+base_cylinder,A/LH,14,3,MF1/MF2/MS4,7222,,102,761,2 1/4-12,2 3/4-12,inch,A,50
+base_cylinder,A/LH,14,3,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,7692,,102,761,2 1/4-12,2 3/4-12,inch,A,50
+base_cylinder,A/LH,14,3,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,8083,,102,761,2 1/4-12,2 3/4-12,inch,A,50
+piston_rod_assembly,A/LH,14,3,,1727,2488,96,,,,inch,A,50
+base_cylinder,A/LH,14,3.5,MX0/MX1/MX2/MX3,7122,,110,761,2 1/2-12,3 1/4-12,inch,A,51
+base_cylinder,A/LH,14,3.5,MF1/MF2/MS4,7436,,110,761,2 1/2-12,3 1/4-12,inch,A,51
+base_cylinder,A/LH,14,3.5,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,7486,,110,761,2 1/2-12,3 1/4-12,inch,A,51
+base_cylinder,A/LH,14,3.5,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,8556,,110,761,2 1/2-12,3 1/4-12,inch,A,51
+piston_rod_assembly,A/LH,14,3.5,,1781,2542,104,,,,inch,A,51
+base_cylinder,A/LH,14,4,MX0/MX1/MX2/MX3,7389,,116,761,3-12,3 3/4-12,inch,A,52
+base_cylinder,A/LH,14,4,MF1/MF2/MS4,7706,,116,761,3-12,3 3/4-12,inch,A,52
+base_cylinder,A/LH,14,4,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,7974,,116,761,3-12,3 3/4-12,inch,A,52
+base_cylinder,A/LH,14,4,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,8835,,116,761,3-12,3 3/4-12,inch,A,52
+piston_rod_assembly,A/LH,14,4,,1848,2609,110,,,,inch,A,52
+base_cylinder,IH/IHM,25,12,MX0/MX1/MX2/MX3,813,,0.4,140,M10x1.25,,mm,IH,7
+base_cylinder,IH/IHM,25,12,MF1/MF2/MS4,875,,0.4,140,M10x1.25,,mm,IH,7
+base_cylinder,IH/IHM,25,12,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,938,,0.4,140,M10x1.25,,mm,IH,7
+base_cylinder,IH/IHM,25,12,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1188,,0.4,140,M10x1.25,,mm,IH,7
+piston_rod_assembly,IH/IHM,25,12,,204,344,0.5,,,,mm,IH,7
+base_cylinder,IH/IHM,25,18,MX0/MX1/MX2/MX3,878,,0.48,140,M14x1.5,,mm,IH,8
+base_cylinder,IH/IHM,25,18,MF1/MF2/MS4,945,,0.48,140,M14x1.5,,mm,IH,8
+base_cylinder,IH/IHM,25,18,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,1013,,0.48,140,M14x1.5,,mm,IH,8
+base_cylinder,IH/IHM,25,18,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,1283,,0.48,140,M14x1.5,,mm,IH,8
+piston_rod_assembly,IH/IHM,25,18,,220,360,0.5,,,,mm,IH,8
+base_cylinder,IH/IHM,32,14,MX0/MX1/MX2/MX3,"=ROUNDUP(E8*1.08,0)",,0.52,153,M12x1.25,,mm,IH,9
+base_cylinder,IH/IHM,32,14,MF1/MF2/MS4,1021,,0.52,153,M12x1.25,,mm,IH,9
+base_cylinder,IH/IHM,32,14,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G8*1.08,0)",,0.52,153,M12x1.25,,mm,IH,9
+base_cylinder,IH/IHM,32,14,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H8*1.08,0)",,0.52,153,M12x1.25,,mm,IH,9
+piston_rod_assembly,IH/IHM,32,14,,238,391,0.5,,,,mm,IH,9
+base_cylinder,IH/IHM,32,18,MX0/MX1/MX2/MX3,"=ROUNDUP(E9*1.08,0)",,0.56,153,M14x1.5,,mm,IH,10
+base_cylinder,IH/IHM,32,18,MF1/MF2/MS4,1103,,0.56,153,M14x1.5,,mm,IH,10
+base_cylinder,IH/IHM,32,18,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G9*1.08,0)",,0.56,153,M14x1.5,,mm,IH,10
+base_cylinder,IH/IHM,32,18,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H9*1.08,0)",,0.56,153,M14x1.5,,mm,IH,10
+piston_rod_assembly,IH/IHM,32,18,,257,410,0.5,,,,mm,IH,10
+base_cylinder,IH/IHM,32,22,MX0/MX1/MX2/MX3,"=ROUNDUP(E10*1.08,0)",,0.56,173,M16x1.5,,mm,IH,11
+base_cylinder,IH/IHM,32,22,MF1/MF2/MS4,1192,,0.56,173,M16x1.5,,mm,IH,11
+base_cylinder,IH/IHM,32,22,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G10*1.08,0)",,0.56,173,M16x1.5,,mm,IH,11
+base_cylinder,IH/IHM,32,22,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H10*1.08,0)",,0.56,173,M16x1.5,,mm,IH,11
+piston_rod_assembly,IH/IHM,32,22,,277,450,0.5,,,,mm,IH,11
+base_cylinder,IH/IHM,40,18,MX0/MX1/MX2/MX3,"=ROUNDUP(E11*1.08,0)",,0.6,173,M14x1.5,,mm,IH,12
+base_cylinder,IH/IHM,40,18,MF1/MF2/MS4,1288,,0.6,173,M14x1.5,,mm,IH,12
+base_cylinder,IH/IHM,40,18,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G11*1.08,0)",,0.6,173,M14x1.5,,mm,IH,12
+base_cylinder,IH/IHM,40,18,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H11*1.08,0)",,0.6,173,M14x1.5,,mm,IH,12
+piston_rod_assembly,IH/IHM,40,18,,299,472,0.5,,,,mm,IH,12
+base_cylinder,IH/IHM,40,22,MX0/MX1/MX2/MX3,"=ROUNDUP(E12*1.08,0)",,0.72,173,M16x1.5,,mm,IH,13
+base_cylinder,IH/IHM,40,22,MF1/MF2/MS4,1392,,0.72,173,M16x1.5,,mm,IH,13
+base_cylinder,IH/IHM,40,22,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G12*1.08,0)",,0.72,173,M16x1.5,,mm,IH,13
+base_cylinder,IH/IHM,40,22,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H12*1.08,0)",,0.72,173,M16x1.5,,mm,IH,13
+piston_rod_assembly,IH/IHM,40,22,,323,496,0.5,,,,mm,IH,13
+base_cylinder,IH/IHM,40,28,MX0/MX1/MX2/MX3,"=ROUNDUP(E13*1.08,0)",,0.72,200,M20x1.5,,mm,IH,14
+base_cylinder,IH/IHM,40,28,MF1/MF2/MS4,1504,,0.72,200,M20x1.5,,mm,IH,14
+base_cylinder,IH/IHM,40,28,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G13*1.08,0)",,0.72,200,M20x1.5,,mm,IH,14
+base_cylinder,IH/IHM,40,28,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H13*1.08,0)",,0.72,200,M20x1.5,,mm,IH,14
+piston_rod_assembly,IH/IHM,40,28,,349,549,0.5,,,,mm,IH,14
+base_cylinder,IH/IHM,50,22,MX0/MX1/MX2/MX3,"=ROUNDUP(E14*1.08,0)",,0.8,200,M16x1.5,,mm,IH,15
+base_cylinder,IH/IHM,50,22,MF1/MF2/MS4,1625,,0.8,200,M16x1.5,,mm,IH,15
+base_cylinder,IH/IHM,50,22,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G14*1.08,0)",,0.8,200,M16x1.5,,mm,IH,15
+base_cylinder,IH/IHM,50,22,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H14*1.08,0)",,0.8,200,M16x1.5,,mm,IH,15
+piston_rod_assembly,IH/IHM,50,22,,377,577,1,,,,mm,IH,15
+base_cylinder,IH/IHM,50,28,MX0/MX1/MX2/MX3,"=ROUNDUP(E15*1.08,0)",,0.92,200,M20x1.5,,mm,IH,16
+base_cylinder,IH/IHM,50,28,MF1/MF2/MS4,1755,,0.92,200,M20x1.5,,mm,IH,16
+base_cylinder,IH/IHM,50,28,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G15*1.08,0)",,0.92,200,M20x1.5,,mm,IH,16
+base_cylinder,IH/IHM,50,28,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H15*1.08,0)",,0.92,200,M20x1.5,,mm,IH,16
+piston_rod_assembly,IH/IHM,50,28,,408,608,1,,,,mm,IH,16
+base_cylinder,IH/IHM,50,36,MX0/MX1/MX2/MX3,"=ROUNDUP(E16*1.08,0)",,0.92,234,M27x2,,mm,IH,17
+base_cylinder,IH/IHM,50,36,MF1/MF2/MS4,1896,,0.92,234,M27x2,,mm,IH,17
+base_cylinder,IH/IHM,50,36,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G16*1.08,0)",,0.92,234,M27x2,,mm,IH,17
+base_cylinder,IH/IHM,50,36,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H16*1.08,0)",,0.92,234,M27x2,,mm,IH,17
+piston_rod_assembly,IH/IHM,50,36,,440,674,1,,,,mm,IH,17
+base_cylinder,IH/IHM,63,28,MX0/MX1/MX2/MX3,"=ROUNDUP(E17*1.08,0)",,1.04,234,M20x1.5,,mm,IH,18
+base_cylinder,IH/IHM,63,28,MF1/MF2/MS4,2048,,1.04,234,M20x1.5,,mm,IH,18
+base_cylinder,IH/IHM,63,28,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G17*1.08,0)",,1.04,234,M20x1.5,,mm,IH,18
+base_cylinder,IH/IHM,63,28,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H17*1.08,0)",,1.04,234,M20x1.5,,mm,IH,18
+piston_rod_assembly,IH/IHM,63,28,,476,710,1,,,,mm,IH,18
+base_cylinder,IH/IHM,63,36,MX0/MX1/MX2/MX3,"=ROUNDUP(E18*1.08,0)",,1.12,234,M27x2,,mm,IH,19
+base_cylinder,IH/IHM,63,36,MF1/MF2/MS4,2212,,1.12,234,M27x2,,mm,IH,19
+base_cylinder,IH/IHM,63,36,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G18*1.08,0)",,1.12,234,M27x2,,mm,IH,19
+base_cylinder,IH/IHM,63,36,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H18*1.08,0)",,1.12,234,M27x2,,mm,IH,19
+piston_rod_assembly,IH/IHM,63,36,,514,748,1,,,,mm,IH,19
+base_cylinder,IH/IHM,63,45,MX0/MX1/MX2/MX3,"=ROUNDUP(E19*1.08,0)",,1.24,259,M33x2,,mm,IH,20
+base_cylinder,IH/IHM,63,45,MF1/MF2/MS4,2389,,1.24,259,M33x2,,mm,IH,20
+base_cylinder,IH/IHM,63,45,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G19*1.08,0)",,1.24,259,M33x2,,mm,IH,20
+base_cylinder,IH/IHM,63,45,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H19*1.08,0)",,1.24,259,M33x2,,mm,IH,20
+piston_rod_assembly,IH/IHM,63,45,,555,814,1,,,,mm,IH,20
+base_cylinder,IH/IHM,80,36,MX0/MX1/MX2/MX3,"=ROUNDUP(E20*1.08,0)",,1.4000000000000001,259,M27x2,,mm,IH,21
+base_cylinder,IH/IHM,80,36,MF1/MF2/MS4,2581,,1.4000000000000001,259,M27x2,,mm,IH,21
+base_cylinder,IH/IHM,80,36,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G20*1.08,0)",,1.4000000000000001,259,M27x2,,mm,IH,21
+base_cylinder,IH/IHM,80,36,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H20*1.08,0)",,1.4000000000000001,259,M27x2,,mm,IH,21
+piston_rod_assembly,IH/IHM,80,36,,600,859,1,,,,mm,IH,21
+base_cylinder,IH/IHM,80,45,MX0/MX1/MX2/MX3,"=ROUNDUP(E21*1.08,0)",,1.56,259,M33x2,,mm,IH,22
+base_cylinder,IH/IHM,80,45,MF1/MF2/MS4,2788,,1.56,259,M33x2,,mm,IH,22
+base_cylinder,IH/IHM,80,45,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G21*1.08,0)",,1.56,259,M33x2,,mm,IH,22
+base_cylinder,IH/IHM,80,45,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H21*1.08,0)",,1.56,259,M33x2,,mm,IH,22
+piston_rod_assembly,IH/IHM,80,45,,648,907,2,,,,mm,IH,22
+base_cylinder,IH/IHM,80,56,MX0/MX1/MX2/MX3,"=ROUNDUP(E22*1.08,0)",,1.8,259,M42x2,,mm,IH,23
+base_cylinder,IH/IHM,80,56,MF1/MF2/MS4,3012,,1.8,259,M42x2,,mm,IH,23
+base_cylinder,IH/IHM,80,56,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G22*1.08,0)",,1.8,259,M42x2,,mm,IH,23
+base_cylinder,IH/IHM,80,56,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H22*1.08,0)",,1.8,259,M42x2,,mm,IH,23
+piston_rod_assembly,IH/IHM,80,56,,700,959,2,,,,mm,IH,23
+base_cylinder,IH/IHM,100,45,MX0/MX1/MX2/MX3,"=ROUNDUP(E23*1.08,0)",,1.56,323,M33x2,,mm,IH,24
+base_cylinder,IH/IHM,100,45,MF1/MF2/MS4,3253,,1.56,323,M33x2,,mm,IH,24
+base_cylinder,IH/IHM,100,45,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G23*1.08,0)",,1.56,323,M33x2,,mm,IH,24
+base_cylinder,IH/IHM,100,45,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H23*1.08,0)",,1.56,323,M33x2,,mm,IH,24
+piston_rod_assembly,IH/IHM,100,45,,756,1079,2,,,,mm,IH,24
+base_cylinder,IH/IHM,100,56,MX0/MX1/MX2/MX3,"=ROUNDUP(E24*1.08,0)",,1.8,323,M42x2,,mm,IH,25
+base_cylinder,IH/IHM,100,56,MF1/MF2/MS4,3514,,1.8,323,M42x2,,mm,IH,25
+base_cylinder,IH/IHM,100,56,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G24*1.08,0)",,1.8,323,M42x2,,mm,IH,25
+base_cylinder,IH/IHM,100,56,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H24*1.08,0)",,1.8,323,M42x2,,mm,IH,25
+piston_rod_assembly,IH/IHM,100,56,,816,1139,2,,,,mm,IH,25
+base_cylinder,IH/IHM,100,70,MX0/MX1/MX2/MX3,"=ROUNDUP(E25*1.08,0)",,2.04,323,M48x2,,mm,IH,26
+base_cylinder,IH/IHM,100,70,MF1/MF2/MS4,3796,,2.04,323,M48x2,,mm,IH,26
+base_cylinder,IH/IHM,100,70,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G25*1.08,0)",,2.04,323,M48x2,,mm,IH,26
+base_cylinder,IH/IHM,100,70,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H25*1.08,0)",,2.04,323,M48x2,,mm,IH,26
+piston_rod_assembly,IH/IHM,100,70,,882,1205,2,,,,mm,IH,26
+base_cylinder,IH/IHM,125,56,MX0/MX1/MX2/MX3,"=ROUNDUP(E26*1.08,0)",,2.2800000000000002,323,M42x2,,mm,IH,27
+base_cylinder,IH/IHM,125,56,MF1/MF2/MS4,4100,,2.2800000000000002,323,M42x2,,mm,IH,27
+base_cylinder,IH/IHM,125,56,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G26*1.08,0)",,2.2800000000000002,323,M42x2,,mm,IH,27
+base_cylinder,IH/IHM,125,56,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H26*1.08,0)",,2.2800000000000002,323,M42x2,,mm,IH,27
+piston_rod_assembly,IH/IHM,125,56,,952,1275,2,,,,mm,IH,27
+base_cylinder,IH/IHM,125,70,MX0/MX1/MX2/MX3,"=ROUNDUP(E27*1.08,0)",,2.08,363,M48x2,,mm,IH,28
+base_cylinder,IH/IHM,125,70,MF1/MF2/MS4,4428,,2.08,363,M48x2,,mm,IH,28
+base_cylinder,IH/IHM,125,70,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G27*1.08,0)",,2.08,363,M48x2,,mm,IH,28
+base_cylinder,IH/IHM,125,70,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H27*1.08,0)",,2.08,363,M48x2,,mm,IH,28
+piston_rod_assembly,IH/IHM,125,70,,1028,1391,2,,,,mm,IH,28
+base_cylinder,IH/IHM,125,90,MX0/MX1/MX2/MX3,"=ROUNDUP(E28*1.08,0)",,2.2,363,M64x3,,mm,IH,29
+base_cylinder,IH/IHM,125,90,MF1/MF2/MS4,4783,,2.2,363,M64x3,,mm,IH,29
+base_cylinder,IH/IHM,125,90,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G28*1.08,0)",,2.2,363,M64x3,,mm,IH,29
+base_cylinder,IH/IHM,125,90,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H28*1.08,0)",,2.2,363,M64x3,,mm,IH,29
+piston_rod_assembly,IH/IHM,125,90,,1111,1474,2,,,,mm,IH,29
+base_cylinder,IH/IHM,160,70,MX0/MX1/MX2/MX3,"=ROUNDUP(E29*1.08,0)",,2.48,363,M48x2,,mm,IH,30
+base_cylinder,IH/IHM,160,70,MF1/MF2/MS4,5166,,2.48,363,M48x2,,mm,IH,30
+base_cylinder,IH/IHM,160,70,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G29*1.08,0)",,2.48,363,M48x2,,mm,IH,30
+base_cylinder,IH/IHM,160,70,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H29*1.08,0)",,2.48,363,M48x2,,mm,IH,30
+piston_rod_assembly,IH/IHM,160,70,,1200,1563,3,,,,mm,IH,30
+base_cylinder,IH/IHM,160,90,MX0/MX1/MX2/MX3,"=ROUNDUP(E30*1.08,0)",,2.8000000000000003,363,M64x3,,mm,IH,31
+base_cylinder,IH/IHM,160,90,MF1/MF2/MS4,5580,,2.8000000000000003,363,M64x3,,mm,IH,31
+base_cylinder,IH/IHM,160,90,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G30*1.08,0)",,2.8000000000000003,363,M64x3,,mm,IH,31
+base_cylinder,IH/IHM,160,90,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H30*1.08,0)",,2.8000000000000003,363,M64x3,,mm,IH,31
+piston_rod_assembly,IH/IHM,160,90,,1296,1659,3,,,,mm,IH,31
+base_cylinder,IH/IHM,160,110,MX0/MX1/MX2/MX3,"=ROUNDUP(E31*1.08,0)",,3,363,M80x3,,mm,IH,32
+base_cylinder,IH/IHM,160,110,MF1/MF2/MS4,6027,,3,363,M80x3,,mm,IH,32
+base_cylinder,IH/IHM,160,110,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G31*1.08,0)",,3,363,M80x3,,mm,IH,32
+base_cylinder,IH/IHM,160,110,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H31*1.08,0)",,3,363,M80x3,,mm,IH,32
+piston_rod_assembly,IH/IHM,160,110,,1399,1762,3,,,,mm,IH,32
+base_cylinder,IH/IHM,200,90,MX0/MX1/MX2/MX3,"=ROUNDUP(E32*1.08,0)",,2.7600000000000002,394,M64x3,,mm,IH,33
+base_cylinder,IH/IHM,200,90,MF1/MF2/MS4,6510,,2.7600000000000002,394,M64x3,,mm,IH,33
+base_cylinder,IH/IHM,200,90,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G32*1.08,0)",,2.7600000000000002,394,M64x3,,mm,IH,33
+base_cylinder,IH/IHM,200,90,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H32*1.08,0)",,2.7600000000000002,394,M64x3,,mm,IH,33
+piston_rod_assembly,IH/IHM,200,90,,1511,1905,3,,,,mm,IH,33
+base_cylinder,IH/IHM,200,110,MX0/MX1/MX2/MX3,"=ROUNDUP(E33*1.08,0)",,2.96,394,M80x3,,mm,IH,34
+base_cylinder,IH/IHM,200,110,MF1/MF2/MS4,7031,,2.96,394,M80x3,,mm,IH,34
+base_cylinder,IH/IHM,200,110,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G33*1.08,0)",,2.96,394,M80x3,,mm,IH,34
+base_cylinder,IH/IHM,200,110,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H33*1.08,0)",,2.96,394,M80x3,,mm,IH,34
+piston_rod_assembly,IH/IHM,200,110,,1632,2026,3,,,,mm,IH,34
+base_cylinder,IH/IHM,200,140,MX0/MX1/MX2/MX3,"=ROUNDUP(E34*1.08,0)",,3.2,394,M100x3,,mm,IH,35
+base_cylinder,IH/IHM,200,140,MF1/MF2/MS4,7594,,3.2,394,M100x3,,mm,IH,35
+base_cylinder,IH/IHM,200,140,MP1/MP3/MT1/MT2/MF5/MF6/MS2/ME5/ME6,"=ROUNDUP(G34*1.08,0)",,3.2,394,M100x3,,mm,IH,35
+base_cylinder,IH/IHM,200,140,MS3/MP2/ME3/ME4/MT4/MPU3/MS7,"=ROUNDUP(H34*1.08,0)",,3.2,394,M100x3,,mm,IH,35
+piston_rod_assembly,IH/IHM,200,140,,1763,2157,4,,,,mm,IH,35
+base_cylinder,MH,1.5,0.625,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,2538,,16,296,7/16-20,1/2-20,inch,MH,7
+base_cylinder,MH,1.5,0.625,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,2882,,16,296,7/16-20,1/2-20,inch,MH,7
+base_cylinder,MH,1.5,1,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,2944,,23,296,3/4-16,7/8-14,inch,MH,8
+base_cylinder,MH,1.5,1,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3327,,23,296,3/4-16,7/8-14,inch,MH,8
+base_cylinder,MH,2,1,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,2238,,17,296,3/4-16,7/8-14,inch,MH,9
+base_cylinder,MH,2,1,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,2803,,17,296,3/4-16,7/8-14,inch,MH,9
+base_cylinder,MH,2,1.375,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,2649,,24,296,1-14,1 1/4-12,inch,MH,10
+base_cylinder,MH,2,1.375,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3170,,24,296,1-14,1 1/4-12,inch,MH,10
+base_cylinder,MH,2.5,1,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,2649,,25,296,3/4-16,7/8-14,inch,MH,11
+base_cylinder,MH,2.5,1,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3330,,25,296,3/4-16,7/8-14,inch,MH,11
+base_cylinder,MH,2.5,1.375,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,2930,,26,296,1-14,1 1/4-12,inch,MH,12
+base_cylinder,MH,2.5,1.375,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3579,,26,296,1-14,1 1/4-12,inch,MH,12
+base_cylinder,MH,2.5,1.75,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3362,,27,296,1 1/4-12,1 1/2-12,inch,MH,13
+base_cylinder,MH,2.5,1.75,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,4008,,27,296,1 1/4-12,1 1/2-12,inch,MH,13
+base_cylinder,MH,3.25,1.375,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,2989,,27,296,1-14,1 1/4-12,inch,MH,14
+base_cylinder,MH,3.25,1.375,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3579,,27,296,1-14,1 1/4-12,inch,MH,14
+base_cylinder,MH,3.25,1.75,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3579,,29,296,1 1/4-12,1 1/2-12,inch,MH,15
+base_cylinder,MH,3.25,1.75,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,4249,,29,296,1 1/4-12,1 1/2-12,inch,MH,15
+base_cylinder,MH,3.25,2,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3891,,29,296,1 1/2-12,1 3/4-12,inch,MH,16
+base_cylinder,MH,3.25,2,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,4571,,29,296,1 1/2-12,1 3/4-12,inch,MH,16
+base_cylinder,MH,4,1.75,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3715,,35,296,1 1/4-12,1 1/2-12,inch,MH,17
+base_cylinder,MH,4,1.75,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,4584,,35,296,1 1/4-12,1 1/2-12,inch,MH,17
+base_cylinder,MH,4,2,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,4293,,35,296,1 1/2-12,1 3/4-12,inch,MH,18
+base_cylinder,MH,4,2,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,5204,,35,296,1 1/2-12,1 3/4-12,inch,MH,18
+base_cylinder,MH,4,2.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,4630,,35,296,1 7/8-12,2 1/4-12,inch,MH,19
+base_cylinder,MH,4,2.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,5570,,35,296,1 7/8-12,2 1/4-12,inch,MH,19
+base_cylinder,MH,5,2,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,4492,,42,296,1 1/2-12,1 3/4-12,inch,MH,20
+base_cylinder,MH,5,2,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,5436,,42,296,1 1/2-12,1 3/4-12,inch,MH,20
+base_cylinder,MH,5,2.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,5116,,48,296,1 7/8-12,2 1/4-12,inch,MH,21
+base_cylinder,MH,5,2.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,6076,,48,296,1 7/8-12,2 1/4-12,inch,MH,21
+base_cylinder,MH,5,3,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,5561,,51,296,2 1/4-12,2 3/4-12,inch,MH,22
+base_cylinder,MH,5,3,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,6514,,51,296,2 1/4-12,2 3/4-12,inch,MH,22
+base_cylinder,MH,5,3.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,5836,,59,296,2 1/2-12,3 1/4-12,inch,MH,23
+base_cylinder,MH,5,3.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,6787,,59,296,2 1/2-12,3 1/4-12,inch,MH,23
+base_cylinder,MH,6,2.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,5614,,51,296,1 7/8-12,2 1/4-12,inch,MH,24
+base_cylinder,MH,6,2.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,6330,,51,296,1 7/8-12,2 1/4-12,inch,MH,24
+base_cylinder,MH,6,3,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,6708,,57,296,2 1/4-12,2 3/4-12,inch,MH,25
+base_cylinder,MH,6,3,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,7421,,57,296,2 1/4-12,2 3/4-12,inch,MH,25
+base_cylinder,MH,6,3.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,7171,,61,296,2 1/2-12,3 1/4-12,inch,MH,26
+base_cylinder,MH,6,3.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,7895,,61,296,2 1/2-12,3 1/4-12,inch,MH,26
+base_cylinder,MH,6,4,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,7720,,67,296,3-12,3 3/4-12,inch,MH,27
+base_cylinder,MH,6,4,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,8432,,67,296,3-12,3 3/4-12,inch,MH,27
+base_cylinder,MH,7,3,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,7747,,59,336,2 1/4-12,2 3/4-12,inch,MH,28
+base_cylinder,MH,7,3,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,8449,,59,336,2 1/4-12,2 3/4-12,inch,MH,28
+base_cylinder,MH,7,3.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,8503,,67,336,2 1/2-12,3 1/4-12,inch,MH,29
+base_cylinder,MH,7,3.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,9192,,67,336,2 1/2-12,3 1/4-12,inch,MH,29
+base_cylinder,MH,7,4,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,9064,,69,336,3-12,3 3/4-12,inch,MH,30
+base_cylinder,MH,7,4,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,9751,,69,336,3-12,3 3/4-12,inch,MH,30
+base_cylinder,MH,7,4.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,9671,,82,336,3 1/4-12,4 1/4-12,inch,MH,31
+base_cylinder,MH,7,4.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,10617,,82,336,3 1/4-12,4 1/4-12,inch,MH,31
+base_cylinder,MH,7,5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,10416,,86,336,3 1/2-12,4 3/4-12,inch,MH,32
+base_cylinder,MH,7,5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,11865,,86,336,3 1/2-12,4 3/4-12,inch,MH,32
+base_cylinder,MH,8,3.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,8898,,81,372,2 1/2-12,3 1/4-12,inch,MH,33
+base_cylinder,MH,8,3.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,9735,,81,372,2 1/2-12,3 1/4-12,inch,MH,33
+base_cylinder,MH,8,4,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,10400,,90,372,3-12,3 3/4-12,inch,MH,34
+base_cylinder,MH,8,4,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,11305,,90,372,3-12,3 3/4-12,inch,MH,34
+base_cylinder,MH,8,4.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,10952,,101,372,3 1/4-12,4 1/4-12,inch,MH,35
+base_cylinder,MH,8,4.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,11877,,101,372,3 1/4-12,4 1/4-12,inch,MH,35
+base_cylinder,MH,8,5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,11633,,108,372,3 1/2-12,4 3/4-12,inch,MH,36
+base_cylinder,MH,8,5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,12518,,108,372,3 1/2-12,4 3/4-12,inch,MH,36
+base_cylinder,MH,8,5.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,12531,,114,372,4-12,5 1/4-12,inch,MH,37
+base_cylinder,MH,8,5.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,13360,,114,372,4-12,5 1/4-12,inch,MH,37
+base_cylinder,MH,10,4.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,16738,,196,473,3 1/4-12,4 1/4-12,inch,MH,38
+base_cylinder,MH,10,4.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,18396,,196,473,3 1/4-12,4 1/4-12,inch,MH,38
+base_cylinder,MH,10,5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,18342,,199,473,3 1/2-12,4 3/4-12,inch,MH,39
+base_cylinder,MH,10,5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,19993,,199,473,3 1/2-12,4 3/4-12,inch,MH,39
+base_cylinder,MH,10,5.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,18741,,212,473,4-12,5 1/4-12,inch,MH,40
+base_cylinder,MH,10,5.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,20618,,212,473,4-12,5 1/4-12,inch,MH,40
+base_cylinder,MH,10,7,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,26572,,284,473,5 1/2-12,6 1/2-12,inch,MH,41
+base_cylinder,MH,10,7,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,28245,,284,473,5 1/2-12,6 1/2-12,inch,MH,41
+base_cylinder,MH,12,5.5,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,25302,,294,642,4-12,5 1/4-12,inch,MH,42
+base_cylinder,MH,12,5.5,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,27385,,294,642,4-12,5 1/4-12,inch,MH,42
+base_cylinder,MH,12,7,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,31451,,326,642,5-12,6 1/2-12,inch,MH,43
+base_cylinder,MH,12,7,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,33174,,326,642,5-12,6 1/2-12,inch,MH,43
+base_cylinder,MH,12,8,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,36336,,376,642,5 3/4-12,7 1/2-12,inch,MH,44
+base_cylinder,MH,12,8,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,38137,,376,642,5 3/4-12,7 1/2-12,inch,MH,44
+base_cylinder,MH,14,8,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,52084,,408,826,5 3/4-12,7 1/2-12,inch,MH,45
+base_cylinder,MH,14,8,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,54100,,408,826,5 3/4-12,7 1/2-12,inch,MH,45
+base_cylinder,MH,14,10,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,56954,,492,826,7 1/4-12,9 1/2-12,inch,MH,46
+base_cylinder,MH,14,10,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,59913,,492,826,7 1/4-12,9 1/2-12,inch,MH,46
+base_cylinder,MH,16,8,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,85263,,464,1399,5 3/4-12,7 1/2-12,inch,MH,47
+base_cylinder,MH,16,8,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,87003,,464,1399,5 3/4-12,7 1/2-12,inch,MH,47
+base_cylinder,MH,16,10,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,99557,,623,1399,7 1/4-12,9 1/2-12,inch,MH,48
+base_cylinder,MH,16,10,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,101589,,623,1399,7 1/4-12,9 1/2-12,inch,MH,48
+base_cylinder,MH,18,8,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,127637,,609,1621,5 3/4-12,7 1/2-12,inch,MH,49
+base_cylinder,MH,18,8,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,130243,,609,1621,5 3/4-12,7 1/2-12,inch,MH,49
+base_cylinder,MH,18,10,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,136824,,654,1621,7 1/4-12,9 1/2-12,inch,MH,50
+base_cylinder,MH,18,10,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,139616,,654,1621,7 1/4-12,9 1/2-12,inch,MH,50
+base_cylinder,MH,20,10,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,156736,,815,1772,7 1/4-12,9 1/2-12,inch,MH,51
+base_cylinder,MH,20,10,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,159931,,815,1772,7 1/4-12,9 1/2-12,inch,MH,51
+base_cylinder,IMH,40,25,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,2901,,0.75,350,M20x1.5,,mm,IMH,7
+base_cylinder,IMH,40,25,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3293,,0.75,350,M20x1.5,,mm,IMH,7
+base_cylinder,IMH,40,28,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3364,,1.05,350,M20x1.5,,mm,IMH,8
+base_cylinder,IMH,40,28,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3802,,1.05,350,M20x1.5,,mm,IMH,8
+base_cylinder,IMH,50,32,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,2558,,0.8,350,M27x2,,mm,IMH,9
+base_cylinder,IMH,50,32,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3203,,0.8,350,M27x2,,mm,IMH,9
+base_cylinder,IMH,50,36,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3027,,1.1,350,M27x2,,mm,IMH,10
+base_cylinder,IMH,50,36,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3623,,1.1,350,M27x2,,mm,IMH,10
+base_cylinder,IMH,63,40,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3027,,1.15,350,M33x2,,mm,IMH,11
+base_cylinder,IMH,63,40,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,3806,,1.15,350,M33x2,,mm,IMH,11
+base_cylinder,IMH,63,45,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3348,,1.2,350,M33x2,,mm,IMH,12
+base_cylinder,IMH,63,45,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,4090,,1.2,350,M33x2,,mm,IMH,12
+base_cylinder,IMH,80,50,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3842,,1.25,350,M42x2,,mm,IMH,13
+base_cylinder,IMH,80,50,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,4581,,1.25,350,M42x2,,mm,IMH,13
+base_cylinder,IMH,80,56,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,3416,,1.25,350,M42x2,,mm,IMH,14
+base_cylinder,IMH,80,56,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,4090,,1.25,350,M42x2,,mm,IMH,14
+base_cylinder,IMH,100,63,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,4090,,1.35,350,M48x2,,mm,IMH,15
+base_cylinder,IMH,100,63,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,4856,,1.35,350,M48x2,,mm,IMH,15
+base_cylinder,IMH,100,70,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,4446,,1.35,350,M48x2,,mm,IMH,16
+base_cylinder,IMH,100,70,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,5224,,1.35,350,M48x2,,mm,IMH,16
+base_cylinder,IMH,125,80,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,4246,,1.65,350,M64x3,,mm,IMH,17
+base_cylinder,IMH,125,80,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,5238,,1.65,350,M64x3,,mm,IMH,17
+base_cylinder,IMH,125,90,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,4906,,1.65,350,M64x3,,mm,IMH,18
+base_cylinder,IMH,125,90,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,5948,,1.65,350,M64x3,,mm,IMH,18
+base_cylinder,IMH,160,100,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,5291,,1.65,350,M80x3,,mm,IMH,19
+base_cylinder,IMH,160,100,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,6365,,1.65,350,M80x3,,mm,IMH,19
+base_cylinder,IMH,160,110,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,5134,,2,350,M80x3,,mm,IMH,20
+base_cylinder,IMH,160,110,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,6213,,2,350,M80x3,,mm,IMH,20
+base_cylinder,IMH,200,125,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,5847,,2.25,350,M100x3,,mm,IMH,21
+base_cylinder,IMH,200,125,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,6944,,2.25,350,M100x3,,mm,IMH,21
+base_cylinder,IMH,200,140,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,6356,,2.4,350,M100x3,,mm,IMH,22
+base_cylinder,IMH,200,140,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,7444,,2.4,350,M100x3,,mm,IMH,22
+base_cylinder,IMH,250,160,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,6670,,2.8,350,M125x4,,mm,IMH,23
+base_cylinder,IMH,250,160,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,7756,,2.8,350,M125x4,,mm,IMH,23
+base_cylinder,IMH,250,180,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,6416,,2.4,350,M125x4,,mm,IMH,24
+base_cylinder,IMH,250,180,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,7234,,2.4,350,M125x4,,mm,IMH,24
+base_cylinder,IMH,320,200,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,7666,,2.7,350,M160x4,,mm,IMH,25
+base_cylinder,IMH,320,200,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,8481,,2.7,350,M160x4,,mm,IMH,25
+base_cylinder,IMH,320,220,MF1/MF2/MF5/MF6/MS3/MP1/MP3/MS2/ME5/ME6,8195,,2.9,350,M160x4,,mm,IMH,26
+base_cylinder,IMH,320,220,MT4/MPU3/MS7/MT1/MT2/ME3/ME4,9023,,2.9,350,M160x4,,mm,IMH,26
+base_cylinder,VA,2.5,"5/8""",All Tie Rod Mounts,360,,12,,7/16-20,1/2-20,inch,VA,5
+base_cylinder,VA,3.25,"1""",All Tie Rod Mounts,420,,13,,3/4-16,7/8-14,inch,VA,6
+base_cylinder,VA,4,"1""",All Tie Rod Mounts,510,,15,,7/16-20,1/2-20,inch,VA,7
+base_cylinder,VA,5,"1""",All Tie Rod Mounts,600,,18,,3/4-16,7/8-14,inch,VA,8
+base_cylinder,VA,6,"1""",All Tie Rod Mounts,690,,21,,1-14,1 1/4-12,inch,VA,9
+base_cylinder,VA,7,"1""",All Tie Rod Mounts,900,,28,,7/16-20,1/2-20,inch,VA,10
+base_cylinder,VA,8,"1""",All Tie Rod Mounts,960,,39,,3/4-16,7/8-14,inch,VA,11
+base_cylinder,VA,10,"1""",All Tie Rod Mounts,1200,,51,,3/4-16,7/8-14,inch,VA,12
+base_cylinder,VA,12,"1 3/8""",All Tie Rod Mounts,2100,,68,,1-14,1 1/4-12,inch,VA,13
+base_cylinder,VA,14,"1 3/8""",All Tie Rod Mounts,2800,,72,,1-14,1 1.4-12,inch,VA,14
+base_cylinder,VA,16,"1 3/4""",All Tie Rod Mounts,5400,,258,,1-14,1 1/4-12,inch,VA,15
+base_cylinder,VA,18,"2""",All Tie Rod Mounts,9000,,317,,1 1/2-12,1 3/4-12,inch,VA,16
+base_cylinder,VA,20,"2""",All Tie Rod Mounts,9500,,399,,1 1/2-12,1 3/4-12,inch,VA,17
+base_cylinder,VA,22,"2 1/2""",All Tie Rod Mounts,10000,,511,,1 7/8-12,2 1/4-12,inch,VA,18

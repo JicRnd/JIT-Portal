@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Account Recovery</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='portal_common.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='portal_auth.css') }}">
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a class="back-link" href="{{ url_for('portal.landing') }}">
+      ← JIT Landing Page
+    </a>
+
+    <h1>Account Recovery</h1>
+
+    {% if error %}
+      <p class="form-error">{{ error }}</p>
+    {% endif %}
+
+    {% if message %}
+      <p>{{ message }}</p>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('portal.forgot_access') }}" autocomplete="on">
+      <label for="recovery_identity">
+        Username or Email
+        <input
+          id="recovery_identity"
+          name="identity"
+          type="text"
+          autocomplete="username"
+          required
+          autofocus
+        >
+      </label>
+
+      <label for="new_password">
+        New Password
+        <input
+          id="new_password"
+          name="new_password"
+          type="password"
+          autocomplete="new-password"
+          required
+        >
+      </label>
+
+      <label for="confirm_password">
+        Confirm New Password
+        <input
+          id="confirm_password"
+          name="confirm_password"
+          type="password"
+          autocomplete="new-password"
+          required
+        >
+      </label>
+
+      <button class="portal-button" type="submit">
+        Reset Password
+      </button>
+    </form>
+
+    <a href="{{ url_for('portal.employee_login') }}">Employee Login</a>
+    <a href="{{ url_for('portal.customer_login') }}">Customer Login</a>
+  </main>
+</body>
+</html>

@@ -5,8 +5,10 @@
   const statusEl = document.getElementById('orderStatus');
   const messageEl = document.getElementById('orderMessage');
   const approveButton = document.getElementById('approveOrderButton');
+  const emailCustomerButton = document.getElementById('emailCustomerButton');
   const partsHost = document.getElementById('orderPartsRows');
   const testingHost = document.getElementById('testingRows');
+  let loadedQuote = null;
 
   const money = n => Number(n || 0).toFixed(2);
   const localDate = iso => {
@@ -14,6 +16,10 @@
     return Number.isNaN(d.getTime()) ? String(iso || '') : d.toLocaleString('en-US');
   };
   const value = (obj, key, fallback = '') => obj && obj[key] != null ? obj[key] : fallback;
+  const emailFromText = text => {
+    const match = String(text || '').match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+    return match ? match[0] : '';
+  };
   const MOUNT_LABELS = {
     MF1:'Rect Head Flange', MF2:'Rect Cap Flange', MF5:'Square Head Flange', MF6:'Square Cap Flange',
     MP1:'Fixed Cap Clevis', MP2:'Detachable Cap Clevis', MP3:'Pivot Eye', MPU3:'Self Aligning Eye',
@@ -115,6 +121,16 @@
     get('parts_total').value = money(partsTotal);
   }
 
+  function openCustomerEmail() {
+    const contactInput = form.querySelector('[data-field="contact"]');
+    const email = emailFromText((contactInput && contactInput.value) || (loadedQuote && loadedQuote.customer_contact) || '');
+    if (!email) {
+      setMessage('No customer email is available for this order.', true);
+      return;
+    }
+    window.location.href = `mailto:${encodeURIComponent(email)}`;
+  }
+
   function buildDefaults(quote) {
     const inputs = quote.cylinder_inputs_snapshot || {};
     const bd = quote.price_breakdown_snapshot || {};
@@ -171,6 +187,8 @@
     if (event.target.matches('[data-field="quantity"],[data-field="net_each"],[data-part-field="cost"]')) recalculate();
   });
 
+  emailCustomerButton.addEventListener('click', openCustomerEmail);
+
   approveButton.addEventListener('click', async () => {
     approveButton.disabled = true;
     approveButton.textContent = 'Approving…';
@@ -198,6 +216,7 @@
       const response = await fetch(`/api/quotes/${quoteId}`);
       const body = await response.json();
       if (!response.ok || !body.ok) throw new Error(body.error || 'Order not found');
+      loadedQuote = body.quote;
       render(body.quote);
     } catch (error) {
       setMessage(error.message || 'Order could not be loaded.', true);

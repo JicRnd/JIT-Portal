@@ -19,6 +19,27 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from .db import get_session
 from .models_db import Customer, Quote, User
+from .part_family_service import (
+    FamilyError,
+    assign_parts,
+    create_family,
+    list_families,
+    preview_family,
+    save_family_image,
+    update_family,
+)
+from .pricing_catalog_service import (
+    PriceUpdateError,
+    apply_bulk_price_update,
+    catalog_page_data,
+    create_catalog_part,
+    get_conflict_details,
+    preview_bulk_price_update,
+    recent_price_changes,
+    resolve_conflict,
+    restore_price_change,
+    update_pricing_amount,
+)
 from .quote_service import quote_to_json
 
 
@@ -41,6 +62,32 @@ def signed_in_user():
         return user
 
 
+def _customer_names(user) -> list[str]:
+    """Names a saved quote could be filed under for this customer account."""
+    return [n for n in (user.company_name, user.display_name) if n]
+
+
+def _customer_quote_filter(user):
+    """Match quotes the customer created themselves or an employee created for them.
+
+    Employee-created quotes have no customer user id on file, so association is
+    made via the customer_name presentation field (the same field the customer's
+    own quote entry prefills from their account), matched case-insensitively.
+    """
+    names = _customer_names(user)
+    conditions = [Quote.created_by_user_id == user.id]
+    if names:
+        conditions.append(func.lower(Quote.customer_name).in_([n.lower() for n in names]))
+    return or_(*conditions)
+
+
+def _customer_owns_quote(user, quote) -> bool:
+    if quote.created_by_user_id == user.id:
+        return True
+    names = {n.lower() for n in _customer_names(user)}
+    return bool(quote.customer_name) and quote.customer_name.lower() in names
+
+
 def require_role(role):
     def decorator(view):
         @wraps(view)
@@ -55,6 +102,18 @@ def require_role(role):
         return wrapped
 
     return decorator
+
+
+def require_admin(view):
+    """Restrict a portal page to an employee with the existing admin access level."""
+    @wraps(view)
+    def wrapped(*args, **kwargs):
+        user = signed_in_user()
+        if not user or user.role != "employee" or user.access_level != "admin":
+            return redirect(url_for("portal.employee_login"))
+        return view(*args, **kwargs)
+
+    return wrapped
 
 
 def total_for(quote):
@@ -111,16 +170,36 @@ def customer_login():
 def employee_login():
     return login("employee")
 
-@portal_bp.post("/approve-user/<int:user_id>")
+@portal_bp.post("/approve-user/<int:user_id>/<decision>")
 @require_role("employee")
-def approve_user(user_id: int):
+def approve_user(user_id: int, decision: str):
+    statuses = {"approve": "approved", "hold": "hold", "deny": "denied"}
+    normalized = (decision or "").lower()
+    reviewer = signed_in_user()
+
     with get_session() as db:
         user = db.get(User, user_id)
-        if user:
-            user.is_active = True
+        if user and normalized in statuses:
+            user.approval_status = statuses[normalized]
+            user.is_active = normalized == "approve"
+            user.approval_decided_at = datetime.now()
+            user.approval_decided_by_user_id = reviewer.id if reviewer else None
             db.commit()
 
     return redirect(url_for("portal.employee_dashboard"))
+
+
+def pending_quote_requires_accept(db, quote_id: str | None, user: User | None) -> bool:
+    if not quote_id or not quote_id.isdigit() or not user:
+        return False
+
+    quote = db.get(Quote, int(quote_id))
+    return bool(
+        quote
+        and quote.status == "pending_approval"
+        and quote.assigned_employee_user_id != user.id
+    )
+
 
 def login(role):
     error = None
@@ -222,13 +301,14 @@ def signup(role):
         elif same_flag == "false":
             shipping_same_as_billing = False
 
+        def get_form_field(key):
+            val = request.form.get(key, "").strip()
+            return val if val else None
+
         if not name or not email or not password:
             error = (
                 "Name, email and password are required."
             )
-
-
-
         else:
             with get_session() as db:
                 conditions = [
@@ -244,64 +324,64 @@ def signup(role):
                     select(User).where(or_(*conditions))
                 ).scalar_one_or_none()
 
-        if duplicate:
-            error = "That username or email is already in use."
-        else:
-            display_name = name
+                if duplicate:
+                    if duplicate.role == role and not duplicate.is_active:
+                        duplicate.display_name = duplicate.display_name or name
+                        duplicate.username = email
+                        duplicate.email = email or None
+                        duplicate.password_hash = generate_password_hash(password)
+                        duplicate.company_name = get_form_field("company_name")
+                        duplicate.phone = get_form_field("phone")
+                        duplicate.phone_extension = get_form_field("phone_extension")
+                        duplicate.approval_status = "pending"
+                        db.commit()
 
-            # Check for existing display name collisions
-            existing_name = db.execute(
-                select(User).where(
-                    func.lower(User.display_name) == name.lower()
-                )
-            ).scalar_one_or_none()
+                        if return_to:
+                            return redirect(return_to)
 
-            if existing_name:
-                display_name = f"{name} ({email})"
+                        return redirect(url_for(f"portal.{role}_login"))
+                    error = "That username or email is already in use."
+                else:
+                    display_name = name
 
-            # Helper for form extraction and whitespace stripping
-            def get_form_field(key):
-                val = request.form.get(key, "").strip()
-                return val if val else None
+                    # Check for existing display name collisions
+                    existing_name = db.execute(
+                        select(User).where(
+                            func.lower(User.display_name) == name.lower()
+                        )
+                    ).scalar_one_or_none()
 
-            account_active = True if acting_employee else False
+                    if existing_name:
+                        display_name = f"{name} ({email})"
 
-            user = User(
-                display_name=display_name,
-                username=email,
-                email=email or None,
-                password_hash=generate_password_hash(password),
-                role=role,
-                company_name=get_form_field("company_name"),
-                phone=get_form_field("phone"),
-                phone_extension=get_form_field("phone_extension"),
-                is_active=account_active,
-            )
+                    account_active = True if acting_employee else False
 
-            db.add(user)
+                    user = User(
+                        display_name=display_name,
+                        username=email,
+                        email=email or None,
+                        password_hash=generate_password_hash(password),
+                        role=role,
+                        access_level="standard",
+                        company_name=get_form_field("company_name"),
+                        phone=get_form_field("phone"),
+                        phone_extension=get_form_field("phone_extension"),
+                        approval_status="approved" if account_active else "pending",
+                        is_active=account_active,
+                    )
 
-            try:
-                db.commit()
-            except IntegrityError:
-                db.rollback()
-                error = "That username or email is already in use."
-            else:
-                if user and check_password_hash(user.password_hash, password):
-                    if not user.is_active:
-                        error = "Your account is pending approval by an employee. Please check back later."
-                    
+                    db.add(user)
+
+                    try:
+                        db.commit()
+                    except IntegrityError:
+                        db.rollback()
+                        error = "That username or email is already in use."
                     else:
-                        session.clear()
-                    session["user_id"] = user.id
-                    session["role"] = user.role
+                        if return_to:
+                            return redirect(return_to)
 
-                if return_to:
-                    return redirect(return_to)
-
-                endpoint = (
-                    "portal.customer_history" if role == "customer" else "portal.employee_dashboard"
-                )
-                return redirect(url_for("portal.login"))
+                        return redirect(url_for(f"portal.{role}_login"))
 
         
     return render_template(
@@ -323,14 +403,46 @@ def logout():
 
 
 @portal_bp.get("/forgot-access")
+@portal_bp.post("/forgot-access")
 def forgot_access():
+    error = None
+    message = None
+
+    if request.method == "POST":
+        identity = (request.form.get("identity") or "").strip().lower()
+        new_password = request.form.get("new_password") or ""
+        confirm_password = request.form.get("confirm_password") or ""
+
+        if not identity or not new_password or not confirm_password:
+            error = "Username/email, new password and confirmation are required."
+        elif new_password != confirm_password:
+            error = "The new passwords did not match."
+        else:
+            with get_session() as db:
+                user = db.execute(
+                    select(User).where(
+                        or_(
+                            func.lower(User.username) == identity,
+                            func.lower(User.email) == identity,
+                        )
+                    )
+                ).scalar_one_or_none()
+
+                if user:
+                    user.password_hash = generate_password_hash(new_password)
+                    if not user.is_active and user.approval_status in (None, "approved"):
+                        user.approval_status = "pending"
+                    db.commit()
+
+            message = (
+                "If that account exists, the password has been updated. "
+                "Pending accounts still need employee approval before login."
+            )
+
     return render_template(
-        "portal_message.html",
-        title="Account Recovery",
-        message=(
-            "Email recovery will be connected later. "
-            "Please contact JIT for access for now."
-        ),
+        "forgot_access.html",
+        error=error,
+        message=message,
     )
 
 
@@ -342,9 +454,7 @@ def customer_history():
     with get_session() as db:
         quotes = db.execute(
             select(Quote)
-            .where(
-                Quote.created_by_user_id == user.id
-            )
+            .where(_customer_quote_filter(user))
             .order_by(Quote.created_at.desc())
         ).scalars().all()
 
@@ -380,11 +490,15 @@ def employee_dashboard():
     month_start = datetime(now.year, now.month, 1)
 
     with get_session() as db:
-        # Fetch inactive user accounts awaiting approval
+        # Fetch customer account requests awaiting employee approval.
         pending_users = db.execute(
             select(User)
-            .where(User.is_active == True)
-            .order_by(User.id.desc())
+            .where(
+                User.role.in_(["customer", "employee"]),
+                User.is_active.is_(False),
+                User.approval_decided_at.is_(None),
+            )
+            .order_by(User.created_at.desc())
         ).scalars().all()
 
         quotes_this_month = db.execute(
@@ -415,7 +529,7 @@ def employee_dashboard():
                 ),
             )
             .order_by(Quote.created_at.asc())
-            .limit(50)
+            .limit(3)
         ).scalars().all()
         pending_queue = [
             {
@@ -506,6 +620,7 @@ def employee_dashboard():
         customer_rows=customer_rows,
         quotes_this_month=quotes_this_month,
         approved_orders_count_this_month=approved_orders_count_this_month,
+        current_month_label=month_start.strftime("%B"),
         pending_queue=pending_queue,
         updated_queue=updated_queue,
         pending_users=pending_users,
@@ -662,7 +777,14 @@ def employee_quote_entry():
     user = signed_in_user()
     # A quote_id (opening a saved quote) or draft flag (from the "Quote" button)
     # goes straight to the dedicated Quote Form page instead of the calculator.
-    if request.args.get("quote_id") or request.args.get("draft"):
+    quote_id = request.args.get("quote_id")
+    if quote_id:
+        with get_session() as db:
+            if pending_quote_requires_accept(db, quote_id, user):
+                flash("Accept the pending quote before opening it.", "error")
+                return redirect(url_for("portal.employee_dashboard"))
+
+    if quote_id or request.args.get("draft"):
         return render_template(
             "quote_form_employee.html",
             current_user_name=user.display_name if user else "",
@@ -780,7 +902,7 @@ def portal_quote(quote_id):
 
         if (
             user.role == "customer"
-            and quote.created_by_user_id != user.id
+            and not _customer_owns_quote(user, quote)
         ):
             return jsonify({
                 "ok": False,
@@ -830,6 +952,222 @@ def manage_users():
         ).all()
         
     return render_template("manage_users.html", user=user, users=approved_users)
+
+
+@portal_bp.get("/parts-catalog")
+@require_admin
+def parts_catalog():
+    user = signed_in_user()
+    return render_template(
+        "parts_catalog.html",
+        user=user,
+        **catalog_page_data(),
+    )
+
+
+@portal_bp.post("/parts-catalog/price")
+@require_admin
+def update_parts_catalog_price():
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = update_pricing_amount(
+            payload.get("table"),
+            payload.get("id"),
+            payload.get("field"),
+            payload.get("value"),
+            actor=signed_in_user(),
+        )
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.post("/parts-catalog/bulk-price/preview")
+@require_admin
+def preview_parts_catalog_bulk_price():
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = preview_bulk_price_update(
+            payload.get("table"),
+            payload.get("field"),
+            payload.get("ids") or [],
+            payload.get("method"),
+            payload.get("amount"),
+        )
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.post("/parts-catalog/bulk-price/apply")
+@require_admin
+def apply_parts_catalog_bulk_price():
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = apply_bulk_price_update(
+            payload.get("table"),
+            payload.get("field"),
+            payload.get("ids") or [],
+            payload.get("method"),
+            payload.get("amount"),
+            actor=signed_in_user(),
+            context=(payload.get("context") or "")[:120],
+        )
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.get("/parts-catalog/price-history")
+@require_admin
+def parts_catalog_price_history():
+    return jsonify({"ok": True, "changes": recent_price_changes(request.args.get("limit", type=int) or 50)})
+
+
+@portal_bp.post("/parts-catalog/price-history/<int:change_id>/restore")
+@require_admin
+def restore_parts_catalog_price(change_id: int):
+    try:
+        result = restore_price_change(change_id, actor=signed_in_user())
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.get("/parts-catalog/conflict/<int:row_id>")
+@require_admin
+def parts_catalog_conflict(row_id: int):
+    field = request.args.get("field") or "sell_price"
+    try:
+        result = get_conflict_details(row_id, field)
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.post("/parts-catalog/conflict/<int:row_id>/resolve")
+@require_admin
+def resolve_parts_catalog_conflict(row_id: int):
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = resolve_conflict(
+            row_id,
+            payload.get("field") or "sell_price",
+            payload.get("resolution"),
+            payload.get("source_name"),
+            payload.get("value"),
+            actor=signed_in_user(),
+        )
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.post("/parts-catalog/parts")
+@require_admin
+def create_parts_catalog_part():
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = create_catalog_part(payload, actor=signed_in_user())
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.get("/parts-catalog/families")
+@require_admin
+def parts_catalog_families():
+    return jsonify({"ok": True, "families": list_families()})
+
+
+@portal_bp.post("/parts-catalog/families")
+@require_admin
+def create_parts_catalog_family():
+    try:
+        result = create_family(request.get_json(silent=True) or {})
+    except FamilyError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, "family": result})
+
+
+@portal_bp.post("/parts-catalog/families/<int:family_id>")
+@require_admin
+def update_parts_catalog_family(family_id: int):
+    try:
+        result = update_family(family_id, request.get_json(silent=True) or {})
+    except FamilyError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, "family": result})
+
+
+@portal_bp.get("/parts-catalog/families/<int:family_id>/preview")
+@require_admin
+def preview_parts_catalog_family(family_id: int):
+    try:
+        result = preview_family(family_id)
+    except FamilyError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.post("/parts-catalog/families/<int:family_id>/image")
+@require_admin
+def upload_parts_catalog_family_image(family_id: int):
+    try:
+        result = save_family_image(family_id, request.files.get("image"))
+    except FamilyError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, "family": result})
+
+
+@portal_bp.post("/parts-catalog/families/assign")
+@require_admin
+def assign_parts_catalog_family():
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = assign_parts(payload.get("family_code"), payload.get("ids") or [])
+    except FamilyError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.post("/manage-users/<int:user_id>/password")
+@require_role("employee")
+def update_user_password(user_id: int):
+    new_password = (request.form.get("new_password") or "").strip()
+
+    if not new_password:
+        flash("Enter a new password before saving.", "error")
+        return redirect(url_for("portal.manage_users"))
+
+    with get_session() as db:
+        target_user = db.get(User, user_id)
+        if target_user:
+            target_user.password_hash = generate_password_hash(new_password)
+            db.commit()
+            flash(f"Password updated for '{target_user.display_name}'.", "success")
+
+    return redirect(url_for("portal.manage_users"))
+
+
+@portal_bp.post("/manage-users/<int:user_id>/access-level")
+@require_role("employee")
+def update_user_access_level(user_id: int):
+    access_level = (request.form.get("access_level") or "standard").strip().lower()
+    allowed_levels = {"standard", "admin"}
+
+    if access_level not in allowed_levels:
+        flash("Choose a valid access level.", "error")
+        return redirect(url_for("portal.manage_users"))
+
+    with get_session() as db:
+        target_user = db.get(User, user_id)
+        if target_user and target_user.role == "employee":
+            target_user.access_level = access_level
+            db.commit()
+            flash(f"Access level updated for '{target_user.display_name}'.", "success")
+
+    return redirect(url_for("portal.manage_users"))
 
 
 @portal_bp.post("/delete-user/<int:user_id>")

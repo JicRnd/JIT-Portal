@@ -13,11 +13,15 @@ def temp_db(tmp_path, monkeypatch):
     db_path = tmp_path / "test_customer_lookup.db"
     monkeypatch.setenv("DATABASE_PATH", str(db_path))
     monkeypatch.setenv("ACCOUNTS_DATABASE_PATH", str(tmp_path / "test_customer_lookup_accounts.db"))
+    monkeypatch.setenv("QUOTES_DATABASE_PATH", str(tmp_path / "test_customer_lookup_quotes.db"))
+    monkeypatch.setenv("ORDERS_DATABASE_PATH", str(tmp_path / "test_customer_lookup_orders.db"))
 
     import app.db as db_mod
 
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._quotes_engine = None
+    db_mod._orders_engine = None
     db_mod._Session = None
     init_db()
 
@@ -27,6 +31,8 @@ def temp_db(tmp_path, monkeypatch):
 
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._quotes_engine = None
+    db_mod._orders_engine = None
     db_mod._Session = None
 
 

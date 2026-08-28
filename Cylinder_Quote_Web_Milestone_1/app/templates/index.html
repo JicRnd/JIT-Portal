@@ -14,6 +14,7 @@
   <main class="orderentry-window" aria-label="JIT Crew Pricing Calculator">
     <div class="window-titlebar">
       <strong>{{ 'JIT Cylinder Calculator' if portal_mode|default('employee') == 'customer' else 'JIT Crew Pricing Calculator' }}</strong>
+      <a id="dashboardButton" class="dashboard-button" href="{{ url_for('portal.customer_history') if portal_mode|default('employee') == 'customer' else url_for('portal.employee_dashboard') }}">Dashboard</a>
       <span class="window-close" aria-hidden="true">×</span>
     </div>
 
@@ -34,7 +35,7 @@
         <label class="c-series">Series<select id="series" required></select></label>
         <label class="c-mount">Mount<select id="mount" required></select></label>
         <label class="c-bore">Bore<select id="bore" required></select></label>
-        <label class="c-stroke">Stroke<input id="stroke" type="number" min="0" step="0.001" value="" required></label>
+        <label class="c-stroke">Stroke<input id="stroke" type="number" min="0" step="1" value="" required></label>
         <label class="c-rod">Rod<select id="rod_diameter" required></select></label>
         <label class="c-style">Style<select id="rod_style" required></select></label>
         <label class="c-cushion">Cushion<select id="cushion"></select></label>

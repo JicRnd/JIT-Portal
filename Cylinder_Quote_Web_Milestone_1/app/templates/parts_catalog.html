@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Catalog - JIT Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='portal_common.css') }}">
+    <style>
+        .catalog-table { font-size: .85rem; }
+        .catalog-table th { white-space: nowrap; position: sticky; top: 0; z-index: 1; }
+        .catalog-table td { vertical-align: middle; }
+        .catalog-scroll { max-height: 65vh; overflow: auto; }
+        .catalog-filter { max-width: 420px; }
+        .editable-price { border: 0; background: transparent; padding: 0; color: #0d6efd; font: inherit; text-align: left; }
+        .editable-price:hover, .editable-price:focus { text-decoration: underline; }
+        .price-edit-form { min-width: 12rem; }
+        .catalog-group-row th { background: #eef2f6; color: #334155; font-size: .78rem; letter-spacing: .02em; text-transform: uppercase; }
+        .select-col { width: 2.25rem; }
+        .preview-scroll { max-height: 45vh; overflow: auto; }
+        .family-image { width: 2.5rem; height: 2.5rem; object-fit: contain; background: #fff; border: 1px solid #cbd5e1; border-radius: .25rem; }
+        .family-headline { text-transform: none; letter-spacing: 0; font-size: .75rem; }
+        .catalog-family-row th { background: #e2e8f0; }
+        .catalog-contents { background: #fff; border: 1px solid #dee2e6; padding: .9rem 1.1rem; }
+        .catalog-contents .contents-title { font-size: .95rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 .6rem; }
+        .catalog-contents .contents-heading { font-size: .75rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #64748b; margin: 0 0 .3rem; }
+        .contents-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1.25rem 2.5rem; }
+        .contents-entry { display: flex; align-items: baseline; gap: .4rem; text-decoration: none; color: #212529; font-size: .85rem; line-height: 1.7; }
+        .contents-entry:hover .contents-label { text-decoration: underline; }
+        .contents-dots { flex: 1 1 auto; border-bottom: 1px dotted #94a3b8; transform: translateY(-.25rem); }
+        .contents-count { color: #6c757d; font-size: .75rem; }
+        #catalog-settings-btn { line-height: 1; }
+    </style>
+</head>
+<body class="bg-light">
+{% macro price_cell(table, row, field, suffix='') -%}
+    {% set value = row|attr(field) %}
+    {% if value is not none %}
+        {% set conflicted = (table == 'catalog_parts' and field == 'sell_price' and row.review_needed == 'YES') %}
+        <button type="button" class="editable-price{{ ' conflicted-price' if conflicted else '' }}" data-table="{{ table }}" data-id="{{ row.id }}" data-field="{{ field }}" data-value="{{ '%.2f'|format(value) }}" data-suffix="{{ suffix }}" data-conflicted="{{ 'true' if conflicted else 'false' }}">{{ format_money(value) }}{{ suffix }}{% if conflicted %} <span class="badge text-bg-warning" title="Unresolved pricing conflict">!</span>{% endif %}</button>
+    {% else %}
+        {{ row|attr(field ~ '_raw') if row|attr(field ~ '_raw') is not none else '' }}
+    {% endif %}
+{%- endmacro %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand fw-bold" href="{{ url_for('portal.employee_dashboard') }}">JIT Portal</a>
+        <div class="d-flex align-items-center gap-3">
+            <span class="text-light">Signed in as <strong>{{ user.display_name }}</strong></span>
+            <a href="{{ url_for('portal.employee_dashboard') }}" class="btn btn-outline-light btn-sm">Dashboard</a>
+            <a href="{{ url_for('portal.logout') }}" class="btn btn-outline-danger btn-sm">Logout</a>
+        </div>
+    </div>
+</nav>
+
+<main class="container-fluid px-4 pb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+        <div>
+            <h1 class="h3 mb-1">JIT Parts Catalog</h1>
+        </div>
+        <input id="catalog-filter" class="form-control catalog-filter" type="search" placeholder="Filter the current section" aria-label="Filter the current catalog section">
+    </div>
+
+    <section id="catalog-contents" class="catalog-contents mb-3">
+        <h2 class="contents-title">Contents</h2>
+        <div class="contents-columns">
+            <div>
+                <h3 class="contents-heading">Parts</h3>
+                {% for section in category_sections %}<a class="contents-entry" href="#cat-{{ section.slug }}" data-tab="#parts" data-anchor="cat-{{ section.slug }}"><span class="contents-label">{{ section.name }}</span><span class="contents-dots"></span><span class="contents-count">{{ section.count }}</span></a>{% endfor %}
+            </div>
+            <div>
+                <h3 class="contents-heading">Pricing</h3>
+                {% if base_prices %}<a class="contents-entry" href="#base" data-tab="#base"><span class="contents-label">Base Cylinder Pricing</span><span class="contents-dots"></span><span class="contents-count">{{ base_prices|length }}</span></a>{% endif %}
+                {% if assembly_prices %}<a class="contents-entry" href="#assembly" data-tab="#assembly"><span class="contents-label">Piston &amp; Rod Assembly</span><span class="contents-dots"></span><span class="contents-count">{{ assembly_prices|length }}</span></a>{% endif %}
+                {% if modifications %}<a class="contents-entry" href="#modifications" data-tab="#modifications"><span class="contents-label">Common Modifications</span><span class="contents-dots"></span><span class="contents-count">{{ modifications|length }}</span></a>{% endif %}
+                {% if ph_va_prices %}<a class="contents-entry" href="#ph-va" data-tab="#ph-va"><span class="contents-label">PH / VA Pricing</span><span class="contents-dots"></span><span class="contents-count">{{ ph_va_prices|length }}</span></a>{% endif %}
+            </div>
+        </div>
+    </section>
+
+    <ul class="nav nav-tabs align-items-center" id="catalog-tabs" role="tablist">
+        <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#parts" type="button">Parts Catalog <span class="badge text-bg-secondary">{{ parts|length }}</span></button></li>
+        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#modifications" type="button">Common Modifications <span class="badge text-bg-secondary">{{ modifications|length }}</span></button></li>
+        <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#ph-va" type="button">PH / VA Pricing <span class="badge text-bg-secondary">{{ ph_va_prices|length }}</span></button></li>
+        <li class="nav-item ms-auto">
+            <button id="catalog-settings-btn" type="button" class="btn btn-sm btn-link text-secondary" title="Pricing Catalog Settings" aria-label="Pricing Catalog Settings">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/><path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/></svg>
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content border border-top-0 bg-white p-3">
+        <section class="tab-pane fade show active" id="parts">
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                <button id="add-part-btn" type="button" class="btn btn-sm btn-success">Add Part</button>
+                <button id="bulk-price-btn" type="button" class="btn btn-sm btn-primary" disabled>Bulk Price Update</button>
+                <span id="selection-count" class="text-muted small">0 selected</span>
+                <button id="history-btn" type="button" class="btn btn-sm btn-outline-secondary ms-auto">Price Change History</button>
+            </div>
+{% macro part_row(row) -%}
+<tr class="part-row" data-row-id="{{ row.id }}" data-part-number="{{ row.part_number|e }}" data-description="{{ (row.display_description or row.description or '')|e }}" data-family-code="{{ row.family_code or '' }}"><td class="select-col"><input type="checkbox" class="form-check-input part-select" value="{{ row.id }}" aria-label="Select {{ row.part_number|e }}"></td><td><strong>{{ row.part_number }}</strong></td><td>{{ row.display_description or row.description or '' }}{% if row.generated_description %} <span class="badge text-bg-light text-muted border" title="Generated from the family description template">family</span>{% endif %}{% if row.size_unresolved %} <span class="badge text-bg-warning" title="Size could not be decoded from this part number - needs admin review">size?</span>{% endif %}</td><td>{{ price_cell('catalog_parts', row, 'unit_cost') }}</td><td>{{ price_cell('catalog_parts', row, 'sell_price') }}</td><td>{{ row.sell_price_source or '' }}</td><td>{{ row.source_locations or '' }}</td></tr>
+{%- endmacro %}
+            <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th class="select-col"><input type="checkbox" id="select-all-parts" class="form-check-input" aria-label="Select all filtered parts"></th><th>Part Number</th><th>Description</th><th>Unit Cost</th><th>Sell Price</th><th>Sell Price Source</th><th>Source Locations</th></tr></thead><tbody>
+            {% for section in category_sections %}<tr class="catalog-group-row catalog-category-row" id="cat-{{ section.slug }}"><th colspan="7">{{ section.name }} <span class="text-muted fw-normal">{{ section.count }}</span></th></tr>{% for group in section.groups %}{% if group.name %}<tr class="catalog-group-row catalog-category-row"><th colspan="7">{{ group.name }} <span class="text-muted fw-normal">{{ group.families|map(attribute='rows')|map('length')|sum + group.rows|length }}</span></th></tr>{% endif %}{% for block in group.families %}<tr class="catalog-group-row catalog-category-row catalog-family-row"><th colspan="7"><span class="d-inline-flex align-items-center gap-2">{% if block.family.image_path %}<img class="family-image" src="{{ url_for('static', filename='family_images/' ~ block.family.image_path) }}" alt="{{ block.family.display_name|e }}">{% endif %}<span>{{ block.family.display_name }} <span class="text-muted fw-normal">{{ block.rows|length }}</span>{% if block.headline %}<span class="d-block fw-normal text-muted text-capitalize-none family-headline">{{ block.headline }}</span>{% endif %}</span></span></th></tr>{% for row in block.rows %}{{ part_row(row) }}{% endfor %}{% endfor %}{% for row in group.rows %}{{ part_row(row) }}{% endfor %}{% endfor %}{% endfor %}
+            </tbody></table></div>
+        </section>
+        <section class="tab-pane fade" id="base">
+            <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th>Series</th><th>Bore</th><th>Rod</th><th>Mount Group</th><th>Base Price</th><th>Cushion Base</th><th>Per Unit</th><th>Cushion / End</th><th>Unit</th><th>Source</th></tr></thead><tbody>
+            {% for row in base_prices %}<tr><td>{{ row.series or '' }}</td><td>{{ format_measurement(row.bore, row.unit) }}</td><td>{{ format_measurement(row.rod, row.unit) }}</td><td>{{ row.mount_group or '' }}</td><td>{{ price_cell('base_assembly_prices', row, 'base_price') }}</td><td>{{ price_cell('base_assembly_prices', row, 'cushion_base') }}</td><td>{{ price_cell('base_assembly_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td>{{ price_cell('base_assembly_prices', row, 'cushion_per_end') }}</td><td>{{ row.unit or '' }}</td><td>{{ row.source_sheet }}:{{ row.source_row }}</td></tr>{% endfor %}
+            </tbody></table></div>
+        </section>
+        <section class="tab-pane fade" id="assembly">
+            <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th>Type</th><th>Series</th><th>Bore</th><th>Rod</th><th>Base Price</th><th>Cushion Base</th><th>Per Unit</th><th>Unit</th><th>Source</th></tr></thead><tbody>
+            {% for row in assembly_prices %}<tr><td>{{ row.pricing_type }}</td><td>{{ row.series or '' }}</td><td>{{ format_measurement(row.bore, row.unit) }}</td><td>{{ format_measurement(row.rod, row.unit) }}</td><td>{{ price_cell('base_assembly_prices', row, 'base_price') }}</td><td>{{ price_cell('base_assembly_prices', row, 'cushion_base') }}</td><td>{{ price_cell('base_assembly_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td>{{ row.unit or '' }}</td><td>{{ row.source_sheet }}:{{ row.source_row }}</td></tr>{% endfor %}
+            </tbody></table></div>
+        </section>
+        <section class="tab-pane fade" id="modifications">
+            <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th>Series</th><th>Bore</th><th>Rod</th><th>Option</th><th>Base Price</th><th>Per Unit</th><th>Unit</th><th>Source</th></tr></thead><tbody>
+            {% for row in modifications %}<tr><td>{{ row.series or '' }}</td><td>{{ format_measurement(row.bore, row.unit) }}</td><td>{{ format_measurement(row.rod, row.unit) }}</td><td>{{ row.option_name }}</td><td>{{ price_cell('common_modification_prices', row, 'base_price') }}</td><td>{{ price_cell('common_modification_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td>{{ row.unit or '' }}</td><td>{{ row.source_sheet }}:{{ row.source_row }}</td></tr>{% endfor %}
+            </tbody></table></div>
+        </section>
+        <section class="tab-pane fade" id="ph-va">
+            <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th>Pricing Group</th><th>Series</th><th>Bore</th><th>Rod</th><th>Option</th><th>Base Price</th><th>Per Unit</th><th>Unit</th><th>Source</th></tr></thead><tbody>
+            {% for row in ph_va_prices %}<tr><td>{{ row.pricing_group }}</td><td>{{ row.series or '' }}</td><td>{{ format_measurement(row.bore, row.unit) }}</td><td>{{ format_measurement(row.rod, row.unit) }}</td><td>{{ row.option_name }}</td><td>{{ price_cell('ph_va_prices', row, 'base_price') }}</td><td>{{ price_cell('ph_va_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td>{{ row.unit or '' }}</td><td>{{ row.source_sheet }}:{{ row.source_row }}</td></tr>{% endfor %}
+            </tbody></table></div>
+        </section>
+    </div>
+</main>
+
+<div class="modal fade" id="bulk-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Bulk Price Update</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-2 align-items-end">
+          <div class="col-sm-4">
+            <label class="form-label small" for="bulk-field">Field</label>
+            <select id="bulk-field" class="form-select form-select-sm">
+              <option value="unit_cost">Unit Cost</option>
+              <option value="sell_price" selected>Sell Price</option>
+            </select>
+          </div>
+          <div class="col-sm-5">
+            <label class="form-label small" for="bulk-method">Update method</label>
+            <select id="bulk-method" class="form-select form-select-sm">
+              <option value="increase_percent">Increase by percentage</option>
+              <option value="decrease_percent">Decrease by percentage</option>
+              <option value="add_amount">Add fixed dollar amount</option>
+              <option value="subtract_amount">Subtract fixed dollar amount</option>
+              <option value="set_exact">Set exact price</option>
+            </select>
+          </div>
+          <div class="col-sm-3">
+            <label class="form-label small" for="bulk-amount">Amount</label>
+            <input id="bulk-amount" class="form-control form-control-sm" type="number" min="0" step="0.01" value="0">
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-2 mt-3">
+          <button id="bulk-preview-btn" type="button" class="btn btn-sm btn-outline-primary">Preview changes</button>
+          <span id="bulk-preview-count" class="text-muted small"></span>
+          <span id="bulk-error" class="text-danger small"></span>
+        </div>
+        <div class="preview-scroll mt-3">
+          <table class="table table-sm catalog-table">
+            <thead class="table-light"><tr><th class="select-col"></th><th>Part Number</th><th>Description</th><th>Old Price</th><th>New Price</th></tr></thead>
+            <tbody id="bulk-preview-body"><tr><td colspan="5" class="text-muted small">Choose options, then Preview changes.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="bulk-apply-btn" type="button" class="btn btn-primary" disabled>Apply Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="history-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Recent Price Changes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-sm catalog-table">
+          <thead class="table-light"><tr><th>When</th><th>Part</th><th>Field</th><th>Old</th><th>New</th><th>Type</th><th>Bulk Operation</th><th>Admin</th><th></th></tr></thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="add-part-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Part</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="add-part-form">
+          <div class="mb-2">
+            <label class="form-label small" for="ap-part-number">Part Number</label>
+            <input id="ap-part-number" class="form-control form-control-sm" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label small" for="ap-description">Description</label>
+            <input id="ap-description" class="form-control form-control-sm" required>
+          </div>
+          <div class="mb-2">
+            <label class="form-label small" for="ap-category">Category</label>
+            <input id="ap-category" class="form-control form-control-sm" list="ap-category-options" required>
+            <datalist id="ap-category-options">{% for section in category_sections %}<option value="{{ section.name }}">{% endfor %}</datalist>
+          </div>
+          <div class="row g-2">
+            <div class="col-sm-6">
+              <label class="form-label small" for="ap-unit-cost">Unit Cost</label>
+              <input id="ap-unit-cost" type="number" min="0" step="0.01" class="form-control form-control-sm">
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label small" for="ap-sell-price">Sell Price</label>
+              <input id="ap-sell-price" type="number" min="0" step="0.01" class="form-control form-control-sm">
+            </div>
+          </div>
+          <div class="mb-2 mt-2">
+            <label class="form-label small" for="ap-sell-source">Sell Price Source</label>
+            <input id="ap-sell-source" class="form-control form-control-sm" value="Manual">
+          </div>
+          <div class="form-check">
+            <input id="ap-active" class="form-check-input" type="checkbox" checked>
+            <label class="form-check-label small" for="ap-active">Active</label>
+          </div>
+          <div class="text-danger small mt-2" id="add-part-error"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="add-part-save-btn" type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="conflict-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Resolve Pricing Conflict</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-1"><strong id="conflict-part-number"></strong> &mdash; <span id="conflict-description"></span></p>
+        <p class="mb-1 small text-muted">Field: <span id="conflict-field"></span> &middot; Current live price: <strong id="conflict-current"></strong></p>
+        <p class="mb-3 small text-muted" id="conflict-reason"></p>
+        <div id="conflict-options"></div>
+        <div class="text-danger small mt-2" id="conflict-error"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="conflict-resolve-btn" type="button" class="btn btn-primary">Resolve</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="family-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Part Family Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-lg-4">
+            <div class="d-flex align-items-center justify-content-between mb-1">
+              <strong class="small">Families</strong>
+              <button id="family-new-btn" type="button" class="btn btn-sm btn-outline-success">New Family</button>
+            </div>
+            <div class="list-group small" id="family-list"></div>
+          </div>
+          <div class="col-lg-8">
+            <form id="family-form">
+              <input type="hidden" id="family-id">
+              <div class="row g-2">
+                <div class="col-sm-4">
+                  <label class="form-label small" for="family-code">Family Code</label>
+                  <input id="family-code" class="form-control form-control-sm" placeholder="GV" required>
+                </div>
+                <div class="col-sm-8">
+                  <label class="form-label small" for="family-display-name">Display Name</label>
+                  <input id="family-display-name" class="form-control form-control-sm" placeholder="Viton Rod Seals" required>
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label small" for="family-material">Material</label>
+                  <input id="family-material" class="form-control form-control-sm" placeholder="Viton/FKM">
+                </div>
+                <div class="col-sm-6">
+                  <label class="form-label small" for="family-part-type">Part Type</label>
+                  <input id="family-part-type" class="form-control form-control-sm" placeholder="Rod Seal">
+                </div>
+                <div class="col-12">
+                  <label class="form-label small" for="family-template">Description Template</label>
+                  <textarea id="family-template" rows="2" class="form-control form-control-sm" placeholder="{part_number} is a {size}-inch Viton/FKM rod seal."></textarea>
+                  <div class="form-text">Variables: {% for name in template_variables %}<code>{{ '{' }}{{ name }}{{ '}' }}</code>{{ ' ' }}{% endfor %}</div>
+                </div>
+                <div class="col-sm-7">
+                  <label class="form-label small" for="family-size-rule">Size-Decoding Rule</label>
+                  <select id="family-size-rule" class="form-select form-select-sm">
+                    {% for key, label in size_rules.items() %}{% if key != 'regex' %}<option value="{{ key }}">{{ label }}</option>{% endif %}{% endfor %}
+                    <option value="custom">Custom regex rule...</option>
+                  </select>
+                  <input id="family-size-rule-custom" class="form-control form-control-sm mt-1 d-none" placeholder="regex:^(\d+)GV$:100">
+                </div>
+                <div class="col-sm-5 d-flex align-items-end">
+                  <div class="form-check">
+                    <input id="family-auto" class="form-check-input" type="checkbox">
+                    <label class="form-check-label small" for="family-auto">Enable automatic family description</label>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label small" for="family-image">Representative Image</label>
+                  <div class="d-flex align-items-center gap-2">
+                    <img id="family-image-preview" class="family-image d-none" alt="Family image">
+                    <input id="family-image" class="form-control form-control-sm" type="file" accept=".png,.jpg,.jpeg,.gif,.webp" disabled>
+                    <button id="family-image-btn" type="button" class="btn btn-sm btn-outline-secondary" disabled>Upload</button>
+                  </div>
+                  <div class="form-text">Saved locally in the project (app/static/family_images).</div>
+                </div>
+              </div>
+            </form>
+            <div class="d-flex align-items-center gap-2 mt-2">
+              <button id="family-preview-btn" type="button" class="btn btn-sm btn-outline-primary" disabled>Preview decoded sizes</button>
+              <span id="family-error" class="text-danger small"></span>
+              <span id="family-status" class="text-success small"></span>
+            </div>
+            <div class="preview-scroll mt-2">
+              <table class="table table-sm catalog-table">
+                <thead class="table-light"><tr><th>Part Number</th><th>Decoded Size</th><th>Description</th></tr></thead>
+                <tbody id="family-preview-body"><tr><td colspan="3" class="text-muted small">Select a family, then preview.</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="family-assign-btn" type="button" class="btn btn-outline-primary me-auto" disabled>Assign Selected Parts to a Family</button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="family-save-btn" type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="settings-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Pricing Catalog Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="list-group">
+          <button id="settings-templates-btn" type="button" class="list-group-item list-group-item-action">
+            <strong>Templates</strong>
+            <span class="d-block small text-muted">Part families, description templates, size-decoding rules, family images, and family assignment.</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="assign-family-modal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assign Selected Parts to a Family</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="small text-muted mb-2"><span id="assign-count">0</span> part(s) selected.</p>
+        <label class="form-label small" for="assign-family-code">Family</label>
+        <select id="assign-family-code" class="form-select form-select-sm"></select>
+        <div class="text-danger small mt-2" id="assign-error"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button id="assign-save-btn" type="button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const filter = document.getElementById('catalog-filter');
+    const CATEGORY_SEARCHES = [
+        { name: 'Wipers', aliases: ['wiper', 'wipers', 'rod wiper', 'rod wipers'], terms: ['wiper', 'scraper'] },
+        { name: 'Pistons', aliases: ['piston', 'pistons'], terms: ['piston'] },
+        { name: 'Barrels', aliases: ['barrel', 'barrels', 'tube', 'tubes'], terms: ['barrel', 'tube'] },
+        { name: 'Tie Rods', aliases: ['tie rod', 'tie rods', 'tierod', 'tierods'], terms: ['tie rod', 'tie-rod', 'tierod'] },
+        { name: 'Mounts', aliases: ['mount', 'mounts', 'mounting', 'mountings'], terms: ['mount', 'mounting', 'clevis', 'trunnion', 'flange', 'foot bracket', 'pivot'] },
+        { name: 'Jam Nuts', aliases: ['jam nut', 'jam nuts', 'jamnut', 'jamnuts'], terms: ['jam nut', 'jamnut'] },
+        { name: 'Seals', aliases: ['seal', 'seals', 'seal kit', 'seal kits'], terms: ['seal', 'seals', 'packing', 'o-ring', 'oring', 'backup ring', 'wear ring', 'wiper'] }
+    ];
+    const GROUP_RULES = {
+        Wipers: [
+            { name: 'Rod Wipers', terms: ['rod wiper', 'wiper', 'scraper'] }
+        ],
+        Pistons: [
+            { name: 'Piston Seals', terms: ['piston seal'] },
+            { name: 'Piston Wear Rings', terms: ['wear ring'] },
+            { name: 'Piston Parts', terms: ['piston'] }
+        ],
+        Barrels: [
+            { name: 'Barrels', terms: ['barrel'] },
+            { name: 'Tubes', terms: ['tube'] }
+        ],
+        'Tie Rods': [
+            { name: 'Tie Rods', terms: ['tie rod', 'tie-rod', 'tierod'] },
+            { name: 'Tie-Rod Hardware', terms: ['nut', 'washer'] }
+        ],
+        Mounts: [
+            { name: 'Clevis Mounts', terms: ['clevis'] },
+            { name: 'Trunnion Mounts', terms: ['trunnion'] },
+            { name: 'Flange Mounts', terms: ['flange'] },
+            { name: 'Foot / Bracket Mounts', terms: ['foot', 'bracket'] },
+            { name: 'Other Mounting Parts', terms: ['mount', 'mounting', 'pivot'] }
+        ],
+        'Jam Nuts': [
+            { name: 'Jam Nuts', terms: ['jam nut', 'jamnut'] }
+        ],
+        Seals: [
+            { name: 'Viton', terms: ['viton', 'fkm'] },
+            { name: 'Buna / Nitrile', terms: ['buna', 'nitrile', 'nbr'] },
+            { name: 'HNBR / Highly Saturated Nitrile', terms: ['hnbr', 'highly saturated nitrile'] },
+            { name: 'Polyurethane', terms: ['polyurethane', 'urethane'] },
+            { name: 'Low Friction', terms: ['low friction'] },
+            { name: 'Rod Seals', terms: ['rod seal'] },
+            { name: 'Piston Seals', terms: ['piston seal'] },
+            { name: 'Seal Kits', terms: ['seal kit'] }
+        ]
+    };
+
+    function normalized(text) {
+        return (text || '').toLowerCase().replace(/[-_/]+/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    // Collapse simple plurals so "seals" and "seal" match the same records.
+    function canonical(text) {
+        return normalized(text)
+            .split(' ')
+            .map((word) => (word.length > 3 && word.endsWith('s') ? word.slice(0, -1) : word))
+            .join(' ');
+    }
+
+    function tokens(text) {
+        return canonical(text).split(' ').filter(Boolean);
+    }
+
+    function tokenRunIndex(queryTokens, aliasTokens) {
+        for (let start = 0; start + aliasTokens.length <= queryTokens.length; start += 1) {
+            if (aliasTokens.every((token, offset) => queryTokens[start + offset] === token)) return start;
+        }
+        return -1;
+    }
+
+    /* Split a query into a category plus leftover qualifier tokens, so
+       "viton seals" / "seals viton" both resolve to Seals + viton. */
+    function matchingCategory(query) {
+        const queryTokens = tokens(query);
+        if (!queryTokens.length) return null;
+        let best = null;
+        CATEGORY_SEARCHES.forEach((category) => {
+            category.aliases.forEach((alias) => {
+                const aliasTokens = tokens(alias);
+                const index = tokenRunIndex(queryTokens, aliasTokens);
+                if (index < 0) return;
+                if (!best || aliasTokens.length > best.length || (aliasTokens.length === best.length && index > best.index)) {
+                    best = { category, length: aliasTokens.length, index };
+                }
+            });
+        });
+        if (!best) return null;
+        const rest = queryTokens.filter((_, position) => position < best.index || position >= best.index + best.length);
+        return { category: best.category, qualifiers: rest };
+    }
+
+    function qualifierRules(category, qualifiers) {
+        const rules = GROUP_RULES[category.name] || [];
+        return rules.filter((rule) => qualifiers.some(
+            (token) => canonical(rule.name).includes(token) || rule.terms.some((term) => canonical(term).includes(token))
+        ));
+    }
+
+    function partText(row) {
+        if (row.dataset.searchText === undefined) {
+            row.dataset.searchText = canonical(`${row.dataset.partNumber || ''} ${row.dataset.description || ''}`);
+        }
+        return row.dataset.searchText;
+    }
+
+    function partSize(row) {
+        const text = `${row.dataset.partNumber || ''} ${row.dataset.description || ''}`;
+        const matches = [...text.matchAll(/\b\d+(?:\.\d+)?\b/g)].map((match) => Number(match[0])).filter((value) => Number.isFinite(value) && value > 0);
+        return matches.length ? Math.min(...matches) : Number.POSITIVE_INFINITY;
+    }
+
+    function groupName(category, row) {
+        const text = partText(row);
+        const rules = GROUP_RULES[category.name] || [];
+        const match = rules.find((rule) => rule.terms.some((term) => text.includes(canonical(term))));
+        return match ? match.name : 'Other / Unclassified';
+    }
+
+    function resetPartOrder(tbody) {
+        tbody.querySelectorAll('.catalog-search-group-row').forEach((row) => row.remove());
+        [...tbody.querySelectorAll('.part-row, .catalog-category-row')]
+            .sort((left, right) => Number(left.dataset.originalIndex) - Number(right.dataset.originalIndex))
+            .forEach((row) => tbody.appendChild(row));
+        tbody.querySelectorAll('.catalog-category-row').forEach((row) => { row.hidden = false; });
+    }
+
+    function filterPartRows(query, tbody) {
+        const rows = [...tbody.querySelectorAll('.part-row')];
+        const queryTokens = tokens(query);
+        const resolved = matchingCategory(query);
+        resetPartOrder(tbody);
+        if (!queryTokens.length) {
+            rows.forEach((row) => { row.hidden = false; });
+            return;
+        }
+        tbody.querySelectorAll('.catalog-category-row').forEach((row) => { row.hidden = true; });
+        if (!resolved) {
+            rows.forEach((row) => { row.hidden = !queryTokens.every((token) => partText(row).includes(token)); });
+            return;
+        }
+
+        const { category, qualifiers } = resolved;
+        const rules = qualifiers.length ? qualifierRules(category, qualifiers) : [];
+        const matches = rows.filter((row) => {
+            const text = partText(row);
+            if (!category.terms.some((term) => text.includes(canonical(term)))) return false;
+            if (!qualifiers.length) return true;
+            if (rules.some((rule) => rule.terms.some((term) => text.includes(canonical(term))))) return true;
+            return qualifiers.every((token) => text.includes(token));
+        });
+        rows.forEach((row) => { row.hidden = true; });
+        const groups = new Map();
+        matches.forEach((row) => {
+            const name = groupName(category, row);
+            if (!groups.has(name)) groups.set(name, []);
+            groups.get(name).push(row);
+        });
+        groups.forEach((groupRows, name) => {
+            const header = document.createElement('tr');
+            header.className = 'catalog-group-row catalog-search-group-row';
+            header.innerHTML = `<th colspan="7">${name} <span class="text-muted fw-normal">${groupRows.length}</span></th>`;
+            tbody.appendChild(header);
+            groupRows
+                .sort((left, right) => partSize(left) - partSize(right) || (left.dataset.partNumber || '').localeCompare(right.dataset.partNumber || ''))
+                .forEach((row) => {
+                    row.hidden = false;
+                    tbody.appendChild(row);
+                });
+        });
+    }
+
+    function filterRows() {
+        const query = filter.value.trim().toLowerCase();
+        const activePane = document.querySelector('.tab-pane.active');
+        const tbody = activePane.querySelector('tbody');
+        if (activePane.id === 'parts') {
+            filterPartRows(normalized(query), tbody);
+            return;
+        }
+        tbody.querySelectorAll('tr').forEach((row) => {
+            row.hidden = query !== '' && !row.textContent.toLowerCase().includes(query);
+        });
+    }
+    document.querySelectorAll('#parts .part-row, #parts .catalog-category-row').forEach((row, index) => { row.dataset.originalIndex = String(index); });
+    filter.addEventListener('input', filterRows);
+    document.querySelectorAll('[data-bs-toggle="tab"]').forEach((tab) => tab.addEventListener('shown.bs.tab', filterRows));
+
+    function restorePriceButton(form, displayValue) {
+        const button = form._priceButton;
+        button.textContent = displayValue;
+        button.dataset.value = form.querySelector('input').value;
+        form.replaceWith(button);
+    }
+
+    document.addEventListener('click', (event) => {
+        const button = event.target.closest('.editable-price');
+        if (!button || document.querySelector('.price-edit-form')) return;
+        if (button.dataset.conflicted === 'true') {
+            openConflictModal(button);
+            return;
+        }
+        const form = document.createElement('form');
+        form.className = 'price-edit-form d-inline-flex align-items-center gap-1';
+        form._priceButton = button.cloneNode(true);
+        form.innerHTML = `<input class="form-control form-control-sm" type="number" min="0" step="0.01" value="${button.dataset.value}" aria-label="Price amount"><button class="btn btn-sm btn-primary" type="submit">Save</button><button class="btn btn-sm btn-outline-secondary" type="button">Cancel</button><span class="text-muted small">${button.dataset.suffix || ''}</span>`;
+        button.replaceWith(form);
+        const input = form.querySelector('input');
+        input.focus();
+        input.select();
+        form.querySelector('button[type="button"]').addEventListener('click', () => form.replaceWith(form._priceButton));
+        form.addEventListener('submit', async (submitEvent) => {
+            submitEvent.preventDefault();
+            const value = input.value.trim();
+            if (value === '' || Number(value) < 0) {
+                input.classList.add('is-invalid');
+                return;
+            }
+            const response = await fetch('{{ url_for('portal.update_parts_catalog_price') }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ table: button.dataset.table, id: button.dataset.id, field: button.dataset.field, value })
+            });
+            const data = await response.json();
+            if (!response.ok || !data.ok) {
+                input.classList.add('is-invalid');
+                input.title = data.error || 'Unable to save price';
+                return;
+            }
+            input.value = data.value;
+            restorePriceButton(form, data.formatted);
+        });
+    });
+
+    // --- Selection, bulk update and history ---
+    const URLS = {
+        preview: '{{ url_for('portal.preview_parts_catalog_bulk_price') }}',
+        apply: '{{ url_for('portal.apply_parts_catalog_bulk_price') }}',
+        history: '{{ url_for('portal.parts_catalog_price_history') }}',
+        restore: '{{ url_for('portal.restore_parts_catalog_price', change_id=0) }}',
+        conflict: '{{ url_for('portal.parts_catalog_conflict', row_id=0) }}',
+        resolveConflict: '{{ url_for('portal.resolve_parts_catalog_conflict', row_id=0) }}',
+        createPart: '{{ url_for('portal.create_parts_catalog_part') }}',
+        families: '{{ url_for('portal.parts_catalog_families') }}',
+        createFamily: '{{ url_for('portal.create_parts_catalog_family') }}',
+        updateFamily: '{{ url_for('portal.update_parts_catalog_family', family_id=0) }}',
+        previewFamily: '{{ url_for('portal.preview_parts_catalog_family', family_id=0) }}',
+        familyImage: '{{ url_for('portal.upload_parts_catalog_family_image', family_id=0) }}',
+        assignFamily: '{{ url_for('portal.assign_parts_catalog_family') }}',
+        familyImageBase: '{{ url_for('static', filename='family_images/') }}'
+    };
+    const selectAll = document.getElementById('select-all-parts');
+    const selectionCount = document.getElementById('selection-count');
+    const bulkButton = document.getElementById('bulk-price-btn');
+    const assignFamilyButton = document.getElementById('family-assign-btn');
+    const bulkModal = new bootstrap.Modal(document.getElementById('bulk-modal'));
+    const historyModal = new bootstrap.Modal(document.getElementById('history-modal'));
+    const previewBody = document.getElementById('bulk-preview-body');
+    const previewCount = document.getElementById('bulk-preview-count');
+    const bulkError = document.getElementById('bulk-error');
+    const applyButton = document.getElementById('bulk-apply-btn');
+
+    function visiblePartRows() {
+        return [...document.querySelectorAll('#parts .part-row')].filter((row) => !row.hidden);
+    }
+
+    function selectedIds() {
+        return visiblePartRows()
+            .filter((row) => row.querySelector('.part-select').checked)
+            .map((row) => row.dataset.rowId);
+    }
+
+    function refreshSelection() {
+        const count = selectedIds().length;
+        selectionCount.textContent = `${count} selected`;
+        bulkButton.disabled = count === 0;
+        assignFamilyButton.disabled = count === 0;
+        const visible = visiblePartRows();
+        selectAll.checked = visible.length > 0 && count === visible.length;
+        selectAll.indeterminate = count > 0 && count < visible.length;
+    }
+
+    selectAll.addEventListener('change', () => {
+        visiblePartRows().forEach((row) => { row.querySelector('.part-select').checked = selectAll.checked; });
+        refreshSelection();
+    });
+    document.getElementById('parts').addEventListener('change', (event) => {
+        if (event.target.classList.contains('part-select')) refreshSelection();
+    });
+    filter.addEventListener('input', () => {
+        // Hidden rows must not stay selected once they leave the current search.
+        document.querySelectorAll('#parts .part-row[hidden] .part-select').forEach((box) => { box.checked = false; });
+        refreshSelection();
+    });
+
+    function priceButtonFor(rowId, field) {
+        return document.querySelector(`#parts .part-row[data-row-id="${rowId}"] .editable-price[data-field="${field}"]`);
+    }
+
+    function bulkPayload() {
+        return {
+            table: 'catalog_parts',
+            field: document.getElementById('bulk-field').value,
+            method: document.getElementById('bulk-method').value,
+            amount: document.getElementById('bulk-amount').value,
+            ids: selectedIds()
+        };
+    }
+
+    function previewCheckedIds() {
+        return [...previewBody.querySelectorAll('.preview-select:checked')].map((box) => box.value);
+    }
+
+    async function loadPreview() {
+        bulkError.textContent = '';
+        applyButton.disabled = true;
+        const response = await fetch(URLS.preview, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bulkPayload())
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            bulkError.textContent = data.error || 'Unable to preview changes.';
+            previewBody.innerHTML = '';
+            previewCount.textContent = '';
+            return;
+        }
+        previewCount.textContent = `${data.count} record(s) selected`;
+        previewBody.innerHTML = data.rows.map((row) => `<tr><td class="select-col"><input type="checkbox" class="form-check-input preview-select" value="${row.id}" ${row.conflicted ? '' : 'checked'}></td><td><strong>${row.label}</strong>${row.conflicted ? ' <span class="badge text-bg-warning" title="Unresolved pricing conflict - excluded by default">Conflict</span>' : ''}</td><td>${row.description}</td><td>${row.old_formatted}</td><td>${row.new_formatted}</td></tr>`).join('')
+            || '<tr><td colspan="5" class="text-muted small">No selected record has a price for this field.</td></tr>';
+        applyButton.disabled = previewCheckedIds().length === 0;
+    }
+
+    bulkButton.addEventListener('click', () => {
+        previewBody.innerHTML = '<tr><td colspan="5" class="text-muted small">Choose options, then Preview changes.</td></tr>';
+        previewCount.textContent = '';
+        bulkError.textContent = '';
+        applyButton.disabled = true;
+        bulkModal.show();
+    });
+    document.getElementById('bulk-preview-btn').addEventListener('click', loadPreview);
+    ['bulk-field', 'bulk-method', 'bulk-amount'].forEach((id) => {
+        document.getElementById(id).addEventListener('change', () => { applyButton.disabled = true; });
+    });
+    previewBody.addEventListener('change', () => { applyButton.disabled = previewCheckedIds().length === 0; });
+
+    applyButton.addEventListener('click', async () => {
+        const ids = previewCheckedIds();
+        if (!ids.length) return;
+        applyButton.disabled = true;
+        const payload = { ...bulkPayload(), ids, context: filter.value.trim() };
+        const response = await fetch(URLS.apply, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            bulkError.textContent = data.error || 'Unable to apply changes.';
+            applyButton.disabled = false;
+            return;
+        }
+        data.updated.forEach((row) => {
+            const button = priceButtonFor(row.id, row.field);
+            if (button) {
+                button.textContent = row.formatted;
+                button.dataset.value = row.value;
+            }
+        });
+        bulkModal.hide();
+    });
+
+    document.getElementById('history-btn').addEventListener('click', async () => {
+        const historyBody = document.getElementById('history-body');
+        historyBody.innerHTML = '<tr><td colspan="9" class="text-muted small">Loading...</td></tr>';
+        historyModal.show();
+        const response = await fetch(URLS.history);
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            historyBody.innerHTML = '<tr><td colspan="9" class="text-danger small">Unable to load history.</td></tr>';
+            return;
+        }
+        historyBody.innerHTML = data.changes.map((change) => `<tr data-change-id="${change.id}"><td>${change.created_at}</td><td><strong>${change.label}</strong><div class="small text-muted">${change.description}</div></td><td>${change.field_label}</td><td>${change.old_formatted}</td><td>${change.new_formatted}</td><td>${change.change_type}</td><td class="small text-muted">${change.batch_summary}</td><td>${change.changed_by}</td><td>${change.restorable ? '<button type="button" class="btn btn-sm btn-outline-secondary restore-btn">Restore</button>' : ''}</td></tr>`).join('')
+            || '<tr><td colspan="9" class="text-muted small">No price changes recorded yet.</td></tr>';
+    });
+
+    document.getElementById('history-body').addEventListener('click', async (event) => {
+        const button = event.target.closest('.restore-btn');
+        if (!button) return;
+        const changeId = button.closest('tr').dataset.changeId;
+        button.disabled = true;
+        const response = await fetch(URLS.restore.replace('/0/restore', `/${changeId}/restore`), { method: 'POST' });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            button.disabled = false;
+            button.title = data.error || 'Unable to restore price.';
+            return;
+        }
+        const priceButton = priceButtonFor(data.id, data.field);
+        if (priceButton) {
+            priceButton.textContent = data.formatted;
+            priceButton.dataset.value = data.value;
+        }
+        button.textContent = 'Restored';
+        document.getElementById('history-btn').click();
+    });
+
+    // --- Conflict resolution modal ---
+    const conflictModal = new bootstrap.Modal(document.getElementById('conflict-modal'));
+    const conflictOptions = document.getElementById('conflict-options');
+    const conflictError = document.getElementById('conflict-error');
+    let conflictContext = null;
+
+    async function openConflictModal(button) {
+        conflictError.textContent = '';
+        const response = await fetch(URLS.conflict.replace('/0', `/${button.dataset.id}`) + `?field=${button.dataset.field}`);
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            conflictError.textContent = data.error || 'Unable to load conflict details.';
+            conflictModal.show();
+            return;
+        }
+        conflictContext = { rowId: button.dataset.id, field: button.dataset.field, button };
+        document.getElementById('conflict-part-number').textContent = data.part_number;
+        document.getElementById('conflict-description').textContent = data.description;
+        document.getElementById('conflict-field').textContent = data.field_label;
+        document.getElementById('conflict-current').textContent = data.current_formatted;
+        document.getElementById('conflict-reason').textContent = data.review_reason;
+        conflictOptions.innerHTML = data.sources.map((source, index) => `
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="conflict-resolution" id="conflict-source-${index}" value="use_source" data-source="${source.name}">
+                <label class="form-check-label" for="conflict-source-${index}">Use ${source.name} price: ${source.formatted}</label>
+            </div>`).join('') + `
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="conflict-resolution" id="conflict-custom-radio" value="custom">
+                <label class="form-check-label" for="conflict-custom-radio">Enter a custom price</label>
+                <input id="conflict-custom-value" type="number" min="0" step="0.01" class="form-control form-control-sm mt-1" placeholder="0.00">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="conflict-resolution" id="conflict-keep-radio" value="keep" checked>
+                <label class="form-check-label" for="conflict-keep-radio">Keep the current live price and leave unresolved</label>
+            </div>`;
+        conflictModal.show();
+    }
+
+    document.getElementById('conflict-resolve-btn').addEventListener('click', async () => {
+        if (!conflictContext) return;
+        conflictError.textContent = '';
+        const selected = document.querySelector('input[name="conflict-resolution"]:checked');
+        if (!selected) {
+            conflictError.textContent = 'Choose a resolution option.';
+            return;
+        }
+        const payload = { field: conflictContext.field, resolution: selected.value };
+        if (selected.value === 'use_source') payload.source_name = selected.dataset.source;
+        if (selected.value === 'custom') {
+            const value = document.getElementById('conflict-custom-value').value.trim();
+            if (value === '' || Number(value) < 0) {
+                conflictError.textContent = 'Enter a valid non-negative price.';
+                return;
+            }
+            payload.value = value;
+        }
+        const response = await fetch(URLS.resolveConflict.replace('/0', `/${conflictContext.rowId}`), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            conflictError.textContent = data.error || 'Unable to resolve conflict.';
+            return;
+        }
+        if (data.resolved) {
+            const button = conflictContext.button;
+            button.textContent = data.formatted;
+            button.dataset.value = data.value;
+            button.dataset.conflicted = 'false';
+            button.classList.remove('conflicted-price');
+            const badge = button.querySelector('.badge');
+            if (badge) badge.remove();
+        }
+        conflictModal.hide();
+    });
+
+    // --- Add Part ---
+    const addPartModal = new bootstrap.Modal(document.getElementById('add-part-modal'));
+    document.getElementById('add-part-btn').addEventListener('click', () => {
+        document.getElementById('add-part-form').reset();
+        document.getElementById('ap-sell-source').value = 'Manual';
+        document.getElementById('ap-active').checked = true;
+        document.getElementById('add-part-error').textContent = '';
+        addPartModal.show();
+    });
+    document.getElementById('add-part-save-btn').addEventListener('click', async () => {
+        const errorEl = document.getElementById('add-part-error');
+        errorEl.textContent = '';
+        const partNumber = document.getElementById('ap-part-number').value.trim();
+        const description = document.getElementById('ap-description').value.trim();
+        const category = document.getElementById('ap-category').value.trim();
+        if (!partNumber || !description || !category) {
+            errorEl.textContent = 'Part Number, Description, and Category are required.';
+            return;
+        }
+        const payload = {
+            part_number: partNumber,
+            description,
+            category,
+            unit_cost: document.getElementById('ap-unit-cost').value,
+            sell_price: document.getElementById('ap-sell-price').value,
+            sell_price_source: document.getElementById('ap-sell-source').value.trim() || 'Manual',
+            active: document.getElementById('ap-active').checked
+        };
+        const response = await fetch(URLS.createPart, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            errorEl.textContent = data.error || 'Unable to save part.';
+            return;
+        }
+        location.reload();
+    });
+
+    // --- Part family settings (admin only) ---
+    const familyModal = new bootstrap.Modal(document.getElementById('family-modal'));
+    const settingsModal = new bootstrap.Modal(document.getElementById('settings-modal'));
+    const assignModal = new bootstrap.Modal(document.getElementById('assign-family-modal'));
+    const familyError = document.getElementById('family-error');
+    const familyStatus = document.getElementById('family-status');
+    const familyRuleSelect = document.getElementById('family-size-rule');
+    const familyRuleCustom = document.getElementById('family-size-rule-custom');
+    const familyPreviewBody = document.getElementById('family-preview-body');
+    let families = [];
+
+    function currentFamilyId() {
+        return document.getElementById('family-id').value;
+    }
+
+    function fillFamilyForm(family) {
+        document.getElementById('family-id').value = family.id || '';
+        document.getElementById('family-code').value = family.family_code || '';
+        document.getElementById('family-display-name').value = family.display_name || '';
+        document.getElementById('family-material').value = family.material || '';
+        document.getElementById('family-part-type').value = family.part_type || '';
+        document.getElementById('family-template').value = family.description_template || '';
+        document.getElementById('family-auto').checked = Boolean(family.auto_description_enabled);
+        const rule = family.size_rule || 'none';
+        const known = [...familyRuleSelect.options].some((option) => option.value === rule);
+        familyRuleSelect.value = known ? rule : 'custom';
+        familyRuleCustom.value = known ? '' : rule;
+        familyRuleCustom.classList.toggle('d-none', familyRuleSelect.value !== 'custom');
+        const image = document.getElementById('family-image-preview');
+        image.src = family.image_path ? URLS.familyImageBase + family.image_path : '';
+        image.classList.toggle('d-none', !family.image_path);
+        document.getElementById('family-image').disabled = !family.id;
+        document.getElementById('family-image-btn').disabled = !family.id;
+        document.getElementById('family-preview-btn').disabled = !family.id;
+        familyError.textContent = '';
+        familyStatus.textContent = '';
+    }
+
+    function renderFamilyList() {
+        const list = document.getElementById('family-list');
+        list.innerHTML = families.map((family) => `<button type="button" class="list-group-item list-group-item-action" data-family-id="${family.id}"><strong>${family.family_code}</strong> ${family.display_name} <span class="text-muted">${family.part_count} part(s)</span></button>`).join('')
+            || '<div class="text-muted small p-2">No families yet.</div>';
+        const assignSelect = document.getElementById('assign-family-code');
+        assignSelect.innerHTML = '<option value="">(remove family assignment)</option>'
+            + families.map((family) => `<option value="${family.family_code}">${family.family_code} - ${family.display_name}</option>`).join('');
+    }
+
+    async function loadFamilies() {
+        const response = await fetch(URLS.families);
+        const data = await response.json();
+        families = (response.ok && data.ok) ? data.families : [];
+        renderFamilyList();
+    }
+
+    familyRuleSelect.addEventListener('change', () => {
+        familyRuleCustom.classList.toggle('d-none', familyRuleSelect.value !== 'custom');
+    });
+
+    document.getElementById('family-list').addEventListener('click', (event) => {
+        const button = event.target.closest('[data-family-id]');
+        if (!button) return;
+        const family = families.find((item) => String(item.id) === button.dataset.familyId);
+        if (family) fillFamilyForm(family);
+        familyPreviewBody.innerHTML = '<tr><td colspan="3" class="text-muted small">Select a family, then preview.</td></tr>';
+    });
+
+    document.getElementById('family-new-btn').addEventListener('click', () => {
+        fillFamilyForm({ size_rule: 'none' });
+    });
+
+    async function openFamilyModal() {
+        fillFamilyForm({ size_rule: 'none' });
+        familyPreviewBody.innerHTML = '<tr><td colspan="3" class="text-muted small">Select a family, then preview.</td></tr>';
+        await loadFamilies();
+        familyModal.show();
+    }
+
+    document.getElementById('catalog-settings-btn').addEventListener('click', () => { settingsModal.show(); });
+    document.getElementById('settings-templates-btn').addEventListener('click', async () => {
+        settingsModal.hide();
+        await openFamilyModal();
+    });
+
+    function familyPayload() {
+        return {
+            family_code: document.getElementById('family-code').value.trim(),
+            display_name: document.getElementById('family-display-name').value.trim(),
+            material: document.getElementById('family-material').value.trim(),
+            part_type: document.getElementById('family-part-type').value.trim(),
+            description_template: document.getElementById('family-template').value.trim(),
+            size_rule: familyRuleSelect.value === 'custom' ? familyRuleCustom.value.trim() : familyRuleSelect.value,
+            auto_description_enabled: document.getElementById('family-auto').checked
+        };
+    }
+
+    document.getElementById('family-save-btn').addEventListener('click', async () => {
+        familyError.textContent = '';
+        familyStatus.textContent = '';
+        const id = currentFamilyId();
+        const url = id ? URLS.updateFamily.replace(/\/0$/, `/${id}`) : URLS.createFamily;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(familyPayload())
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            familyError.textContent = data.error || 'Unable to save family.';
+            return;
+        }
+        await loadFamilies();
+        fillFamilyForm(families.find((item) => item.id === data.family.id) || data.family);
+        familyStatus.textContent = 'Saved.';
+    });
+
+    document.getElementById('family-image-btn').addEventListener('click', async () => {
+        familyError.textContent = '';
+        const input = document.getElementById('family-image');
+        if (!input.files.length) {
+            familyError.textContent = 'Choose an image file.';
+            return;
+        }
+        const body = new FormData();
+        body.append('image', input.files[0]);
+        const response = await fetch(URLS.familyImage.replace(/\/0\/image$/, `/${currentFamilyId()}/image`), { method: 'POST', body });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            familyError.textContent = data.error || 'Unable to upload image.';
+            return;
+        }
+        const image = document.getElementById('family-image-preview');
+        image.src = `${URLS.familyImageBase}${data.family.image_path}?t=${Date.now()}`;
+        image.classList.remove('d-none');
+        familyStatus.textContent = 'Image saved.';
+        await loadFamilies();
+    });
+
+    document.getElementById('family-preview-btn').addEventListener('click', async () => {
+        familyError.textContent = '';
+        const response = await fetch(URLS.previewFamily.replace(/\/0\/preview$/, `/${currentFamilyId()}/preview`));
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            familyError.textContent = data.error || 'Unable to preview family.';
+            return;
+        }
+        familyPreviewBody.innerHTML = data.rows.map((row) => `<tr><td><strong>${row.part_number}</strong></td><td>${row.size_display}</td><td>${row.description}</td></tr>`).join('')
+            || '<tr><td colspan="3" class="text-muted small">No parts assigned to this family yet.</td></tr>';
+        if (data.unresolved) familyError.textContent = `${data.unresolved} part(s) need admin review - size could not be decoded.`;
+    });
+
+    assignFamilyButton.addEventListener('click', async () => {
+        document.getElementById('assign-error').textContent = '';
+        document.getElementById('assign-count').textContent = String(selectedIds().length);
+        await loadFamilies();
+        familyModal.hide();
+        assignModal.show();
+    });
+
+    document.getElementById('assign-save-btn').addEventListener('click', async () => {
+        const errorEl = document.getElementById('assign-error');
+        errorEl.textContent = '';
+        const response = await fetch(URLS.assignFamily, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ family_code: document.getElementById('assign-family-code').value, ids: selectedIds() })
+        });
+        const data = await response.json();
+        if (!response.ok || !data.ok) {
+            errorEl.textContent = data.error || 'Unable to assign parts.';
+            return;
+        }
+        location.reload();
+    });
+
+    // Contents entries activate the owning pane first because base/assembly have no tab button.
+    function showPane(selector) {
+        document.querySelectorAll('#catalog-tabs .nav-link').forEach((button) => {
+            const on = button.dataset.bsTarget === selector;
+            button.classList.toggle('active', on);
+            button.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        document.querySelectorAll('.tab-content > .tab-pane').forEach((pane) => {
+            const on = `#${pane.id}` === selector;
+            pane.classList.toggle('show', on);
+            pane.classList.toggle('active', on);
+        });
+    }
+
+    document.querySelectorAll('#catalog-contents .contents-entry').forEach((link) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            showPane(link.dataset.tab);
+            const anchor = link.dataset.anchor ? document.getElementById(link.dataset.anchor) : null;
+            (anchor || document.querySelector(link.dataset.tab)).scrollIntoView({ block: 'start', behavior: 'smooth' });
+        });
+    });
+
+    refreshSelection();
+</script>
+</body>
+</html>

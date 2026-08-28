@@ -31,11 +31,15 @@ def temp_db(tmp_path, monkeypatch):
     db_path = tmp_path / "test_pending_approval_queue.db"
     monkeypatch.setenv("DATABASE_PATH", str(db_path))
     monkeypatch.setenv("ACCOUNTS_DATABASE_PATH", str(tmp_path / "test_pending_approval_queue_accounts.db"))
+    monkeypatch.setenv("QUOTES_DATABASE_PATH", str(tmp_path / "test_pending_approval_queue_quotes.db"))
+    monkeypatch.setenv("ORDERS_DATABASE_PATH", str(tmp_path / "test_pending_approval_queue_orders.db"))
 
     import app.db as db_mod
 
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._quotes_engine = None
+    db_mod._orders_engine = None
     db_mod._Session = None
     init_db()
 
@@ -45,6 +49,8 @@ def temp_db(tmp_path, monkeypatch):
 
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._quotes_engine = None
+    db_mod._orders_engine = None
     db_mod._Session = None
 
 
@@ -80,6 +86,13 @@ def _set_quote_status(quote_id: int, status: str):
     with get_session() as session:
         quote = session.get(Quote, quote_id)
         quote.status = status
+        session.commit()
+
+
+def _assign_quote(quote_id: int, user_id: int):
+    with get_session() as session:
+        quote = session.get(Quote, quote_id)
+        quote.assigned_employee_user_id = user_id
         session.commit()
 
 
@@ -149,6 +162,67 @@ def test_accept_endpoint_race_safe(temp_db):
     body = resp2.get_json()
     assert body["ok"] is False
     assert "Already claimed" in body["error"]
+
+
+def test_pending_queue_only_shows_first_three_quotes(temp_db):
+    client = temp_db.test_client()
+    creator = _create_employee_user("creator")
+    viewer = _create_employee_user("viewer")
+
+    quote_numbers = []
+    for index in range(5):
+        quote = _create_quote(client, creator.display_name, f"Queue Customer {index}")
+        quote_numbers.append(quote["quote_number"])
+        _set_quote_status(quote["id"], "pending_approval")
+
+    _login_client(client, viewer)
+    resp = client.get("/employee/dashboard")
+    assert resp.status_code == 200
+    text = resp.get_data(as_text=True)
+    assert text.count('data-pending-id="') == 3
+    assert quote_numbers[0] in text
+    assert quote_numbers[1] in text
+    assert quote_numbers[2] in text
+    assert quote_numbers[3] not in text
+    assert quote_numbers[4] not in text
+
+
+def test_pending_quote_must_be_accepted_before_opening(temp_db):
+    client = temp_db.test_client()
+    creator = _create_employee_user("creator")
+    viewer = _create_employee_user("viewer")
+
+    quote = _create_quote(client, creator.display_name, "Blocked Customer")
+    _set_quote_status(quote["id"], "pending_approval")
+
+    _login_client(client, viewer)
+    blocked = client.get(f"/employee/quote-entry?quote_id={quote['id']}")
+    assert blocked.status_code == 302
+    assert blocked.headers["Location"].endswith("/employee/dashboard")
+
+    client.post(f"/employee/quotes/{quote['id']}/accept")
+    opened = client.get(f"/employee/quote-entry?quote_id={quote['id']}")
+    assert opened.status_code == 200
+    assert "Quote Form" in opened.get_data(as_text=True)
+
+
+def test_pending_order_must_be_accepted_before_opening(temp_db):
+    client = temp_db.test_client()
+    creator = _create_employee_user("creator")
+    viewer = _create_employee_user("viewer")
+
+    quote = _create_quote(client, creator.display_name, "Blocked Order Customer")
+    _set_quote_status(quote["id"], "pending_approval")
+
+    _login_client(client, viewer)
+    blocked = client.get(f"/order-form?quote_id={quote['id']}")
+    assert blocked.status_code == 403
+    assert "Accept the pending order before opening it." in blocked.get_data(as_text=True)
+
+    _assign_quote(quote["id"], viewer.id)
+    opened = client.get(f"/order-form?quote_id={quote['id']}")
+    assert opened.status_code == 200
+    assert "Order Form" in opened.get_data(as_text=True)
 
 
 def test_accepted_quote_stays_visible_to_claimer_but_hidden_from_others(temp_db):

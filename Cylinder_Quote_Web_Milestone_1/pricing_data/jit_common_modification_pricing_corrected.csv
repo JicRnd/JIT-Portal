@@ -1,0 +1,2076 @@
+﻿series,bore,rod,option_name,base_price,per_unit_price,unit,source_sheet,source_row
+H/HM/W,1.5,0.625,Rod Extension,,14,inch,H2,8
+H/HM/W,1.5,0.625,Stop Tube,57,44,inch,H2,8
+H/HM/W,1.5,0.625,Stainless Steel Piston Rod,40,6,inch,H2,8
+H/HM/W,1.5,0.625,Chromed Bore,490,16,inch,H2,8
+H/HM/W,1.5,0.625,Thread Extension,,17,inch,H2,8
+H/HM/W,,1,Rod Extension,,16,inch,H2,9
+H/HM/W,,1,Stop Tube,67,51,inch,H2,9
+H/HM/W,,1,Stainless Steel Piston Rod,72,7,inch,H2,9
+H/HM/W,,1,Chromed Bore,490,16,inch,H2,9
+H/HM/W,,1,Thread Extension,,18,inch,H2,9
+H/HM/W,2,1,Rod Extension,,16,inch,H2,10
+H/HM/W,2,1,Stop Tube,67,50,inch,H2,10
+H/HM/W,2,1,Stainless Steel Piston Rod,72,7,inch,H2,10
+H/HM/W,2,1,Chromed Bore,490,16,inch,H2,10
+H/HM/W,2,1,Thread Extension,,18,inch,H2,10
+H/HM/W,,1.375,Rod Extension,,18,inch,H2,11
+H/HM/W,,1.375,Stop Tube,72,63,inch,H2,11
+H/HM/W,,1.375,Stainless Steel Piston Rod,143,10,inch,H2,11
+H/HM/W,,1.375,Chromed Bore,490,16,inch,H2,11
+H/HM/W,,1.375,Thread Extension,,21,inch,H2,11
+H/HM/W,2.5,1,Rod Extension,,16,inch,H2,12
+H/HM/W,2.5,1,Stop Tube,72,50,inch,H2,12
+H/HM/W,2.5,1,Stainless Steel Piston Rod,72,7,inch,H2,12
+H/HM/W,2.5,1,Chromed Bore,490,16,inch,H2,12
+H/HM/W,2.5,1,Thread Extension,,18,inch,H2,12
+H/HM/W,,1.375,Rod Extension,,18,inch,H2,13
+H/HM/W,,1.375,Stop Tube,73,54,inch,H2,13
+H/HM/W,,1.375,Stainless Steel Piston Rod,143,10,inch,H2,13
+H/HM/W,,1.375,Chromed Bore,490,16,inch,H2,13
+H/HM/W,,1.375,Thread Extension,,21,inch,H2,13
+H/HM/W,,1.75,Rod Extension,,19,inch,H2,14
+H/HM/W,,1.75,Stop Tube,78,63,inch,H2,14
+H/HM/W,,1.75,Stainless Steel Piston Rod,292,11,inch,H2,14
+H/HM/W,,1.75,Chromed Bore,490,16,inch,H2,14
+H/HM/W,,1.75,Thread Extension,,26,inch,H2,14
+H/HM/W,3.25,1.375,Rod Extension,,18,inch,H2,15
+H/HM/W,3.25,1.375,Stop Tube,78,59,inch,H2,15
+H/HM/W,3.25,1.375,Stainless Steel Piston Rod,143,10,inch,H2,15
+H/HM/W,3.25,1.375,Chromed Bore,490,16,inch,H2,15
+H/HM/W,3.25,1.375,Thread Extension,,21,inch,H2,15
+H/HM/W,,1.75,Rod Extension,,19,inch,H2,16
+H/HM/W,,1.75,Stop Tube,82,70,inch,H2,16
+H/HM/W,,1.75,Stainless Steel Piston Rod,292,11,inch,H2,16
+H/HM/W,,1.75,Chromed Bore,490,16,inch,H2,16
+H/HM/W,,1.75,Thread Extension,,26,inch,H2,16
+H/HM/W,,2,Rod Extension,,20,inch,H2,17
+H/HM/W,,2,Stop Tube,110,91,inch,H2,17
+H/HM/W,,2,Stainless Steel Piston Rod,423,13,inch,H2,17
+H/HM/W,,2,Chromed Bore,490,16,inch,H2,17
+H/HM/W,,2,Thread Extension,,28,inch,H2,17
+H/HM/W,4,1.75,Rod Extension,,19,inch,H2,18
+H/HM/W,4,1.75,Stop Tube,98,78,inch,H2,18
+H/HM/W,4,1.75,Stainless Steel Piston Rod,292,11,inch,H2,18
+H/HM/W,4,1.75,Chromed Bore,490,17,inch,H2,18
+H/HM/W,4,1.75,Thread Extension,,26,inch,H2,18
+H/HM/W,,2,Rod Extension,,20,inch,H2,19
+H/HM/W,,2,Stop Tube,107,80,inch,H2,19
+H/HM/W,,2,Stainless Steel Piston Rod,423,13,inch,H2,19
+H/HM/W,,2,Chromed Bore,490,17,inch,H2,19
+H/HM/W,,2,Thread Extension,,28,inch,H2,19
+H/HM/W,,2.5,Rod Extension,,25,inch,H2,20
+H/HM/W,,2.5,Stop Tube,118,103,inch,H2,20
+H/HM/W,,2.5,Stainless Steel Piston Rod,805,18,inch,H2,20
+H/HM/W,,2.5,Chromed Bore,490,17,inch,H2,20
+H/HM/W,,2.5,Thread Extension,,30,inch,H2,20
+H/HM/W,5,2,Rod Extension,,20,inch,H2,21
+H/HM/W,5,2,Stop Tube,123,100,inch,H2,21
+H/HM/W,5,2,Stainless Steel Piston Rod,423,13,inch,H2,21
+H/HM/W,5,2,Chromed Bore,510,17,inch,H2,21
+H/HM/W,5,2,Thread Extension,,28,inch,H2,21
+H/HM/W,,2.5,Rod Extension,,25,inch,H2,22
+H/HM/W,,2.5,Stop Tube,132,111,inch,H2,22
+H/HM/W,,2.5,Stainless Steel Piston Rod,805,18,inch,H2,22
+H/HM/W,,2.5,Chromed Bore,510,17,inch,H2,22
+H/HM/W,,2.5,Thread Extension,,30,inch,H2,22
+H/HM/W,,3,Rod Extension,,40,inch,H2,23
+H/HM/W,,3,Stop Tube,143,131,inch,H2,23
+H/HM/W,,3,Stainless Steel Piston Rod,1234,25,inch,H2,23
+H/HM/W,,3,Chromed Bore,510,17,inch,H2,23
+H/HM/W,,3,Thread Extension,,58,inch,H2,23
+H/HM/W,,3.5,Rod Extension,,50,inch,H2,24
+H/HM/W,,3.5,Stop Tube,153,145,inch,H2,24
+H/HM/W,,3.5,Stainless Steel Piston Rod,1560,32,inch,H2,24
+H/HM/W,,3.5,Chromed Bore,510,17,inch,H2,24
+H/HM/W,,3.5,Thread Extension,,68,inch,H2,24
+H/HM/W,6,2.5,Rod Extension,,25,inch,H2,25
+H/HM/W,6,2.5,Stop Tube,139,124,inch,H2,25
+H/HM/W,6,2.5,Stainless Steel Piston Rod,805,18,inch,H2,25
+H/HM/W,6,2.5,Chromed Bore,510,17,inch,H2,25
+H/HM/W,6,2.5,Thread Extension,,30,inch,H2,25
+H/HM/W,,3,Rod Extension,,40,inch,H2,26
+H/HM/W,,3,Stop Tube,157,138,inch,H2,26
+H/HM/W,,3,Stainless Steel Piston Rod,1234,25,inch,H2,26
+H/HM/W,,3,Chromed Bore,510,17,inch,H2,26
+H/HM/W,,3,Thread Extension,,58,inch,H2,26
+H/HM/W,,3.5,Rod Extension,,50,inch,H2,27
+H/HM/W,,3.5,Stop Tube,166,159,inch,H2,27
+H/HM/W,,3.5,Stainless Steel Piston Rod,1560,32,inch,H2,27
+H/HM/W,,3.5,Chromed Bore,510,17,inch,H2,27
+H/HM/W,,3.5,Thread Extension,,68,inch,H2,27
+H/HM/W,,4,Rod Extension,,60,inch,H2,28
+H/HM/W,,4,Stop Tube,182,180,inch,H2,28
+H/HM/W,,4,Stainless Steel Piston Rod,1859,44,inch,H2,28
+H/HM/W,,4,Chromed Bore,510,17,inch,H2,28
+H/HM/W,,4,Thread Extension,,84,inch,H2,28
+H/HM/W,7,3,Rod Extension,,40,inch,H2,29
+H/HM/W,7,3,Stop Tube,159,159,inch,H2,29
+H/HM/W,7,3,Stainless Steel Piston Rod,1234,25,inch,H2,29
+H/HM/W,7,3,Chromed Bore,513,18,inch,H2,29
+H/HM/W,7,3,Thread Extension,,58,inch,H2,29
+H/HM/W,,3.5,Rod Extension,,50,inch,H2,30
+H/HM/W,,3.5,Stop Tube,180,175,inch,H2,30
+H/HM/W,,3.5,Stainless Steel Piston Rod,1560,32,inch,H2,30
+H/HM/W,,3.5,Chromed Bore,513,18,inch,H2,30
+H/HM/W,,3.5,Thread Extension,,68,inch,H2,30
+H/HM/W,,4,Rod Extension,,60,inch,H2,31
+H/HM/W,,4,Stop Tube,196,196,inch,H2,31
+H/HM/W,,4,Stainless Steel Piston Rod,1859,44,inch,H2,31
+H/HM/W,,4,Chromed Bore,513,18,inch,H2,31
+H/HM/W,,4,Thread Extension,,84,inch,H2,31
+H/HM/W,,4.5,Rod Extension,,79,inch,H2,32
+H/HM/W,,4.5,Stop Tube,216,224,inch,H2,32
+H/HM/W,,4.5,Stainless Steel Piston Rod,2982,65,inch,H2,32
+H/HM/W,,4.5,Chromed Bore,513,18,inch,H2,32
+H/HM/W,,4.5,Thread Extension,,101,inch,H2,32
+H/HM/W,,5,Rod Extension,,137,inch,H2,33
+H/HM/W,,5,Stop Tube,236,250,inch,H2,33
+H/HM/W,,5,Stainless Steel Piston Rod,3820,78,inch,H2,33
+H/HM/W,,5,Chromed Bore,513,18,inch,H2,33
+H/HM/W,,5,Thread Extension,,123,inch,H2,33
+H/HM/W,8,3.5,Rod Extension,,50,inch,H2,34
+H/HM/W,8,3.5,Stop Tube,209,212,inch,H2,34
+H/HM/W,8,3.5,Stainless Steel Piston Rod,1560,32,inch,H2,34
+H/HM/W,8,3.5,Chromed Bore,513,20,inch,H2,34
+H/HM/W,8,3.5,Thread Extension,,68,inch,H2,34
+H/HM/W,,4,Rod Extension,,60,inch,H2,35
+H/HM/W,,4,Stop Tube,221,226,inch,H2,35
+H/HM/W,,4,Stainless Steel Piston Rod,1859,44,inch,H2,35
+H/HM/W,,4,Chromed Bore,513,20,inch,H2,35
+H/HM/W,,4,Thread Extension,,84,inch,H2,35
+H/HM/W,,4.5,Rod Extension,,79,inch,H2,36
+H/HM/W,,4.5,Stop Tube,256,261,inch,H2,36
+H/HM/W,,4.5,Stainless Steel Piston Rod,2982,65,inch,H2,36
+H/HM/W,,4.5,Chromed Bore,513,20,inch,H2,36
+H/HM/W,,4.5,Thread Extension,,101,inch,H2,36
+H/HM/W,,5,Rod Extension,,137,inch,H2,37
+H/HM/W,,5,Stop Tube,290,289,inch,H2,37
+H/HM/W,,5,Stainless Steel Piston Rod,3820,78,inch,H2,37
+H/HM/W,,5,Chromed Bore,513,20,inch,H2,37
+H/HM/W,,5,Thread Extension,,123,inch,H2,37
+H/HM/W,,5.5,Rod Extension,,164,inch,H2,38
+H/HM/W,,5.5,Stop Tube,292,319,inch,H2,38
+H/HM/W,,5.5,Stainless Steel Piston Rod,4413,84,inch,H2,38
+H/HM/W,,5.5,Chromed Bore,513,20,inch,H2,38
+H/HM/W,,5.5,Thread Extension,,117,inch,H2,38
+H/HM/W,10,4.5,Rod Extension,,79,inch,H2,39
+H/HM/W,10,4.5,Stop Tube,449,282,inch,H2,39
+H/HM/W,10,4.5,Stainless Steel Piston Rod,2831,42,inch,H2,39
+H/HM/W,10,4.5,Chromed Bore,686,26,inch,H2,39
+H/HM/W,10,4.5,Thread Extension,,101,inch,H2,39
+H/HM/W,,5,Rod Extension,,137,inch,H2,40
+H/HM/W,,5,Stop Tube,473,298,inch,H2,40
+H/HM/W,,5,Stainless Steel Piston Rod,3813,54,inch,H2,40
+H/HM/W,,5,Chromed Bore,686,26,inch,H2,40
+H/HM/W,,5,Thread Extension,,123,inch,H2,40
+H/HM/W,,5.5,Rod Extension,,164,inch,H2,41
+H/HM/W,,5.5,Stop Tube,486,321,inch,H2,41
+H/HM/W,,5.5,Stainless Steel Piston Rod,4380,58,inch,H2,41
+H/HM/W,,5.5,Chromed Bore,686,26,inch,H2,41
+H/HM/W,,5.5,Thread Extension,,146,inch,H2,41
+H/HM/W,,7,Rod Extension,,192,inch,H2,42
+H/HM/W,,7,Stop Tube,590,513,inch,H2,42
+H/HM/W,,7,Stainless Steel Piston Rod,6609,84,inch,H2,42
+H/HM/W,,7,Chromed Bore,686,26,inch,H2,42
+H/HM/W,,7,Thread Extension,,183,inch,H2,42
+H/HM/W,12,5.5,Rod Extension,,164,inch,H2,43
+H/HM/W,12,5.5,Stop Tube,473,348,inch,H2,43
+H/HM/W,12,5.5,Stainless Steel Piston Rod,4380,58,inch,H2,43
+H/HM/W,12,5.5,Chromed Bore,918,36,inch,H2,43
+H/HM/W,12,5.5,Thread Extension,,146,inch,H2,43
+H/HM/W,,7,Rod Extension,,192,inch,H2,44
+H/HM/W,,7,Stop Tube,590,513,inch,H2,44
+H/HM/W,,7,Stainless Steel Piston Rod,6609,84,inch,H2,44
+H/HM/W,,7,Chromed Bore,918,36,inch,H2,44
+H/HM/W,,7,Thread Extension,,183,inch,H2,44
+H/HM/W,,8,Rod Extension,,264,inch,H2,45
+H/HM/W,,8,Stop Tube,665,560,inch,H2,45
+H/HM/W,,8,Stainless Steel Piston Rod,10934,136,inch,H2,45
+H/HM/W,,8,Chromed Bore,918,36,inch,H2,45
+H/HM/W,,8,Thread Extension,,317,inch,H2,45
+H/HM/W,14,8,Rod Extension,,264,inch,H2,46
+H/HM/W,14,8,Stop Tube,665,560,inch,H2,46
+H/HM/W,14,8,Stainless Steel Piston Rod,10934,136,inch,H2,46
+H/HM/W,14,8,Chromed Bore,1230,44,inch,H2,46
+H/HM/W,14,8,Thread Extension,,317,inch,H2,46
+H/HM/W,,10,Rod Extension,,344,inch,H2,47
+H/HM/W,,10,Stop Tube,785,699,inch,H2,47
+H/HM/W,,10,Stainless Steel Piston Rod,13531,175,inch,H2,47
+H/HM/W,,10,Chromed Bore,1230,44,inch,H2,47
+H/HM/W,,10,Thread Extension,,411,inch,H2,47
+H/HM/W,16,8,Rod Extension,,264,inch,H2,48
+H/HM/W,16,8,Stop Tube,1207,706,inch,H2,48
+H/HM/W,16,8,Stainless Steel Piston Rod,10934,136,inch,H2,48
+H/HM/W,16,8,Chromed Bore,1650,58,inch,H2,48
+H/HM/W,16,8,Thread Extension,,317,inch,H2,48
+H/HM/W,,10,Rod Extension,,344,inch,H2,49
+H/HM/W,,10,Stop Tube,1720,870,inch,H2,49
+H/HM/W,,10,Stainless Steel Piston Rod,13531,175,inch,H2,49
+H/HM/W,,10,Chromed Bore,1650,58,inch,H2,49
+H/HM/W,,10,Thread Extension,,411,inch,H2,49
+H/HM/W,18,8,Rod Extension,,264,inch,H2,50
+H/HM/W,18,8,Stop Tube,1667,818,inch,H2,50
+H/HM/W,18,8,Stainless Steel Piston Rod,10934,136,inch,H2,50
+H/HM/W,18,8,Chromed Bore,2212,74,inch,H2,50
+H/HM/W,18,8,Thread Extension,,317,inch,H2,50
+H/HM/W,,10,Rod Extension,,344,inch,H2,51
+H/HM/W,,10,Stop Tube,1797,924,inch,H2,51
+H/HM/W,,10,Stainless Steel Piston Rod,13531,175,inch,H2,51
+H/HM/W,,10,Chromed Bore,2212,74,inch,H2,51
+H/HM/W,,10,Thread Extension,,411,inch,H2,51
+H/HM/W,20,10,Rod Extension,,344,inch,H2,52
+H/HM/W,20,10,Stop Tube,1888,983,inch,H2,52
+H/HM/W,20,10,Stainless Steel Piston Rod,13531,175,inch,H2,52
+H/HM/W,20,10,Chromed Bore,2967,98,inch,H2,52
+H/HM/W,20,10,Thread Extension,,411,inch,H2,52
+A/LH,1.5,0.625,Rod Extension,,11,inch,A2,8
+A/LH,1.5,0.625,Stop Tube,116,34,inch,A2,8
+A/LH,1.5,0.625,Chrome Plated Stainless Steel Piston Rod,34,15,inch,A2,8
+A/LH,1.5,0.625,Thread Extension,,15,inch,A2,8
+A/LH,1.5,1,Rod Extension,,12,inch,A2,9
+A/LH,1.5,1,Stop Tube,116,34,inch,A2,9
+A/LH,1.5,1,Chrome Plated Stainless Steel Piston Rod,60,17,inch,A2,9
+A/LH,1.5,1,Thread Extension,,17,inch,A2,9
+A/LH,2,0.625,Rod Extension,,11,inch,A2,10
+A/LH,2,0.625,Stop Tube,130,34,inch,A2,10
+A/LH,2,0.625,Chrome Plated Stainless Steel Piston Rod,34,15,inch,A2,10
+A/LH,2,0.625,Thread Extension,,15,inch,A2,10
+A/LH,2,1,Rod Extension,,12,inch,A2,11
+A/LH,2,1,Stop Tube,130,34,inch,A2,11
+A/LH,2,1,Chrome Plated Stainless Steel Piston Rod,60,17,inch,A2,11
+A/LH,2,1,Thread Extension,,17,inch,A2,11
+A/LH,2,1.375,Rod Extension,,15,inch,A2,12
+A/LH,2,1.375,Stop Tube,130,34,inch,A2,12
+A/LH,2,1.375,Chrome Plated Stainless Steel Piston Rod,119,22,inch,A2,12
+A/LH,2,1.375,Thread Extension,,18,inch,A2,12
+A/LH,2.5,0.625,Rod Extension,,11,inch,A2,13
+A/LH,2.5,0.625,Stop Tube,141,35,inch,A2,13
+A/LH,2.5,0.625,Chrome Plated Stainless Steel Piston Rod,34,15,inch,A2,13
+A/LH,2.5,0.625,Thread Extension,,15,inch,A2,13
+A/LH,2.5,1,Rod Extension,,12,inch,A2,14
+A/LH,2.5,1,Stop Tube,141,35,inch,A2,14
+A/LH,2.5,1,Chrome Plated Stainless Steel Piston Rod,60,17,inch,A2,14
+A/LH,2.5,1,Thread Extension,,17,inch,A2,14
+A/LH,2.5,1.375,Rod Extension,,15,inch,A2,15
+A/LH,2.5,1.375,Stop Tube,141,35,inch,A2,15
+A/LH,2.5,1.375,Chrome Plated Stainless Steel Piston Rod,119,22,inch,A2,15
+A/LH,2.5,1.375,Thread Extension,,18,inch,A2,15
+A/LH,2.5,1.75,Rod Extension,,16,inch,A2,16
+A/LH,2.5,1.75,Stop Tube,141,35,inch,A2,16
+A/LH,2.5,1.75,Chrome Plated Stainless Steel Piston Rod,242,24,inch,A2,16
+A/LH,2.5,1.75,Thread Extension,,22,inch,A2,16
+A/LH,3.25,1,Rod Extension,,12,inch,A2,17
+A/LH,3.25,1,Stop Tube,182,45,inch,A2,17
+A/LH,3.25,1,Chrome Plated Stainless Steel Piston Rod,60,17,inch,A2,17
+A/LH,3.25,1,Thread Extension,,17,inch,A2,17
+A/LH,3.25,1.375,Rod Extension,,15,inch,A2,18
+A/LH,3.25,1.375,Stop Tube,182,45,inch,A2,18
+A/LH,3.25,1.375,Chrome Plated Stainless Steel Piston Rod,119,22,inch,A2,18
+A/LH,3.25,1.375,Thread Extension,,18,inch,A2,18
+A/LH,3.25,1.75,Rod Extension,,16,inch,A2,19
+A/LH,3.25,1.75,Stop Tube,182,45,inch,A2,19
+A/LH,3.25,1.75,Chrome Plated Stainless Steel Piston Rod,242,24,inch,A2,19
+A/LH,3.25,1.75,Thread Extension,,22,inch,A2,19
+A/LH,3.25,2,Rod Extension,,17,inch,A2,20
+A/LH,3.25,2,Stop Tube,182,45,inch,A2,20
+A/LH,3.25,2,Chrome Plated Stainless Steel Piston Rod,344,35,inch,A2,20
+A/LH,3.25,2,Thread Extension,,24,inch,A2,20
+A/LH,4,1,Rod Extension,,12,inch,A2,21
+A/LH,4,1,Stop Tube,226,48,inch,A2,21
+A/LH,4,1,Chrome Plated Stainless Steel Piston Rod,60,17,inch,A2,21
+A/LH,4,1,Thread Extension,,17,inch,A2,21
+A/LH,4,1.375,Rod Extension,,15,inch,A2,22
+A/LH,4,1.375,Stop Tube,226,48,inch,A2,22
+A/LH,4,1.375,Chrome Plated Stainless Steel Piston Rod,119,22,inch,A2,22
+A/LH,4,1.375,Thread Extension,,18,inch,A2,22
+A/LH,4,1.75,Rod Extension,,16,inch,A2,23
+A/LH,4,1.75,Stop Tube,226,48,inch,A2,23
+A/LH,4,1.75,Chrome Plated Stainless Steel Piston Rod,242,24,inch,A2,23
+A/LH,4,1.75,Thread Extension,,22,inch,A2,23
+A/LH,4,2,Rod Extension,,17,inch,A2,24
+A/LH,4,2,Stop Tube,226,48,inch,A2,24
+A/LH,4,2,Chrome Plated Stainless Steel Piston Rod,344,35,inch,A2,24
+A/LH,4,2,Thread Extension,,24,inch,A2,24
+A/LH,5,1,Rod Extension,,12,inch,A2,25
+A/LH,5,1,Stop Tube,285,62,inch,A2,25
+A/LH,5,1,Chrome Plated Stainless Steel Piston Rod,60,17,inch,A2,25
+A/LH,5,1,Thread Extension,,17,inch,A2,25
+A/LH,5,1.375,Rod Extension,,15,inch,A2,26
+A/LH,5,1.375,Stop Tube,285,62,inch,A2,26
+A/LH,5,1.375,Chrome Plated Stainless Steel Piston Rod,119,22,inch,A2,26
+A/LH,5,1.375,Thread Extension,,18,inch,A2,26
+A/LH,5,1.75,Rod Extension,,16,inch,A2,27
+A/LH,5,1.75,Stop Tube,285,62,inch,A2,27
+A/LH,5,1.75,Chrome Plated Stainless Steel Piston Rod,242,24,inch,A2,27
+A/LH,5,1.75,Thread Extension,,22,inch,A2,27
+A/LH,5,2,Rod Extension,,17,inch,A2,28
+A/LH,5,2,Stop Tube,285,62,inch,A2,28
+A/LH,5,2,Chrome Plated Stainless Steel Piston Rod,344,35,inch,A2,28
+A/LH,5,2,Thread Extension,,24,inch,A2,28
+A/LH,6,1.375,Rod Extension,,15,inch,A2,29
+A/LH,6,1.375,Stop Tube,378,76,inch,A2,29
+A/LH,6,1.375,Chrome Plated Stainless Steel Piston Rod,119,22,inch,A2,29
+A/LH,6,1.375,Thread Extension,,18,inch,A2,29
+A/LH,6,1.75,Rod Extension,,16,inch,A2,30
+A/LH,6,1.75,Stop Tube,378,76,inch,A2,30
+A/LH,6,1.75,Chrome Plated Stainless Steel Piston Rod,242,24,inch,A2,30
+A/LH,6,1.75,Thread Extension,,22,inch,A2,30
+A/LH,6,2,Rod Extension,,17,inch,A2,31
+A/LH,6,2,Stop Tube,378,76,inch,A2,31
+A/LH,6,2,Chrome Plated Stainless Steel Piston Rod,344,35,inch,A2,31
+A/LH,6,2,Thread Extension,,24,inch,A2,31
+A/LH,6,2.5,Rod Extension,,20,inch,A2,32
+A/LH,6,2.5,Stop Tube,378,76,inch,A2,32
+A/LH,6,2.5,Chrome Plated Stainless Steel Piston Rod,656,48,inch,A2,32
+A/LH,6,2.5,Thread Extension,,33,inch,A2,32
+A/LH,7,1.375,Rod Extension,,15,inch,A2,33
+A/LH,7,1.375,Stop Tube,449,88,inch,A2,33
+A/LH,7,1.375,Chrome Plated Stainless Steel Piston Rod,119,22,inch,A2,33
+A/LH,7,1.375,Thread Extension,,18,inch,A2,33
+A/LH,7,1.75,Rod Extension,,16,inch,A2,34
+A/LH,7,1.75,Stop Tube,449,88,inch,A2,34
+A/LH,7,1.75,Chrome Plated Stainless Steel Piston Rod,242,24,inch,A2,34
+A/LH,7,1.75,Thread Extension,,22,inch,A2,34
+A/LH,7,2,Rod Extension,,17,inch,A2,35
+A/LH,7,2,Stop Tube,449,88,inch,A2,35
+A/LH,7,2,Chrome Plated Stainless Steel Piston Rod,344,35,inch,A2,35
+A/LH,7,2,Thread Extension,,24,inch,A2,35
+A/LH,7,2.5,Rod Extension,,20,inch,A2,36
+A/LH,7,2.5,Stop Tube,449,88,inch,A2,36
+A/LH,7,2.5,Chrome Plated Stainless Steel Piston Rod,656,48,inch,A2,36
+A/LH,7,2.5,Thread Extension,,33,inch,A2,36
+A/LH,8,1.375,Rod Extension,,15,inch,A2,37
+A/LH,8,1.375,Stop Tube,521,96,inch,A2,37
+A/LH,8,1.375,Chrome Plated Stainless Steel Piston Rod,119,22,inch,A2,37
+A/LH,8,1.375,Thread Extension,,18,inch,A2,37
+A/LH,8,1.75,Rod Extension,,16,inch,A2,38
+A/LH,8,1.75,Stop Tube,521,96,inch,A2,38
+A/LH,8,1.75,Chrome Plated Stainless Steel Piston Rod,242,24,inch,A2,38
+A/LH,8,1.75,Thread Extension,,22,inch,A2,38
+A/LH,8,2,Rod Extension,,17,inch,A2,39
+A/LH,8,2,Stop Tube,521,96,inch,A2,39
+A/LH,8,2,Chrome Plated Stainless Steel Piston Rod,344,35,inch,A2,39
+A/LH,8,2,Thread Extension,,24,inch,A2,39
+A/LH,8,2.5,Rod Extension,,20,inch,A2,40
+A/LH,8,2.5,Stop Tube,521,96,inch,A2,40
+A/LH,8,2.5,Chrome Plated Stainless Steel Piston Rod,656,48,inch,A2,40
+A/LH,8,2.5,Thread Extension,,33,inch,A2,40
+A/LH,10,1.75,Rod Extension,,16,inch,A2,41
+A/LH,10,1.75,Stop Tube,879,144,inch,A2,41
+A/LH,10,1.75,Chrome Plated Stainless Steel Piston Rod,242,24,inch,A2,41
+A/LH,10,1.75,Thread Extension,,22,inch,A2,41
+A/LH,10,2,Rod Extension,,17,inch,A2,42
+A/LH,10,2,Stop Tube,879,144,inch,A2,42
+A/LH,10,2,Chrome Plated Stainless Steel Piston Rod,344,35,inch,A2,42
+A/LH,10,2,Thread Extension,,24,inch,A2,42
+A/LH,10,2.5,Rod Extension,,20,inch,A2,43
+A/LH,10,2.5,Stop Tube,879,144,inch,A2,43
+A/LH,10,2.5,Chrome Plated Stainless Steel Piston Rod,656,48,inch,A2,43
+A/LH,10,2.5,Thread Extension,,33,inch,A2,43
+A/LH,10,3,Rod Extension,,34,inch,A2,44
+A/LH,10,3,Stop Tube,879,144,inch,A2,44
+A/LH,10,3,Chrome Plated Stainless Steel Piston Rod,1001,64,inch,A2,44
+A/LH,10,3,Thread Extension,,62,inch,A2,44
+A/LH,10,3.5,Rod Extension,,41,inch,A2,45
+A/LH,10,3.5,Stop Tube,879,144,inch,A2,45
+A/LH,10,3.5,Chrome Plated Stainless Steel Piston Rod,1264,86,inch,A2,45
+A/LH,10,3.5,Thread Extension,,69,inch,A2,45
+A/LH,12,2,Rod Extension,,17,inch,A2,46
+A/LH,12,2,Stop Tube,1238,200,inch,A2,46
+A/LH,12,2,Chrome Plated Stainless Steel Piston Rod,344,35,inch,A2,46
+A/LH,12,2,Thread Extension,,24,inch,A2,46
+A/LH,12,2.5,Rod Extension,,20,inch,A2,47
+A/LH,12,2.5,Stop Tube,1238,200,inch,A2,47
+A/LH,12,2.5,Chrome Plated Stainless Steel Piston Rod,656,48,inch,A2,47
+A/LH,12,2.5,Thread Extension,,33,inch,A2,47
+A/LH,12,3,Rod Extension,,34,inch,A2,48
+A/LH,12,3,Stop Tube,1238,200,inch,A2,48
+A/LH,12,3,Chrome Plated Stainless Steel Piston Rod,1001,64,inch,A2,48
+A/LH,12,3,Thread Extension,,62,inch,A2,48
+A/LH,12,3.5,Rod Extension,,41,inch,A2,49
+A/LH,12,3.5,Stop Tube,1238,200,inch,A2,49
+A/LH,12,3.5,Chrome Plated Stainless Steel Piston Rod,1264,86,inch,A2,49
+A/LH,12,3.5,Thread Extension,,69,inch,A2,49
+A/LH,12,4,Rod Extension,,51,inch,A2,50
+A/LH,12,4,Stop Tube,1238,200,inch,A2,50
+A/LH,12,4,Chrome Plated Stainless Steel Piston Rod,1508,119,inch,A2,50
+A/LH,12,4,Thread Extension,,89,inch,A2,50
+A/LH,14,2.5,Rod Extension,,20,inch,A2,51
+A/LH,14,2.5,Stop Tube,1596,227,inch,A2,51
+A/LH,14,2.5,Chrome Plated Stainless Steel Piston Rod,656,48,inch,A2,51
+A/LH,14,2.5,Thread Extension,,33,inch,A2,51
+A/LH,14,3,Rod Extension,,34,inch,A2,52
+A/LH,14,3,Stop Tube,1596,227,inch,A2,52
+A/LH,14,3,Chrome Plated Stainless Steel Piston Rod,1001,64,inch,A2,52
+A/LH,14,3,Thread Extension,,62,inch,A2,52
+A/LH,14,3.5,Rod Extension,,41,inch,A2,53
+A/LH,14,3.5,Stop Tube,1596,227,inch,A2,53
+A/LH,14,3.5,Chrome Plated Stainless Steel Piston Rod,1264,86,inch,A2,53
+A/LH,14,3.5,Thread Extension,,69,inch,A2,53
+A/LH,14,4,Rod Extension,,51,inch,A2,54
+A/LH,14,4,Stop Tube,1596,227,inch,A2,54
+A/LH,14,4,Chrome Plated Stainless Steel Piston Rod,1508,119,inch,A2,54
+A/LH,14,4,Thread Extension,,89,inch,A2,54
+IH/IHM/IMH,25,12,Rod Extension,,0.6000000000000001,mm,IH2,8
+IH/IHM/IMH,25,12,Stop Tube,60,1.9500000000000002,mm,IH2,8
+IH/IHM/IMH,25,12,Stainless Steel Piston Rod,36,0.2,mm,IH2,8
+IH/IHM/IMH,25,12,Chrome Bore,490,0.8,mm,IH2,8
+IH/IHM/IMH,25,12,Thread Extension,,0.8500000000000001,mm,IH2,8
+IH/IHM/IMH,,18,Rod Extension,,0.7000000000000001,mm,IH2,9
+IH/IHM/IMH,,18,Stop Tube,60,2.25,mm,IH2,9
+IH/IHM/IMH,,18,Stainless Steel Piston Rod,64,0.25,mm,IH2,9
+IH/IHM/IMH,,18,Chrome Bore,490,0.8,mm,IH2,9
+IH/IHM/IMH,,18,Thread Extension,,0.9,mm,IH2,9
+IH/IHM/IMH,32,14,Rod Extension,,0.7000000000000001,mm,IH2,10
+IH/IHM/IMH,32,14,Stop Tube,70,2.2,mm,IH2,10
+IH/IHM/IMH,32,14,Stainless Steel Piston Rod,64,0.25,mm,IH2,10
+IH/IHM/IMH,32,14,Chrome Bore,490,0.8,mm,IH2,10
+IH/IHM/IMH,32,14,Thread Extension,,0.9,mm,IH2,10
+IH/IHM/IMH,,18,Rod Extension,,0.8,mm,IH2,11
+IH/IHM/IMH,,18,Stop Tube,70,2.85,mm,IH2,11
+IH/IHM/IMH,,18,Stainless Steel Piston Rod,80,0.4,mm,IH2,11
+IH/IHM/IMH,,18,Chrome Bore,490,0.8,mm,IH2,11
+IH/IHM/IMH,,18,Thread Extension,,1.05,mm,IH2,11
+IH/IHM/IMH,,22,Rod Extension,,0.7000000000000001,mm,IH2,12
+IH/IHM/IMH,,22,Stop Tube,70,2.2,mm,IH2,12
+IH/IHM/IMH,,22,Stainless Steel Piston Rod,150,0.25,mm,IH2,12
+IH/IHM/IMH,,22,Chrome Bore,490,0.8,mm,IH2,12
+IH/IHM/IMH,,22,Thread Extension,,0.9,mm,IH2,12
+IH/IHM/IMH,40,18,Rod Extension,,0.8,mm,IH2,13
+IH/IHM/IMH,40,18,Stop Tube,80,2.4000000000000004,mm,IH2,13
+IH/IHM/IMH,40,18,Stainless Steel Piston Rod,100,0.4,mm,IH2,13
+IH/IHM/IMH,40,18,Chrome Bore,490,0.8,mm,IH2,13
+IH/IHM/IMH,40,18,Thread Extension,,1.05,mm,IH2,13
+IH/IHM/IMH,,22,Rod Extension,,0.8500000000000001,mm,IH2,14
+IH/IHM/IMH,,22,Stop Tube,80,2.85,mm,IH2,14
+IH/IHM/IMH,,22,Stainless Steel Piston Rod,264,0.45,mm,IH2,14
+IH/IHM/IMH,,22,Chrome Bore,490,0.8,mm,IH2,14
+IH/IHM/IMH,,22,Thread Extension,,1.3,mm,IH2,14
+IH/IHM/IMH,,28,Rod Extension,,0.8,mm,IH2,15
+IH/IHM/IMH,,28,Stop Tube,80,2.6500000000000004,mm,IH2,15
+IH/IHM/IMH,,28,Stainless Steel Piston Rod,350,0.4,mm,IH2,15
+IH/IHM/IMH,,28,Chrome Bore,490,0.8,mm,IH2,15
+IH/IHM/IMH,,28,Thread Extension,,1.05,mm,IH2,15
+IH/IHM/IMH,50,22,Rod Extension,,0.8500000000000001,mm,IH2,16
+IH/IHM/IMH,50,22,Stop Tube,90,3.1,mm,IH2,16
+IH/IHM/IMH,50,22,Stainless Steel Piston Rod,280,0.45,mm,IH2,16
+IH/IHM/IMH,50,22,Chrome Bore,490,0.8,mm,IH2,16
+IH/IHM/IMH,50,22,Thread Extension,,1.3,mm,IH2,16
+IH/IHM/IMH,,28,Rod Extension,,0.9,mm,IH2,17
+IH/IHM/IMH,,28,Stop Tube,90,4.05,mm,IH2,17
+IH/IHM/IMH,,28,Stainless Steel Piston Rod,382,0.55,mm,IH2,17
+IH/IHM/IMH,,28,Chrome Bore,490,0.8,mm,IH2,17
+IH/IHM/IMH,,28,Thread Extension,,1.4000000000000001,mm,IH2,17
+IH/IHM/IMH,,36,Rod Extension,,0.8500000000000001,mm,IH2,18
+IH/IHM/IMH,,36,Stop Tube,90,3.5,mm,IH2,18
+IH/IHM/IMH,,36,Stainless Steel Piston Rod,500,0.45,mm,IH2,18
+IH/IHM/IMH,,36,Chrome Bore,490,0.8500000000000001,mm,IH2,18
+IH/IHM/IMH,,36,Thread Extension,,1.3,mm,IH2,18
+IH/IHM/IMH,63,28,Rod Extension,,0.9,mm,IH2,19
+IH/IHM/IMH,63,28,Stop Tube,150,3.6,mm,IH2,19
+IH/IHM/IMH,63,28,Stainless Steel Piston Rod,400,0.55,mm,IH2,19
+IH/IHM/IMH,63,28,Chrome Bore,490,0.8500000000000001,mm,IH2,19
+IH/IHM/IMH,63,28,Thread Extension,,1.4000000000000001,mm,IH2,19
+IH/IHM/IMH,,36,Rod Extension,,1.05,mm,IH2,20
+IH/IHM/IMH,,36,Stop Tube,150,4.65,mm,IH2,20
+IH/IHM/IMH,,36,Stainless Steel Piston Rod,729,0.8,mm,IH2,20
+IH/IHM/IMH,,36,Chrome Bore,490,0.8500000000000001,mm,IH2,20
+IH/IHM/IMH,,36,Thread Extension,,1.5,mm,IH2,20
+IH/IHM/IMH,,45,Rod Extension,,2,mm,IH2,21
+IH/IHM/IMH,,45,Stop Tube,150,4.5,mm,IH2,21
+IH/IHM/IMH,,45,Stainless Steel Piston Rod,900,0.55,mm,IH2,21
+IH/IHM/IMH,,45,Chrome Bore,510,0.8500000000000001,mm,IH2,21
+IH/IHM/IMH,,45,Thread Extension,,1.4000000000000001,mm,IH2,21
+IH/IHM/IMH,80,36,Rod Extension,,1.05,mm,IH2,22
+IH/IHM/IMH,80,36,Stop Tube,180,5,mm,IH2,22
+IH/IHM/IMH,80,36,Stainless Steel Piston Rod,729,0.8,mm,IH2,22
+IH/IHM/IMH,80,36,Chrome Bore,510,0.8500000000000001,mm,IH2,22
+IH/IHM/IMH,80,36,Thread Extension,,1.5,mm,IH2,22
+IH/IHM/IMH,,45,Rod Extension,,2,mm,IH2,23
+IH/IHM/IMH,,45,Stop Tube,180,5.9,mm,IH2,23
+IH/IHM/IMH,,45,Stainless Steel Piston Rod,1119,1.05,mm,IH2,23
+IH/IHM/IMH,,45,Chrome Bore,510,0.8500000000000001,mm,IH2,23
+IH/IHM/IMH,,45,Thread Extension,,2.9000000000000004,mm,IH2,23
+IH/IHM/IMH,,56,Rod Extension,,3,mm,IH2,24
+IH/IHM/IMH,,56,Stop Tube,180,6.550000000000001,mm,IH2,24
+IH/IHM/IMH,,56,Stainless Steel Piston Rod,1414,1.4000000000000001,mm,IH2,24
+IH/IHM/IMH,,56,Chrome Bore,510,0.8500000000000001,mm,IH2,24
+IH/IHM/IMH,,56,Thread Extension,,3.4000000000000004,mm,IH2,24
+IH/IHM/IMH,100,45,Rod Extension,,2,mm,IH2,25
+IH/IHM/IMH,100,45,Stop Tube,250,5.6000000000000005,mm,IH2,25
+IH/IHM/IMH,100,45,Stainless Steel Piston Rod,1200,0.8,mm,IH2,25
+IH/IHM/IMH,100,45,Chrome Bore,510,0.8500000000000001,mm,IH2,25
+IH/IHM/IMH,100,45,Thread Extension,,1.5,mm,IH2,25
+IH/IHM/IMH,,56,Rod Extension,,3,mm,IH2,26
+IH/IHM/IMH,,56,Stop Tube,250,6.2,mm,IH2,26
+IH/IHM/IMH,,56,Stainless Steel Piston Rod,1500,1.05,mm,IH2,26
+IH/IHM/IMH,,56,Chrome Bore,510,0.8500000000000001,mm,IH2,26
+IH/IHM/IMH,,56,Thread Extension,,2.9000000000000004,mm,IH2,26
+IH/IHM/IMH,,70,Rod Extension,,4,mm,IH2,27
+IH/IHM/IMH,,70,Stop Tube,250,7.15,mm,IH2,27
+IH/IHM/IMH,,70,Stainless Steel Piston Rod,1600,1.4000000000000001,mm,IH2,27
+IH/IHM/IMH,,70,Chrome Bore,510,0.8500000000000001,mm,IH2,27
+IH/IHM/IMH,,70,Thread Extension,,3.4000000000000004,mm,IH2,27
+IH/IHM/IMH,125,56,Rod Extension,,3,mm,IH2,28
+IH/IHM/IMH,125,56,Stop Tube,350,8.1,mm,IH2,28
+IH/IHM/IMH,125,56,Stainless Steel Piston Rod,1685,1.9500000000000002,mm,IH2,28
+IH/IHM/IMH,125,56,Chrome Bore,510,0.8500000000000001,mm,IH2,28
+IH/IHM/IMH,125,56,Thread Extension,,4.2,mm,IH2,28
+IH/IHM/IMH,,70,Rod Extension,,4,mm,IH2,29
+IH/IHM/IMH,,70,Stop Tube,350,7.15,mm,IH2,29
+IH/IHM/IMH,,70,Stainless Steel Piston Rod,1800,1.05,mm,IH2,29
+IH/IHM/IMH,,70,Chrome Bore,513,0.9,mm,IH2,29
+IH/IHM/IMH,,70,Thread Extension,,2.9000000000000004,mm,IH2,29
+IH/IHM/IMH,,90,Rod Extension,,5,mm,IH2,30
+IH/IHM/IMH,,90,Stop Tube,350,7.9,mm,IH2,30
+IH/IHM/IMH,,90,Stainless Steel Piston Rod,2000,1.4000000000000001,mm,IH2,30
+IH/IHM/IMH,,90,Chrome Bore,513,0.9,mm,IH2,30
+IH/IHM/IMH,,90,Thread Extension,,3.4000000000000004,mm,IH2,30
+IH/IHM/IMH,160,70,Rod Extension,,2.7,mm,IH2,31
+IH/IHM/IMH,160,70,Stop Tube,500,8.85,mm,IH2,31
+IH/IHM/IMH,160,70,Stainless Steel Piston Rod,1900,1.9500000000000002,mm,IH2,31
+IH/IHM/IMH,160,70,Chrome Bore,513,0.9,mm,IH2,31
+IH/IHM/IMH,160,70,Thread Extension,,4.2,mm,IH2,31
+IH/IHM/IMH,,90,Rod Extension,,5,mm,IH2,32
+IH/IHM/IMH,,90,Stop Tube,500,10.100000000000001,mm,IH2,32
+IH/IHM/IMH,,90,Stainless Steel Piston Rod,2704,2.9000000000000004,mm,IH2,32
+IH/IHM/IMH,,90,Chrome Bore,513,0.9,mm,IH2,32
+IH/IHM/IMH,,90,Thread Extension,,5.050000000000001,mm,IH2,32
+IH/IHM/IMH,,110,Rod Extension,,10,mm,IH2,33
+IH/IHM/IMH,,110,Stop Tube,500,11.3,mm,IH2,33
+IH/IHM/IMH,,110,Stainless Steel Piston Rod,3464,3.5,mm,IH2,33
+IH/IHM/IMH,,110,Chrome Bore,513,0.9,mm,IH2,33
+IH/IHM/IMH,,110,Thread Extension,,6.15,mm,IH2,33
+IH/IHM/IMH,200,90,Rod Extension,,5,mm,IH2,34
+IH/IHM/IMH,200,90,Stop Tube,800,9.55,mm,IH2,34
+IH/IHM/IMH,200,90,Stainless Steel Piston Rod,2704,1.4000000000000001,mm,IH2,34
+IH/IHM/IMH,200,90,Chrome Bore,513,1,mm,IH2,34
+IH/IHM/IMH,200,90,Thread Extension,,3.4000000000000004,mm,IH2,34
+IH/IHM/IMH,,110,Rod Extension,,10,mm,IH2,35
+IH/IHM/IMH,,110,Stop Tube,800,10.200000000000001,mm,IH2,35
+IH/IHM/IMH,,110,Stainless Steel Piston Rod,3464,1.9500000000000002,mm,IH2,35
+IH/IHM/IMH,,110,Chrome Bore,513,1,mm,IH2,35
+IH/IHM/IMH,,110,Thread Extension,,4.2,mm,IH2,35
+IH/IHM/IMH,,140,Rod Extension,,20,mm,IH2,36
+IH/IHM/IMH,,140,Stop Tube,800,11.8,mm,IH2,36
+IH/IHM/IMH,,140,Stainless Steel Piston Rod,5000,2.9000000000000004,mm,IH2,36
+IH/IHM/IMH,,140,Chrome Bore,513,1,mm,IH2,36
+IH/IHM/IMH,,140,Thread Extension,,5.050000000000001,mm,IH2,36
+H/HM/W,1.5,0.625,Rod Gland Drain,374,,inch,H3,8
+H/HM/W,1.5,0.625,Air Bleed,173,,inch,H3,8
+H/HM/W,1.5,0.625,Prox Switch,823,,inch,H3,8
+H/HM/W,1.5,0.625,Brass Wiper,84,,inch,H3,8
+H/HM/W,1.5,0.625,Viton Rod Seal,22,,inch,H3,8
+H/HM/W,1.5,0.625,Viton Piston Seal,120,,inch,H3,8
+H/HM/W,1.5,0.625,Extra Port,92,,inch,H3,8
+H/HM/W,1.5,0.625,Light Duty Mill,599,,inch,H3,8
+H/HM/W,,1,Rod Gland Drain,448,,inch,H3,9
+H/HM/W,,1,Air Bleed,173,,inch,H3,9
+H/HM/W,,1,Prox Switch,823,,inch,H3,9
+H/HM/W,,1,Brass Wiper,88,,inch,H3,9
+H/HM/W,,1,Viton Rod Seal,34,,inch,H3,9
+H/HM/W,,1,Viton Piston Seal,120,,inch,H3,9
+H/HM/W,,1,Extra Port,92,,inch,H3,9
+H/HM/W,,1,Light Duty Mill,599,,inch,H3,9
+H/HM/W,2,1,Rod Gland Drain,448,,inch,H3,10
+H/HM/W,2,1,Air Bleed,182,,inch,H3,10
+H/HM/W,2,1,Prox Switch,823,,inch,H3,10
+H/HM/W,2,1,Brass Wiper,88,,inch,H3,10
+H/HM/W,2,1,Viton Rod Seal,34,,inch,H3,10
+H/HM/W,2,1,Viton Piston Seal,135,,inch,H3,10
+H/HM/W,2,1,Extra Port,95,,inch,H3,10
+H/HM/W,2,1,Light Duty Mill,699,,inch,H3,10
+H/HM/W,,1.375,Rod Gland Drain,457,,inch,H3,11
+H/HM/W,,1.375,Air Bleed,182,,inch,H3,11
+H/HM/W,,1.375,Prox Switch,823,,inch,H3,11
+H/HM/W,,1.375,Brass Wiper,113,,inch,H3,11
+H/HM/W,,1.375,Viton Rod Seal,56,,inch,H3,11
+H/HM/W,,1.375,Viton Piston Seal,135,,inch,H3,11
+H/HM/W,,1.375,Extra Port,95,,inch,H3,11
+H/HM/W,,1.375,Light Duty Mill,699,,inch,H3,11
+H/HM/W,2.5,1,Rod Gland Drain,448,,inch,H3,12
+H/HM/W,2.5,1,Air Bleed,188,,inch,H3,12
+H/HM/W,2.5,1,Prox Switch,823,,inch,H3,12
+H/HM/W,2.5,1,Brass Wiper,88,,inch,H3,12
+H/HM/W,2.5,1,Viton Rod Seal,34,,inch,H3,12
+H/HM/W,2.5,1,Viton Piston Seal,170,,inch,H3,12
+H/HM/W,2.5,1,Extra Port,100,,inch,H3,12
+H/HM/W,2.5,1,Light Duty Mill,863,,inch,H3,12
+H/HM/W,,1.375,Rod Gland Drain,457,,inch,H3,13
+H/HM/W,,1.375,Air Bleed,188,,inch,H3,13
+H/HM/W,,1.375,Prox Switch,823,,inch,H3,13
+H/HM/W,,1.375,Brass Wiper,113,,inch,H3,13
+H/HM/W,,1.375,Viton Rod Seal,56,,inch,H3,13
+H/HM/W,,1.375,Viton Piston Seal,170,,inch,H3,13
+H/HM/W,,1.375,Extra Port,100,,inch,H3,13
+H/HM/W,,1.375,Light Duty Mill,863,,inch,H3,13
+H/HM/W,,1.75,Rod Gland Drain,468,,inch,H3,14
+H/HM/W,,1.75,Air Bleed,188,,inch,H3,14
+H/HM/W,,1.75,Prox Switch,823,,inch,H3,14
+H/HM/W,,1.75,Brass Wiper,155,,inch,H3,14
+H/HM/W,,1.75,Viton Rod Seal,70,,inch,H3,14
+H/HM/W,,1.75,Viton Piston Seal,170,,inch,H3,14
+H/HM/W,,1.75,Extra Port,100,,inch,H3,14
+H/HM/W,,1.75,Light Duty Mill,863,,inch,H3,14
+H/HM/W,3.25,1.375,Rod Gland Drain,457,,inch,H3,15
+H/HM/W,3.25,1.375,Air Bleed,198,,inch,H3,15
+H/HM/W,3.25,1.375,Prox Switch,823,,inch,H3,15
+H/HM/W,3.25,1.375,Brass Wiper,113,,inch,H3,15
+H/HM/W,3.25,1.375,Viton Rod Seal,56,,inch,H3,15
+H/HM/W,3.25,1.375,Viton Piston Seal,190,,inch,H3,15
+H/HM/W,3.25,1.375,Extra Port,105,,inch,H3,15
+H/HM/W,3.25,1.375,Light Duty Mill,979,,inch,H3,15
+H/HM/W,,1.75,Rod Gland Drain,468,,inch,H3,16
+H/HM/W,,1.75,Air Bleed,198,,inch,H3,16
+H/HM/W,,1.75,Prox Switch,823,,inch,H3,16
+H/HM/W,,1.75,Brass Wiper,155,,inch,H3,16
+H/HM/W,,1.75,Viton Rod Seal,70,,inch,H3,16
+H/HM/W,,1.75,Viton Piston Seal,190,,inch,H3,16
+H/HM/W,,1.75,Extra Port,105,,inch,H3,16
+H/HM/W,,1.75,Light Duty Mill,979,,inch,H3,16
+H/HM/W,,2,Rod Gland Drain,478,,inch,H3,17
+H/HM/W,,2,Air Bleed,198,,inch,H3,17
+H/HM/W,,2,Prox Switch,823,,inch,H3,17
+H/HM/W,,2,Brass Wiper,236,,inch,H3,17
+H/HM/W,,2,Viton Rod Seal,96,,inch,H3,17
+H/HM/W,,2,Viton Piston Seal,190,,inch,H3,17
+H/HM/W,,2,Extra Port,105,,inch,H3,17
+H/HM/W,,2,Light Duty Mill,979,,inch,H3,17
+H/HM/W,4,1.75,Rod Gland Drain,468,,inch,H3,18
+H/HM/W,4,1.75,Air Bleed,208,,inch,H3,18
+H/HM/W,4,1.75,Prox Switch,823,,inch,H3,18
+H/HM/W,4,1.75,Brass Wiper,155,,inch,H3,18
+H/HM/W,4,1.75,Viton Rod Seal,70,,inch,H3,18
+H/HM/W,4,1.75,Viton Piston Seal,230,,inch,H3,18
+H/HM/W,4,1.75,Extra Port,116,,inch,H3,18
+H/HM/W,4,1.75,Light Duty Mill,1141,,inch,H3,18
+H/HM/W,,2,Rod Gland Drain,478,,inch,H3,19
+H/HM/W,,2,Air Bleed,208,,inch,H3,19
+H/HM/W,,2,Prox Switch,823,,inch,H3,19
+H/HM/W,,2,Brass Wiper,236,,inch,H3,19
+H/HM/W,,2,Viton Rod Seal,96,,inch,H3,19
+H/HM/W,,2,Viton Piston Seal,230,,inch,H3,19
+H/HM/W,,2,Extra Port,116,,inch,H3,19
+H/HM/W,,2,Light Duty Mill,1141,,inch,H3,19
+H/HM/W,,2.5,Rod Gland Drain,483,,inch,H3,20
+H/HM/W,,2.5,Air Bleed,208,,inch,H3,20
+H/HM/W,,2.5,Prox Switch,823,,inch,H3,20
+H/HM/W,,2.5,Brass Wiper,422,,inch,H3,20
+H/HM/W,,2.5,Viton Rod Seal,189,,inch,H3,20
+H/HM/W,,2.5,Viton Piston Seal,230,,inch,H3,20
+H/HM/W,,2.5,Extra Port,116,,inch,H3,20
+H/HM/W,,2.5,Light Duty Mill,1141,,inch,H3,20
+H/HM/W,5,2,Rod Gland Drain,478,,inch,H3,21
+H/HM/W,5,2,Air Bleed,218,,inch,H3,21
+H/HM/W,5,2,Prox Switch,823,,inch,H3,21
+H/HM/W,5,2,Brass Wiper,236,,inch,H3,21
+H/HM/W,5,2,Viton Rod Seal,96,,inch,H3,21
+H/HM/W,5,2,Viton Piston Seal,450,,inch,H3,21
+H/HM/W,5,2,Extra Port,120,,inch,H3,21
+H/HM/W,5,2,Light Duty Mill,1548,,inch,H3,21
+H/HM/W,,2.5,Rod Gland Drain,483,,inch,H3,22
+H/HM/W,,2.5,Air Bleed,218,,inch,H3,22
+H/HM/W,,2.5,Prox Switch,823,,inch,H3,22
+H/HM/W,,2.5,Brass Wiper,422,,inch,H3,22
+H/HM/W,,2.5,Viton Rod Seal,189,,inch,H3,22
+H/HM/W,,2.5,Viton Piston Seal,450,,inch,H3,22
+H/HM/W,,2.5,Extra Port,120,,inch,H3,22
+H/HM/W,,2.5,Light Duty Mill,1548,,inch,H3,22
+H/HM/W,,3,Rod Gland Drain,513,,inch,H3,23
+H/HM/W,,3,Air Bleed,218,,inch,H3,23
+H/HM/W,,3,Prox Switch,823,,inch,H3,23
+H/HM/W,,3,Brass Wiper,466,,inch,H3,23
+H/HM/W,,3,Viton Rod Seal,248,,inch,H3,23
+H/HM/W,,3,Viton Piston Seal,450,,inch,H3,23
+H/HM/W,,3,Extra Port,120,,inch,H3,23
+H/HM/W,,3,Light Duty Mill,1548,,inch,H3,23
+H/HM/W,,3.5,Rod Gland Drain,541,,inch,H3,24
+H/HM/W,,3.5,Air Bleed,218,,inch,H3,24
+H/HM/W,,3.5,Prox Switch,823,,inch,H3,24
+H/HM/W,,3.5,Brass Wiper,651,,inch,H3,24
+H/HM/W,,3.5,Viton Rod Seal,292,,inch,H3,24
+H/HM/W,,3.5,Viton Piston Seal,450,,inch,H3,24
+H/HM/W,,3.5,Extra Port,120,,inch,H3,24
+H/HM/W,,3.5,Light Duty Mill,1548,,inch,H3,24
+H/HM/W,6,2.5,Rod Gland Drain,483,,inch,H3,25
+H/HM/W,6,2.5,Air Bleed,229,,inch,H3,25
+H/HM/W,6,2.5,Prox Switch,823,,inch,H3,25
+H/HM/W,6,2.5,Brass Wiper,422,,inch,H3,25
+H/HM/W,6,2.5,Viton Rod Seal,189,,inch,H3,25
+H/HM/W,6,2.5,Viton Piston Seal,550,,inch,H3,25
+H/HM/W,6,2.5,Extra Port,130,,inch,H3,25
+H/HM/W,6,2.5,Light Duty Mill,1757,,inch,H3,25
+H/HM/W,,3,Rod Gland Drain,513,,inch,H3,26
+H/HM/W,,3,Air Bleed,229,,inch,H3,26
+H/HM/W,,3,Prox Switch,823,,inch,H3,26
+H/HM/W,,3,Brass Wiper,466,,inch,H3,26
+H/HM/W,,3,Viton Rod Seal,242,,inch,H3,26
+H/HM/W,,3,Viton Piston Seal,550,,inch,H3,26
+H/HM/W,,3,Extra Port,130,,inch,H3,26
+H/HM/W,,3,Light Duty Mill,1757,,inch,H3,26
+H/HM/W,,3.5,Rod Gland Drain,558,,inch,H3,27
+H/HM/W,,3.5,Air Bleed,229,,inch,H3,27
+H/HM/W,,3.5,Prox Switch,823,,inch,H3,27
+H/HM/W,,3.5,Brass Wiper,651,,inch,H3,27
+H/HM/W,,3.5,Viton Rod Seal,292,,inch,H3,27
+H/HM/W,,3.5,Viton Piston Seal,550,,inch,H3,27
+H/HM/W,,3.5,Extra Port,130,,inch,H3,27
+H/HM/W,,3.5,Light Duty Mill,1757,,inch,H3,27
+H/HM/W,,4,Rod Gland Drain,587,,inch,H3,28
+H/HM/W,,4,Air Bleed,229,,inch,H3,28
+H/HM/W,,4,Prox Switch,823,,inch,H3,28
+H/HM/W,,4,Brass Wiper,716,,inch,H3,28
+H/HM/W,,4,Viton Rod Seal,343,,inch,H3,28
+H/HM/W,,4,Viton Piston Seal,550,,inch,H3,28
+H/HM/W,,4,Extra Port,130,,inch,H3,28
+H/HM/W,,4,Light Duty Mill,1757,,inch,H3,28
+H/HM/W,7,3,Rod Gland Drain,513,,inch,H3,29
+H/HM/W,7,3,Air Bleed,238,,inch,H3,29
+H/HM/W,7,3,Prox Switch,823,,inch,H3,29
+H/HM/W,7,3,Brass Wiper,466,,inch,H3,29
+H/HM/W,7,3,Viton Rod Seal,242,,inch,H3,29
+H/HM/W,7,3,Viton Piston Seal,647,,inch,H3,29
+H/HM/W,7,3,Extra Port,142,,inch,H3,29
+H/HM/W,7,3,Light Duty Mill,1929,,inch,H3,29
+H/HM/W,,3.5,Rod Gland Drain,558,,inch,H3,30
+H/HM/W,,3.5,Air Bleed,238,,inch,H3,30
+H/HM/W,,3.5,Prox Switch,823,,inch,H3,30
+H/HM/W,,3.5,Brass Wiper,651,,inch,H3,30
+H/HM/W,,3.5,Viton Rod Seal,292,,inch,H3,30
+H/HM/W,,3.5,Viton Piston Seal,647,,inch,H3,30
+H/HM/W,,3.5,Extra Port,142,,inch,H3,30
+H/HM/W,,3.5,Light Duty Mill,1929,,inch,H3,30
+H/HM/W,,4,Rod Gland Drain,605,,inch,H3,31
+H/HM/W,,4,Air Bleed,238,,inch,H3,31
+H/HM/W,,4,Prox Switch,823,,inch,H3,31
+H/HM/W,,4,Brass Wiper,716,,inch,H3,31
+H/HM/W,,4,Viton Rod Seal,343,,inch,H3,31
+H/HM/W,,4,Viton Piston Seal,647,,inch,H3,31
+H/HM/W,,4,Extra Port,142,,inch,H3,31
+H/HM/W,,4,Light Duty Mill,1929,,inch,H3,31
+H/HM/W,,4.5,Rod Gland Drain,765,,inch,H3,32
+H/HM/W,,4.5,Air Bleed,238,,inch,H3,32
+H/HM/W,,4.5,Prox Switch,823,,inch,H3,32
+H/HM/W,,4.5,Brass Wiper,786,,inch,H3,32
+H/HM/W,,4.5,Viton Rod Seal,390,,inch,H3,32
+H/HM/W,,4.5,Viton Piston Seal,647,,inch,H3,32
+H/HM/W,,4.5,Extra Port,142,,inch,H3,32
+H/HM/W,,4.5,Light Duty Mill,1929,,inch,H3,32
+H/HM/W,,5,Rod Gland Drain,882,,inch,H3,33
+H/HM/W,,5,Air Bleed,238,,inch,H3,33
+H/HM/W,,5,Prox Switch,823,,inch,H3,33
+H/HM/W,,5,Brass Wiper,865,,inch,H3,33
+H/HM/W,,5,Viton Rod Seal,450,,inch,H3,33
+H/HM/W,,5,Viton Piston Seal,647,,inch,H3,33
+H/HM/W,,5,Extra Port,142,,inch,H3,33
+H/HM/W,,5,Light Duty Mill,1929,,inch,H3,33
+H/HM/W,8,3.5,Rod Gland Drain,558,,inch,H3,34
+H/HM/W,8,3.5,Air Bleed,249,,inch,H3,34
+H/HM/W,8,3.5,Prox Switch,823,,inch,H3,34
+H/HM/W,8,3.5,Brass Wiper,651,,inch,H3,34
+H/HM/W,8,3.5,Viton Rod Seal,292,,inch,H3,34
+H/HM/W,8,3.5,Viton Piston Seal,863,,inch,H3,34
+H/HM/W,8,3.5,Extra Port,151,,inch,H3,34
+H/HM/W,8,3.5,Light Duty Mill,2518,,inch,H3,34
+H/HM/W,,4,Rod Gland Drain,605,,inch,H3,35
+H/HM/W,,4,Air Bleed,249,,inch,H3,35
+H/HM/W,,4,Prox Switch,823,,inch,H3,35
+H/HM/W,,4,Brass Wiper,716,,inch,H3,35
+H/HM/W,,4,Viton Rod Seal,343,,inch,H3,35
+H/HM/W,,4,Viton Piston Seal,863,,inch,H3,35
+H/HM/W,,4,Extra Port,151,,inch,H3,35
+H/HM/W,,4,Light Duty Mill,2518,,inch,H3,35
+H/HM/W,,4.5,Rod Gland Drain,765,,inch,H3,36
+H/HM/W,,4.5,Air Bleed,249,,inch,H3,36
+H/HM/W,,4.5,Prox Switch,823,,inch,H3,36
+H/HM/W,,4.5,Brass Wiper,786,,inch,H3,36
+H/HM/W,,4.5,Viton Rod Seal,390,,inch,H3,36
+H/HM/W,,4.5,Viton Piston Seal,863,,inch,H3,36
+H/HM/W,,4.5,Extra Port,151,,inch,H3,36
+H/HM/W,,4.5,Light Duty Mill,2518,,inch,H3,36
+H/HM/W,,5,Rod Gland Drain,882,,inch,H3,37
+H/HM/W,,5,Air Bleed,249,,inch,H3,37
+H/HM/W,,5,Prox Switch,823,,inch,H3,37
+H/HM/W,,5,Brass Wiper,865,,inch,H3,37
+H/HM/W,,5,Viton Rod Seal,450,,inch,H3,37
+H/HM/W,,5,Viton Piston Seal,863,,inch,H3,37
+H/HM/W,,5,Extra Port,151,,inch,H3,37
+H/HM/W,,5,Light Duty Mill,2518,,inch,H3,37
+H/HM/W,,5.5,Rod Gland Drain,1017,,inch,H3,38
+H/HM/W,,5.5,Air Bleed,249,,inch,H3,38
+H/HM/W,,5.5,Prox Switch,823,,inch,H3,38
+H/HM/W,,5.5,Brass Wiper,953,,inch,H3,38
+H/HM/W,,5.5,Viton Rod Seal,500,,inch,H3,38
+H/HM/W,,5.5,Viton Piston Seal,863,,inch,H3,38
+H/HM/W,,5.5,Extra Port,151,,inch,H3,38
+H/HM/W,,5.5,Light Duty Mill,2518,,inch,H3,38
+H/HM/W,10,4.5,Rod Gland Drain,765,,inch,H3,39
+H/HM/W,10,4.5,Air Bleed,306,,inch,H3,39
+H/HM/W,10,4.5,Prox Switch,1048,,inch,H3,39
+H/HM/W,10,4.5,Brass Wiper,786,,inch,H3,39
+H/HM/W,10,4.5,Viton Rod Seal,390,,inch,H3,39
+H/HM/W,10,4.5,Viton Piston Seal,1042,,inch,H3,39
+H/HM/W,10,4.5,Extra Port,173,,inch,H3,39
+H/HM/W,10,4.5,Light Duty Mill,3272,,inch,H3,39
+H/HM/W,,5,Rod Gland Drain,882,,inch,H3,40
+H/HM/W,,5,Air Bleed,306,,inch,H3,40
+H/HM/W,,5,Prox Switch,1071,,inch,H3,40
+H/HM/W,,5,Brass Wiper,865,,inch,H3,40
+H/HM/W,,5,Viton Rod Seal,450,,inch,H3,40
+H/HM/W,,5,Viton Piston Seal,1042,,inch,H3,40
+H/HM/W,,5,Extra Port,173,,inch,H3,40
+H/HM/W,,5,Light Duty Mill,3272,,inch,H3,40
+H/HM/W,,5.5,Rod Gland Drain,1017,,inch,H3,41
+H/HM/W,,5.5,Air Bleed,306,,inch,H3,41
+H/HM/W,,5.5,Prox Switch,1092,,inch,H3,41
+H/HM/W,,5.5,Brass Wiper,953,,inch,H3,41
+H/HM/W,,5.5,Viton Rod Seal,500,,inch,H3,41
+H/HM/W,,5.5,Viton Piston Seal,1042,,inch,H3,41
+H/HM/W,,5.5,Extra Port,173,,inch,H3,41
+H/HM/W,,5.5,Light Duty Mill,3272,,inch,H3,41
+H/HM/W,,7,Rod Gland Drain,1176,,inch,H3,42
+H/HM/W,,7,Air Bleed,306,,inch,H3,42
+H/HM/W,,7,Prox Switch,1115,,inch,H3,42
+H/HM/W,,7,Brass Wiper,2218,,inch,H3,42
+H/HM/W,,7,Viton Rod Seal,535,,inch,H3,42
+H/HM/W,,7,Viton Piston Seal,1042,,inch,H3,42
+H/HM/W,,7,Extra Port,173,,inch,H3,42
+H/HM/W,,7,Light Duty Mill,3272,,inch,H3,42
+H/HM/W,12,5.5,Rod Gland Drain,1017,,inch,H3,43
+H/HM/W,12,5.5,Air Bleed,377,,inch,H3,43
+H/HM/W,12,5.5,Prox Switch,1448,,inch,H3,43
+H/HM/W,12,5.5,Brass Wiper,953,,inch,H3,43
+H/HM/W,12,5.5,Viton Rod Seal,500,,inch,H3,43
+H/HM/W,12,5.5,Viton Piston Seal,1335,,inch,H3,43
+H/HM/W,12,5.5,Extra Port,189,,inch,H3,43
+H/HM/W,12,5.5,Light Duty Mill,4253,,inch,H3,43
+H/HM/W,,7,Rod Gland Drain,1176,,inch,H3,44
+H/HM/W,,7,Air Bleed,377,,inch,H3,44
+H/HM/W,,7,Prox Switch,1475,,inch,H3,44
+H/HM/W,,7,Brass Wiper,2218,,inch,H3,44
+H/HM/W,,7,Viton Rod Seal,535,,inch,H3,44
+H/HM/W,,7,Viton Piston Seal,1335,,inch,H3,44
+H/HM/W,,7,Extra Port,189,,inch,H3,44
+H/HM/W,,7,Light Duty Mill,4253,,inch,H3,44
+H/HM/W,,8,Rod Gland Drain,1411,,inch,H3,45
+H/HM/W,,8,Air Bleed,377,,inch,H3,45
+H/HM/W,,8,Prox Switch,1505,,inch,H3,45
+H/HM/W,,8,Brass Wiper,2771,,inch,H3,45
+H/HM/W,,8,Viton Rod Seal,700,,inch,H3,45
+H/HM/W,,8,Viton Piston Seal,1335,,inch,H3,45
+H/HM/W,,8,Extra Port,189,,inch,H3,45
+H/HM/W,,8,Light Duty Mill,4253,,inch,H3,45
+H/HM/W,14,8,Rod Gland Drain,1411,,inch,H3,46
+H/HM/W,14,8,Air Bleed,460,,inch,H3,46
+H/HM/W,14,8,Prox Switch,1956,,inch,H3,46
+H/HM/W,14,8,Brass Wiper,2688,,inch,H3,46
+H/HM/W,14,8,Viton Rod Seal,700,,inch,H3,46
+H/HM/W,14,8,Viton Piston Seal,1519,,inch,H3,46
+H/HM/W,14,8,Extra Port,319,,inch,H3,46
+H/HM/W,14,8,Light Duty Mill,5527,,inch,H3,46
+H/HM/W,,10,Rod Gland Drain,1733,,inch,H3,47
+H/HM/W,,10,Air Bleed,460,,inch,H3,47
+H/HM/W,,10,Prox Switch,1993,,inch,H3,47
+H/HM/W,,10,Brass Wiper,4154,,inch,H3,47
+H/HM/W,,10,Viton Rod Seal,900,,inch,H3,47
+H/HM/W,,10,Viton Piston Seal,1519,,inch,H3,47
+H/HM/W,,10,Extra Port,319,,inch,H3,47
+H/HM/W,,10,Light Duty Mill,5527,,inch,H3,47
+H/HM/W,16,8,Rod Gland Drain,1411,,inch,H3,48
+H/HM/W,16,8,Air Bleed,566,,inch,H3,48
+H/HM/W,16,8,Prox Switch,2591,,inch,H3,48
+H/HM/W,16,8,Brass Wiper,2771,,inch,H3,48
+H/HM/W,16,8,Viton Rod Seal,700,,inch,H3,48
+H/HM/W,16,8,Viton Piston Seal,2067,,inch,H3,48
+H/HM/W,16,8,Extra Port,353,,inch,H3,48
+H/HM/W,16,8,Light Duty Mill,7185,,inch,H3,48
+H/HM/W,,10,Rod Gland Drain,1733,,inch,H3,49
+H/HM/W,,10,Air Bleed,566,,inch,H3,49
+H/HM/W,,10,Prox Switch,2642,,inch,H3,49
+H/HM/W,,10,Brass Wiper,4154,,inch,H3,49
+H/HM/W,,10,Viton Rod Seal,900,,inch,H3,49
+H/HM/W,,10,Viton Piston Seal,2067,,inch,H3,49
+H/HM/W,,10,Extra Port,353,,inch,H3,49
+H/HM/W,,10,Light Duty Mill,7185,,inch,H3,49
+H/HM/W,18,8,Rod Gland Drain,1411,,inch,H3,50
+H/HM/W,18,8,Air Bleed,698,,inch,H3,50
+H/HM/W,18,8,Prox Switch,3433,,inch,H3,50
+H/HM/W,18,8,Brass Wiper,2771,,inch,H3,50
+H/HM/W,18,8,Viton Rod Seal,700,,inch,H3,50
+H/HM/W,18,8,Viton Piston Seal,2796,,inch,H3,50
+H/HM/W,18,8,Extra Port,457,,inch,H3,50
+H/HM/W,18,8,Light Duty Mill,9339,,inch,H3,50
+H/HM/W,,10,Rod Gland Drain,1733,,inch,H3,51
+H/HM/W,,10,Air Bleed,698,,inch,H3,51
+H/HM/W,,10,Prox Switch,3501,,inch,H3,51
+H/HM/W,,10,Brass Wiper,4154,,inch,H3,51
+H/HM/W,,10,Viton Rod Seal,900,,inch,H3,51
+H/HM/W,,10,Viton Piston Seal,2796,,inch,H3,51
+H/HM/W,,10,Extra Port,457,,inch,H3,51
+H/HM/W,,10,Light Duty Mill,9339,,inch,H3,51
+H/HM/W,20,10,Rod Gland Drain,1733,,inch,H3,52
+H/HM/W,20,10,Air Bleed,853,,inch,H3,52
+H/HM/W,20,10,Prox Switch,4549,,inch,H3,52
+H/HM/W,20,10,Brass Wiper,4154,,inch,H3,52
+H/HM/W,20,10,Viton Rod Seal,900,,inch,H3,52
+H/HM/W,20,10,Viton Piston Seal,3669,,inch,H3,52
+H/HM/W,20,10,Extra Port,590,,inch,H3,52
+H/HM/W,20,10,Light Duty Mill,12137,,inch,H3,52
+A/LH,1.5,0.625,Air Bleed,138,,inch,A3,8
+A/LH,1.5,0.625,Prox Switch,797,,inch,A3,8
+A/LH,1.5,0.625,Brass Wiper,82,,inch,A3,8
+A/LH,1.5,0.625,Viton Rod Seal,22,,inch,A3,8
+A/LH,1.5,0.625,Viton Piston Seal,96,,inch,A3,8
+A/LH,1.5,0.625,Extra Port,74,,inch,A3,8
+A/LH,1.5,1,Air Bleed,138,,inch,A3,9
+A/LH,1.5,1,Prox Switch,797,,inch,A3,9
+A/LH,1.5,1,Brass Wiper,84,,inch,A3,9
+A/LH,1.5,1,Viton Rod Seal,34,,inch,A3,9
+A/LH,1.5,1,Viton Piston Seal,96,,inch,A3,9
+A/LH,1.5,1,Extra Port,74,,inch,A3,9
+A/LH,2,0.625,Air Bleed,146,,inch,A3,10
+A/LH,2,0.625,Prox Switch,797,,inch,A3,10
+A/LH,2,0.625,Brass Wiper,82,,inch,A3,10
+A/LH,2,0.625,Viton Rod Seal,22,,inch,A3,10
+A/LH,2,0.625,Viton Piston Seal,118,,inch,A3,10
+A/LH,2,0.625,Extra Port,78,,inch,A3,10
+A/LH,2,1,Air Bleed,146,,inch,A3,11
+A/LH,2,1,Prox Switch,797,,inch,A3,11
+A/LH,2,1,Brass Wiper,84,,inch,A3,11
+A/LH,2,1,Viton Rod Seal,34,,inch,A3,11
+A/LH,2,1,Viton Piston Seal,118,,inch,A3,11
+A/LH,2,1,Extra Port,78,,inch,A3,11
+A/LH,2,1.375,Air Bleed,146,,inch,A3,12
+A/LH,2,1.375,Prox Switch,797,,inch,A3,12
+A/LH,2,1.375,Brass Wiper,108,,inch,A3,12
+A/LH,2,1.375,Viton Rod Seal,54,,inch,A3,12
+A/LH,2,1.375,Viton Piston Seal,118,,inch,A3,12
+A/LH,2,1.375,Extra Port,78,,inch,A3,12
+A/LH,2.5,0.625,Air Bleed,152,,inch,A3,13
+A/LH,2.5,0.625,Prox Switch,797,,inch,A3,13
+A/LH,2.5,0.625,Brass Wiper,82,,inch,A3,13
+A/LH,2.5,0.625,Viton Rod Seal,23,,inch,A3,13
+A/LH,2.5,0.625,Viton Piston Seal,147,,inch,A3,13
+A/LH,2.5,0.625,Extra Port,81,,inch,A3,13
+A/LH,2.5,1,Air Bleed,152,,inch,A3,14
+A/LH,2.5,1,Prox Switch,797,,inch,A3,14
+A/LH,2.5,1,Brass Wiper,84,,inch,A3,14
+A/LH,2.5,1,Viton Rod Seal,34,,inch,A3,14
+A/LH,2.5,1,Viton Piston Seal,147,,inch,A3,14
+A/LH,2.5,1,Extra Port,81,,inch,A3,14
+A/LH,2.5,1.375,Air Bleed,152,,inch,A3,15
+A/LH,2.5,1.375,Prox Switch,797,,inch,A3,15
+A/LH,2.5,1.375,Brass Wiper,108,,inch,A3,15
+A/LH,2.5,1.375,Viton Rod Seal,56,,inch,A3,15
+A/LH,2.5,1.375,Viton Piston Seal,147,,inch,A3,15
+A/LH,2.5,1.375,Extra Port,81,,inch,A3,15
+A/LH,2.5,1.75,Air Bleed,152,,inch,A3,16
+A/LH,2.5,1.75,Prox Switch,797,,inch,A3,16
+A/LH,2.5,1.75,Brass Wiper,150,,inch,A3,16
+A/LH,2.5,1.75,Viton Rod Seal,59,,inch,A3,16
+A/LH,2.5,1.75,Viton Piston Seal,147,,inch,A3,16
+A/LH,2.5,1.75,Extra Port,81,,inch,A3,16
+A/LH,3.25,1,Air Bleed,160,,inch,A3,17
+A/LH,3.25,1,Prox Switch,797,,inch,A3,17
+A/LH,3.25,1,Brass Wiper,84,,inch,A3,17
+A/LH,3.25,1,Viton Rod Seal,34,,inch,A3,17
+A/LH,3.25,1,Viton Piston Seal,159,,inch,A3,17
+A/LH,3.25,1,Extra Port,84,,inch,A3,17
+A/LH,3.25,1.375,Air Bleed,160,,inch,A3,18
+A/LH,3.25,1.375,Prox Switch,797,,inch,A3,18
+A/LH,3.25,1.375,Brass Wiper,108,,inch,A3,18
+A/LH,3.25,1.375,Viton Rod Seal,56,,inch,A3,18
+A/LH,3.25,1.375,Viton Piston Seal,159,,inch,A3,18
+A/LH,3.25,1.375,Extra Port,84,,inch,A3,18
+A/LH,3.25,1.75,Air Bleed,160,,inch,A3,19
+A/LH,3.25,1.75,Prox Switch,797,,inch,A3,19
+A/LH,3.25,1.75,Brass Wiper,150,,inch,A3,19
+A/LH,3.25,1.75,Viton Rod Seal,59,,inch,A3,19
+A/LH,3.25,1.75,Viton Piston Seal,159,,inch,A3,19
+A/LH,3.25,1.75,Extra Port,84,,inch,A3,19
+A/LH,3.25,2,Air Bleed,160,,inch,A3,20
+A/LH,3.25,2,Prox Switch,797,,inch,A3,20
+A/LH,3.25,2,Brass Wiper,230,,inch,A3,20
+A/LH,3.25,2,Viton Rod Seal,94,,inch,A3,20
+A/LH,3.25,2,Viton Piston Seal,159,,inch,A3,20
+A/LH,3.25,2,Extra Port,84,,inch,A3,20
+A/LH,4,1,Air Bleed,167,,inch,A3,21
+A/LH,4,1,Prox Switch,797,,inch,A3,21
+A/LH,4,1,Brass Wiper,84,,inch,A3,21
+A/LH,4,1,Viton Rod Seal,34,,inch,A3,21
+A/LH,4,1,Viton Piston Seal,165,,inch,A3,21
+A/LH,4,1,Extra Port,93,,inch,A3,21
+A/LH,4,1.375,Air Bleed,167,,inch,A3,22
+A/LH,4,1.375,Prox Switch,797,,inch,A3,22
+A/LH,4,1.375,Brass Wiper,108,,inch,A3,22
+A/LH,4,1.375,Viton Rod Seal,53,,inch,A3,22
+A/LH,4,1.375,Viton Piston Seal,165,,inch,A3,22
+A/LH,4,1.375,Extra Port,93,,inch,A3,22
+A/LH,4,1.75,Air Bleed,167,,inch,A3,23
+A/LH,4,1.75,Prox Switch,797,,inch,A3,23
+A/LH,4,1.75,Brass Wiper,150,,inch,A3,23
+A/LH,4,1.75,Viton Rod Seal,59,,inch,A3,23
+A/LH,4,1.75,Viton Piston Seal,165,,inch,A3,23
+A/LH,4,1.75,Extra Port,93,,inch,A3,23
+A/LH,4,2,Air Bleed,167,,inch,A3,24
+A/LH,4,2,Prox Switch,797,,inch,A3,24
+A/LH,4,2,Brass Wiper,230,,inch,A3,24
+A/LH,4,2,Viton Rod Seal,94,,inch,A3,24
+A/LH,4,2,Viton Piston Seal,165,,inch,A3,24
+A/LH,4,2,Extra Port,93,,inch,A3,24
+A/LH,5,1,Air Bleed,174,,inch,A3,25
+A/LH,5,1,Prox Switch,797,,inch,A3,25
+A/LH,5,1,Brass Wiper,84,,inch,A3,25
+A/LH,5,1,Viton Rod Seal,34,,inch,A3,25
+A/LH,5,1,Viton Piston Seal,201,,inch,A3,25
+A/LH,5,1,Extra Port,98,,inch,A3,25
+A/LH,5,1.375,Air Bleed,174,,inch,A3,26
+A/LH,5,1.375,Prox Switch,797,,inch,A3,26
+A/LH,5,1.375,Brass Wiper,108,,inch,A3,26
+A/LH,5,1.375,Viton Rod Seal,54,,inch,A3,26
+A/LH,5,1.375,Viton Piston Seal,201,,inch,A3,26
+A/LH,5,1.375,Extra Port,98,,inch,A3,26
+A/LH,5,1.75,Air Bleed,174,,inch,A3,27
+A/LH,5,1.75,Prox Switch,797,,inch,A3,27
+A/LH,5,1.75,Brass Wiper,150,,inch,A3,27
+A/LH,5,1.75,Viton Rod Seal,59,,inch,A3,27
+A/LH,5,1.75,Viton Piston Seal,201,,inch,A3,27
+A/LH,5,1.75,Extra Port,98,,inch,A3,27
+A/LH,5,2,Air Bleed,174,,inch,A3,28
+A/LH,5,2,Prox Switch,797,,inch,A3,28
+A/LH,5,2,Brass Wiper,230,,inch,A3,28
+A/LH,5,2,Viton Rod Seal,96,,inch,A3,28
+A/LH,5,2,Viton Piston Seal,201,,inch,A3,28
+A/LH,5,2,Extra Port,98,,inch,A3,28
+A/LH,6,1.375,Air Bleed,185,,inch,A3,29
+A/LH,6,1.375,Prox Switch,797,,inch,A3,29
+A/LH,6,1.375,Brass Wiper,108,,inch,A3,29
+A/LH,6,1.375,Viton Rod Seal,54,,inch,A3,29
+A/LH,6,1.375,Viton Piston Seal,347,,inch,A3,29
+A/LH,6,1.375,Extra Port,106,,inch,A3,29
+A/LH,6,1.75,Air Bleed,185,,inch,A3,30
+A/LH,6,1.75,Prox Switch,797,,inch,A3,30
+A/LH,6,1.75,Brass Wiper,150,,inch,A3,30
+A/LH,6,1.75,Viton Rod Seal,64,,inch,A3,30
+A/LH,6,1.75,Viton Piston Seal,347,,inch,A3,30
+A/LH,6,1.75,Extra Port,106,,inch,A3,30
+A/LH,6,2,Air Bleed,185,,inch,A3,31
+A/LH,6,2,Prox Switch,797,,inch,A3,31
+A/LH,6,2,Brass Wiper,230,,inch,A3,31
+A/LH,6,2,Viton Rod Seal,96,,inch,A3,31
+A/LH,6,2,Viton Piston Seal,347,,inch,A3,31
+A/LH,6,2,Extra Port,106,,inch,A3,31
+A/LH,6,2.5,Air Bleed,185,,inch,A3,32
+A/LH,6,2.5,Prox Switch,797,,inch,A3,32
+A/LH,6,2.5,Brass Wiper,408,,inch,A3,32
+A/LH,6,2.5,Viton Rod Seal,159,,inch,A3,32
+A/LH,6,2.5,Viton Piston Seal,347,,inch,A3,32
+A/LH,6,2.5,Extra Port,106,,inch,A3,32
+A/LH,7,1.375,Air Bleed,192,,inch,A3,33
+A/LH,7,1.375,Prox Switch,797,,inch,A3,33
+A/LH,7,1.375,Brass Wiper,108,,inch,A3,33
+A/LH,7,1.375,Viton Rod Seal,54,,inch,A3,33
+A/LH,7,1.375,Viton Piston Seal,413,,inch,A3,33
+A/LH,7,1.375,Extra Port,114,,inch,A3,33
+A/LH,7,1.75,Air Bleed,192,,inch,A3,34
+A/LH,7,1.75,Prox Switch,797,,inch,A3,34
+A/LH,7,1.75,Brass Wiper,150,,inch,A3,34
+A/LH,7,1.75,Viton Rod Seal,64,,inch,A3,34
+A/LH,7,1.75,Viton Piston Seal,413,,inch,A3,34
+A/LH,7,1.75,Extra Port,114,,inch,A3,34
+A/LH,7,2,Air Bleed,192,,inch,A3,35
+A/LH,7,2,Prox Switch,797,,inch,A3,35
+A/LH,7,2,Brass Wiper,230,,inch,A3,35
+A/LH,7,2,Viton Rod Seal,96,,inch,A3,35
+A/LH,7,2,Viton Piston Seal,413,,inch,A3,35
+A/LH,7,2,Extra Port,114,,inch,A3,35
+A/LH,7,2.5,Air Bleed,192,,inch,A3,36
+A/LH,7,2.5,Prox Switch,797,,inch,A3,36
+A/LH,7,2.5,Brass Wiper,408,,inch,A3,36
+A/LH,7,2.5,Viton Rod Seal,159,,inch,A3,36
+A/LH,7,2.5,Viton Piston Seal,413,,inch,A3,36
+A/LH,7,2.5,Extra Port,114,,inch,A3,36
+A/LH,8,1.375,Air Bleed,201,,inch,A3,37
+A/LH,8,1.375,Prox Switch,797,,inch,A3,37
+A/LH,8,1.375,Brass Wiper,108,,inch,A3,37
+A/LH,8,1.375,Viton Rod Seal,54,,inch,A3,37
+A/LH,8,1.375,Viton Piston Seal,452,,inch,A3,37
+A/LH,8,1.375,Extra Port,122,,inch,A3,37
+A/LH,8,1.75,Air Bleed,201,,inch,A3,38
+A/LH,8,1.75,Prox Switch,797,,inch,A3,38
+A/LH,8,1.75,Brass Wiper,150,,inch,A3,38
+A/LH,8,1.75,Viton Rod Seal,64,,inch,A3,38
+A/LH,8,1.75,Viton Piston Seal,452,,inch,A3,38
+A/LH,8,1.75,Extra Port,122,,inch,A3,38
+A/LH,8,2,Air Bleed,201,,inch,A3,39
+A/LH,8,2,Prox Switch,797,,inch,A3,39
+A/LH,8,2,Brass Wiper,230,,inch,A3,39
+A/LH,8,2,Viton Rod Seal,94,,inch,A3,39
+A/LH,8,2,Viton Piston Seal,452,,inch,A3,39
+A/LH,8,2,Extra Port,122,,inch,A3,39
+A/LH,8,2.5,Air Bleed,201,,inch,A3,40
+A/LH,8,2.5,Prox Switch,797,,inch,A3,40
+A/LH,8,2.5,Brass Wiper,408,,inch,A3,40
+A/LH,8,2.5,Viton Rod Seal,159,,inch,A3,40
+A/LH,8,2.5,Viton Piston Seal,452,,inch,A3,40
+A/LH,8,2.5,Extra Port,122,,inch,A3,40
+A/LH,10,1.75,Air Bleed,246,,inch,A3,41
+A/LH,10,1.75,Prox Switch,886,,inch,A3,41
+A/LH,10,1.75,Brass Wiper,150,,inch,A3,41
+A/LH,10,1.75,Viton Rod Seal,64,,inch,A3,41
+A/LH,10,1.75,Viton Piston Seal,508,,inch,A3,41
+A/LH,10,1.75,Extra Port,138,,inch,A3,41
+A/LH,10,2,Air Bleed,246,,inch,A3,42
+A/LH,10,2,Prox Switch,892,,inch,A3,42
+A/LH,10,2,Brass Wiper,230,,inch,A3,42
+A/LH,10,2,Viton Rod Seal,96,,inch,A3,42
+A/LH,10,2,Viton Piston Seal,508,,inch,A3,42
+A/LH,10,2,Extra Port,138,,inch,A3,42
+A/LH,10,2.5,Air Bleed,246,,inch,A3,43
+A/LH,10,2.5,Prox Switch,894,,inch,A3,43
+A/LH,10,2.5,Brass Wiper,408,,inch,A3,43
+A/LH,10,2.5,Viton Rod Seal,159,,inch,A3,43
+A/LH,10,2.5,Viton Piston Seal,508,,inch,A3,43
+A/LH,10,2.5,Extra Port,138,,inch,A3,43
+A/LH,10,3,Air Bleed,246,,inch,A3,44
+A/LH,10,3,Prox Switch,1061,,inch,A3,44
+A/LH,10,3,Brass Wiper,450,,inch,A3,44
+A/LH,10,3,Viton Rod Seal,192,,inch,A3,44
+A/LH,10,3,Viton Piston Seal,508,,inch,A3,44
+A/LH,10,3,Extra Port,138,,inch,A3,44
+A/LH,10,3.5,Air Bleed,246,,inch,A3,45
+A/LH,10,3.5,Prox Switch,1066,,inch,A3,45
+A/LH,10,3.5,Brass Wiper,633,,inch,A3,45
+A/LH,10,3.5,Viton Rod Seal,240,,inch,A3,45
+A/LH,10,3.5,Viton Piston Seal,508,,inch,A3,45
+A/LH,10,3.5,Extra Port,138,,inch,A3,45
+A/LH,12,2,Air Bleed,305,,inch,A3,46
+A/LH,12,2,Prox Switch,1071,,inch,A3,46
+A/LH,12,2,Brass Wiper,230,,inch,A3,46
+A/LH,12,2,Viton Rod Seal,96,,inch,A3,46
+A/LH,12,2,Viton Piston Seal,545,,inch,A3,46
+A/LH,12,2,Extra Port,154,,inch,A3,46
+A/LH,12,2.5,Air Bleed,305,,inch,A3,47
+A/LH,12,2.5,Prox Switch,1271,,inch,A3,47
+A/LH,12,2.5,Brass Wiper,408,,inch,A3,47
+A/LH,12,2.5,Viton Rod Seal,159,,inch,A3,47
+A/LH,12,2.5,Viton Piston Seal,545,,inch,A3,47
+A/LH,12,2.5,Extra Port,154,,inch,A3,47
+A/LH,12,3,Air Bleed,305,,inch,A3,48
+A/LH,12,3,Prox Switch,1281,,inch,A3,48
+A/LH,12,3,Brass Wiper,450,,inch,A3,48
+A/LH,12,3,Viton Rod Seal,192,,inch,A3,48
+A/LH,12,3,Viton Piston Seal,545,,inch,A3,48
+A/LH,12,3,Extra Port,154,,inch,A3,48
+A/LH,12,3.5,Air Bleed,305,,inch,A3,49
+A/LH,12,3.5,Prox Switch,1284,,inch,A3,49
+A/LH,12,3.5,Brass Wiper,633,,inch,A3,49
+A/LH,12,3.5,Viton Rod Seal,240,,inch,A3,49
+A/LH,12,3.5,Viton Piston Seal,545,,inch,A3,49
+A/LH,12,3.5,Extra Port,154,,inch,A3,49
+A/LH,12,4,Air Bleed,305,,inch,A3,50
+A/LH,12,4,Prox Switch,1526,,inch,A3,50
+A/LH,12,4,Brass Wiper,693,,inch,A3,50
+A/LH,12,4,Viton Rod Seal,286,,inch,A3,50
+A/LH,12,4,Viton Piston Seal,545,,inch,A3,50
+A/LH,12,4,Extra Port,154,,inch,A3,50
+A/LH,14,2.5,Air Bleed,372,,inch,A3,51
+A/LH,14,2.5,Prox Switch,1536,,inch,A3,51
+A/LH,14,2.5,Brass Wiper,408,,inch,A3,51
+A/LH,14,2.5,Viton Rod Seal,159,,inch,A3,51
+A/LH,14,2.5,Viton Piston Seal,1082,,inch,A3,51
+A/LH,14,2.5,Extra Port,258,,inch,A3,51
+A/LH,14,3,Air Bleed,372,,inch,A3,52
+A/LH,14,3,Prox Switch,1542,,inch,A3,52
+A/LH,14,3,Brass Wiper,450,,inch,A3,52
+A/LH,14,3,Viton Rod Seal,192,,inch,A3,52
+A/LH,14,3,Viton Piston Seal,1082,,inch,A3,52
+A/LH,14,3,Extra Port,258,,inch,A3,52
+A/LH,14,3.5,Air Bleed,372,,inch,A3,53
+A/LH,14,3.5,Prox Switch,1828,,inch,A3,53
+A/LH,14,3.5,Brass Wiper,633,,inch,A3,53
+A/LH,14,3.5,Viton Rod Seal,240,,inch,A3,53
+A/LH,14,3.5,Viton Piston Seal,1082,,inch,A3,53
+A/LH,14,3.5,Extra Port,258,,inch,A3,53
+A/LH,14,4,Air Bleed,372,,inch,A3,54
+A/LH,14,4,Prox Switch,1845,,inch,A3,54
+A/LH,14,4,Brass Wiper,693,,inch,A3,54
+A/LH,14,4,Viton Rod Seal,286,,inch,A3,54
+A/LH,14,4,Viton Piston Seal,1082,,inch,A3,54
+A/LH,14,4,Extra Port,258,,inch,A3,54
+IH/IHM/IMH,25,12,Rod Gland Drain,356,,mm,IH3,8
+IH/IHM/IMH,25,12,Air Bleed,164,,mm,IH3,8
+IH/IHM/IMH,25,12,Prox Switch,600,,mm,IH3,8
+IH/IHM/IMH,25,12,Brass Wiper,80,,mm,IH3,8
+IH/IHM/IMH,25,12,Viton Rod Seal,28,,mm,IH3,8
+IH/IHM/IMH,25,12,Viton Piston Seal,75,,mm,IH3,8
+IH/IHM/IMH,25,12,Extra Port,87,,mm,IH3,8
+IH/IHM/IMH,25,12,Boss Port,166,,mm,IH3,8
+IH/IHM/IMH,25,12,Light Duty Mill,570,,mm,IH3,8
+IH/IHM/IMH,25,18,Rod Gland Drain,426,,mm,IH3,9
+IH/IHM/IMH,25,18,Air Bleed,164,,mm,IH3,9
+IH/IHM/IMH,25,18,Prox Switch,600,,mm,IH3,9
+IH/IHM/IMH,25,18,Brass Wiper,83,,mm,IH3,9
+IH/IHM/IMH,25,18,Viton Rod Seal,38,,mm,IH3,9
+IH/IHM/IMH,25,18,Viton Piston Seal,75,,mm,IH3,9
+IH/IHM/IMH,25,18,Extra Port,87,,mm,IH3,9
+IH/IHM/IMH,25,18,Boss Port,166,,mm,IH3,9
+IH/IHM/IMH,25,18,Light Duty Mill,570,,mm,IH3,9
+IH/IHM/IMH,32,14,Rod Gland Drain,426,,mm,IH3,10
+IH/IHM/IMH,32,14,Air Bleed,173,,mm,IH3,10
+IH/IHM/IMH,32,14,Prox Switch,600,,mm,IH3,10
+IH/IHM/IMH,32,14,Brass Wiper,83,,mm,IH3,10
+IH/IHM/IMH,32,14,Viton Rod Seal,38,,mm,IH3,10
+IH/IHM/IMH,32,14,Viton Piston Seal,112,,mm,IH3,10
+IH/IHM/IMH,32,14,Extra Port,90,,mm,IH3,10
+IH/IHM/IMH,32,14,Boss Port,166,,mm,IH3,10
+IH/IHM/IMH,32,14,Light Duty Mill,665,,mm,IH3,10
+IH/IHM/IMH,32,18,Rod Gland Drain,435,,mm,IH3,11
+IH/IHM/IMH,32,18,Air Bleed,173,,mm,IH3,11
+IH/IHM/IMH,32,18,Prox Switch,600,,mm,IH3,11
+IH/IHM/IMH,32,18,Brass Wiper,107,,mm,IH3,11
+IH/IHM/IMH,32,18,Viton Rod Seal,64,,mm,IH3,11
+IH/IHM/IMH,32,18,Viton Piston Seal,112,,mm,IH3,11
+IH/IHM/IMH,32,18,Extra Port,90,,mm,IH3,11
+IH/IHM/IMH,32,18,Boss Port,166,,mm,IH3,11
+IH/IHM/IMH,32,18,Light Duty Mill,665,,mm,IH3,11
+IH/IHM/IMH,32,22,Rod Gland Drain,426,,mm,IH3,12
+IH/IHM/IMH,32,22,Air Bleed,179,,mm,IH3,12
+IH/IHM/IMH,32,22,Prox Switch,600,,mm,IH3,12
+IH/IHM/IMH,32,22,Brass Wiper,83,,mm,IH3,12
+IH/IHM/IMH,32,22,Viton Rod Seal,38,,mm,IH3,12
+IH/IHM/IMH,32,22,Viton Piston Seal,143,,mm,IH3,12
+IH/IHM/IMH,32,22,Extra Port,95,,mm,IH3,12
+IH/IHM/IMH,32,22,Boss Port,166,,mm,IH3,12
+IH/IHM/IMH,32,22,Light Duty Mill,821,,mm,IH3,12
+IH/IHM/IMH,40,18,Rod Gland Drain,435,,mm,IH3,13
+IH/IHM/IMH,40,18,Air Bleed,179,,mm,IH3,13
+IH/IHM/IMH,40,18,Prox Switch,600,,mm,IH3,13
+IH/IHM/IMH,40,18,Brass Wiper,107,,mm,IH3,13
+IH/IHM/IMH,40,18,Viton Rod Seal,64,,mm,IH3,13
+IH/IHM/IMH,40,18,Viton Piston Seal,143,,mm,IH3,13
+IH/IHM/IMH,40,18,Extra Port,95,,mm,IH3,13
+IH/IHM/IMH,40,18,Boss Port,166,,mm,IH3,13
+IH/IHM/IMH,40,18,Light Duty Mill,821,,mm,IH3,13
+IH/IHM/IMH,40,22,Rod Gland Drain,445,,mm,IH3,14
+IH/IHM/IMH,40,22,Air Bleed,179,,mm,IH3,14
+IH/IHM/IMH,40,22,Prox Switch,600,,mm,IH3,14
+IH/IHM/IMH,40,22,Brass Wiper,147,,mm,IH3,14
+IH/IHM/IMH,40,22,Viton Rod Seal,70,,mm,IH3,14
+IH/IHM/IMH,40,22,Viton Piston Seal,143,,mm,IH3,14
+IH/IHM/IMH,40,22,Extra Port,95,,mm,IH3,14
+IH/IHM/IMH,40,22,Boss Port,166,,mm,IH3,14
+IH/IHM/IMH,40,22,Light Duty Mill,821,,mm,IH3,14
+IH/IHM/IMH,40,28,Rod Gland Drain,435,,mm,IH3,15
+IH/IHM/IMH,40,28,Air Bleed,188,,mm,IH3,15
+IH/IHM/IMH,40,28,Prox Switch,600,,mm,IH3,15
+IH/IHM/IMH,40,28,Brass Wiper,107,,mm,IH3,15
+IH/IHM/IMH,40,28,Viton Rod Seal,64,,mm,IH3,15
+IH/IHM/IMH,40,28,Viton Piston Seal,190,,mm,IH3,15
+IH/IHM/IMH,40,28,Extra Port,100,,mm,IH3,15
+IH/IHM/IMH,40,28,Boss Port,166,,mm,IH3,15
+IH/IHM/IMH,40,28,Light Duty Mill,932,,mm,IH3,15
+IH/IHM/IMH,50,22,Rod Gland Drain,445,,mm,IH3,16
+IH/IHM/IMH,50,22,Air Bleed,188,,mm,IH3,16
+IH/IHM/IMH,50,22,Prox Switch,600,,mm,IH3,16
+IH/IHM/IMH,50,22,Brass Wiper,147,,mm,IH3,16
+IH/IHM/IMH,50,22,Viton Rod Seal,70,,mm,IH3,16
+IH/IHM/IMH,50,22,Viton Piston Seal,190,,mm,IH3,16
+IH/IHM/IMH,50,22,Extra Port,100,,mm,IH3,16
+IH/IHM/IMH,50,22,Boss Port,166,,mm,IH3,16
+IH/IHM/IMH,50,22,Light Duty Mill,932,,mm,IH3,16
+IH/IHM/IMH,50,28,Rod Gland Drain,455,,mm,IH3,17
+IH/IHM/IMH,50,28,Air Bleed,188,,mm,IH3,17
+IH/IHM/IMH,50,28,Prox Switch,600,,mm,IH3,17
+IH/IHM/IMH,50,28,Brass Wiper,224,,mm,IH3,17
+IH/IHM/IMH,50,28,Viton Rod Seal,111,,mm,IH3,17
+IH/IHM/IMH,50,28,Viton Piston Seal,190,,mm,IH3,17
+IH/IHM/IMH,50,28,Extra Port,100,,mm,IH3,17
+IH/IHM/IMH,50,28,Boss Port,166,,mm,IH3,17
+IH/IHM/IMH,50,28,Light Duty Mill,932,,mm,IH3,17
+IH/IHM/IMH,50,36,Rod Gland Drain,445,,mm,IH3,18
+IH/IHM/IMH,50,36,Air Bleed,198,,mm,IH3,18
+IH/IHM/IMH,50,36,Prox Switch,600,,mm,IH3,18
+IH/IHM/IMH,50,36,Brass Wiper,147,,mm,IH3,18
+IH/IHM/IMH,50,36,Viton Rod Seal,70,,mm,IH3,18
+IH/IHM/IMH,50,36,Viton Piston Seal,232,,mm,IH3,18
+IH/IHM/IMH,50,36,Extra Port,110,,mm,IH3,18
+IH/IHM/IMH,50,36,Boss Port,166,,mm,IH3,18
+IH/IHM/IMH,50,36,Light Duty Mill,1086,,mm,IH3,18
+IH/IHM/IMH,63,28,Rod Gland Drain,455,,mm,IH3,19
+IH/IHM/IMH,63,28,Air Bleed,198,,mm,IH3,19
+IH/IHM/IMH,63,28,Prox Switch,600,,mm,IH3,19
+IH/IHM/IMH,63,28,Brass Wiper,224,,mm,IH3,19
+IH/IHM/IMH,63,28,Viton Rod Seal,112,,mm,IH3,19
+IH/IHM/IMH,63,28,Viton Piston Seal,232,,mm,IH3,19
+IH/IHM/IMH,63,28,Extra Port,110,,mm,IH3,19
+IH/IHM/IMH,63,28,Boss Port,166,,mm,IH3,19
+IH/IHM/IMH,63,28,Light Duty Mill,1086,,mm,IH3,19
+IH/IHM/IMH,63,36,Rod Gland Drain,460,,mm,IH3,20
+IH/IHM/IMH,63,36,Air Bleed,198,,mm,IH3,20
+IH/IHM/IMH,63,36,Prox Switch,600,,mm,IH3,20
+IH/IHM/IMH,63,36,Brass Wiper,401,,mm,IH3,20
+IH/IHM/IMH,63,36,Viton Rod Seal,180,,mm,IH3,20
+IH/IHM/IMH,63,36,Viton Piston Seal,232,,mm,IH3,20
+IH/IHM/IMH,63,36,Extra Port,110,,mm,IH3,20
+IH/IHM/IMH,63,36,Boss Port,166,,mm,IH3,20
+IH/IHM/IMH,63,36,Light Duty Mill,1086,,mm,IH3,20
+IH/IHM/IMH,63,45,Rod Gland Drain,455,,mm,IH3,21
+IH/IHM/IMH,63,45,Air Bleed,207,,mm,IH3,21
+IH/IHM/IMH,63,45,Prox Switch,600,,mm,IH3,21
+IH/IHM/IMH,63,45,Brass Wiper,224,,mm,IH3,21
+IH/IHM/IMH,63,45,Viton Rod Seal,111,,mm,IH3,21
+IH/IHM/IMH,63,45,Viton Piston Seal,527,,mm,IH3,21
+IH/IHM/IMH,63,45,Extra Port,114,,mm,IH3,21
+IH/IHM/IMH,63,45,Boss Port,166,,mm,IH3,21
+IH/IHM/IMH,63,45,Light Duty Mill,1474,,mm,IH3,21
+IH/IHM/IMH,80,36,Rod Gland Drain,460,,mm,IH3,22
+IH/IHM/IMH,80,36,Air Bleed,207,,mm,IH3,22
+IH/IHM/IMH,80,36,Prox Switch,600,,mm,IH3,22
+IH/IHM/IMH,80,36,Brass Wiper,401,,mm,IH3,22
+IH/IHM/IMH,80,36,Viton Rod Seal,180,,mm,IH3,22
+IH/IHM/IMH,80,36,Viton Piston Seal,527,,mm,IH3,22
+IH/IHM/IMH,80,36,Extra Port,114,,mm,IH3,22
+IH/IHM/IMH,80,36,Boss Port,166,,mm,IH3,22
+IH/IHM/IMH,80,36,Light Duty Mill,1474,,mm,IH3,22
+IH/IHM/IMH,80,45,Rod Gland Drain,488,,mm,IH3,23
+IH/IHM/IMH,80,45,Air Bleed,207,,mm,IH3,23
+IH/IHM/IMH,80,45,Prox Switch,600,,mm,IH3,23
+IH/IHM/IMH,80,45,Brass Wiper,443,,mm,IH3,23
+IH/IHM/IMH,80,45,Viton Rod Seal,236,,mm,IH3,23
+IH/IHM/IMH,80,45,Viton Piston Seal,527,,mm,IH3,23
+IH/IHM/IMH,80,45,Extra Port,114,,mm,IH3,23
+IH/IHM/IMH,80,45,Boss Port,166,,mm,IH3,23
+IH/IHM/IMH,80,45,Light Duty Mill,1474,,mm,IH3,23
+IH/IHM/IMH,80,56,Rod Gland Drain,515,,mm,IH3,24
+IH/IHM/IMH,80,56,Air Bleed,207,,mm,IH3,24
+IH/IHM/IMH,80,56,Prox Switch,600,,mm,IH3,24
+IH/IHM/IMH,80,56,Brass Wiper,620,,mm,IH3,24
+IH/IHM/IMH,80,56,Viton Rod Seal,278,,mm,IH3,24
+IH/IHM/IMH,80,56,Viton Piston Seal,527,,mm,IH3,24
+IH/IHM/IMH,80,56,Extra Port,114,,mm,IH3,24
+IH/IHM/IMH,80,56,Boss Port,166,,mm,IH3,24
+IH/IHM/IMH,80,56,Light Duty Mill,1474,,mm,IH3,24
+IH/IHM/IMH,100,45,Rod Gland Drain,460,,mm,IH3,25
+IH/IHM/IMH,100,45,Air Bleed,218,,mm,IH3,25
+IH/IHM/IMH,100,45,Prox Switch,600,,mm,IH3,25
+IH/IHM/IMH,100,45,Brass Wiper,401,,mm,IH3,25
+IH/IHM/IMH,100,45,Viton Rod Seal,180,,mm,IH3,25
+IH/IHM/IMH,100,45,Viton Piston Seal,550,,mm,IH3,25
+IH/IHM/IMH,100,45,Extra Port,123,,mm,IH3,25
+IH/IHM/IMH,100,45,Boss Port,187,,mm,IH3,25
+IH/IHM/IMH,100,45,Light Duty Mill,1673,,mm,IH3,25
+IH/IHM/IMH,100,56,Rod Gland Drain,488,,mm,IH3,26
+IH/IHM/IMH,100,56,Air Bleed,218,,mm,IH3,26
+IH/IHM/IMH,100,56,Prox Switch,600,,mm,IH3,26
+IH/IHM/IMH,100,56,Brass Wiper,443,,mm,IH3,26
+IH/IHM/IMH,100,56,Viton Rod Seal,230,,mm,IH3,26
+IH/IHM/IMH,100,56,Viton Piston Seal,550,,mm,IH3,26
+IH/IHM/IMH,100,56,Extra Port,123,,mm,IH3,26
+IH/IHM/IMH,100,56,Boss Port,187,,mm,IH3,26
+IH/IHM/IMH,100,56,Light Duty Mill,1673,,mm,IH3,26
+IH/IHM/IMH,100,70,Rod Gland Drain,531,,mm,IH3,27
+IH/IHM/IMH,100,70,Air Bleed,218,,mm,IH3,27
+IH/IHM/IMH,100,70,Prox Switch,600,,mm,IH3,27
+IH/IHM/IMH,100,70,Brass Wiper,620,,mm,IH3,27
+IH/IHM/IMH,100,70,Viton Rod Seal,278,,mm,IH3,27
+IH/IHM/IMH,100,70,Viton Piston Seal,550,,mm,IH3,27
+IH/IHM/IMH,100,70,Extra Port,123,,mm,IH3,27
+IH/IHM/IMH,100,70,Boss Port,187,,mm,IH3,27
+IH/IHM/IMH,100,70,Light Duty Mill,1673,,mm,IH3,27
+IH/IHM/IMH,125,56,Rod Gland Drain,559,,mm,IH3,28
+IH/IHM/IMH,125,56,Air Bleed,218,,mm,IH3,28
+IH/IHM/IMH,125,56,Prox Switch,600,,mm,IH3,28
+IH/IHM/IMH,125,56,Brass Wiper,681,,mm,IH3,28
+IH/IHM/IMH,125,56,Viton Rod Seal,326,,mm,IH3,28
+IH/IHM/IMH,125,56,Viton Piston Seal,550,,mm,IH3,28
+IH/IHM/IMH,125,56,Extra Port,123,,mm,IH3,28
+IH/IHM/IMH,125,56,Boss Port,187,,mm,IH3,28
+IH/IHM/IMH,125,56,Light Duty Mill,1673,,mm,IH3,28
+IH/IHM/IMH,125,70,Rod Gland Drain,488,,mm,IH3,29
+IH/IHM/IMH,125,70,Air Bleed,226,,mm,IH3,29
+IH/IHM/IMH,125,70,Prox Switch,600,,mm,IH3,29
+IH/IHM/IMH,125,70,Brass Wiper,443,,mm,IH3,29
+IH/IHM/IMH,125,70,Viton Rod Seal,230,,mm,IH3,29
+IH/IHM/IMH,125,70,Viton Piston Seal,616,,mm,IH3,29
+IH/IHM/IMH,125,70,Extra Port,135,,mm,IH3,29
+IH/IHM/IMH,125,70,Boss Port,187,,mm,IH3,29
+IH/IHM/IMH,125,70,Light Duty Mill,1837,,mm,IH3,29
+IH/IHM/IMH,125,90,Rod Gland Drain,531,,mm,IH3,30
+IH/IHM/IMH,125,90,Air Bleed,226,,mm,IH3,30
+IH/IHM/IMH,125,90,Prox Switch,600,,mm,IH3,30
+IH/IHM/IMH,125,90,Brass Wiper,620,,mm,IH3,30
+IH/IHM/IMH,125,90,Viton Rod Seal,278,,mm,IH3,30
+IH/IHM/IMH,125,90,Viton Piston Seal,616,,mm,IH3,30
+IH/IHM/IMH,125,90,Extra Port,135,,mm,IH3,30
+IH/IHM/IMH,125,90,Boss Port,187,,mm,IH3,30
+IH/IHM/IMH,125,90,Light Duty Mill,1837,,mm,IH3,30
+IH/IHM/IMH,160,70,Rod Gland Drain,576,,mm,IH3,31
+IH/IHM/IMH,160,70,Air Bleed,226,,mm,IH3,31
+IH/IHM/IMH,160,70,Prox Switch,600,,mm,IH3,31
+IH/IHM/IMH,160,70,Brass Wiper,681,,mm,IH3,31
+IH/IHM/IMH,160,70,Viton Rod Seal,326,,mm,IH3,31
+IH/IHM/IMH,160,70,Viton Piston Seal,616,,mm,IH3,31
+IH/IHM/IMH,160,70,Extra Port,135,,mm,IH3,31
+IH/IHM/IMH,160,70,Boss Port,187,,mm,IH3,31
+IH/IHM/IMH,160,70,Light Duty Mill,1837,,mm,IH3,31
+IH/IHM/IMH,160,90,Rod Gland Drain,728,,mm,IH3,32
+IH/IHM/IMH,160,90,Air Bleed,226,,mm,IH3,32
+IH/IHM/IMH,160,90,Prox Switch,600,,mm,IH3,32
+IH/IHM/IMH,160,90,Brass Wiper,748,,mm,IH3,32
+IH/IHM/IMH,160,90,Viton Rod Seal,371,,mm,IH3,32
+IH/IHM/IMH,160,90,Viton Piston Seal,616,,mm,IH3,32
+IH/IHM/IMH,160,90,Extra Port,135,,mm,IH3,32
+IH/IHM/IMH,160,90,Boss Port,187,,mm,IH3,32
+IH/IHM/IMH,160,90,Light Duty Mill,1837,,mm,IH3,32
+IH/IHM/IMH,160,110,Rod Gland Drain,840,,mm,IH3,33
+IH/IHM/IMH,160,110,Air Bleed,226,,mm,IH3,33
+IH/IHM/IMH,160,110,Prox Switch,600,,mm,IH3,33
+IH/IHM/IMH,160,110,Brass Wiper,823,,mm,IH3,33
+IH/IHM/IMH,160,110,Viton Rod Seal,423,,mm,IH3,33
+IH/IHM/IMH,160,110,Viton Piston Seal,616,,mm,IH3,33
+IH/IHM/IMH,160,110,Extra Port,135,,mm,IH3,33
+IH/IHM/IMH,160,110,Boss Port,187,,mm,IH3,33
+IH/IHM/IMH,160,110,Light Duty Mill,1837,,mm,IH3,33
+IH/IHM/IMH,200,90,Rod Gland Drain,531,,mm,IH3,34
+IH/IHM/IMH,200,90,Air Bleed,237,,mm,IH3,34
+IH/IHM/IMH,200,90,Prox Switch,600,,mm,IH3,34
+IH/IHM/IMH,200,90,Brass Wiper,620,,mm,IH3,34
+IH/IHM/IMH,200,90,Viton Rod Seal,278,,mm,IH3,34
+IH/IHM/IMH,200,90,Viton Piston Seal,821,,mm,IH3,34
+IH/IHM/IMH,200,90,Extra Port,143,,mm,IH3,34
+IH/IHM/IMH,200,90,Boss Port,187,,mm,IH3,34
+IH/IHM/IMH,200,90,Light Duty Mill,2398,,mm,IH3,34
+IH/IHM/IMH,200,110,Rod Gland Drain,576,,mm,IH3,35
+IH/IHM/IMH,200,110,Air Bleed,237,,mm,IH3,35
+IH/IHM/IMH,200,110,Prox Switch,600,,mm,IH3,35
+IH/IHM/IMH,200,110,Brass Wiper,681,,mm,IH3,35
+IH/IHM/IMH,200,110,Viton Rod Seal,326,,mm,IH3,35
+IH/IHM/IMH,200,110,Viton Piston Seal,821,,mm,IH3,35
+IH/IHM/IMH,200,110,Extra Port,143,,mm,IH3,35
+IH/IHM/IMH,200,110,Boss Port,187,,mm,IH3,35
+IH/IHM/IMH,200,110,Light Duty Mill,2398,,mm,IH3,35
+IH/IHM/IMH,200,140,Rod Gland Drain,728,,mm,IH3,36
+IH/IHM/IMH,200,140,Air Bleed,237,,mm,IH3,36
+IH/IHM/IMH,200,140,Prox Switch,600,,mm,IH3,36
+IH/IHM/IMH,200,140,Brass Wiper,748,,mm,IH3,36
+IH/IHM/IMH,200,140,Viton Rod Seal,371,,mm,IH3,36
+IH/IHM/IMH,200,140,Viton Piston Seal,821,,mm,IH3,36
+IH/IHM/IMH,200,140,Extra Port,143,,mm,IH3,36
+IH/IHM/IMH,200,140,Boss Port,187,,mm,IH3,36
+IH/IHM/IMH,200,140,Light Duty Mill,2398,,mm,IH3,36
+H/HM/W,1.5,0.625,Flange Port,223,,inch,H4,8
+H/HM/W,1.5,0.625,Tie Rod Extension,,11,inch,H4,8
+H/HM/W,1.5,0.625,CIPR,38,,inch,H4,8
+H/HM/W,1.5,0.625,UltraOx,900.9000000000001,41.4375,inch,H4,8
+H/HM/W,1.5,0.625,High Load Seals,37,,inch,H4,8
+H/HM/W,1.5,0.625,Thicker Head,943,,inch,H4,8
+H/HM/W,,1,Flange Port,223,,inch,H4,9
+H/HM/W,,1,Tie Rod Extension,,11,inch,H4,9
+H/HM/W,,1,CIPR,38,,inch,H4,9
+H/HM/W,,1,UltraOx,900.9000000000001,41.4375,inch,H4,9
+H/HM/W,,1,High Load Seals,37,,inch,H4,9
+H/HM/W,,1,Thicker Head,943,,inch,H4,9
+H/HM/W,2,1,Flange Port,229,,inch,H4,10
+H/HM/W,2,1,Tie Rod Extension,,12,inch,H4,10
+H/HM/W,2,1,CIPR,49,,inch,H4,10
+H/HM/W,2,1,UltraOx,900.9000000000001,41.4375,inch,H4,10
+H/HM/W,2,1,High Load Seals,44,,inch,H4,10
+H/HM/W,2,1,Thicker Head,992,,inch,H4,10
+H/HM/W,,1.375,Flange Port,229,,inch,H4,11
+H/HM/W,,1.375,Tie Rod Extension,,12,inch,H4,11
+H/HM/W,,1.375,CIPR,49,,inch,H4,11
+H/HM/W,,1.375,UltraOx,900.9000000000001,41.4375,inch,H4,11
+H/HM/W,,1.375,High Load Seals,44,,inch,H4,11
+H/HM/W,,1.375,Thicker Head,992,,inch,H4,11
+H/HM/W,2.5,1,Flange Port,229,,inch,H4,12
+H/HM/W,2.5,1,Tie Rod Extension,,12,inch,H4,12
+H/HM/W,2.5,1,CIPR,56,,inch,H4,12
+H/HM/W,2.5,1,UltraOx,940.5000000000001,46.3125,inch,H4,12
+H/HM/W,2.5,1,High Load Seals,48,,inch,H4,12
+H/HM/W,2.5,1,Thicker Head,1048,,inch,H4,12
+H/HM/W,,1.375,Flange Port,229,,inch,H4,13
+H/HM/W,,1.375,Tie Rod Extension,,12,inch,H4,13
+H/HM/W,,1.375,CIPR,56,,inch,H4,13
+H/HM/W,,1.375,UltraOx,940.5000000000001,46.3125,inch,H4,13
+H/HM/W,,1.375,High Load Seals,48,,inch,H4,13
+H/HM/W,,1.375,Thicker Head,1048,,inch,H4,13
+H/HM/W,,1.75,Flange Port,229,,inch,H4,14
+H/HM/W,,1.75,Tie Rod Extension,,12,inch,H4,14
+H/HM/W,,1.75,CIPR,56,,inch,H4,14
+H/HM/W,,1.75,UltraOx,940.5000000000001,46.3125,inch,H4,14
+H/HM/W,,1.75,High Load Seals,48,,inch,H4,14
+H/HM/W,,1.75,Thicker Head,1048,,inch,H4,14
+H/HM/W,3.25,1.375,Flange Port,229,,inch,H4,15
+H/HM/W,3.25,1.375,Tie Rod Extension,,12,inch,H4,15
+H/HM/W,3.25,1.375,CIPR,73,,inch,H4,15
+H/HM/W,3.25,1.375,UltraOx,940.5000000000001,46.3125,inch,H4,15
+H/HM/W,3.25,1.375,High Load Seals,67,,inch,H4,15
+H/HM/W,3.25,1.375,Thicker Head,1106,,inch,H4,15
+H/HM/W,,1.75,Flange Port,229,,inch,H4,16
+H/HM/W,,1.75,Tie Rod Extension,,12,inch,H4,16
+H/HM/W,,1.75,CIPR,73,,inch,H4,16
+H/HM/W,,1.75,UltraOx,940.5000000000001,46.3125,inch,H4,16
+H/HM/W,,1.75,High Load Seals,67,,inch,H4,16
+H/HM/W,,1.75,Thicker Head,1106,,inch,H4,16
+H/HM/W,,2,Flange Port,229,,inch,H4,17
+H/HM/W,,2,Tie Rod Extension,,12,inch,H4,17
+H/HM/W,,2,CIPR,73,,inch,H4,17
+H/HM/W,,2,UltraOx,940.5000000000001,46.3125,inch,H4,17
+H/HM/W,,2,High Load Seals,67,,inch,H4,17
+H/HM/W,,2,Thicker Head,1106,,inch,H4,17
+H/HM/W,4,1.75,Flange Port,229,,inch,H4,18
+H/HM/W,4,1.75,Tie Rod Extension,,12,inch,H4,18
+H/HM/W,4,1.75,CIPR,92,,inch,H4,18
+H/HM/W,4,1.75,UltraOx,1425.6000000000001,56.0625,inch,H4,18
+H/HM/W,4,1.75,High Load Seals,78,,inch,H4,18
+H/HM/W,4,1.75,Thicker Head,1215,,inch,H4,18
+H/HM/W,,2,Flange Port,229,,inch,H4,19
+H/HM/W,,2,Tie Rod Extension,,12,inch,H4,19
+H/HM/W,,2,CIPR,92,,inch,H4,19
+H/HM/W,,2,UltraOx,1425.6000000000001,56.0625,inch,H4,19
+H/HM/W,,2,High Load Seals,78,,inch,H4,19
+H/HM/W,,2,Thicker Head,1215,,inch,H4,19
+H/HM/W,,2.5,Flange Port,229,,inch,H4,20
+H/HM/W,,2.5,Tie Rod Extension,,12,inch,H4,20
+H/HM/W,,2.5,CIPR,92,,inch,H4,20
+H/HM/W,,2.5,UltraOx,1425.6000000000001,56.0625,inch,H4,20
+H/HM/W,,2.5,High Load Seals,78,,inch,H4,20
+H/HM/W,,2.5,Thicker Head,1215,,inch,H4,20
+H/HM/W,5,2,Flange Port,229,,inch,H4,21
+H/HM/W,5,2,Tie Rod Extension,,13,inch,H4,21
+H/HM/W,5,2,CIPR,110,,inch,H4,21
+H/HM/W,5,2,UltraOx,1485.0000000000002,56.0625,inch,H4,21
+H/HM/W,5,2,High Load Seals,101,,inch,H4,21
+H/HM/W,5,2,Thicker Head,1258,,inch,H4,21
+H/HM/W,,2.5,Flange Port,229,,inch,H4,22
+H/HM/W,,2.5,Tie Rod Extension,,13,inch,H4,22
+H/HM/W,,2.5,CIPR,110,,inch,H4,22
+H/HM/W,,2.5,UltraOx,1485.0000000000002,56.0625,inch,H4,22
+H/HM/W,,2.5,High Load Seals,101,,inch,H4,22
+H/HM/W,,2.5,Thicker Head,1258,,inch,H4,22
+H/HM/W,,3,Flange Port,229,,inch,H4,23
+H/HM/W,,3,Tie Rod Extension,,13,inch,H4,23
+H/HM/W,,3,CIPR,110,,inch,H4,23
+H/HM/W,,3,UltraOx,1485.0000000000002,56.0625,inch,H4,23
+H/HM/W,,3,High Load Seals,101,,inch,H4,23
+H/HM/W,,3,Thicker Head,1258,,inch,H4,23
+H/HM/W,,3.5,Flange Port,229,,inch,H4,24
+H/HM/W,,3.5,Tie Rod Extension,,13,inch,H4,24
+H/HM/W,,3.5,CIPR,110,,inch,H4,24
+H/HM/W,,3.5,UltraOx,1485.0000000000002,56.0625,inch,H4,24
+H/HM/W,,3.5,High Load Seals,101,,inch,H4,24
+H/HM/W,,3.5,Thicker Head,1258,,inch,H4,24
+H/HM/W,6,2.5,Flange Port,248,,inch,H4,25
+H/HM/W,6,2.5,Tie Rod Extension,,18,inch,H4,25
+H/HM/W,6,2.5,CIPR,123,,inch,H4,25
+H/HM/W,6,2.5,UltraOx,2989.8,63.375,inch,H4,25
+H/HM/W,6,2.5,High Load Seals,120,,inch,H4,25
+H/HM/W,6,2.5,Thicker Head,1300,,inch,H4,25
+H/HM/W,,3,Flange Port,248,,inch,H4,26
+H/HM/W,,3,Tie Rod Extension,,18,inch,H4,26
+H/HM/W,,3,CIPR,123,,inch,H4,26
+H/HM/W,,3,UltraOx,2989.8,63.375,inch,H4,26
+H/HM/W,,3,High Load Seals,120,,inch,H4,26
+H/HM/W,,3,Thicker Head,1300,,inch,H4,26
+H/HM/W,,3.5,Flange Port,248,,inch,H4,27
+H/HM/W,,3.5,Tie Rod Extension,,18,inch,H4,27
+H/HM/W,,3.5,CIPR,123,,inch,H4,27
+H/HM/W,,3.5,UltraOx,2989.8,63.375,inch,H4,27
+H/HM/W,,3.5,High Load Seals,120,,inch,H4,27
+H/HM/W,,3.5,Thicker Head,1300,,inch,H4,27
+H/HM/W,,4,Flange Port,248,,inch,H4,28
+H/HM/W,,4,Tie Rod Extension,,18,inch,H4,28
+H/HM/W,,4,CIPR,123,,inch,H4,28
+H/HM/W,,4,UltraOx,2989.8,63.375,inch,H4,28
+H/HM/W,,4,High Load Seals,120,,inch,H4,28
+H/HM/W,,4,Thicker Head,1300,,inch,H4,28
+H/HM/W,7,3,Flange Port,284,,inch,H4,29
+H/HM/W,7,3,Tie Rod Extension,,19,inch,H4,29
+H/HM/W,7,3,CIPR,141,,inch,H4,29
+H/HM/W,7,3,UltraOx,3653.1000000000004,78,inch,H4,29
+H/HM/W,7,3,High Load Seals,243,,inch,H4,29
+H/HM/W,7,3,Thicker Head,1487,,inch,H4,29
+H/HM/W,,3.5,Flange Port,284,,inch,H4,30
+H/HM/W,,3.5,Tie Rod Extension,,19,inch,H4,30
+H/HM/W,,3.5,CIPR,141,,inch,H4,30
+H/HM/W,,3.5,UltraOx,3653.1000000000004,78,inch,H4,30
+H/HM/W,,3.5,High Load Seals,243,,inch,H4,30
+H/HM/W,,3.5,Thicker Head,1487,,inch,H4,30
+H/HM/W,,4,Flange Port,284,,inch,H4,31
+H/HM/W,,4,Tie Rod Extension,,19,inch,H4,31
+H/HM/W,,4,CIPR,141,,inch,H4,31
+H/HM/W,,4,UltraOx,3653.1000000000004,78,inch,H4,31
+H/HM/W,,4,High Load Seals,243,,inch,H4,31
+H/HM/W,,4,Thicker Head,1487,,inch,H4,31
+H/HM/W,,4.5,Flange Port,284,,inch,H4,32
+H/HM/W,,4.5,Tie Rod Extension,,19,inch,H4,32
+H/HM/W,,4.5,CIPR,141,,inch,H4,32
+H/HM/W,,4.5,UltraOx,3653.1000000000004,78,inch,H4,32
+H/HM/W,,4.5,High Load Seals,243,,inch,H4,32
+H/HM/W,,4.5,Thicker Head,1487,,inch,H4,32
+H/HM/W,,5,Flange Port,284,,inch,H4,33
+H/HM/W,,5,Tie Rod Extension,,19,inch,H4,33
+H/HM/W,,5,CIPR,141,,inch,H4,33
+H/HM/W,,5,UltraOx,3653.1000000000004,78,inch,H4,33
+H/HM/W,,5,High Load Seals,243,,inch,H4,33
+H/HM/W,,5,Thicker Head,1487,,inch,H4,33
+H/HM/W,8,3.5,Flange Port,296,,inch,H4,34
+H/HM/W,8,3.5,Tie Rod Extension,,23,inch,H4,34
+H/HM/W,8,3.5,CIPR,176,,inch,H4,34
+H/HM/W,8,3.5,UltraOx,5494.5,117,inch,H4,34
+H/HM/W,8,3.5,High Load Seals,277,,inch,H4,34
+H/HM/W,8,3.5,Thicker Head,1641,,inch,H4,34
+H/HM/W,,4,Flange Port,296,,inch,H4,35
+H/HM/W,,4,Tie Rod Extension,,23,inch,H4,35
+H/HM/W,,4,CIPR,176,,inch,H4,35
+H/HM/W,,4,UltraOx,5494.5,117,inch,H4,35
+H/HM/W,,4,High Load Seals,277,,inch,H4,35
+H/HM/W,,4,Thicker Head,1641,,inch,H4,35
+H/HM/W,,4.5,Flange Port,296,,inch,H4,36
+H/HM/W,,4.5,Tie Rod Extension,,23,inch,H4,36
+H/HM/W,,4.5,CIPR,176,,inch,H4,36
+H/HM/W,,4.5,UltraOx,5494.5,117,inch,H4,36
+H/HM/W,,4.5,High Load Seals,277,,inch,H4,36
+H/HM/W,,4.5,Thicker Head,1641,,inch,H4,36
+H/HM/W,,5,Flange Port,296,,inch,H4,37
+H/HM/W,,5,Tie Rod Extension,,23,inch,H4,37
+H/HM/W,,5,CIPR,176,,inch,H4,37
+H/HM/W,,5,UltraOx,5494.5,117,inch,H4,37
+H/HM/W,,5,High Load Seals,277,,inch,H4,37
+H/HM/W,,5,Thicker Head,1641,,inch,H4,37
+H/HM/W,,5.5,Flange Port,296,,inch,H4,38
+H/HM/W,,5.5,Tie Rod Extension,,23,inch,H4,38
+H/HM/W,,5.5,CIPR,176,,inch,H4,38
+H/HM/W,,5.5,UltraOx,5494.5,117,inch,H4,38
+H/HM/W,,5.5,High Load Seals,277,,inch,H4,38
+H/HM/W,,5.5,Thicker Head,1641,,inch,H4,38
+H/HM/W,10,4.5,Flange Port,322,,inch,H4,39
+H/HM/W,10,4.5,Tie Rod Extension,,26,inch,H4,39
+H/HM/W,10,4.5,CIPR,208,,inch,H4,39
+H/HM/W,10,4.5,UltraOx,6642.900000000001,131.625,inch,H4,39
+H/HM/W,10,4.5,High Load Seals,370,,inch,H4,39
+H/HM/W,10,4.5,Thicker Head,2025,,inch,H4,39
+H/HM/W,,5,Flange Port,322,,inch,H4,40
+H/HM/W,,5,Tie Rod Extension,,26,inch,H4,40
+H/HM/W,,5,CIPR,208,,inch,H4,40
+H/HM/W,,5,UltraOx,6642.900000000001,131.625,inch,H4,40
+H/HM/W,,5,High Load Seals,370,,inch,H4,40
+H/HM/W,,5,Thicker Head,2025,,inch,H4,40
+H/HM/W,,5.5,Flange Port,322,,inch,H4,41
+H/HM/W,,5.5,Tie Rod Extension,,26,inch,H4,41
+H/HM/W,,5.5,CIPR,208,,inch,H4,41
+H/HM/W,,5.5,UltraOx,6642.900000000001,131.625,inch,H4,41
+H/HM/W,,5.5,High Load Seals,370,,inch,H4,41
+H/HM/W,,5.5,Thicker Head,2025,,inch,H4,41
+H/HM/W,,7,Flange Port,322,,inch,H4,42
+H/HM/W,,7,Tie Rod Extension,,26,inch,H4,42
+H/HM/W,,7,CIPR,208,,inch,H4,42
+H/HM/W,,7,UltraOx,6642.900000000001,131.625,inch,H4,42
+H/HM/W,,7,High Load Seals,370,,inch,H4,42
+H/HM/W,,7,Thicker Head,2025,,inch,H4,42
+H/HM/W,12,5.5,Flange Port,322,,inch,H4,43
+H/HM/W,12,5.5,Tie Rod Extension,,37,inch,H4,43
+H/HM/W,12,5.5,CIPR,262,,inch,H4,43
+H/HM/W,12,5.5,UltraOx,8632.800000000001,168.1875,inch,H4,43
+H/HM/W,12,5.5,High Load Seals,476,,inch,H4,43
+H/HM/W,12,5.5,Thicker Head,2498,,inch,H4,43
+H/HM/W,,7,Flange Port,322,,inch,H4,44
+H/HM/W,,7,Tie Rod Extension,,37,inch,H4,44
+H/HM/W,,7,CIPR,262,,inch,H4,44
+H/HM/W,,7,UltraOx,8632.800000000001,168.1875,inch,H4,44
+H/HM/W,,7,High Load Seals,476,,inch,H4,44
+H/HM/W,,7,Thicker Head,2498,,inch,H4,44
+H/HM/W,,8,Flange Port,322,,inch,H4,45
+H/HM/W,,8,Tie Rod Extension,,37,inch,H4,45
+H/HM/W,,8,CIPR,262,,inch,H4,45
+H/HM/W,,8,UltraOx,8632.800000000001,168.1875,inch,H4,45
+H/HM/W,,8,High Load Seals,476,,inch,H4,45
+H/HM/W,,8,Thicker Head,2498,,inch,H4,45
+H/HM/W,14,8,Flange Port,322,,inch,H4,46
+H/HM/W,14,8,Tie Rod Extension,,49,inch,H4,46
+H/HM/W,14,8,CIPR,450,,inch,H4,46
+H/HM/W,14,8,UltraOx,11167.2,216.9375,inch,H4,46
+H/HM/W,14,8,High Load Seals,540,,inch,H4,46
+H/HM/W,14,8,Thicker Head,3081,,inch,H4,46
+H/HM/W,,10,Flange Port,322,,inch,H4,47
+H/HM/W,,10,Tie Rod Extension,,49,inch,H4,47
+H/HM/W,,10,CIPR,450,,inch,H4,47
+H/HM/W,,10,UltraOx,11167.2,216.9375,inch,H4,47
+H/HM/W,,10,High Load Seals,540,,inch,H4,47
+H/HM/W,,10,Thicker Head,3081,,inch,H4,47
+H/HM/W,16,8,Flange Port,322,,inch,H4,48
+H/HM/W,16,8,Tie Rod Extension,,61,inch,H4,48
+H/HM/W,16,8,CIPR,582,,inch,H4,48
+H/HM/W,16,8,UltraOx,14513.400000000001,270.5625,inch,H4,48
+H/HM/W,16,8,High Load Seals,737,,inch,H4,48
+H/HM/W,16,8,Thicker Head,3803,,inch,H4,48
+H/HM/W,,10,Flange Port,322,,inch,H4,49
+H/HM/W,,10,Tie Rod Extension,,61,inch,H4,49
+H/HM/W,,10,CIPR,582,,inch,H4,49
+H/HM/W,,10,UltraOx,14513.400000000001,270.5625,inch,H4,49
+H/HM/W,,10,High Load Seals,737,,inch,H4,49
+H/HM/W,,10,Thicker Head,3803,,inch,H4,49
+H/HM/W,18,8,Flange Port,322,,inch,H4,50
+H/HM/W,18,8,Tie Rod Extension,,78,inch,H4,50
+H/HM/W,18,8,CIPR,752,,inch,H4,50
+H/HM/W,18,8,UltraOx,18839.7,348.5625,inch,H4,50
+H/HM/W,18,8,High Load Seals,977,,inch,H4,50
+H/HM/W,18,8,Thicker Head,4691,,inch,H4,50
+H/HM/W,,10,Flange Port,322,,inch,H4,51
+H/HM/W,,10,Tie Rod Extension,,78,inch,H4,51
+H/HM/W,,10,CIPR,752,,inch,H4,51
+H/HM/W,,10,UltraOx,18839.7,348.5625,inch,H4,51
+H/HM/W,,10,High Load Seals,977,,inch,H4,51
+H/HM/W,,10,Thicker Head,4691,,inch,H4,51
+H/HM/W,20,10,Flange Port,322,,inch,H4,52
+H/HM/W,20,10,Tie Rod Extension,,98,inch,H4,52
+H/HM/W,20,10,CIPR,977,,inch,H4,52
+H/HM/W,20,10,UltraOx,24482.7,443.625,inch,H4,52
+H/HM/W,20,10,High Load Seals,1305,,inch,H4,52
+H/HM/W,20,10,Thicker Head,5788,,inch,H4,52
+A/LH,1.5,0.625,Tie Rod Extension,,8,inch,A4,8
+A/LH,1.5,0.625,UltraOx,312,24,inch,A4,8
+A/LH,1.5,0.625,Bumper Piston,341,,inch,A4,8
+A/LH,1.5,1,Tie Rod Extension,,8,inch,A4,9
+A/LH,1.5,1,UltraOx,312,24,inch,A4,9
+A/LH,1.5,1,Bumper Piston,341,,inch,A4,9
+A/LH,2,0.625,Tie Rod Extension,,9,inch,A4,10
+A/LH,2,0.625,UltraOx,346,28,inch,A4,10
+A/LH,2,0.625,Bumper Piston,341,,inch,A4,10
+A/LH,2,1,Tie Rod Extension,,9,inch,A4,11
+A/LH,2,1,UltraOx,346,28,inch,A4,11
+A/LH,2,1,Bumper Piston,341,,inch,A4,11
+A/LH,2,1.375,Tie Rod Extension,,9,inch,A4,12
+A/LH,2,1.375,UltraOx,346,28,inch,A4,12
+A/LH,2,1.375,Bumper Piston,341,,inch,A4,12
+A/LH,2.5,0.625,Tie Rod Extension,,10,inch,A4,13
+A/LH,2.5,0.625,UltraOx,384,31,inch,A4,13
+A/LH,2.5,0.625,Bumper Piston,341,,inch,A4,13
+A/LH,2.5,1,Tie Rod Extension,,10,inch,A4,14
+A/LH,2.5,1,UltraOx,384,31,inch,A4,14
+A/LH,2.5,1,Bumper Piston,341,,inch,A4,14
+A/LH,2.5,1.375,Tie Rod Extension,,10,inch,A4,15
+A/LH,2.5,1.375,UltraOx,384,31,inch,A4,15
+A/LH,2.5,1.375,Bumper Piston,341,,inch,A4,15
+A/LH,2.5,1.75,Tie Rod Extension,,10,inch,A4,16
+A/LH,2.5,1.75,UltraOx,384,31,inch,A4,16
+A/LH,2.5,1.75,Bumper Piston,341,,inch,A4,16
+A/LH,3.25,1,Tie Rod Extension,,11,inch,A4,17
+A/LH,3.25,1,UltraOx,418,33,inch,A4,17
+A/LH,3.25,1,Bumper Piston,341,,inch,A4,17
+A/LH,3.25,1.375,Tie Rod Extension,,11,inch,A4,18
+A/LH,3.25,1.375,UltraOx,418,33,inch,A4,18
+A/LH,3.25,1.375,Bumper Piston,341,,inch,A4,18
+A/LH,3.25,1.75,Tie Rod Extension,,11,inch,A4,19
+A/LH,3.25,1.75,UltraOx,418,33,inch,A4,19
+A/LH,3.25,1.75,Bumper Piston,341,,inch,A4,19
+A/LH,3.25,2,Tie Rod Extension,,11,inch,A4,20
+A/LH,3.25,2,UltraOx,418,33,inch,A4,20
+A/LH,3.25,2,Bumper Piston,341,,inch,A4,20
+A/LH,4,1,Tie Rod Extension,,12,inch,A4,21
+A/LH,4,1,UltraOx,490,36,inch,A4,21
+A/LH,4,1,Bumper Piston,341,,inch,A4,21
+A/LH,4,1.375,Tie Rod Extension,,12,inch,A4,22
+A/LH,4,1.375,UltraOx,490,36,inch,A4,22
+A/LH,4,1.375,Bumper Piston,341,,inch,A4,22
+A/LH,4,1.75,Tie Rod Extension,,12,inch,A4,23
+A/LH,4,1.75,UltraOx,490,36,inch,A4,23
+A/LH,4,1.75,Bumper Piston,341,,inch,A4,23
+A/LH,4,2,Tie Rod Extension,,12,inch,A4,24
+A/LH,4,2,UltraOx,490,36,inch,A4,24
+A/LH,4,2,Bumper Piston,341,,inch,A4,24
+A/LH,5,1,Tie Rod Extension,,14,inch,A4,25
+A/LH,5,1,UltraOx,567,39,inch,A4,25
+A/LH,5,1,Bumper Piston,341,,inch,A4,25
+A/LH,5,1.375,Tie Rod Extension,,14,inch,A4,26
+A/LH,5,1.375,UltraOx,567,39,inch,A4,26
+A/LH,5,1.375,Bumper Piston,341,,inch,A4,26
+A/LH,5,1.75,Tie Rod Extension,,14,inch,A4,27
+A/LH,5,1.75,UltraOx,567,39,inch,A4,27
+A/LH,5,1.75,Bumper Piston,341,,inch,A4,27
+A/LH,5,2,Tie Rod Extension,,14,inch,A4,28
+A/LH,5,2,UltraOx,567,39,inch,A4,28
+A/LH,5,2,Bumper Piston,341,,inch,A4,28
+A/LH,6,1.375,Tie Rod Extension,,15,inch,A4,29
+A/LH,6,1.375,UltraOx,1085,41,inch,A4,29
+A/LH,6,1.375,Bumper Piston,341,,inch,A4,29
+A/LH,6,1.75,Tie Rod Extension,,15,inch,A4,30
+A/LH,6,1.75,UltraOx,1085,41,inch,A4,30
+A/LH,6,1.75,Bumper Piston,341,,inch,A4,30
+A/LH,6,2,Tie Rod Extension,,15,inch,A4,31
+A/LH,6,2,UltraOx,1085,41,inch,A4,31
+A/LH,6,2,Bumper Piston,341,,inch,A4,31
+A/LH,6,2.5,Tie Rod Extension,,15,inch,A4,32
+A/LH,6,2.5,UltraOx,1085,41,inch,A4,32
+A/LH,6,2.5,Bumper Piston,341,,inch,A4,32
+A/LH,7,1.375,Tie Rod Extension,,16,inch,A4,33
+A/LH,7,1.375,UltraOx,1743,57,inch,A4,33
+A/LH,7,1.375,Bumper Piston,364,,inch,A4,33
+A/LH,7,1.75,Tie Rod Extension,,16,inch,A4,34
+A/LH,7,1.75,UltraOx,1743,57,inch,A4,34
+A/LH,7,1.75,Bumper Piston,364,,inch,A4,34
+A/LH,7,2,Tie Rod Extension,,16,inch,A4,35
+A/LH,7,2,UltraOx,1743,57,inch,A4,35
+A/LH,7,2,Bumper Piston,364,,inch,A4,35
+A/LH,7,2.5,Tie Rod Extension,,16,inch,A4,36
+A/LH,7,2.5,UltraOx,1743,57,inch,A4,36
+A/LH,7,2.5,Bumper Piston,364,,inch,A4,36
+A/LH,8,1.375,Tie Rod Extension,,17,inch,A4,37
+A/LH,8,1.375,UltraOx,1925,65,inch,A4,37
+A/LH,8,1.375,Bumper Piston,453,,inch,A4,37
+A/LH,8,1.75,Tie Rod Extension,,17,inch,A4,38
+A/LH,8,1.75,UltraOx,1925,65,inch,A4,38
+A/LH,8,1.75,Bumper Piston,435,,inch,A4,38
+A/LH,8,2,Tie Rod Extension,,17,inch,A4,39
+A/LH,8,2,UltraOx,1925,65,inch,A4,39
+A/LH,8,2,Bumper Piston,435,,inch,A4,39
+A/LH,8,2.5,Tie Rod Extension,,17,inch,A4,40
+A/LH,8,2.5,UltraOx,1925,65,inch,A4,40
+A/LH,8,2.5,Bumper Piston,453,,inch,A4,40
+A/LH,10,1.75,Tie Rod Extension,,20,inch,A4,41
+A/LH,10,1.75,UltraOx,2410,81,inch,A4,41
+A/LH,10,1.75,Bumper Piston,589,,inch,A4,41
+A/LH,10,2,Tie Rod Extension,,20,inch,A4,42
+A/LH,10,2,UltraOx,2410,81,inch,A4,42
+A/LH,10,2,Bumper Piston,589,,inch,A4,42
+A/LH,10,2.5,Tie Rod Extension,,20,inch,A4,43
+A/LH,10,2.5,UltraOx,2410,81,inch,A4,43
+A/LH,10,2.5,Bumper Piston,589,,inch,A4,43
+A/LH,10,3,Tie Rod Extension,,20,inch,A4,44
+A/LH,10,3,UltraOx,2410,81,inch,A4,44
+A/LH,10,3,Bumper Piston,589,,inch,A4,44
+A/LH,10,3.5,Tie Rod Extension,,20,inch,A4,45
+A/LH,10,3.5,UltraOx,2410,81,inch,A4,45
+A/LH,10,3.5,Bumper Piston,589,,inch,A4,45
+A/LH,12,2,Tie Rod Extension,,22,inch,A4,46
+A/LH,12,2,UltraOx,2698,96,inch,A4,46
+A/LH,12,2,Bumper Piston,766,,inch,A4,46
+A/LH,12,2.5,Tie Rod Extension,,22,inch,A4,47
+A/LH,12,2.5,UltraOx,2698,96,inch,A4,47
+A/LH,12,2.5,Bumper Piston,766,,inch,A4,47
+A/LH,12,3,Tie Rod Extension,,22,inch,A4,48
+A/LH,12,3,UltraOx,2698,96,inch,A4,48
+A/LH,12,3,Bumper Piston,766,,inch,A4,48
+A/LH,12,3.5,Tie Rod Extension,,22,inch,A4,49
+A/LH,12,3.5,UltraOx,2698,96,inch,A4,49
+A/LH,12,3.5,Bumper Piston,766,,inch,A4,49
+A/LH,12,4,Tie Rod Extension,,22,inch,A4,50
+A/LH,12,4,UltraOx,2698,96,inch,A4,50
+A/LH,12,4,Bumper Piston,766,,inch,A4,50
+A/LH,14,2.5,Tie Rod Extension,,24,inch,A4,51
+A/LH,14,2.5,UltraOx,3216,109,inch,A4,51
+A/LH,14,2.5,Bumper Piston,995,,inch,A4,51
+A/LH,14,3,Tie Rod Extension,,24,inch,A4,52
+A/LH,14,3,UltraOx,3216,109,inch,A4,52
+A/LH,14,3,Bumper Piston,995,,inch,A4,52
+A/LH,14,3.5,Tie Rod Extension,,24,inch,A4,53
+A/LH,14,3.5,UltraOx,3216,109,inch,A4,53
+A/LH,14,3.5,Bumper Piston,995,,inch,A4,53
+A/LH,14,4,Tie Rod Extension,,24,inch,A4,54
+A/LH,14,4,UltraOx,3216,109,inch,A4,54
+A/LH,14,4,Bumper Piston,995,,inch,A4,54
+IH/IHM/IMH,25,12,Flange Port,212,,mm,IH4,8
+IH/IHM/IMH,25,12,Tie Rod Extension,,0.5,mm,IH4,8
+IH/IHM/IMH,25,12,CIPR,36,,mm,IH4,8
+IH/IHM/IMH,25,12,UltraOx,344,0.8,mm,IH4,8
+IH/IHM/IMH,25,12,Buna N Seals,21,,mm,IH4,8
+IH/IHM/IMH,25,12,High Load Seals,35,,mm,IH4,8
+IH/IHM/IMH,25,12,Thicker Head,898,,mm,IH4,8
+IH/IHM/IMH,25,18,Flange Port,212,,mm,IH4,9
+IH/IHM/IMH,25,18,Tie Rod Extension,,0.5,mm,IH4,9
+IH/IHM/IMH,25,18,CIPR,36,,mm,IH4,9
+IH/IHM/IMH,25,18,UltraOx,344,0.8,mm,IH4,9
+IH/IHM/IMH,25,18,Buna N Seals,24,,mm,IH4,9
+IH/IHM/IMH,25,18,High Load Seals,35,,mm,IH4,9
+IH/IHM/IMH,25,18,Thicker Head,898,,mm,IH4,9
+IH/IHM/IMH,32,14,Flange Port,218,,mm,IH4,10
+IH/IHM/IMH,32,14,Tie Rod Extension,,0.55,mm,IH4,10
+IH/IHM/IMH,32,14,CIPR,46,,mm,IH4,10
+IH/IHM/IMH,32,14,UltraOx,344,0.8,mm,IH4,10
+IH/IHM/IMH,32,14,Buna N Seals,24,,mm,IH4,10
+IH/IHM/IMH,32,14,High Load Seals,41,,mm,IH4,10
+IH/IHM/IMH,32,14,Thicker Head,944,,mm,IH4,10
+IH/IHM/IMH,32,18,Flange Port,218,,mm,IH4,11
+IH/IHM/IMH,32,18,Tie Rod Extension,,0.55,mm,IH4,11
+IH/IHM/IMH,32,18,CIPR,46,,mm,IH4,11
+IH/IHM/IMH,32,18,UltraOx,360,0.8,mm,IH4,11
+IH/IHM/IMH,32,18,Buna N Seals,30,,mm,IH4,11
+IH/IHM/IMH,32,18,High Load Seals,41,,mm,IH4,11
+IH/IHM/IMH,32,18,Thicker Head,944,,mm,IH4,11
+IH/IHM/IMH,32,22,Flange Port,218,,mm,IH4,12
+IH/IHM/IMH,32,22,Tie Rod Extension,,0.55,mm,IH4,12
+IH/IHM/IMH,32,22,CIPR,53,,mm,IH4,12
+IH/IHM/IMH,32,22,UltraOx,360,0.9,mm,IH4,12
+IH/IHM/IMH,32,22,Buna N Seals,24,,mm,IH4,12
+IH/IHM/IMH,32,22,High Load Seals,45,,mm,IH4,12
+IH/IHM/IMH,32,22,Thicker Head,998,,mm,IH4,12
+IH/IHM/IMH,40,18,Flange Port,218,,mm,IH4,13
+IH/IHM/IMH,40,18,Tie Rod Extension,,0.55,mm,IH4,13
+IH/IHM/IMH,40,18,CIPR,53,,mm,IH4,13
+IH/IHM/IMH,40,18,UltraOx,480,0.9,mm,IH4,13
+IH/IHM/IMH,40,18,Buna N Seals,30,,mm,IH4,13
+IH/IHM/IMH,40,18,High Load Seals,45,,mm,IH4,13
+IH/IHM/IMH,40,18,Thicker Head,998,,mm,IH4,13
+IH/IHM/IMH,40,22,Flange Port,218,,mm,IH4,14
+IH/IHM/IMH,40,22,Tie Rod Extension,,0.55,mm,IH4,14
+IH/IHM/IMH,40,22,CIPR,53,,mm,IH4,14
+IH/IHM/IMH,40,22,UltraOx,480,0.9,mm,IH4,14
+IH/IHM/IMH,40,22,Buna N Seals,36,,mm,IH4,14
+IH/IHM/IMH,40,22,High Load Seals,45,,mm,IH4,14
+IH/IHM/IMH,40,22,Thicker Head,998,,mm,IH4,14
+IH/IHM/IMH,40,28,Flange Port,218,,mm,IH4,15
+IH/IHM/IMH,40,28,Tie Rod Extension,,0.55,mm,IH4,15
+IH/IHM/IMH,40,28,CIPR,69,,mm,IH4,15
+IH/IHM/IMH,40,28,UltraOx,480,0.9,mm,IH4,15
+IH/IHM/IMH,40,28,Buna N Seals,30,,mm,IH4,15
+IH/IHM/IMH,40,28,High Load Seals,63,,mm,IH4,15
+IH/IHM/IMH,40,28,Thicker Head,1053,,mm,IH4,15
+IH/IHM/IMH,50,22,Flange Port,218,,mm,IH4,16
+IH/IHM/IMH,50,22,Tie Rod Extension,,0.55,mm,IH4,16
+IH/IHM/IMH,50,22,CIPR,69,,mm,IH4,16
+IH/IHM/IMH,50,22,UltraOx,480,0.9,mm,IH4,16
+IH/IHM/IMH,50,22,Buna N Seals,36,,mm,IH4,16
+IH/IHM/IMH,50,22,High Load Seals,63,,mm,IH4,16
+IH/IHM/IMH,50,22,Thicker Head,1053,,mm,IH4,16
+IH/IHM/IMH,50,28,Flange Port,218,,mm,IH4,17
+IH/IHM/IMH,50,28,Tie Rod Extension,,0.55,mm,IH4,17
+IH/IHM/IMH,50,28,CIPR,69,,mm,IH4,17
+IH/IHM/IMH,50,28,UltraOx,548,0.9,mm,IH4,17
+IH/IHM/IMH,50,28,Buna N Seals,41,,mm,IH4,17
+IH/IHM/IMH,50,28,High Load Seals,63,,mm,IH4,17
+IH/IHM/IMH,50,28,Thicker Head,1053,,mm,IH4,17
+IH/IHM/IMH,50,36,Flange Port,218,,mm,IH4,18
+IH/IHM/IMH,50,36,Tie Rod Extension,,0.55,mm,IH4,18
+IH/IHM/IMH,50,36,CIPR,87,,mm,IH4,18
+IH/IHM/IMH,50,36,UltraOx,548,1.05,mm,IH4,18
+IH/IHM/IMH,50,36,Buna N Seals,36,,mm,IH4,18
+IH/IHM/IMH,50,36,High Load Seals,74,,mm,IH4,18
+IH/IHM/IMH,50,36,Thicker Head,1157,,mm,IH4,18
+IH/IHM/IMH,63,28,Flange Port,218,,mm,IH4,19
+IH/IHM/IMH,63,28,Tie Rod Extension,,0.55,mm,IH4,19
+IH/IHM/IMH,63,28,CIPR,87,,mm,IH4,19
+IH/IHM/IMH,63,28,UltraOx,548,1.05,mm,IH4,19
+IH/IHM/IMH,63,28,Buna N Seals,41,,mm,IH4,19
+IH/IHM/IMH,63,28,High Load Seals,74,,mm,IH4,19
+IH/IHM/IMH,63,28,Thicker Head,1157,,mm,IH4,19
+IH/IHM/IMH,63,36,Flange Port,218,,mm,IH4,20
+IH/IHM/IMH,63,36,Tie Rod Extension,,0.55,mm,IH4,20
+IH/IHM/IMH,63,36,CIPR,87,,mm,IH4,20
+IH/IHM/IMH,63,36,UltraOx,568,1.05,mm,IH4,20
+IH/IHM/IMH,63,36,Buna N Seals,48,,mm,IH4,20
+IH/IHM/IMH,63,36,High Load Seals,74,,mm,IH4,20
+IH/IHM/IMH,63,36,Thicker Head,1157,,mm,IH4,20
+IH/IHM/IMH,63,45,Flange Port,218,,mm,IH4,21
+IH/IHM/IMH,63,45,Tie Rod Extension,,0.6,mm,IH4,21
+IH/IHM/IMH,63,45,CIPR,104,,mm,IH4,21
+IH/IHM/IMH,63,45,UltraOx,568,1.05,mm,IH4,21
+IH/IHM/IMH,63,45,Buna N Seals,41,,mm,IH4,21
+IH/IHM/IMH,63,45,High Load Seals,96,,mm,IH4,21
+IH/IHM/IMH,63,45,Thicker Head,1198,,mm,IH4,21
+IH/IHM/IMH,80,36,Flange Port,218,,mm,IH4,22
+IH/IHM/IMH,80,36,Tie Rod Extension,,0.6,mm,IH4,22
+IH/IHM/IMH,80,36,CIPR,104,,mm,IH4,22
+IH/IHM/IMH,80,36,UltraOx,568,1.05,mm,IH4,22
+IH/IHM/IMH,80,36,Buna N Seals,48,,mm,IH4,22
+IH/IHM/IMH,80,36,High Load Seals,96,,mm,IH4,22
+IH/IHM/IMH,80,36,Thicker Head,1198,,mm,IH4,22
+IH/IHM/IMH,80,45,Flange Port,218,,mm,IH4,23
+IH/IHM/IMH,80,45,Tie Rod Extension,,0.6,mm,IH4,23
+IH/IHM/IMH,80,45,CIPR,104,,mm,IH4,23
+IH/IHM/IMH,80,45,UltraOx,568,1.05,mm,IH4,23
+IH/IHM/IMH,80,45,Buna N Seals,62,,mm,IH4,23
+IH/IHM/IMH,80,45,High Load Seals,96,,mm,IH4,23
+IH/IHM/IMH,80,45,Thicker Head,1198,,mm,IH4,23
+IH/IHM/IMH,80,56,Flange Port,218,,mm,IH4,24
+IH/IHM/IMH,80,56,Tie Rod Extension,,0.6,mm,IH4,24
+IH/IHM/IMH,80,56,CIPR,104,,mm,IH4,24
+IH/IHM/IMH,80,56,UltraOx,1148,1.05,mm,IH4,24
+IH/IHM/IMH,80,56,Buna N Seals,74,,mm,IH4,24
+IH/IHM/IMH,80,56,High Load Seals,96,,mm,IH4,24
+IH/IHM/IMH,80,56,Thicker Head,1198,,mm,IH4,24
+IH/IHM/IMH,100,45,Flange Port,236,,mm,IH4,25
+IH/IHM/IMH,100,45,Tie Rod Extension,,0.85,mm,IH4,25
+IH/IHM/IMH,100,45,CIPR,117,,mm,IH4,25
+IH/IHM/IMH,100,45,UltraOx,1148,1.2,mm,IH4,25
+IH/IHM/IMH,100,45,Buna N Seals,48,,mm,IH4,25
+IH/IHM/IMH,100,45,High Load Seals,114,,mm,IH4,25
+IH/IHM/IMH,100,45,Thicker Head,1238,,mm,IH4,25
+IH/IHM/IMH,100,56,Flange Port,236,,mm,IH4,26
+IH/IHM/IMH,100,56,Tie Rod Extension,,0.85,mm,IH4,26
+IH/IHM/IMH,100,56,CIPR,117,,mm,IH4,26
+IH/IHM/IMH,100,56,UltraOx,1148,1.2,mm,IH4,26
+IH/IHM/IMH,100,56,Buna N Seals,62,,mm,IH4,26
+IH/IHM/IMH,100,56,High Load Seals,114,,mm,IH4,26
+IH/IHM/IMH,100,56,Thicker Head,1238,,mm,IH4,26
+IH/IHM/IMH,100,70,Flange Port,236,,mm,IH4,27
+IH/IHM/IMH,100,70,Tie Rod Extension,,0.85,mm,IH4,27
+IH/IHM/IMH,100,70,CIPR,117,,mm,IH4,27
+IH/IHM/IMH,100,70,UltraOx,1148,1.2,mm,IH4,27
+IH/IHM/IMH,100,70,Buna N Seals,74,,mm,IH4,27
+IH/IHM/IMH,100,70,High Load Seals,114,,mm,IH4,27
+IH/IHM/IMH,100,70,Thicker Head,1238,,mm,IH4,27
+IH/IHM/IMH,125,56,Flange Port,236,,mm,IH4,28
+IH/IHM/IMH,125,56,Tie Rod Extension,,0.85,mm,IH4,28
+IH/IHM/IMH,125,56,CIPR,117,,mm,IH4,28
+IH/IHM/IMH,125,56,UltraOx,1404,1.2,mm,IH4,28
+IH/IHM/IMH,125,56,Buna N Seals,80,,mm,IH4,28
+IH/IHM/IMH,125,56,High Load Seals,114,,mm,IH4,28
+IH/IHM/IMH,125,56,Thicker Head,1238,,mm,IH4,28
+IH/IHM/IMH,125,70,Flange Port,270,,mm,IH4,29
+IH/IHM/IMH,125,70,Tie Rod Extension,,0.9,mm,IH4,29
+IH/IHM/IMH,125,70,CIPR,134,,mm,IH4,29
+IH/IHM/IMH,125,70,UltraOx,1404,1.5,mm,IH4,29
+IH/IHM/IMH,125,70,Buna N Seals,62,,mm,IH4,29
+IH/IHM/IMH,125,70,High Load Seals,231,,mm,IH4,29
+IH/IHM/IMH,125,70,Thicker Head,1416,,mm,IH4,29
+IH/IHM/IMH,125,90,Flange Port,270,,mm,IH4,30
+IH/IHM/IMH,125,90,Tie Rod Extension,,0.9,mm,IH4,30
+IH/IHM/IMH,125,90,CIPR,134,,mm,IH4,30
+IH/IHM/IMH,125,90,UltraOx,1404,1.5,mm,IH4,30
+IH/IHM/IMH,125,90,Buna N Seals,74,,mm,IH4,30
+IH/IHM/IMH,125,90,High Load Seals,231,,mm,IH4,30
+IH/IHM/IMH,125,90,Thicker Head,1416,,mm,IH4,30
+IH/IHM/IMH,160,70,Flange Port,270,,mm,IH4,31
+IH/IHM/IMH,160,70,Tie Rod Extension,,0.9,mm,IH4,31
+IH/IHM/IMH,160,70,CIPR,134,,mm,IH4,31
+IH/IHM/IMH,160,70,UltraOx,1404,1.5,mm,IH4,31
+IH/IHM/IMH,160,70,Buna N Seals,80,,mm,IH4,31
+IH/IHM/IMH,160,70,High Load Seals,231,,mm,IH4,31
+IH/IHM/IMH,160,70,Thicker Head,1416,,mm,IH4,31
+IH/IHM/IMH,160,90,Flange Port,270,,mm,IH4,32
+IH/IHM/IMH,160,90,Tie Rod Extension,,0.9,mm,IH4,32
+IH/IHM/IMH,160,90,CIPR,134,,mm,IH4,32
+IH/IHM/IMH,160,90,UltraOx,1404,1.5,mm,IH4,32
+IH/IHM/IMH,160,90,Buna N Seals,86,,mm,IH4,32
+IH/IHM/IMH,160,90,High Load Seals,231,,mm,IH4,32
+IH/IHM/IMH,160,90,Thicker Head,1416,,mm,IH4,32
+IH/IHM/IMH,160,110,Flange Port,270,,mm,IH4,33
+IH/IHM/IMH,160,110,Tie Rod Extension,,0.9,mm,IH4,33
+IH/IHM/IMH,160,110,CIPR,134,,mm,IH4,33
+IH/IHM/IMH,160,110,UltraOx,2112,1.5,mm,IH4,33
+IH/IHM/IMH,160,110,Buna N Seals,125,,mm,IH4,33
+IH/IHM/IMH,160,110,High Load Seals,231,,mm,IH4,33
+IH/IHM/IMH,160,110,Thicker Head,1416,,mm,IH4,33
+IH/IHM/IMH,200,90,Flange Port,281,,mm,IH4,34
+IH/IHM/IMH,200,90,Tie Rod Extension,,1.05,mm,IH4,34
+IH/IHM/IMH,200,90,CIPR,167,,mm,IH4,34
+IH/IHM/IMH,200,90,UltraOx,2112,2.25,mm,IH4,34
+IH/IHM/IMH,200,90,Buna N Seals,74,,mm,IH4,34
+IH/IHM/IMH,200,90,High Load Seals,263,,mm,IH4,34
+IH/IHM/IMH,200,90,Thicker Head,1562,,mm,IH4,34
+IH/IHM/IMH,200,110,Flange Port,281,,mm,IH4,35
+IH/IHM/IMH,200,110,Tie Rod Extension,,1.05,mm,IH4,35
+IH/IHM/IMH,200,110,CIPR,167,,mm,IH4,35
+IH/IHM/IMH,200,110,UltraOx,2112,2.25,mm,IH4,35
+IH/IHM/IMH,200,110,Buna N Seals,80,,mm,IH4,35
+IH/IHM/IMH,200,110,High Load Seals,263,,mm,IH4,35
+IH/IHM/IMH,200,110,Thicker Head,1562,,mm,IH4,35
+IH/IHM/IMH,200,140,Flange Port,281,,mm,IH4,36
+IH/IHM/IMH,200,140,Tie Rod Extension,,1.05,mm,IH4,36
+IH/IHM/IMH,200,140,CIPR,167,,mm,IH4,36
+IH/IHM/IMH,200,140,UltraOx,2112,2.25,mm,IH4,36
+IH/IHM/IMH,200,140,Buna N Seals,86,,mm,IH4,36
+IH/IHM/IMH,200,140,High Load Seals,263,,mm,IH4,36
+IH/IHM/IMH,200,140,Thicker Head,1562,,mm,IH4,36

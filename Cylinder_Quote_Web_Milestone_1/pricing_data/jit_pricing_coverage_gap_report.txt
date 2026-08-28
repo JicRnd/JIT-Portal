@@ -1,0 +1,159 @@
+JIT PRICING EXTRACTION COVERAGE / GAP CHECKPOINT
+======================================================================
+
+EXTRACTED DATA FILES
+----------------------------------------------------------------------
+[OK] jit_master_parts_catalog.csv (104,571 bytes)
+[OK] jit_base_and_assembly_pricing_clean.csv (65,729 bytes)
+[OK] jit_common_modification_pricing_corrected.csv (94,103 bytes)
+[OK] jit_ph_va_pricing.csv (9,481 bytes)
+
+
+CURRENT COVERAGE
+----------------------------------------------------------------------
+
+1. Master Parts Catalog
+   Sources:
+   - Inventory
+   - ShipVia
+   - Acc
+
+   Contains:
+   - part numbers
+   - descriptions
+   - internal/unit cost
+   - quote/sell price
+   - source tracking
+   - conflict/review flags
+
+2. Base Cylinder + Piston & Rod Assembly Pricing
+   Sources:
+   - H
+   - A
+   - IH
+   - MH
+   - IMH
+   - VA
+
+   Contains:
+   - series
+   - bore
+   - rod
+   - mounting price groups
+   - base cylinder pricing
+   - stroke/per-unit pricing
+   - cushion pricing
+   - Piston & Rod Assembly non-cushion base
+   - Piston & Rod Assembly cushion base
+   - Piston & Rod Assembly per-inch/per-mm pricing
+
+3. Common Modification Pricing
+   Sources:
+   - H2 / H3 / H4
+   - A2 / A3 / A4
+   - IH2 / IH3 / IH4
+
+   Contains:
+   - rod extensions
+   - stop tubes
+   - stainless/chrome plated rods
+   - chromed bore
+   - thread extensions
+   - gland drains
+   - air bleeds
+   - prox switches
+   - brass wipers
+   - Viton seals
+   - extra ports
+   - flange ports
+   - CIPR
+   - UltraOx
+   - tie rod extensions
+   - high load seals
+   - Buna N seals
+   - bumper piston
+   - thicker head
+   - boss port
+   - light duty mill
+
+4. PH + VA Pricing
+   Sources:
+   - PH
+   - VA
+
+   Contains:
+   - gun drilling
+   - sensor cover
+   - valve manifold
+   - VA extra rod thread
+   - VA extra rod extension
+   - VA stainless rod
+   - VA Viton seals
+   - VA extra tie rod
+
+POSSIBLE FUTURE GAPS / REVIEW AREAS
+----------------------------------------------------------------------
+
+These are NOT necessarily missing.
+They are areas to revisit only if the HTML calculator later needs them:
+
+- Data sheet:
+  Central calculation/selection rules and pricing glue.
+
+- Quote Form:
+  Final display formulas, discounts, rounding, repair-kit selection,
+  and other presentation-specific calculations.
+
+- ShipVia:
+  Some pricing selector logic may still need to be translated into
+  Python rules even though the actual parts/prices were extracted.
+
+- Acc:
+  Accessory lookup/selection rules may still need to be translated
+  into Python even though the parts/prices were extracted.
+
+- H / A / IH:
+  Additional lookup tables such as port, dimensional, barrel,
+  rod/tie-rod additions or other secondary tables may still exist.
+
+- MH / IMH:
+  Additional modification pricing may exist outside the base-price
+  rows already extracted.
+
+- Discount / ROUNDUP behavior:
+  Pricing data is extracted, but Excel calculation rules should remain
+  separate from raw pricing data.
+
+- Customer-specific pricing:
+  Any future customer discount, markup, contract pricing, or special
+  approval logic should remain separate from the master price tables.
+
+
+WORKBOOK SHEET CHECK
+----------------------------------------------------------------------
+Inventory: 947 rows x 10 columns
+ShipVia: 3648 rows x 18 columns
+Acc: 69 rows x 55 columns
+H: 93 rows x 54 columns
+H2: 68 rows x 18 columns
+H3: 123 rows x 23 columns
+H4: 111 rows x 27 columns
+A: 334 rows x 35 columns
+A2: 57 rows x 21 columns
+A3: 162 rows x 23 columns
+A4: 55 rows x 15 columns
+IH: 105 rows x 54 columns
+IH2: 68 rows x 18 columns
+IH3: 123 rows x 23 columns
+IH4: 111 rows x 27 columns
+MH: 93 rows x 50 columns
+IMH: 68 rows x 50 columns
+PH: 107 rows x 28 columns
+VA: 37 rows x 17 columns
+Data: 565 rows x 34 columns
+Quote Form: 98 rows x 83 columns
+
+
+CHECKPOINT STATUS
+----------------------------------------------------------------------
+The current extracted files are sufficient to begin building the pricing database and parts_catalog.html admin page. Remaining gaps can be added later without rebuilding the current extracted datasets.

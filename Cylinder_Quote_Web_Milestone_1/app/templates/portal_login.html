@@ -36,20 +36,23 @@
       <p class="form-error">{{ error }}</p>
     {% endif %}
 
-    <form method="post">
-      <label>
+    <form method="post" action="{{ request.path }}" autocomplete="on">
+      <label for="username">
         Username or Email
         <input
+          id="username"
           name="identity"
+          type="text"
           autocomplete="username"
           required
           autofocus
         >
       </label>
 
-      <label>
+      <label for="password">
         Password
         <input
+          id="password"
           name="password"
           type="password"
           autocomplete="current-password"

@@ -1,0 +1,146 @@
+﻿pricing_group,series,bore,rod,option_name,base_price,per_unit_price,unit,source_sheet,source_row
+position_sensing,H/A/MH related,1.5,,Gun Drilling,677,18,inch,PH,5
+position_sensing,H/A/MH related,1.5,,Sensor Cover,385,,inch,PH,5
+position_sensing,H/A/MH related,1.5,,Valve Manifold,882,14,inch,PH,5
+position_sensing,H/A/MH related,2,,Gun Drilling,677,18,inch,PH,6
+position_sensing,H/A/MH related,2,,Sensor Cover,385,,inch,PH,6
+position_sensing,H/A/MH related,2,,Valve Manifold,882,14,inch,PH,6
+position_sensing,H/A/MH related,2.5,,Gun Drilling,677,18,inch,PH,7
+position_sensing,H/A/MH related,2.5,,Sensor Cover,385,,inch,PH,7
+position_sensing,H/A/MH related,2.5,,Valve Manifold,882,14,inch,PH,7
+position_sensing,H/A/MH related,3.25,,Gun Drilling,677,18,inch,PH,8
+position_sensing,H/A/MH related,3.25,,Sensor Cover,385,,inch,PH,8
+position_sensing,H/A/MH related,3.25,,Valve Manifold,882,14,inch,PH,8
+position_sensing,H/A/MH related,4,,Gun Drilling,677,18,inch,PH,9
+position_sensing,H/A/MH related,4,,Sensor Cover,385,,inch,PH,9
+position_sensing,H/A/MH related,4,,Valve Manifold,882,14,inch,PH,9
+position_sensing,H/A/MH related,5,,Gun Drilling,752,18,inch,PH,10
+position_sensing,H/A/MH related,5,,Sensor Cover,385,,inch,PH,10
+position_sensing,H/A/MH related,5,,Valve Manifold,882,14,inch,PH,10
+position_sensing,H/A/MH related,6,,Gun Drilling,752,18,inch,PH,11
+position_sensing,H/A/MH related,6,,Sensor Cover,385,,inch,PH,11
+position_sensing,H/A/MH related,6,,Valve Manifold,882,14,inch,PH,11
+position_sensing,H/A/MH related,7,,Gun Drilling,752,18,inch,PH,12
+position_sensing,H/A/MH related,7,,Sensor Cover,385,,inch,PH,12
+position_sensing,H/A/MH related,7,,Valve Manifold,882,14,inch,PH,12
+position_sensing,H/A/MH related,8,,Gun Drilling,752,18,inch,PH,13
+position_sensing,H/A/MH related,8,,Sensor Cover,385,,inch,PH,13
+position_sensing,H/A/MH related,8,,Valve Manifold,882,14,inch,PH,13
+position_sensing,H/A/MH related,10,,Gun Drilling,900,18,inch,PH,14
+position_sensing,H/A/MH related,10,,Sensor Cover,385,,inch,PH,14
+position_sensing,H/A/MH related,10,,Valve Manifold,945,14,inch,PH,14
+position_sensing,H/A/MH related,12,,Gun Drilling,1109,18,inch,PH,15
+position_sensing,H/A/MH related,12,,Sensor Cover,385,,inch,PH,15
+position_sensing,H/A/MH related,12,,Valve Manifold,1164,14,inch,PH,15
+position_sensing,H/A/MH related,14,,Gun Drilling,1370,18,inch,PH,16
+position_sensing,H/A/MH related,14,,Sensor Cover,385,,inch,PH,16
+position_sensing,H/A/MH related,14,,Valve Manifold,1438,14,inch,PH,16
+position_sensing,H/A/MH related,16,,Gun Drilling,1687,18,inch,PH,17
+position_sensing,H/A/MH related,16,,Sensor Cover,385,,inch,PH,17
+position_sensing,H/A/MH related,16,,Valve Manifold,1771,14,inch,PH,17
+position_sensing,H/A/MH related,18,,Gun Drilling,2081,18,inch,PH,18
+position_sensing,H/A/MH related,18,,Sensor Cover,385,,inch,PH,18
+position_sensing,H/A/MH related,18,,Valve Manifold,2187,14,inch,PH,18
+position_sensing,H/A/MH related,20,,Gun Drilling,2566,18,inch,PH,19
+position_sensing,H/A/MH related,20,,Sensor Cover,385,,inch,PH,19
+position_sensing,H/A/MH related,20,,Valve Manifold,2695,14,inch,PH,19
+position_sensing,IH/IMH related,25,,Gun Drilling,677,0.9,mm,PH,5
+position_sensing,IH/IMH related,25,,Sensor Cover,385,,mm,PH,5
+position_sensing,IH/IMH related,25,,Valve Manifold,882,0.7,mm,PH,5
+position_sensing,IH/IMH related,32,,Gun Drilling,677,0.9,mm,PH,6
+position_sensing,IH/IMH related,32,,Sensor Cover,385,,mm,PH,6
+position_sensing,IH/IMH related,32,,Valve Manifold,882,0.7,mm,PH,6
+position_sensing,IH/IMH related,40,,Gun Drilling,677,0.9,mm,PH,7
+position_sensing,IH/IMH related,40,,Sensor Cover,385,,mm,PH,7
+position_sensing,IH/IMH related,40,,Valve Manifold,882,0.7,mm,PH,7
+position_sensing,IH/IMH related,50,,Gun Drilling,677,0.9,mm,PH,8
+position_sensing,IH/IMH related,50,,Sensor Cover,385,,mm,PH,8
+position_sensing,IH/IMH related,50,,Valve Manifold,882,0.7,mm,PH,8
+position_sensing,IH/IMH related,63,,Gun Drilling,677,0.9,mm,PH,9
+position_sensing,IH/IMH related,63,,Sensor Cover,385,,mm,PH,9
+position_sensing,IH/IMH related,63,,Valve Manifold,882,0.7,mm,PH,9
+position_sensing,IH/IMH related,80,,Gun Drilling,752,0.9,mm,PH,10
+position_sensing,IH/IMH related,80,,Sensor Cover,385,,mm,PH,10
+position_sensing,IH/IMH related,80,,Valve Manifold,882,0.7,mm,PH,10
+position_sensing,IH/IMH related,100,,Gun Drilling,752,0.9,mm,PH,11
+position_sensing,IH/IMH related,100,,Sensor Cover,385,,mm,PH,11
+position_sensing,IH/IMH related,100,,Valve Manifold,882,0.7,mm,PH,11
+position_sensing,IH/IMH related,125,,Gun Drilling,752,0.9,mm,PH,12
+position_sensing,IH/IMH related,125,,Sensor Cover,385,,mm,PH,12
+position_sensing,IH/IMH related,125,,Valve Manifold,882,0.7,mm,PH,12
+position_sensing,IH/IMH related,160,,Gun Drilling,752,0.9,mm,PH,13
+position_sensing,IH/IMH related,160,,Sensor Cover,385,,mm,PH,13
+position_sensing,IH/IMH related,160,,Valve Manifold,882,0.7,mm,PH,13
+position_sensing,IH/IMH related,200,,Gun Drilling,900,0.9,mm,PH,14
+position_sensing,IH/IMH related,200,,Sensor Cover,385,,mm,PH,14
+position_sensing,IH/IMH related,200,,Valve Manifold,945,0.7,mm,PH,14
+va_modification,VA,2.5,"5/8""",Extra Rod Thread,,6,inch,VA,23
+va_modification,VA,2.5,"5/8""",Extra Rod Extension,,3,inch,VA,23
+va_modification,VA,2.5,"5/8""",Stainless Steel Rod,22,8,inch,VA,23
+va_modification,VA,2.5,"5/8""",Viton Seals,73,,inch,VA,23
+va_modification,VA,2.5,"5/8""",Extra Tie Rod,,5,inch,VA,23
+va_modification,VA,3.25,"1""",Extra Rod Thread,,7,inch,VA,24
+va_modification,VA,3.25,"1""",Extra Rod Extension,,4,inch,VA,24
+va_modification,VA,3.25,"1""",Stainless Steel Rod,41,12,inch,VA,24
+va_modification,VA,3.25,"1""",Viton Seals,87,,inch,VA,24
+va_modification,VA,3.25,"1""",Extra Tie Rod,,8,inch,VA,24
+va_modification,VA,4,"1""",Extra Rod Thread,,7,inch,VA,25
+va_modification,VA,4,"1""",Extra Rod Extension,,4,inch,VA,25
+va_modification,VA,4,"1""",Stainless Steel Rod,41,12,inch,VA,25
+va_modification,VA,4,"1""",Viton Seals,92,,inch,VA,25
+va_modification,VA,4,"1""",Extra Tie Rod,,8,inch,VA,25
+va_modification,VA,5,"1""",Extra Rod Thread,,7,inch,VA,26
+va_modification,VA,5,"1""",Extra Rod Extension,,4,inch,VA,26
+va_modification,VA,5,"1""",Stainless Steel Rod,41,12,inch,VA,26
+va_modification,VA,5,"1""",Viton Seals,118,,inch,VA,26
+va_modification,VA,5,"1""",Extra Tie Rod,,8,inch,VA,26
+va_modification,VA,6,"1""",Extra Rod Thread,,7,inch,VA,27
+va_modification,VA,6,"1""",Extra Rod Extension,,4,inch,VA,27
+va_modification,VA,6,"1""",Stainless Steel Rod,41,12,inch,VA,27
+va_modification,VA,6,"1""",Viton Seals,168,,inch,VA,27
+va_modification,VA,6,"1""",Extra Tie Rod,,8,inch,VA,27
+va_modification,VA,7,"1""",Extra Rod Thread,,7,inch,VA,28
+va_modification,VA,7,"1""",Extra Rod Extension,,4,inch,VA,28
+va_modification,VA,7,"1""",Stainless Steel Rod,41,12,inch,VA,28
+va_modification,VA,7,"1""",Viton Seals,182,,inch,VA,28
+va_modification,VA,7,"1""",Extra Tie Rod,,9,inch,VA,28
+va_modification,VA,8,"1""",Extra Rod Thread,,7,inch,VA,29
+va_modification,VA,8,"1""",Extra Rod Extension,,4,inch,VA,29
+va_modification,VA,8,"1""",Stainless Steel Rod,41,12,inch,VA,29
+va_modification,VA,8,"1""",Viton Seals,217,,inch,VA,29
+va_modification,VA,8,"1""",Extra Tie Rod,,9,inch,VA,29
+va_modification,VA,10,"1""",Extra Rod Thread,,7,inch,VA,30
+va_modification,VA,10,"1""",Extra Rod Extension,,4,inch,VA,30
+va_modification,VA,10,"1""",Stainless Steel Rod,41,12,inch,VA,30
+va_modification,VA,10,"1""",Viton Seals,264,,inch,VA,30
+va_modification,VA,10,"1""",Extra Tie Rod,,9,inch,VA,30
+va_modification,VA,12,"1 3/8""",Extra Rod Thread,,10,inch,VA,31
+va_modification,VA,12,"1 3/8""",Extra Rod Extension,,5,inch,VA,31
+va_modification,VA,12,"1 3/8""",Stainless Steel Rod,87,20,inch,VA,31
+va_modification,VA,12,"1 3/8""",Viton Seals,305,,inch,VA,31
+va_modification,VA,12,"1 3/8""",Extra Tie Rod,,9,inch,VA,31
+va_modification,VA,14,"1 3/8""",Extra Rod Thread,,10,inch,VA,32
+va_modification,VA,14,"1 3/8""",Extra Rod Extension,,5,inch,VA,32
+va_modification,VA,14,"1 3/8""",Stainless Steel Rod,87,20,inch,VA,32
+va_modification,VA,14,"1 3/8""",Viton Seals,369,,inch,VA,32
+va_modification,VA,14,"1 3/8""",Extra Tie Rod,,10,inch,VA,32
+va_modification,VA,16,"1 3/4""",Extra Rod Thread,,13,inch,VA,33
+va_modification,VA,16,"1 3/4""",Extra Rod Extension,,6,inch,VA,33
+va_modification,VA,16,"1 3/4""",Stainless Steel Rod,182,24,inch,VA,33
+va_modification,VA,16,"1 3/4""",Viton Seals,464,,inch,VA,33
+va_modification,VA,16,"1 3/4""",Extra Tie Rod,,14,inch,VA,33
+va_modification,VA,18,"2""",Extra Rod Thread,,14,inch,VA,34
+va_modification,VA,18,"2""",Extra Rod Extension,,7,inch,VA,34
+va_modification,VA,18,"2""",Stainless Steel Rod,262,34,inch,VA,34
+va_modification,VA,18,"2""",Viton Seals,524,,inch,VA,34
+va_modification,VA,18,"2""",Extra Tie Rod,,16,inch,VA,34
+va_modification,VA,20,"2""",Extra Rod Thread,,14,inch,VA,35
+va_modification,VA,20,"2""",Extra Rod Extension,,7,inch,VA,35
+va_modification,VA,20,"2""",Stainless Steel Rod,262,34,inch,VA,35
+va_modification,VA,20,"2""",Viton Seals,600,,inch,VA,35
+va_modification,VA,20,"2""",Extra Tie Rod,,17,inch,VA,35
+va_modification,VA,22,"2 1/2""",Extra Rod Thread,,19,inch,VA,36
+va_modification,VA,22,"2 1/2""",Extra Rod Extension,,19,inch,VA,36
+va_modification,VA,22,"2 1/2""",Stainless Steel Rod,770,68,inch,VA,36
+va_modification,VA,22,"2 1/2""",Viton Seals,632,,inch,VA,36
+va_modification,VA,22,"2 1/2""",Extra Tie Rod,,17,inch,VA,36
