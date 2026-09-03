@@ -8,6 +8,11 @@
   const emailCustomerButton = document.getElementById('emailCustomerButton');
   const partsHost = document.getElementById('orderPartsRows');
   const testingHost = document.getElementById('testingRows');
+  const addPartButton = document.getElementById('addPartButton');
+  const addPartModal = document.getElementById('addPartModal');
+  const addPartSearchInput = document.getElementById('addPartSearchInput');
+  const addPartResults = document.getElementById('addPartResults');
+  const closeAddPartModal = document.getElementById('closeAddPartModal');
   let loadedQuote = null;
 
   const money = n => Number(n || 0).toFixed(2);
@@ -84,6 +89,29 @@
       row.appendChild(input);
     });
     partsHost.appendChild(row);
+    return row;
+  }
+
+  function isBlankPartRow(row) {
+    return [...row.querySelectorAll('input')].every(input => !Number(input.value) && !String(input.value || '').trim());
+  }
+
+  function insertPartAfterLastEntry(item) {
+    const rows = [...partsHost.querySelectorAll('.part-row')];
+    let lastFilledIndex = -1;
+    rows.forEach((row, index) => { if (!isBlankPartRow(row)) lastFilledIndex = index; });
+    const row = addPartRow(item);
+    partsHost.removeChild(row);
+    if (lastFilledIndex === -1) {
+      partsHost.insertBefore(row, partsHost.firstChild);
+    } else {
+      partsHost.insertBefore(row, rows[lastFilledIndex].nextSibling);
+    }
+    const blankRows = [...partsHost.querySelectorAll('.part-row')].filter(isBlankPartRow);
+    if (partsHost.children.length > 24 && blankRows.length) {
+      partsHost.removeChild(blankRows[blankRows.length - 1]);
+    }
+    recalculate();
   }
 
   function addTestingRow(item = {}) {
@@ -129,6 +157,55 @@
       return;
     }
     window.location.href = `mailto:${encodeURIComponent(email)}`;
+  }
+
+  let addPartSearchTimer = null;
+
+  function renderAddPartResults(parts) {
+    addPartResults.innerHTML = '';
+    if (!parts.length) {
+      const empty = document.createElement('div');
+      empty.className = 'add-part-empty';
+      empty.textContent = 'No matching parts found.';
+      addPartResults.appendChild(empty);
+      return;
+    }
+    parts.forEach(part => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'add-part-result';
+      button.innerHTML = `<span>${part.part_number}</span><span>${part.description || ''}</span><span>${part.sell_price || part.unit_cost || ''}</span>`;
+      button.addEventListener('click', () => {
+        insertPartAfterLastEntry({
+          part_number: part.part_number, description: part.description || '',
+          cost: part.sell_price || part.unit_cost || '0', on_hand: '0', allocated: '1'
+        });
+        closeAddPart();
+      });
+      addPartResults.appendChild(button);
+    });
+  }
+
+  async function runAddPartSearch(query) {
+    try {
+      const response = await fetch(`/api/catalog-parts/search?q=${encodeURIComponent(query)}`);
+      const body = await response.json();
+      renderAddPartResults(response.ok && body.ok ? body.parts : []);
+    } catch (err) {
+      renderAddPartResults([]);
+    }
+  }
+
+  function openAddPart() {
+    addPartModal.hidden = false;
+    addPartSearchInput.value = '';
+    addPartResults.innerHTML = '';
+    addPartSearchInput.focus();
+    runAddPartSearch('');
+  }
+
+  function closeAddPart() {
+    addPartModal.hidden = true;
   }
 
   function buildDefaults(quote) {
@@ -188,6 +265,14 @@
   });
 
   emailCustomerButton.addEventListener('click', openCustomerEmail);
+
+  addPartButton.addEventListener('click', openAddPart);
+  closeAddPartModal.addEventListener('click', closeAddPart);
+  addPartModal.addEventListener('click', event => { if (event.target === addPartModal) closeAddPart(); });
+  addPartSearchInput.addEventListener('input', () => {
+    clearTimeout(addPartSearchTimer);
+    addPartSearchTimer = setTimeout(() => runAddPartSearch(addPartSearchInput.value), 250);
+  });
 
   approveButton.addEventListener('click', async () => {
     approveButton.disabled = true;

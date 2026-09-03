@@ -16,6 +16,7 @@
       <button id="emailCustomerButton" class="toolbar-button" type="button">Email Customer</button>
       <button class="toolbar-button" type="button" disabled title="Attachment workflow has not been implemented yet.">Attach Quote Form</button>
       <button class="toolbar-button" type="button" disabled title="Attachment workflow has not been implemented yet.">Attach Report Images</button>
+      <button id="addPartButton" class="toolbar-button" type="button">+ Add Part</button>
       <button id="approveOrderButton" class="approve-button" type="button">Approve Order</button>
     </div>
 
@@ -92,7 +93,9 @@
         </div>
 
         <div class="parts-panel">
-          <div class="parts-header"><span>Part #</span><span>Description</span><span>Cost</span><span>On Hand</span><span>Allocated</span></div>
+          <div class="parts-header">
+            <span>Part #</span><span>Description</span><span>Cost</span><span>On Hand</span><span>Allocated</span>
+          </div>
           <div id="orderPartsRows" class="parts-rows"></div>
           <div class="parts-total"><span>Parts Total</span><input data-field="parts_total" type="number" step="0.01"></div>
         </div>
@@ -104,6 +107,17 @@
         <div id="testingRows" class="testing-rows"></div>
       </section>
     </form>
+
+    <div id="addPartModal" class="add-part-modal" hidden>
+      <div class="add-part-dialog">
+        <div class="add-part-dialog-head">
+          <span>Add Part From Catalog</span>
+          <button id="closeAddPartModal" class="toolbar-button" type="button">Close</button>
+        </div>
+        <input id="addPartSearchInput" type="text" placeholder="Search part # or description…" autocomplete="off">
+        <div id="addPartResults" class="add-part-results"></div>
+      </div>
+    </div>
   </main>
   <script src="{{ url_for('static', filename='order_form.js') }}"></script>
 </body>

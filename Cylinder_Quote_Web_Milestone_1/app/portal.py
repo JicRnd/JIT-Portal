@@ -10,6 +10,7 @@ from flask import (
     redirect,
     render_template,
     request,
+    send_file,
     session,
     url_for,
 )
@@ -17,6 +18,7 @@ from sqlalchemy import func, or_, select, update
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from . import ai_usage_service
 from .db import get_session
 from .models_db import Customer, Quote, User
 from .part_family_service import (
@@ -31,13 +33,18 @@ from .part_family_service import (
 from .pricing_catalog_service import (
     PriceUpdateError,
     apply_bulk_price_update,
+    apply_workbook_price_update,
+    build_price_template_workbook,
     catalog_page_data,
     create_catalog_part,
+    get_catalog_part,
     get_conflict_details,
+    parse_price_workbook,
     preview_bulk_price_update,
     recent_price_changes,
     resolve_conflict,
     restore_price_change,
+    update_catalog_part,
     update_pricing_amount,
 )
 from .quote_service import quote_to_json
@@ -529,7 +536,6 @@ def employee_dashboard():
                 ),
             )
             .order_by(Quote.created_at.asc())
-            .limit(3)
         ).scalars().all()
         pending_queue = [
             {
@@ -656,6 +662,30 @@ def accept_pending_quote(quote_id: int):
     return jsonify({"ok": True, "quote_id": quote_id}), 200
 
 
+@portal_bp.post("/employee/quotes/<int:quote_id>/delete")
+@require_role("employee")
+def delete_pending_quote(quote_id: int):
+    """Delete a pending-approval quote that the current employee has claimed."""
+    user = signed_in_user()
+
+    with get_session() as db:
+        quote = db.get(Quote, quote_id)
+        if (
+            quote is None
+            or quote.status != "pending_approval"
+            or quote.assigned_employee_user_id != user.id
+        ):
+            return jsonify({
+                "ok": False,
+                "error": "Quote not found or not claimed by you",
+            }), 404
+
+        db.delete(quote)
+        db.commit()
+
+    return jsonify({"ok": True, "quote_id": quote_id}), 200
+
+
 @portal_bp.get("/employee/history")
 @require_role("employee")
 def employee_history():
@@ -663,7 +693,16 @@ def employee_history():
     query = (request.args.get("q") or "").strip()
 
     with get_session() as db:
-        stmt = select(Quote).where(Quote.created_by_user_id == user.id)
+        stmt = (
+            select(Quote)
+            .where(
+                or_(
+                    Quote.created_by_user_id == user.id,
+                    Quote.assigned_employee_user_id == user.id,
+                )
+            )
+            .where(Quote.status != "pending_approval")
+        )
         if query:
             like = f"%{query}%"
             # Users live in a separate database file, so resolve matching
@@ -679,6 +718,7 @@ def employee_history():
                     Quote.customer_address.ilike(like),
                     Quote.status.ilike(like),
                     Quote.created_by_user_id.in_(matching_user_ids),
+                    Quote.assigned_employee_user_id.in_(matching_user_ids),
                     func.json_extract(Quote.order_form_snapshot, "$.order_number").ilike(like),
                 )
             )
@@ -1018,6 +1058,46 @@ def apply_parts_catalog_bulk_price():
     return jsonify({"ok": True, **result})
 
 
+@portal_bp.post("/parts-catalog/bulk-price/workbook-preview")
+@require_admin
+def preview_parts_catalog_workbook():
+    try:
+        result = parse_price_workbook(
+            request.files.get("workbook"),
+            (request.form.get("field") or "sell_price").strip(),
+        )
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.post("/parts-catalog/bulk-price/workbook-apply")
+@require_admin
+def apply_parts_catalog_workbook():
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = apply_workbook_price_update(
+            (payload.get("field") or "sell_price").strip(),
+            payload.get("updates") or [],
+            actor=signed_in_user(),
+            source_name=(payload.get("source_name") or "")[:120],
+        )
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.get("/parts-catalog/price-template.xlsx")
+@require_admin
+def download_parts_catalog_price_template():
+    return send_file(
+        build_price_template_workbook(),
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        as_attachment=True,
+        download_name="jit_price_update_template.xlsx",
+    )
+
+
 @portal_bp.get("/parts-catalog/price-history")
 @require_admin
 def parts_catalog_price_history():
@@ -1069,6 +1149,27 @@ def create_parts_catalog_part():
     payload = request.get_json(silent=True) or {}
     try:
         result = create_catalog_part(payload, actor=signed_in_user())
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.get("/parts-catalog/parts/<int:row_id>")
+@require_admin
+def get_parts_catalog_part(row_id: int):
+    try:
+        result = get_catalog_part(row_id)
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, "part": result})
+
+
+@portal_bp.post("/parts-catalog/parts/<int:row_id>")
+@require_admin
+def update_parts_catalog_part(row_id: int):
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = update_catalog_part(row_id, payload, actor=signed_in_user())
     except PriceUpdateError as exc:
         return jsonify({"ok": False, "error": str(exc)}), exc.status_code
     return jsonify({"ok": True, **result})
@@ -1129,6 +1230,31 @@ def assign_parts_catalog_family():
     except FamilyError as exc:
         return jsonify({"ok": False, "error": str(exc)}), exc.status_code
     return jsonify({"ok": True, **result})
+
+
+@portal_bp.route("/employee/admin/ai-usage-dashboard", methods=["GET", "POST"])
+@require_admin
+def ai_usage_dashboard():
+    user = signed_in_user()
+
+    if request.method == "POST":
+        try:
+            ai_usage_service.add_credit_entry(
+                (request.form.get("entry_date") or "").strip(),
+                (request.form.get("credits_used") or "").strip(),
+                (request.form.get("credits_remaining") or "").strip(),
+                request.form.get("note"),
+            )
+            flash("Credit entry saved.", "success")
+        except ai_usage_service.CreditEntryError as exc:
+            flash(str(exc), "error")
+        return redirect(url_for("portal.ai_usage_dashboard"))
+
+    return render_template(
+        "ai_usage_dashboard.html",
+        user=user,
+        data=ai_usage_service.get_dashboard_data(),
+    )
 
 
 @portal_bp.post("/manage-users/<int:user_id>/password")

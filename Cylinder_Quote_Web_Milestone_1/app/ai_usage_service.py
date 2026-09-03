@@ -1,0 +1,877 @@
+from __future__ import annotations
+
+"""Read-only reporting for local AI orchestration credit usage.
+
+No AI model calls happen here - this module only reads a local JSONL log,
+local agent config files, and the AiUsageCreditEntry table, then does plain
+arithmetic. Every returned metric dict carries an ``is_estimate`` flag so the
+template can distinguish actual data from estimated/projected values.
+"""
+
+import json
+import re
+from datetime import date, datetime, timezone
+from pathlib import Path
+
+from sqlalchemy import select
+
+from .db import get_session
+from .models_db import AiUsageClassCalibration, AiUsageCreditEntry, AiUsageDailySnapshot, AiUsageGithubCreditSnapshot
+
+ROUTING_LOG_PATH = Path.home() / ".copilot" / "orchestration" / "routing_log.jsonl"
+AGENTS_DIR = Path.home() / ".copilot" / "agents"
+
+# Admins can edit these constants directly to reconfigure budget behavior;
+# no settings UI is required for this.
+MONTHLY_CREDIT_BUDGET = 1000
+
+# Fallback for "credits saved" estimates when a (task_type, worker, model) class
+# has no recalibrated history yet. Once real GitHub usage data reconciles a
+# class, AiUsageClassCalibration overrides this per-class - see
+# _cost_per_task_for_class().
+ASSUMED_PREMIUM_CREDIT_COST_PER_TASK = 5
+
+# (low_inclusive, high_exclusive_or_None, label) evaluated in order against
+# the latest known credits_used value.
+BUDGET_THRESHOLDS = [
+    (0, 300, "Normal"),
+    (300, 400, "Local First"),
+    (400, 500, "Strict"),
+    (500, None, "Premium Stop"),
+]
+
+MIN_RECORDS_FOR_SUCCESS_RATE = 5
+TREND_HISTORY_LIMIT = 30
+
+_LOCAL_MODEL_HINTS = ("qwen", "llama", "local", "ollama", "mistral", "deepseek")
+
+
+def _metric(value, is_estimate: bool, note: str | None = None) -> dict:
+    return {"value": value, "is_estimate": is_estimate, "note": note}
+
+
+def _read_routing_log() -> list[dict]:
+    """Parse routing_log.jsonl, skipping malformed lines and a missing file."""
+    if not ROUTING_LOG_PATH.exists():
+        return []
+
+    records = []
+    try:
+        with ROUTING_LOG_PATH.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    record = json.loads(line)
+                except (json.JSONDecodeError, ValueError):
+                    continue
+                if isinstance(record, dict):
+                    records.append(record)
+    except OSError:
+        return []
+
+    return records
+
+
+def _read_worker_model_map() -> dict[str, str]:
+    """Map an agent's display name (front matter ``name:``) to its ``model:``."""
+    worker_model: dict[str, str] = {}
+    if not AGENTS_DIR.exists():
+        return worker_model
+
+    for path in AGENTS_DIR.glob("*.agent.md"):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+
+        name_match = re.search(r"(?m)^name:\s*(.+)$", text)
+        model_match = re.search(r"(?m)^model:\s*(.+)$", text)
+        if name_match and model_match:
+            worker_model[name_match.group(1).strip()] = model_match.group(1).strip()
+
+    return worker_model
+
+
+def _is_local_model(model_name: str | None) -> bool:
+    if not model_name:
+        return False
+    lowered = model_name.lower()
+    return any(hint in lowered for hint in _LOCAL_MODEL_HINTS)
+
+
+def _record_date(record: dict) -> date | None:
+    """Best-effort parse of a routing log record's timestamp into a calendar date."""
+    raw = record.get("timestamp")
+    if not raw:
+        return None
+    try:
+        return datetime.fromisoformat(str(raw).replace("Z", "+00:00")).date()
+    except ValueError:
+        return None
+
+
+def _filter_records_by_date(records: list[dict], target: date) -> list[dict]:
+    return [r for r in records if _record_date(r) == target]
+
+
+def _class_key(record: dict, worker_model: dict[str, str]) -> tuple[str, str, str]:
+    worker = record.get("worker") or "unknown"
+    task_type = record.get("task_type") or "unknown"
+    model = worker_model.get(worker) or "unknown"
+    return (task_type, worker, model)
+
+
+def _classify_by_class(records: list[dict], worker_model: dict[str, str]) -> dict[tuple[str, str, str], dict]:
+    """Group records into per (task_type, worker, model) total/local counts."""
+    classes: dict[tuple[str, str, str], dict] = {}
+    for record in records:
+        key = _class_key(record, worker_model)
+        bucket = classes.setdefault(key, {"total": 0, "local": 0})
+        bucket["total"] += 1
+        if _is_local_model(worker_model.get(record.get("worker") or "")):
+            bucket["local"] += 1
+    return classes
+
+
+def _get_calibration_map() -> dict[tuple[str, str, str], float]:
+    with get_session() as db:
+        rows = db.execute(select(AiUsageClassCalibration)).scalars().all()
+        return {
+            (row.task_type, row.worker, row.model or "unknown"): row.calibrated_cost_per_task
+            for row in rows
+        }
+
+
+def _cost_per_task_for_class(key: tuple[str, str, str], calibration_map: dict[tuple[str, str, str], float]) -> float:
+    return calibration_map.get(key, ASSUMED_PREMIUM_CREDIT_COST_PER_TASK)
+
+
+def _estimate_savings_for_records(
+    records: list[dict],
+    worker_model: dict[str, str],
+    calibration_map: dict[tuple[str, str, str], float],
+) -> dict:
+    """Estimate avoided premium credits for a set of records using per-class rates."""
+    classes = _classify_by_class(records, worker_model)
+    estimated_savings = 0.0
+    baseline_credits = 0.0
+    task_count = 0
+    local_task_count = 0
+
+    for key, counts in classes.items():
+        cost_per_task = _cost_per_task_for_class(key, calibration_map)
+        estimated_savings += counts["local"] * cost_per_task
+        baseline_credits += counts["total"] * cost_per_task
+        task_count += counts["total"]
+        local_task_count += counts["local"]
+
+    return {
+        "estimated_savings": round(estimated_savings, 2),
+        "baseline_credits": round(baseline_credits, 2),
+        "task_count": task_count,
+        "local_task_count": local_task_count,
+        "breakdown": {
+            f"{t}|{w}|{m}": counts for (t, w, m), counts in classes.items()
+        },
+    }
+
+
+def _usage_by(records: list[dict], key: str) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for record in records:
+        value = record.get(key) or "unknown"
+        counts[value] = counts.get(value, 0) + 1
+    return counts
+
+
+def _first_pass_success_rate(records: list[dict]) -> dict:
+    success = sum(1 for r in records if r.get("outcome") == "success")
+    failure = sum(1 for r in records if r.get("outcome") == "failure")
+    total = success + failure
+
+    if total < MIN_RECORDS_FOR_SUCCESS_RATE:
+        return _metric(
+            None,
+            is_estimate=False,
+            note="insufficient data",
+        )
+
+    return _metric(round(success / total * 100, 1), is_estimate=False)
+
+
+def _sonnet_escalation_rate(records: list[dict]) -> dict:
+    if not records:
+        return _metric(None, is_estimate=True, note="insufficient data")
+
+    escalated = sum(
+        1
+        for r in records
+        if "orchestrator" in (r.get("worker") or "").lower()
+        or "sonnet" in (r.get("worker") or "").lower()
+    )
+    return _metric(
+        round(escalated / len(records) * 100, 1),
+        is_estimate=True,
+        note="best-effort: log does not explicitly tag escalation reason",
+    )
+
+
+def _retries_and_failures(records: list[dict]) -> dict:
+    failures = sum(1 for r in records if r.get("outcome") == "failure")
+    return {
+        "failures": _metric(failures, is_estimate=False),
+        "retries": _metric(
+            None,
+            is_estimate=False,
+            note="not trackable with current log schema",
+        ),
+    }
+
+
+def _local_vs_premium_split(records: list[dict], worker_model: dict[str, str]) -> dict:
+    if not records:
+        return _metric(None, is_estimate=True, note="insufficient data")
+
+    local_count = 0
+    for record in records:
+        model = worker_model.get(record.get("worker") or "")
+        if _is_local_model(model):
+            local_count += 1
+
+    return _metric(
+        {
+            "local_percent": round(local_count / len(records) * 100, 1),
+            "premium_percent": round((len(records) - local_count) / len(records) * 100, 1),
+        },
+        is_estimate=True,
+        note=(
+            "classification based on each worker's currently configured model; "
+            "a worker's model may have changed over time"
+        ),
+    )
+
+
+def _largest_premium_sources(records: list[dict], worker_model: dict[str, str]) -> dict:
+    counts: dict[tuple[str, str], int] = {}
+    for record in records:
+        worker = record.get("worker") or "unknown"
+        model = worker_model.get(worker)
+        if _is_local_model(model):
+            continue
+        key = (worker, record.get("task_type") or "unknown")
+        counts[key] = counts.get(key, 0) + 1
+
+    top = sorted(counts.items(), key=lambda kv: kv[1], reverse=True)[:10]
+    return _metric(
+        [{"worker": w, "task_type": t, "count": c} for (w, t), c in top],
+        is_estimate=False,
+        note="based on available records; trivial with very few records",
+    )
+
+
+def _sync_actual_usage_from_github() -> dict:
+    """Best-effort auto-ingestion of today's actual usage via GitHub's official
+    user billing API (see github_usage_service). On any failure (gh missing,
+    unauthenticated, wrong scope, or plan without billing data), this changes
+    nothing and the existing manual AiUsageCreditEntry form remains the only
+    way to record actual usage - it is never disabled or replaced.
+    """
+    from . import github_usage_service
+
+    try:
+        result = github_usage_service.fetch_month_to_date_credits_used()
+    except Exception as exc:  # never let auto-ingestion break the dashboard
+        return {"ok": False, "reason": f"unexpected error: {exc}"}
+
+    if not result["ok"]:
+        return result
+
+    today = datetime.now(timezone.utc).date()
+    credits_used = int(round(result["credits_used"]))
+
+    with get_session() as db:
+        rows = db.execute(select(AiUsageCreditEntry)).scalars().all()
+        existing = next(
+            (r for r in rows if (r.entry_date.date() if hasattr(r.entry_date, "date") else r.entry_date) == today),
+            None,
+        )
+        if existing is not None:
+            existing.credits_used = credits_used
+            existing.note = "Auto (GitHub billing API: ai_credit/usage)"
+        else:
+            db.add(
+                AiUsageCreditEntry(
+                    entry_date=datetime(today.year, today.month, today.day),
+                    credits_used=credits_used,
+                    credits_remaining=None,
+                    note="Auto (GitHub billing API: ai_credit/usage)",
+                )
+            )
+        db.commit()
+
+        _record_intraday_snapshot_if_changed(db, result["credits_used"], result.get("model_breakdown") or {})
+
+    return {"ok": True, "credits_used": credits_used, "username": result.get("username")}
+
+
+def _record_intraday_snapshot_if_changed(db, cumulative_credits_used: float, model_breakdown: dict) -> None:
+    """Append a new AiUsageGithubCreditSnapshot only if the cumulative total changed.
+
+    Sparse, append-only, never edited - each row is a real GitHub-reported
+    value at the time it was observed.
+    """
+    latest = db.execute(
+        select(AiUsageGithubCreditSnapshot).order_by(AiUsageGithubCreditSnapshot.captured_at.desc()).limit(1)
+    ).scalar_one_or_none()
+
+    if latest is not None and abs(latest.cumulative_credits_used - cumulative_credits_used) < 1e-9:
+        return
+
+    db.add(
+        AiUsageGithubCreditSnapshot(
+            captured_at=datetime.now(timezone.utc),
+            cumulative_credits_used=cumulative_credits_used,
+            model_breakdown_json=json.dumps(model_breakdown),
+        )
+    )
+    db.commit()
+
+
+def _intraday_snapshots_with_deltas(limit: int = 500) -> list[dict]:
+    """Chronological snapshots with credits-consumed and credits/hour between rows."""
+    with get_session() as db:
+        rows = db.execute(
+            select(AiUsageGithubCreditSnapshot).order_by(AiUsageGithubCreditSnapshot.captured_at.asc()).limit(limit)
+        ).scalars().all()
+        snapshots = [
+            {
+                "captured_at": row.captured_at,
+                "cumulative_credits_used": row.cumulative_credits_used,
+                "model_breakdown": json.loads(row.model_breakdown_json),
+            }
+            for row in rows
+        ]
+
+    previous = None
+    for snapshot in snapshots:
+        if previous is None:
+            snapshot["delta_credits"] = None
+            snapshot["delta_seconds"] = None
+            snapshot["credits_per_hour"] = None
+        else:
+            delta_credits = round(snapshot["cumulative_credits_used"] - previous["cumulative_credits_used"], 4)
+            delta_seconds = (snapshot["captured_at"] - previous["captured_at"]).total_seconds()
+            snapshot["delta_credits"] = delta_credits
+            snapshot["delta_seconds"] = delta_seconds
+            snapshot["credits_per_hour"] = (
+                round(delta_credits / (delta_seconds / 3600), 2) if delta_seconds > 0 else None
+            )
+        previous = snapshot
+
+    return snapshots
+
+
+def _correlated_routing_records(records: list[dict], start, end) -> list[dict]:
+    return [r for r in records if (d := _record_date(r)) is not None and start.date() <= d <= end.date()
+            and start <= _parse_timestamp(r) <= end]
+
+
+def _parse_timestamp(record: dict):
+    raw = record.get("timestamp")
+    try:
+        return datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+    except (ValueError, TypeError):
+        return datetime.min.replace(tzinfo=timezone.utc)
+
+
+def _largest_intraday_spikes(snapshots: list[dict], records: list[dict], top_n: int = 5) -> list[dict]:
+    """Biggest credit increases between consecutive snapshots, with a best-effort
+    (Estimated, never proven) correlation to routing-log activity in that window.
+    """
+    dated = [s for s in snapshots if s["delta_credits"] is not None]
+    top = sorted(dated, key=lambda s: s["delta_credits"], reverse=True)[:top_n]
+
+    spikes = []
+    for snapshot in top:
+        idx = snapshots.index(snapshot)
+        window_start = snapshots[idx - 1]["captured_at"]
+        window_end = snapshot["captured_at"]
+        overlapping = _correlated_routing_records(records, window_start, window_end)
+
+        counts: dict[tuple[str, str], int] = {}
+        for r in overlapping:
+            key = (r.get("worker") or "unknown", r.get("task_type") or "unknown")
+            counts[key] = counts.get(key, 0) + 1
+        likely = sorted(counts.items(), key=lambda kv: kv[1], reverse=True)[:5]
+
+        spikes.append(
+            {
+                "captured_at": snapshot["captured_at"],
+                "delta_credits": snapshot["delta_credits"],
+                "delta_seconds": snapshot["delta_seconds"],
+                "window_start": window_start,
+                "likely_sources": _metric(
+                    [{"worker": w, "task_type": t, "count": c} for (w, t), c in likely],
+                    is_estimate=True,
+                    note="time-window correlation only - not a proven causal link" if likely else "no routing-log activity overlapped this window",
+                ),
+            }
+        )
+    return spikes
+
+
+def _recent_credit_entries(limit: int = 30) -> list[AiUsageCreditEntry]:
+    with get_session() as db:
+        rows = db.execute(
+            select(AiUsageCreditEntry).order_by(AiUsageCreditEntry.entry_date.desc()).limit(limit)
+        ).scalars().all()
+        # Detach values needed after the session closes.
+        return [
+            {
+                "id": row.id,
+                "entry_date": row.entry_date,
+                "credits_used": row.credits_used,
+                "credits_remaining": row.credits_remaining,
+                "note": row.note,
+                "created_at": row.created_at,
+            }
+            for row in rows
+        ]
+
+
+def _credit_entries_by_date() -> dict[date, int]:
+    """Full history of admin-entered credits_used, keyed by calendar date.
+
+    Used only for reconciling past daily snapshots against real usage - unlike
+    ``_recent_credit_entries`` (display-only, capped at 30 rows).
+    """
+    with get_session() as db:
+        rows = db.execute(
+            select(AiUsageCreditEntry).order_by(AiUsageCreditEntry.entry_date.asc())
+        ).scalars().all()
+
+    by_date: dict[date, int] = {}
+    for row in rows:
+        entry_date = row.entry_date
+        entry_date = entry_date.date() if hasattr(entry_date, "date") else entry_date
+        by_date[entry_date] = row.credits_used
+    return by_date
+
+
+def _todays_credits_used(entries: list[dict]) -> dict:
+    if not entries:
+        return _metric(None, is_estimate=False, note="no entry today")
+
+    today = datetime.now(timezone.utc).date()
+    latest = entries[0]
+    entry_date = latest["entry_date"]
+    if hasattr(entry_date, "date"):
+        entry_date = entry_date.date()
+
+    if entry_date != today:
+        return _metric(None, is_estimate=False, note="no entry today")
+
+    return _metric(latest["credits_used"], is_estimate=False)
+
+
+def _burn_rate(entries: list[dict]) -> dict:
+    if len(entries) < 2:
+        return _metric(None, is_estimate=False, note="insufficient data")
+
+    newest, previous = entries[0], entries[1]
+    newest_date = newest["entry_date"]
+    previous_date = previous["entry_date"]
+    if hasattr(newest_date, "date"):
+        newest_date = newest_date.date()
+    if hasattr(previous_date, "date"):
+        previous_date = previous_date.date()
+
+    days = (newest_date - previous_date).days
+    if days <= 0:
+        return _metric(None, is_estimate=False, note="insufficient data")
+
+    diff = newest["credits_used"] - previous["credits_used"]
+    return _metric(round(diff / days, 2), is_estimate=False)
+
+
+def _monthly_projection(burn_rate_metric: dict, entries: list[dict]) -> dict:
+    if burn_rate_metric["value"] is None or not entries:
+        return _metric(None, is_estimate=True, note="insufficient data")
+
+    latest_used = entries[0]["credits_used"]
+    days_left_in_month = 30 - datetime.now(timezone.utc).day
+    days_left_in_month = max(days_left_in_month, 0)
+    projected = latest_used + burn_rate_metric["value"] * days_left_in_month
+    remaining = MONTHLY_CREDIT_BUDGET - latest_used
+
+    return _metric(
+        {
+            "monthly_remaining": remaining,
+            "projected_month_end_usage": round(projected, 2),
+            "monthly_budget": MONTHLY_CREDIT_BUDGET,
+        },
+        is_estimate=True,
+        note="projection from recent burn rate and MONTHLY_CREDIT_BUDGET constant",
+    )
+
+
+def _estimated_credits_saved(
+    records: list[dict],
+    worker_model: dict[str, str],
+    calibration_map: dict[tuple[str, str, str], float] | None = None,
+) -> dict:
+    """Cumulative live-estimate of premium credits avoided by local routing.
+
+    This is the "speedometer": it always includes today's not-yet-finalized
+    activity and uses whatever per-class calibration currently exists (falling
+    back to ASSUMED_PREMIUM_CREDIT_COST_PER_TASK for classes with no history).
+    """
+    if not records:
+        return _metric(None, is_estimate=True, note="insufficient data")
+
+    if calibration_map is None:
+        calibration_map = _get_calibration_map()
+
+    result = _estimate_savings_for_records(records, worker_model, calibration_map)
+    return _metric(
+        result["estimated_savings"],
+        is_estimate=True,
+        note=(
+            "live estimate using per-class calibrated avoided-cost rates where available, "
+            "ASSUMED_PREMIUM_CREDIT_COST_PER_TASK elsewhere - recalibrated daily against actual usage"
+        ),
+    )
+
+
+def _credits_per_coding_hour(burn_rate_metric: dict) -> dict:
+    # No hours-worked source exists yet; never invent one.
+    return _metric(None, is_estimate=True, note="insufficient data")
+
+
+def _create_missing_snapshots(records: list[dict], worker_model: dict[str, str]) -> None:
+    """Freeze an estimate snapshot for each past day that has routing activity.
+
+    Only days strictly before today are finalized, since "today" is still the
+    live/in-progress estimate. Once a row exists here its estimate columns are
+    never touched again - see class docstring on AiUsageDailySnapshot.
+    """
+    today = datetime.now(timezone.utc).date()
+    dates_with_activity = {d for d in (_record_date(r) for r in records) if d is not None and d < today}
+    if not dates_with_activity:
+        return
+
+    with get_session() as db:
+        existing = {
+            row.date()
+            for row in db.execute(select(AiUsageDailySnapshot.snapshot_date)).scalars().all()
+        }
+        calibration_map = {
+            (row.task_type, row.worker, row.model or "unknown"): row.calibrated_cost_per_task
+            for row in db.execute(select(AiUsageClassCalibration)).scalars().all()
+        }
+
+        for target in sorted(dates_with_activity - existing):
+            day_records = _filter_records_by_date(records, target)
+            result = _estimate_savings_for_records(day_records, worker_model, calibration_map)
+            db.add(
+                AiUsageDailySnapshot(
+                    snapshot_date=datetime(target.year, target.month, target.day, tzinfo=timezone.utc),
+                    task_count=result["task_count"],
+                    local_task_count=result["local_task_count"],
+                    estimated_savings_credits=result["estimated_savings"],
+                    baseline_credits_estimate=result["baseline_credits"],
+                    breakdown_json=json.dumps(result["breakdown"]),
+                )
+            )
+        db.commit()
+
+
+def _recalibrate_class(db, key: tuple[str, str, str], observed_cost_per_task: float) -> None:
+    """Nudge one class's calibrated avoided-cost toward newly observed reality."""
+    task_type, worker, model = key
+    row = db.execute(
+        select(AiUsageClassCalibration).where(
+            AiUsageClassCalibration.task_type == task_type,
+            AiUsageClassCalibration.worker == worker,
+            AiUsageClassCalibration.model == model,
+        )
+    ).scalar_one_or_none()
+
+    now = datetime.now(timezone.utc)
+    if row is None:
+        db.add(
+            AiUsageClassCalibration(
+                task_type=task_type,
+                worker=worker,
+                model=model,
+                sample_days=1,
+                calibrated_cost_per_task=observed_cost_per_task,
+                last_recalibrated_at=now,
+            )
+        )
+        return
+
+    # Rolling average so one noisy day never overrides all prior history.
+    row.calibrated_cost_per_task = (
+        row.calibrated_cost_per_task * row.sample_days + observed_cost_per_task
+    ) / (row.sample_days + 1)
+    row.sample_days += 1
+    row.last_recalibrated_at = now
+
+
+def _backfill_actuals_and_recalibrate() -> None:
+    """Fill in actual usage for finalized snapshots once real credit data exists.
+
+    Once actual_savings_credits is set on a row it is never recomputed, so a
+    later-corrected credit entry cannot rewrite an already-reconciled day.
+    """
+    credits_by_date = _credit_entries_by_date()
+    if not credits_by_date:
+        return
+    known_dates = sorted(credits_by_date.keys())
+
+    with get_session() as db:
+        pending = db.execute(
+            select(AiUsageDailySnapshot).where(AiUsageDailySnapshot.actual_savings_credits.is_(None))
+        ).scalars().all()
+
+        for snapshot in pending:
+            target = snapshot.snapshot_date.date()
+            if target not in credits_by_date:
+                continue
+            earlier = [d for d in known_dates if d < target]
+            if not earlier:
+                continue
+            prev_date = earlier[-1]
+
+            delta = credits_by_date[target] - credits_by_date[prev_date]
+            premium_task_count = snapshot.task_count - snapshot.local_task_count
+
+            if premium_task_count > 0:
+                observed_cost_per_task = max(delta, 0) / premium_task_count
+                actual_savings = observed_cost_per_task * snapshot.local_task_count
+            elif snapshot.local_task_count == 0:
+                observed_cost_per_task = None
+                actual_savings = 0.0
+            else:
+                # Every task that day was local - no premium billing exists to
+                # measure a real per-task rate from, so leave this pending.
+                continue
+
+            snapshot.actual_credits_used_delta = delta
+            snapshot.actual_savings_credits = round(actual_savings, 2)
+            snapshot.estimation_error = round(snapshot.estimated_savings_credits - actual_savings, 2)
+            if actual_savings > 0:
+                accuracy = 100 - min(100.0, abs(snapshot.estimation_error) / actual_savings * 100)
+            else:
+                accuracy = 100.0 if snapshot.estimation_error == 0 else 0.0
+            snapshot.accuracy_pct = round(accuracy, 1)
+            snapshot.actuals_recorded_at = datetime.now(timezone.utc)
+
+            if observed_cost_per_task is not None:
+                breakdown = json.loads(snapshot.breakdown_json)
+                for class_str, counts in breakdown.items():
+                    if counts.get("local", 0) <= 0:
+                        continue
+                    task_type, worker, model = class_str.split("|", 2)
+                    _recalibrate_class(db, (task_type, worker, model), observed_cost_per_task)
+
+        db.commit()
+
+
+def _recent_snapshots(limit: int = TREND_HISTORY_LIMIT) -> list[dict]:
+    with get_session() as db:
+        rows = db.execute(
+            select(AiUsageDailySnapshot)
+            .order_by(AiUsageDailySnapshot.snapshot_date.desc())
+            .limit(limit)
+        ).scalars().all()
+        return [
+            {
+                "date": row.snapshot_date.date(),
+                "estimated_savings": row.estimated_savings_credits,
+                "actual_savings": row.actual_savings_credits,
+                "estimation_error": row.estimation_error,
+                "accuracy_pct": row.accuracy_pct,
+                "task_count": row.task_count,
+                "local_task_count": row.local_task_count,
+            }
+            for row in rows
+        ]
+
+
+def _class_calibration_table() -> list[dict]:
+    with get_session() as db:
+        rows = db.execute(
+            select(AiUsageClassCalibration).order_by(AiUsageClassCalibration.sample_days.desc())
+        ).scalars().all()
+        return [
+            {
+                "task_type": row.task_type,
+                "worker": row.worker,
+                "model": row.model,
+                "calibrated_cost_per_task": round(row.calibrated_cost_per_task, 2),
+                "sample_days": row.sample_days,
+            }
+            for row in rows
+        ]
+
+
+def _measured_actual_savings(trend: list[dict]) -> dict:
+    reconciled = [row for row in trend if row["actual_savings"] is not None]
+    if not reconciled:
+        return _metric(None, is_estimate=False, note="no reconciled days yet - awaiting a real credit entry")
+
+    total = round(sum(row["actual_savings"] for row in reconciled), 2)
+    return _metric(
+        total,
+        is_estimate=False,
+        note=f"measured from {len(reconciled)} finalized day(s) reconciled against real GitHub credit entries",
+    )
+
+
+def _estimator_accuracy(trend: list[dict]) -> dict:
+    reconciled = [row for row in trend if row["accuracy_pct"] is not None]
+    if not reconciled:
+        return _metric(None, is_estimate=False, note="no reconciled days yet")
+
+    avg_accuracy = round(sum(row["accuracy_pct"] for row in reconciled) / len(reconciled), 1)
+    return _metric(avg_accuracy, is_estimate=False, note=f"average across {len(reconciled)} reconciled day(s)")
+
+
+def _budget_status(entries: list[dict]) -> str:
+    if not entries:
+        return "Normal"
+
+    latest_used = entries[0]["credits_used"]
+    for low, high, label in BUDGET_THRESHOLDS:
+        if high is None:
+            if latest_used >= low:
+                return label
+        elif low <= latest_used < high:
+            return label
+
+    return "Normal"
+
+
+def get_dashboard_data() -> dict:
+    """Gather every metric the AI usage dashboard template needs."""
+    records = _read_routing_log()
+    worker_model = _read_worker_model_map()
+
+    # Best-effort auto-ingestion of today's actual usage; falls through to the
+    # existing manual AiUsageCreditEntry data untouched on any failure.
+    github_sync = _sync_actual_usage_from_github()
+    entries = _recent_credit_entries()
+
+    # Freeze yesterday-and-earlier estimates, then reconcile any day that now
+    # has real GitHub credit data, before reading anything back out.
+    _create_missing_snapshots(records, worker_model)
+    _backfill_actuals_and_recalibrate()
+
+    burn_rate = _burn_rate(entries)
+    calibration_map = _get_calibration_map()
+    trend = _recent_snapshots()
+
+    today = datetime.now(timezone.utc).date()
+    todays_records = _filter_records_by_date(records, today)
+    live_today = _estimate_savings_for_records(todays_records, worker_model, calibration_map)
+
+    estimated_total = _estimated_credits_saved(records, worker_model, calibration_map)
+    measured_actual = _measured_actual_savings(trend)
+    savings_difference = None
+    if estimated_total["value"] is not None and measured_actual["value"] is not None:
+        savings_difference = round(estimated_total["value"] - measured_actual["value"], 2)
+
+    intraday_snapshots = _intraday_snapshots_with_deltas()
+    intraday_spikes = _largest_intraday_spikes(intraday_snapshots, records)
+    recent_rate_snapshots = [s for s in intraday_snapshots if s["credits_per_hour"] is not None]
+    intraday_credits_per_hour = _metric(
+        recent_rate_snapshots[-1]["credits_per_hour"] if recent_rate_snapshots else None,
+        is_estimate=False,
+        note="from the two most recent GitHub-reported intraday snapshots" if recent_rate_snapshots else "insufficient data - need at least two intraday snapshots",
+    )
+
+    return {
+        "usage_by_worker": _metric(_usage_by(records, "worker"), is_estimate=False),
+        "usage_by_outcome": _metric(_usage_by(records, "outcome"), is_estimate=False),
+        "first_pass_success_rate": _first_pass_success_rate(records),
+        "sonnet_escalation_rate": _sonnet_escalation_rate(records),
+        "retries_and_failures": _retries_and_failures(records),
+        "local_vs_premium": _local_vs_premium_split(records, worker_model),
+        "largest_premium_sources": _largest_premium_sources(records, worker_model),
+        "todays_credits_used": _todays_credits_used(entries),
+        "burn_rate": burn_rate,
+        "monthly_projection": _monthly_projection(burn_rate, entries),
+        "estimated_credits_saved": estimated_total,
+        "credits_per_coding_hour": _credits_per_coding_hour(burn_rate),
+        "budget_status": _budget_status(entries),
+        "recent_entries": entries,
+        "total_log_records": len(records),
+        "github_sync": github_sync,
+        # Live speedometer vs. real odometer comparison.
+        "live_estimated_savings_today": _metric(
+            live_today["estimated_savings"],
+            is_estimate=True,
+            note=f"{live_today['local_task_count']} of {live_today['task_count']} tasks routed locally today",
+        ),
+        "measured_actual_savings": measured_actual,
+        "savings_difference": _metric(
+            savings_difference,
+            is_estimate=False,
+            note="estimated minus measured actual - positive means the estimator is over-crediting itself",
+        ),
+        "estimator_accuracy": _estimator_accuracy(trend),
+        "estimated_vs_actual_trend": trend,
+        "class_calibration": _class_calibration_table(),
+        # Intraday GitHub credit tracking (Actual) - additive, does not affect anything above.
+        "intraday_snapshots": intraday_snapshots,
+        "intraday_spikes": intraday_spikes,
+        "intraday_credits_per_hour": intraday_credits_per_hour,
+    }
+
+
+class CreditEntryError(ValueError):
+    """Raised when a submitted AiUsageCreditEntry fails validation."""
+
+
+def add_credit_entry(entry_date_str: str, credits_used_str: str, credits_remaining_str: str | None, note: str | None) -> None:
+    """Validate and persist a new admin-entered credit snapshot."""
+    if not entry_date_str:
+        raise CreditEntryError("Entry date is required.")
+    if not credits_used_str:
+        raise CreditEntryError("Credits used is required.")
+
+    try:
+        entry_date = datetime.strptime(entry_date_str, "%Y-%m-%d")
+    except ValueError:
+        raise CreditEntryError("Entry date must be in YYYY-MM-DD format.")
+
+    try:
+        credits_used = int(credits_used_str)
+    except ValueError:
+        raise CreditEntryError("Credits used must be a whole number.")
+    if credits_used < 0:
+        raise CreditEntryError("Credits used must not be negative.")
+
+    credits_remaining = None
+    if credits_remaining_str:
+        try:
+            credits_remaining = int(credits_remaining_str)
+        except ValueError:
+            raise CreditEntryError("Credits remaining must be a whole number.")
+        if credits_remaining < 0:
+            raise CreditEntryError("Credits remaining must not be negative.")
+
+    with get_session() as db:
+        db.add(
+            AiUsageCreditEntry(
+                entry_date=entry_date,
+                credits_used=credits_used,
+                credits_remaining=credits_remaining,
+                note=(note or "").strip() or None,
+            )
+        )
+        db.commit()

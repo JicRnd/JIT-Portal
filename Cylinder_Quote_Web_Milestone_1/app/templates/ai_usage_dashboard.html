@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+  <title>AI Usage Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      background: #f4f5f7;
+      color: #222;
+    }
+    header.portal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.5rem;
+      background: #1f2937;
+      color: #fff;
+    }
+    header.portal-header a {
+      color: #fff;
+    }
+    main {
+      max-width: 1100px;
+      margin: 1.5rem auto;
+      padding: 0 1rem 3rem;
+    }
+    section {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 0.4rem 0.6rem;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      margin-left: 0.4rem;
+    }
+    .badge.actual {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .badge.estimate {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+    .status-label {
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+    }
+    .status-Normal { background: #dcfce7; color: #166534; }
+    .status-Local-First { background: #dbeafe; color: #1e3a8a; }
+    .status-Strict { background: #fef3c7; color: #92400e; }
+    .status-Premium-Stop { background: #fee2e2; color: #991b1b; }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.25rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .metric-row:last-child { border-bottom: none; }
+    .metric-note {
+      font-size: 0.75rem;
+      color: #666;
+      display: block;
+    }
+    form.entry-form label {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-size: 0.85rem;
+    }
+    form.entry-form input, form.entry-form textarea {
+      display: block;
+      width: 100%;
+      max-width: 320px;
+      padding: 0.35rem;
+      margin-top: 0.2rem;
+    }
+    .flash { padding: 0.5rem 0.75rem; border-radius: 4px; margin-bottom: 0.75rem; font-size: 0.9rem; }
+    .flash.success { background: #dcfce7; color: #166534; }
+    .flash.error { background: #fee2e2; color: #991b1b; }
+  </style>
+</head>
+<body>
+  <header class="portal-header">
+    <div>{{ user.display_name }}</div>
+    <h1 style="font-size:1.1rem;margin:0;">AI Usage Dashboard</h1>
+    <a href="{{ url_for('portal.employee_dashboard') }}">← Dashboard</a>
+  </header>
+
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <section>
+      <h2>Budget Status</h2>
+      <span class="status-label status-{{ data.budget_status | replace(' ', '-') }}">{{ data.budget_status }}</span>
+      <p style="font-size:0.8rem;color:#666;">
+        Thresholds are configured in <code>ai_usage_service.BUDGET_THRESHOLDS</code> and can be
+        edited directly by an admin.
+      </p>
+    </section>
+
+    <section>
+      <h2>Estimated vs. Actual Savings</h2>
+      <p style="font-size:0.8rem;color:#666;">
+        Live estimated savings is the speedometer - it moves in real time as tasks route.
+        Measured actual savings is the odometer - it only grows once a real GitHub credit
+        entry lets a past day be reconciled. The gap between them is how far off the
+        estimator currently is; the per-class table below is how it self-corrects.
+      </p>
+      <div class="metric-row">
+        <span>Live estimated savings (today)</span>
+        <span>
+          {% if data.live_estimated_savings_today.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.live_estimated_savings_today.value }}
+          {% endif %}
+          <span class="badge estimate">Estimated</span>
+          {% if data.live_estimated_savings_today.note %}
+            <span class="metric-note">{{ data.live_estimated_savings_today.note }}</span>
+          {% endif %}
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Measured actual savings (all reconciled days)</span>
+        <span>
+          {% if data.measured_actual_savings.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.measured_actual_savings.value }}
+          {% endif %}
+          <span class="badge actual">Actual</span>
+          {% if data.measured_actual_savings.note %}
+            <span class="metric-note">{{ data.measured_actual_savings.note }}</span>
+          {% endif %}
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Difference (estimated − actual)</span>
+        <span>
+          {% if data.savings_difference.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.savings_difference.value }}
+          {% endif %}
+          <span class="badge actual">Actual</span>
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Estimator accuracy</span>
+        <span>
+          {% if data.estimator_accuracy.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.estimator_accuracy.value }}%
+          {% endif %}
+          <span class="badge actual">Actual</span>
+          {% if data.estimator_accuracy.note %}
+            <span class="metric-note">{{ data.estimator_accuracy.note }}</span>
+          {% endif %}
+        </span>
+      </div>
+
+      <h2 style="font-size:1rem;margin-top:1.25rem;">Estimated vs. Actual Trend (daily, most recent first)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th><th>Tasks (local/total)</th><th>Estimated</th><th>Actual</th><th>Error</th><th>Accuracy</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data.estimated_vs_actual_trend %}
+            <tr>
+              <td>{{ row.date }}</td>
+              <td>{{ row.local_task_count }}/{{ row.task_count }}</td>
+              <td>{{ row.estimated_savings }}</td>
+              <td>{{ row.actual_savings if row.actual_savings is not none else 'pending' }}</td>
+              <td>{{ row.estimation_error if row.estimation_error is not none else '—' }}</td>
+              <td>{{ (row.accuracy_pct ~ '%') if row.accuracy_pct is not none else '—' }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="6">No finalized days yet - snapshots freeze once a day ends.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h2 style="font-size:1rem;margin-top:1.25rem;">Per-Class Calibration (task type / agent / model)</h2>
+      <table>
+        <thead>
+          <tr><th>Task Type</th><th>Worker</th><th>Model</th><th>Calibrated Avoided-Cost/Task</th><th>Days Reconciled</th></tr>
+        </thead>
+        <tbody>
+          {% for row in data.class_calibration %}
+            <tr>
+              <td>{{ row.task_type }}</td>
+              <td>{{ row.worker }}</td>
+              <td>{{ row.model }}</td>
+              <td>{{ row.calibrated_cost_per_task }}</td>
+              <td>{{ row.sample_days }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="5">No class has been recalibrated against real usage yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Credits</h2>
+      <div class="metric-row">
+        <span>Today's credits used</span>
+        <span>
+          {% if data.todays_credits_used.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.todays_credits_used.value }}
+          {% endif %}
+          <span class="badge {{ 'estimate' if data.todays_credits_used.is_estimate else 'actual' }}">
+            {{ 'Estimated' if data.todays_credits_used.is_estimate else 'Actual' }}
+          </span>
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Burn rate (credits/day)</span>
+        <span>
+          {% if data.burn_rate.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.burn_rate.value }}
+          {% endif %}
+          <span class="badge {{ 'estimate' if data.burn_rate.is_estimate else 'actual' }}">
+            {{ 'Estimated' if data.burn_rate.is_estimate else 'Actual' }}
+          </span>
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Monthly remaining / projected month-end usage</span>
+        <span>
+          {% if data.monthly_projection.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.monthly_projection.value.monthly_remaining }} remaining /
+            {{ data.monthly_projection.value.projected_month_end_usage }} projected
+            (budget {{ data.monthly_projection.value.monthly_budget }})
+          {% endif %}
+          <span class="badge estimate">Estimated</span>
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Estimated credits saved by local routing</span>
+        <span>
+          {% if data.estimated_credits_saved.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.estimated_credits_saved.value }}
+          {% endif %}
+          <span class="badge estimate">Estimated</span>
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Credits per coding hour</span>
+        <span>
+          {% if data.credits_per_coding_hour.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.credits_per_coding_hour.value }}
+          {% endif %}
+          <span class="badge estimate">Estimated</span>
+        </span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Task Outcomes</h2>
+      <div class="metric-row">
+        <span>First-pass success rate</span>
+        <span>
+          {% if data.first_pass_success_rate.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.first_pass_success_rate.value }}%
+          {% endif %}
+          <span class="badge actual">Actual</span>
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Sonnet escalation rate</span>
+        <span>
+          {% if data.sonnet_escalation_rate.value is none %}
+            insufficient data
+          {% else %}
+            {{ data.sonnet_escalation_rate.value }}%
+          {% endif %}
+          <span class="badge estimate">Estimated</span>
+          {% if data.sonnet_escalation_rate.note %}
+            <span class="metric-note">{{ data.sonnet_escalation_rate.note }}</span>
+          {% endif %}
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Failures</span>
+        <span>
+          {{ data.retries_and_failures.failures.value }}
+          <span class="badge actual">Actual</span>
+        </span>
+      </div>
+      <div class="metric-row">
+        <span>Retries</span>
+        <span>
+          not trackable with current log schema
+          <span class="badge estimate">Estimated</span>
+        </span>
+      </div>
+    </section>
+
+    <section>
+      <h2>Usage by Worker/Agent</h2>
+      <table>
+        <thead><tr><th>Worker</th><th>Count</th></tr></thead>
+        <tbody>
+          {% for worker, count in data.usage_by_worker.value.items() %}
+            <tr><td>{{ worker }}</td><td>{{ count }}</td></tr>
+          {% else %}
+            <tr><td colspan="2">No records yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Usage by Outcome</h2>
+      <table>
+        <thead><tr><th>Outcome</th><th>Count</th></tr></thead>
+        <tbody>
+          {% for outcome, count in data.usage_by_outcome.value.items() %}
+            <tr><td>{{ outcome }}</td><td>{{ count }}</td></tr>
+          {% else %}
+            <tr><td colspan="2">No records yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Local vs Premium Split <span class="badge estimate">Estimated</span></h2>
+      {% if data.local_vs_premium.value is none %}
+        <p>insufficient data</p>
+      {% else %}
+        <p>Local: {{ data.local_vs_premium.value.local_percent }}% &nbsp; Premium: {{ data.local_vs_premium.value.premium_percent }}%</p>
+      {% endif %}
+      {% if data.local_vs_premium.note %}
+        <span class="metric-note">{{ data.local_vs_premium.note }}</span>
+      {% endif %}
+    </section>
+
+    <section>
+      <h2>Largest Premium Usage Sources <span class="badge actual">Actual</span></h2>
+      <table>
+        <thead><tr><th>Worker</th><th>Task Type</th><th>Count</th></tr></thead>
+        <tbody>
+          {% for row in data.largest_premium_sources.value %}
+            <tr><td>{{ row.worker }}</td><td>{{ row.task_type }}</td><td>{{ row.count }}</td></tr>
+          {% else %}
+            <tr><td colspan="3">No premium usage recorded yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if data.largest_premium_sources.note %}
+        <span class="metric-note">{{ data.largest_premium_sources.note }}</span>
+      {% endif %}
+    </section>
+
+    <section>
+      <h2>Recent Credit Entries <span class="badge actual">Actual</span></h2>
+      <table>
+        <thead><tr><th>Date</th><th>Used</th><th>Remaining</th><th>Note</th></tr></thead>
+        <tbody>
+          {% for entry in data.recent_entries %}
+            <tr>
+              <td>{{ entry.entry_date }}</td>
+              <td>{{ entry.credits_used }}</td>
+              <td>{{ entry.credits_remaining if entry.credits_remaining is not none else '—' }}</td>
+              <td>{{ entry.note or '' }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="4">No entries yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Intraday GitHub Credit Snapshots <span class="badge actual">Actual</span></h2>
+      <p class="metric-note">
+        Credits/hour (latest interval): {{ data.intraday_credits_per_hour.value if data.intraday_credits_per_hour.value is not none else 'insufficient data' }}
+        {% if data.intraday_credits_per_hour.note %} - {{ data.intraday_credits_per_hour.note }}{% endif %}
+      </p>
+      <table>
+        <thead><tr><th>Captured At</th><th>Cumulative Credits</th><th>Δ Credits</th><th>Δ Seconds</th><th>Credits/hr</th></tr></thead>
+        <tbody>
+          {% for snap in data.intraday_snapshots %}
+            <tr>
+              <td>{{ snap.captured_at }}</td>
+              <td>{{ snap.cumulative_credits_used }}</td>
+              <td>{{ snap.delta_credits if snap.delta_credits is not none else '—' }}</td>
+              <td>{{ snap.delta_seconds if snap.delta_seconds is not none else '—' }}</td>
+              <td>{{ snap.credits_per_hour if snap.credits_per_hour is not none else '—' }}</td>
+            </tr>
+          {% else %}
+            <tr><td colspan="5">No intraday snapshots recorded yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Largest Credit Spikes</h2>
+      <table>
+        <thead><tr><th>Captured At</th><th>Δ Credits</th><th>Likely Source(s) <span class="badge estimate">Estimated</span></th></tr></thead>
+        <tbody>
+          {% for spike in data.intraday_spikes %}
+            <tr>
+              <td>{{ spike.captured_at }}</td>
+              <td>{{ spike.delta_credits }}</td>
+              <td>
+                {% if spike.likely_sources.value %}
+                  {% for src in spike.likely_sources.value %}
+                    {{ src.worker }} / {{ src.task_type }} ({{ src.count }}){% if not loop.last %}, {% endif %}
+                  {% endfor %}
+                {% else %}
+                  {{ spike.likely_sources.note }}
+                {% endif %}
+              </td>
+            </tr>
+          {% else %}
+            <tr><td colspan="3">No spikes recorded yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Add Credit Entry</h2>
+      {% if data.github_sync.ok %}
+        <span class="metric-note">Auto-synced from GitHub ({{ data.github_sync.username }}) - manual entry below still works as a fallback/override.</span>
+      {% else %}
+        <span class="metric-note">Automatic GitHub sync unavailable ({{ data.github_sync.reason }}) - use manual entry below.</span>
+      {% endif %}
+      <form class="entry-form" method="post">
+        <label>
+          Entry date
+          <input type="date" name="entry_date" required>
+        </label>
+        <label>
+          Credits used (cumulative total)
+          <input type="number" name="credits_used" min="0" step="1" required>
+        </label>
+        <label>
+          Credits remaining (optional)
+          <input type="number" name="credits_remaining" min="0" step="1">
+        </label>
+        <label>
+          Note (optional)
+          <textarea name="note" rows="2"></textarea>
+        </label>
+        <button type="submit">Save Entry</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

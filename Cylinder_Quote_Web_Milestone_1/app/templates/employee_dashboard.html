@@ -79,6 +79,12 @@
       >
         Parts Catalog
       </a>
+      <a
+        class="portal-button secondary"
+        href="{{ url_for('portal.ai_usage_dashboard') }}"
+      >
+        AI Usage Dashboard
+      </a>
       {% endif %}
     </div>
 
@@ -125,6 +131,14 @@
                       >
                         Open
                       </a>
+                      <button
+                        class="small-button delete-pending-button"
+                        data-delete-url="{{ url_for('portal.delete_pending_quote', quote_id=item.id) }}"
+                        type="button"
+                        style="margin-left:0.5rem;"
+                      >
+                        Delete
+                      </button>
                     {% else %}
                       <button
                         class="small-button accept-pending-button"
@@ -1072,6 +1086,45 @@
           message.textContent = body.error || "Could not accept quote.";
         } catch (e) {
           message.textContent = "Network error. Please try again.";
+        } finally {
+          button.disabled = false;
+        }
+      });
+    });
+  })();
+  </script>
+
+  <script>
+  (function () {
+    document.querySelectorAll(".delete-pending-button").forEach((button) => {
+      button.addEventListener("click", async () => {
+        if (!window.confirm("Delete this pending quote? This cannot be undone.")) {
+          return;
+        }
+
+        const row = button.closest("tr");
+        const url = button.getAttribute("data-delete-url");
+
+        button.disabled = true;
+
+        try {
+          const res = await fetch(url, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+              "Accept": "application/json",
+            },
+          });
+
+          if (res.ok) {
+            row.remove();
+            return;
+          }
+
+          const body = await res.json().catch(() => ({}));
+          window.alert(body.error || "Could not delete quote.");
+        } catch (e) {
+          window.alert("Network error. Please try again.");
         } finally {
           button.disabled = false;
         }

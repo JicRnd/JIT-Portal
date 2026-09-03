@@ -6,6 +6,7 @@ from decimal import Decimal
 from sqlalchemy import (
     Boolean,
     DateTime,
+    Float,
     ForeignKey,
     Index,
     Integer,
@@ -167,7 +168,10 @@ class CatalogPart(Base):
     shipvia_sell_values: Mapped[str | None] = mapped_column(Text, nullable=True)
     acc_sell_values: Mapped[str | None] = mapped_column(Text, nullable=True)
     all_descriptions: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # Where the part came from in the source workbook (displayed as "Workbook Location").
     source_locations: Mapped[str | None] = mapped_column(Text, nullable=True)
+    # Free-text list of vendors that sell this part, one per line.
+    vendors: Mapped[str | None] = mapped_column(Text, nullable=True)
     review_needed: Mapped[str | None] = mapped_column(String(20), nullable=True)
     review_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
     active: Mapped[str | None] = mapped_column(String(20), nullable=True)
@@ -254,6 +258,9 @@ class PriceChangeLog(Base):
     record_description: Mapped[str | None] = mapped_column(Text, nullable=True)
     old_value: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
     new_value: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    # Used instead of old_value/new_value when a non-price field is edited.
+    old_text: Mapped[str | None] = mapped_column(Text, nullable=True)
+    new_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     change_type: Mapped[str] = mapped_column(String(20), nullable=False, default="individual")
     # Groups every row touched by one bulk operation.
     batch_id: Mapped[str | None] = mapped_column(String(40), nullable=True)
@@ -495,4 +502,99 @@ class ApprovalSubmission(Base):
 
     __table_args__ = (
         Index("ix_approval_submissions_quote_id", quote_id),
+    )
+
+
+class AiUsageCreditEntry(Base):
+    """Admin-entered snapshot of AI orchestration credit usage on a given date."""
+
+    __tablename__ = "ai_usage_credit_entries"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    entry_date: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    credits_used: Mapped[int] = mapped_column(Integer, nullable=False)
+    credits_remaining: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    note: Mapped[str | None] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, default=utc_now, nullable=False
+    )
+
+
+class AiUsageDailySnapshot(Base):
+    """Immutable per-day record comparing the live estimator to measured usage.
+
+    ``estimated_*``/``task_count``/``breakdown_json`` are frozen the first time a
+    day is finalized (the estimator's live prediction at the time). The
+    ``actual_*`` columns are filled in later once a real GitHub credit entry
+    exists for that date and, once set, are never recomputed - preserving an
+    honest historical record of estimate vs. reality.
+    """
+
+    __tablename__ = "ai_usage_daily_snapshots"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    snapshot_date: Mapped[datetime] = mapped_column(DateTime, nullable=False, unique=True)
+
+    task_count: Mapped[int] = mapped_column(Integer, nullable=False)
+    local_task_count: Mapped[int] = mapped_column(Integer, nullable=False)
+    estimated_savings_credits: Mapped[float] = mapped_column(Float, nullable=False)
+    baseline_credits_estimate: Mapped[float] = mapped_column(Float, nullable=False)
+    breakdown_json: Mapped[str] = mapped_column(Text, nullable=False)
+
+    actual_credits_used_delta: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    actual_savings_credits: Mapped[float | None] = mapped_column(Float, nullable=True)
+    estimation_error: Mapped[float | None] = mapped_column(Float, nullable=True)
+    accuracy_pct: Mapped[float | None] = mapped_column(Float, nullable=True)
+
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now, nullable=False)
+    actuals_recorded_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+
+
+class AiUsageClassCalibration(Base):
+    """Rolling, per (task_type, worker, model) calibrated avoided-cost estimate.
+
+    Updated only from finalized ``AiUsageDailySnapshot`` rows once real usage
+    data arrives, so a single noisy class never distorts every other class.
+    """
+
+    __tablename__ = "ai_usage_class_calibrations"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    task_type: Mapped[str] = mapped_column(String(120), nullable=False)
+    worker: Mapped[str] = mapped_column(String(120), nullable=False)
+    model: Mapped[str | None] = mapped_column(String(120), nullable=True)
+
+    sample_days: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    calibrated_cost_per_task: Mapped[float] = mapped_column(Float, nullable=False)
+    last_recalibrated_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+
+    __table_args__ = (
+        Index(
+            "ix_ai_usage_class_calibrations_key",
+            "task_type",
+            "worker",
+            "model",
+            unique=True,
+        ),
+    )
+
+
+class AiUsageGithubCreditSnapshot(Base):
+    """Immutable intra-day snapshot of GitHub's cumulative AI-credit total.
+
+    A row is only appended when ``cumulative_credits_used`` differs from the
+    previous snapshot, so this is a sparse, append-only log of real
+    GitHub-reported changes (Actual), never edited or recomputed afterward.
+    """
+
+    __tablename__ = "ai_usage_github_credit_snapshots"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    captured_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    cumulative_credits_used: Mapped[float] = mapped_column(Float, nullable=False)
+    model_breakdown_json: Mapped[str] = mapped_column(Text, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now, nullable=False)
+
+    __table_args__ = (
+        Index("ix_ai_usage_github_credit_snapshots_captured_at", "captured_at"),
     )

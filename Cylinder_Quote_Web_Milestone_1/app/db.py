@@ -290,6 +290,13 @@ def init_db():
             connection.exec_driver_sql("ALTER TABLE catalog_parts ADD COLUMN category VARCHAR(80)")
         if "family_code" not in catalog_part_columns:
             connection.exec_driver_sql("ALTER TABLE catalog_parts ADD COLUMN family_code VARCHAR(40)")
+        if "vendors" not in catalog_part_columns:
+            connection.exec_driver_sql("ALTER TABLE catalog_parts ADD COLUMN vendors TEXT")
+
+        price_log_columns = {row[1] for row in connection.exec_driver_sql("PRAGMA table_info(price_change_log)")}
+        if price_log_columns and "old_text" not in price_log_columns:
+            connection.exec_driver_sql("ALTER TABLE price_change_log ADD COLUMN old_text TEXT")
+            connection.exec_driver_sql("ALTER TABLE price_change_log ADD COLUMN new_text TEXT")
 
     # Customer directory column rename: contact -> phone, plus email.
     with engine.begin() as connection:
