@@ -30,11 +30,13 @@ def temp_db(tmp_path, monkeypatch):
     db_path = tmp_path / "test_quote_persistence.db"
     monkeypatch.setenv("DATABASE_PATH", str(db_path))
     monkeypatch.setenv("ACCOUNTS_DATABASE_PATH", str(tmp_path / "test_quote_persistence_accounts.db"))
+    monkeypatch.setenv("CONTACTS_DATABASE_PATH", str(tmp_path / "test_quote_persistence_contacts.db"))
 
     import app.db as db_mod
 
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._contacts_engine = None
     db_mod._Session = None
     init_db()
 
@@ -44,6 +46,7 @@ def temp_db(tmp_path, monkeypatch):
 
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._contacts_engine = None
     db_mod._Session = None
 
 

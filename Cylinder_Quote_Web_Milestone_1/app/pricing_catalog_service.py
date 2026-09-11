@@ -564,12 +564,14 @@ def _log_change(
     table_name: str,
     row,
     field_name: str,
-    old_value,
-    new_value,
+    old_value=None,
+    new_value=None,
     change_type: str,
     actor=None,
     batch_id: str | None = None,
     batch_summary: str | None = None,
+    old_text: str | None = None,
+    new_text: str | None = None,
 ) -> None:
     label, description = _row_identity(table_name, row)
     session.add(
@@ -581,6 +583,8 @@ def _log_change(
             record_description=description,
             old_value=old_value,
             new_value=new_value,
+            old_text=old_text,
+            new_text=new_text,
             change_type=change_type,
             batch_id=batch_id,
             batch_summary=batch_summary,
@@ -719,8 +723,8 @@ def recent_price_changes(limit: int = 50) -> list[dict]:
                 "field_label": entry.field_name.replace("_", " ").title(),
                 "label": entry.record_label or "",
                 "description": entry.record_description or "",
-                "old_formatted": format_money(entry.old_value),
-                "new_formatted": format_money(entry.new_value),
+                "old_formatted": format_money(entry.old_value) if entry.old_value is not None else (entry.old_text or ""),
+                "new_formatted": format_money(entry.new_value) if entry.new_value is not None else (entry.new_text or ""),
                 "change_type": entry.change_type,
                 "batch_summary": entry.batch_summary or "",
                 "changed_by": entry.changed_by_name or "Unknown",
@@ -904,6 +908,8 @@ def create_catalog_part(data: dict, actor=None) -> dict:
     unit_cost = _validate_optional_amount(data.get("unit_cost"), "Unit Cost")
     sell_price = _validate_optional_amount(data.get("sell_price"), "Sell Price")
     sell_price_source = _clean(data.get("sell_price_source")) or "Manual"
+    vendors = _normalize_vendors(data.get("vendors"))
+    source_locations = _clean(data.get("source_locations"))
     active = "YES" if data.get("active", True) in (True, "true", "YES", "yes", "1", 1) else "NO"
 
     with get_session() as session:
@@ -920,6 +926,8 @@ def create_catalog_part(data: dict, actor=None) -> dict:
             unit_cost=unit_cost,
             sell_price=sell_price,
             sell_price_source=sell_price_source,
+            vendors=vendors,
+            source_locations=source_locations,
             active=active,
             review_needed="NO",
         )
@@ -943,4 +951,515 @@ def create_catalog_part(data: dict, actor=None) -> dict:
         )
         session.commit()
         return {"id": row.id, "part_number": row.part_number, "category": row.category}
+
+
+# --- Edit an existing part -------------------------------------------------
+
+
+# Text fields an admin may edit inline, mapped to their human label.
+EDITABLE_PART_TEXT_FIELDS = {
+    "part_number": "Part Number",
+    "description": "Description",
+    "category": "Category",
+    "vendors": "Vendors",
+    "source_locations": "Workbook Location",
+    "active": "Active",
+}
+
+EDITABLE_PART_AMOUNT_FIELDS = {"unit_cost": "Unit Cost", "sell_price": "Sell Price"}
+
+
+def _validate_inventory(value) -> int | None:
+    if value in (None, ""):
+        return None
+    try:
+        inventory = int(str(value).strip())
+    except (TypeError, ValueError) as exc:
+        raise PriceUpdateError("Inventory must be a whole number.") from exc
+    if inventory < 0:
+        raise PriceUpdateError("Inventory must be non-negative.")
+    return inventory
+
+
+def _normalize_vendors(value) -> str | None:
+    """Store a multi-vendor list as one vendor per line."""
+    if value is None:
+        return None
+    text = str(value).replace("\r\n", "\n").replace("\r", "\n")
+    entries = [part.strip() for chunk in text.split("\n") for part in chunk.split(";")]
+    return "\n".join(entry for entry in entries if entry) or None
+
+
+def search_catalog_parts(query: str, limit: int = 25) -> list[dict]:
+    """Lightweight lookup for non-admin pages (e.g. Order Form "Add Part")."""
+    query = _clean(query) or ""
+    with get_session() as session:
+        statement = select(CatalogPart).order_by(CatalogPart.part_number)
+        if query:
+            like = f"%{query}%"
+            statement = statement.where(
+                CatalogPart.part_number.ilike(like) | CatalogPart.description.ilike(like)
+            )
+        rows = session.execute(statement.limit(max(1, min(limit, 100)))).scalars().all()
+        return [
+            {
+                "id": row.id,
+                "part_number": row.part_number,
+                "description": row.description or "",
+                "unit_cost": f"{Decimal(str(row.unit_cost)):.2f}" if row.unit_cost is not None else "",
+                "sell_price": f"{Decimal(str(row.sell_price)):.2f}" if row.sell_price is not None else "",
+            }
+            for row in rows
+        ]
+
+
+def quote_special_parts(allowed_part_numbers) -> list[dict]:
+    """Return active catalog details for special parts known to the pricing engine."""
+    allowed = {str(value).strip().upper() for value in allowed_part_numbers if str(value).strip()}
+    if not allowed:
+        return []
+    with get_session() as session:
+        rows = session.execute(select(CatalogPart).order_by(CatalogPart.part_number)).scalars().all()
+        return [
+            {
+                "part_number": row.part_number,
+                "description": row.description or "",
+                "sell_price": f"{Decimal(str(row.sell_price)):.2f}" if row.sell_price is not None else "",
+            }
+            for row in rows
+            if (row.active or "YES").upper() != "NO"
+            and (row.part_number or "").strip().upper() in allowed
+        ]
+
+
+def get_catalog_part(row_id) -> dict:
+    with get_session() as session:
+        row = session.get(CatalogPart, _row_id(row_id))
+        if row is None:
+            raise PriceUpdateError("Part was not found.", status_code=404)
+        return {
+            "id": row.id,
+            "part_number": row.part_number,
+            "description": row.description or "",
+            "category": categorize_part(row),
+            "vendors": row.vendors or "",
+            "source_locations": row.source_locations or "",
+            "active": (row.active or "YES").upper() != "NO",
+            "unit_cost": f"{Decimal(str(row.unit_cost)):.2f}" if row.unit_cost is not None else "",
+            "sell_price": f"{Decimal(str(row.sell_price)):.2f}" if row.sell_price is not None else "",
+            "inventory": row.inventory if row.inventory is not None else "",
+        }
+
+
+def update_catalog_part(row_id, data: dict, actor=None) -> dict:
+    """Edit any admin-editable field on one catalog part, logging each change."""
+    with get_session() as session:
+        row = session.get(CatalogPart, _row_id(row_id))
+        if row is None:
+            raise PriceUpdateError("Part was not found.", status_code=404)
+
+        changes: list[tuple[str, str | None, str | None]] = []
+        for field, label in EDITABLE_PART_TEXT_FIELDS.items():
+            if field not in data:
+                continue
+            if field == "active":
+                new_text = "YES" if data.get("active") in (True, "true", "YES", "yes", "1", 1) else "NO"
+            elif field == "vendors":
+                new_text = _normalize_vendors(data.get(field))
+            else:
+                new_text = _clean(data.get(field))
+            if field in {"part_number", "description", "category"} and not new_text:
+                raise PriceUpdateError(f"{label} is required.")
+            old_text = getattr(row, field)
+            if (old_text or None) == (new_text or None):
+                continue
+            if field == "part_number":
+                clash = session.execute(
+                    select(CatalogPart).filter_by(part_number=new_text)
+                ).scalar_one_or_none()
+                if clash is not None and clash.id != row.id:
+                    raise PriceUpdateError(f"Part number '{new_text}' already exists.")
+            setattr(row, field, new_text)
+            changes.append((field, old_text, new_text))
+
+        amount_changes: list[tuple[str, Decimal | None, Decimal | None]] = []
+        for field, label in EDITABLE_PART_AMOUNT_FIELDS.items():
+            if field not in data:
+                continue
+            new_amount = _validate_optional_amount(data.get(field), label)
+            old_amount = getattr(row, field)
+            if old_amount is None and new_amount is None:
+                continue
+            if old_amount is not None and new_amount is not None and Decimal(str(old_amount)) == new_amount:
+                continue
+            setattr(row, field, new_amount)
+            amount_changes.append((field, old_amount, new_amount))
+
+        if "inventory" in data:
+            new_inventory = _validate_inventory(data.get("inventory"))
+            old_inventory = row.inventory
+            if old_inventory != new_inventory:
+                row.inventory = new_inventory
+                amount_changes.append(("inventory", old_inventory, new_inventory))
+
+        if not changes and not amount_changes:
+            return {"id": row.id, "changed": 0, **_part_row_display(row)}
+
+        for field, old_text, new_text in changes:
+            _log_change(
+                session,
+                table_name="catalog_parts",
+                row=row,
+                field_name=field,
+                change_type="edit",
+                actor=actor,
+                old_text=old_text,
+                new_text=new_text,
+                batch_summary=f"Edited {EDITABLE_PART_TEXT_FIELDS[field]}",
+            )
+        for field, old_amount, new_amount in amount_changes:
+            _log_change(
+                session,
+                table_name="catalog_parts",
+                row=row,
+                field_name=field,
+                old_value=old_amount,
+                new_value=new_amount,
+                change_type="edit",
+                actor=actor,
+                batch_summary=f"Edited {EDITABLE_PART_AMOUNT_FIELDS.get(field, 'Inventory')}",
+            )
+        try:
+            session.commit()
+        except IntegrityError as exc:
+            session.rollback()
+            raise PriceUpdateError("That part number is already in use.") from exc
+
+        return {"id": row.id, "changed": len(changes) + len(amount_changes), **_part_row_display(row)}
+
+
+def _part_row_display(row) -> dict:
+    return {
+        "part_number": row.part_number,
+        "description": row.description or "",
+        "vendors": row.vendors or "",
+        "source_locations": row.source_locations or "",
+        "unit_cost": f"{Decimal(str(row.unit_cost)).quantize(MONEY_QUANT):.2f}" if row.unit_cost is not None else "",
+        "unit_cost_formatted": format_money(row.unit_cost),
+        "sell_price": f"{Decimal(str(row.sell_price)).quantize(MONEY_QUANT):.2f}" if row.sell_price is not None else "",
+        "sell_price_formatted": format_money(row.sell_price),
+        "inventory": row.inventory if row.inventory is not None else "",
+    }
+
+
+def update_catalog_inventory_bulk(row_ids, value, actor=None) -> dict:
+    inventory = _validate_inventory(value)
+    ids = [_row_id(row_id) for row_id in (row_ids or [])]
+    if not ids:
+        raise PriceUpdateError("Select at least one part.")
+    with get_session() as session:
+        rows = session.execute(select(CatalogPart).where(CatalogPart.id.in_(ids))).scalars().all()
+        if len(rows) != len(set(ids)):
+            raise PriceUpdateError("One or more selected parts were not found.", status_code=404)
+        updated = []
+        for row in rows:
+            if row.inventory == inventory:
+                continue
+            old_inventory = row.inventory
+            row.inventory = inventory
+            _log_change(
+                session,
+                table_name="catalog_parts",
+                row=row,
+                field_name="inventory",
+                old_value=old_inventory,
+                new_value=inventory,
+                change_type="edit",
+                actor=actor,
+                batch_summary="Bulk inventory update",
+            )
+            updated.append({"id": row.id, "inventory": inventory})
+        session.commit()
+        return {"updated": updated, "count": len(updated)}
+
+
+# --- Excel price workbook upload -------------------------------------------
+
+
+WORKBOOK_FIELD_LABELS = {"unit_cost": "Unit Cost", "sell_price": "Sell Price", "both": "Unit Cost and Sell Price"}
+WORKBOOK_PRICE_FIELDS = ("unit_cost", "sell_price")
+
+_PART_NUMBER_HEADERS = ("part number", "part no", "part #", "part num", "partnumber", "part", "item number", "item")
+_DESCRIPTION_HEADERS = ("part name", "description", "name", "desc")
+_PRICE_HEADERS = {
+    "sell_price": ("sell price", "new price", "price", "list price", "sell", "unit price"),
+    "unit_cost": ("unit cost", "new cost", "cost", "our cost", "purchase price"),
+}
+_MAX_WORKBOOK_ROWS = 20000
+
+
+def _header_text(value) -> str:
+    return re.sub(r"\s+", " ", str(value or "").strip().lower())
+
+
+def _find_column(headers: list[str], candidates: tuple[str, ...]) -> int | None:
+    for candidate in candidates:
+        for index, header in enumerate(headers):
+            if header == candidate:
+                return index
+    for candidate in candidates:
+        for index, header in enumerate(headers):
+            if candidate in header:
+                return index
+    return None
+
+
+def _cell_text(value) -> str | None:
+    if value is None:
+        return None
+    if isinstance(value, float) and value.is_integer():
+        value = int(value)
+    return _clean(str(value))
+
+
+def _workbook_price(value) -> Decimal | None:
+    if value in (None, ""):
+        return None
+    text = str(value).replace(",", "").replace("$", "").strip()
+    if not text:
+        return None
+    try:
+        amount = Decimal(text)
+    except InvalidOperation:
+        return None
+    return amount if amount >= 0 else None
+
+
+def parse_price_workbook(stream, field: str) -> dict:
+    """Read an uploaded .xlsx price list and diff it against the catalog."""
+    from openpyxl import load_workbook  # imported lazily: only needed for uploads
+
+    if field not in WORKBOOK_FIELD_LABELS:
+        raise PriceUpdateError("Choose Unit Cost or Sell Price before uploading.")
+    if stream is None:
+        raise PriceUpdateError("Choose an Excel (.xlsx) file to upload.")
+
+    try:
+        workbook = load_workbook(stream, read_only=True, data_only=True)
+    except Exception as exc:  # openpyxl raises many types for bad input
+        raise PriceUpdateError("That file could not be read as an Excel (.xlsx) workbook.") from exc
+
+    try:
+        sheet = workbook.worksheets[0]
+        rows = []
+        for index, raw in enumerate(sheet.iter_rows(values_only=True)):
+            rows.append(raw)
+            if index >= _MAX_WORKBOOK_ROWS:
+                break
+    finally:
+        workbook.close()
+
+    header_index = None
+    part_col = desc_col = None
+    price_cols = {}
+    for index, raw in enumerate(rows[:10]):
+        headers = [_header_text(cell) for cell in raw]
+        part_col = _find_column(headers, _PART_NUMBER_HEADERS)
+        desc_col = _find_column(headers, _DESCRIPTION_HEADERS)
+        fields = WORKBOOK_PRICE_FIELDS if field == "both" else (field,)
+        price_cols = {name: _find_column(headers, _PRICE_HEADERS[name]) for name in fields}
+        if any(column is not None for column in price_cols.values()) and (part_col is not None or desc_col is not None):
+            header_index = index
+            break
+    if header_index is None:
+        raise PriceUpdateError(
+            "The workbook needs a header row with a part number (or part name) column "
+            f"and a {WORKBOOK_FIELD_LABELS[field]} column."
+        )
+
+    entries = []
+    for raw in rows[header_index + 1:]:
+        key = _cell_text(raw[part_col]) if part_col is not None and part_col < len(raw) else None
+        name = _cell_text(raw[desc_col]) if desc_col is not None and desc_col < len(raw) else None
+        prices = {
+            name: _workbook_price(raw[column]) if column is not None and column < len(raw) else None
+            for name, column in price_cols.items()
+        }
+        if not key and not name:
+            continue
+        entries.append((key, name, prices))
+
+    with get_session() as session:
+        parts = session.execute(select(CatalogPart)).scalars().all()
+        by_number = {(part.part_number or "").strip().lower(): part for part in parts}
+        by_description = {}
+        for part in parts:
+            description_key = (part.description or "").strip().lower()
+            if description_key:
+                by_description.setdefault(description_key, part)
+
+        matched, unchanged, invalid = [], 0, []
+        seen_ids = set()
+        for key, name, prices in entries:
+            part = by_number.get((key or "").lower()) or by_description.get((name or "").lower())
+            if part is None:
+                invalid.append({"reason": "not found", "value": key or name})
+                continue
+            valid_prices = {name: price for name, price in prices.items() if price is not None}
+            if not valid_prices:
+                invalid.append({"reason": "no valid price", "value": key or name})
+                continue
+            if part.id in seen_ids:
+                continue
+            seen_ids.add(part.id)
+            changes = {}
+            for price_field, price in valid_prices.items():
+                current = getattr(part, price_field)
+                new_value = price.quantize(STORAGE_QUANT)
+                if current is None or Decimal(str(current)).quantize(STORAGE_QUANT) != new_value:
+                    changes[price_field] = {
+                        "old_value": f"{Decimal(str(current)).quantize(MONEY_QUANT):.2f}" if current is not None else "",
+                        "old_formatted": format_money(current) or "(none)",
+                        "new_value": f"{new_value.quantize(MONEY_QUANT):.2f}",
+                        "new_formatted": format_money(new_value),
+                    }
+            if not changes:
+                unchanged += 1
+                continue
+            if field == "both":
+                old_display = " / ".join(f"{WORKBOOK_FIELD_LABELS[key]}: {value['old_formatted']}" for key, value in changes.items())
+                new_display = " / ".join(f"{WORKBOOK_FIELD_LABELS[key]}: {value['new_formatted']}" for key, value in changes.items())
+                matched.append({
+                    "id": part.id,
+                    "label": part.part_number,
+                    "description": part.description or "",
+                    "old_formatted": old_display,
+                    "new_formatted": new_display,
+                    "values": {key: value["new_value"] for key, value in changes.items()},
+                    "conflicted": part.review_needed == "YES",
+                })
+                continue
+            price_change = changes[field]
+            matched.append({
+                "id": part.id,
+                "label": part.part_number,
+                "description": part.description or "",
+                "old_value": price_change["old_value"],
+                "old_formatted": price_change["old_formatted"],
+                "new_value": price_change["new_value"],
+                "new_formatted": price_change["new_formatted"],
+                "conflicted": part.review_needed == "YES",
+            })
+
+    matched.sort(key=lambda item: item["label"])
+    return {
+        "rows": matched,
+        "count": len(matched),
+        "unchanged": unchanged,
+        "unmatched": len(invalid),
+        "unmatched_samples": [item["value"] for item in invalid[:10] if item["value"]],
+        "field": field,
+    }
+
+
+def apply_workbook_price_update(field: str, updates, actor=None, source_name: str = "") -> dict:
+    """Apply the reviewed rows from an uploaded price workbook."""
+    fields = WORKBOOK_PRICE_FIELDS if field == "both" else (field,)
+    for price_field in fields:
+        _resolve_editable("catalog_parts", price_field)
+    parsed = []
+    for item in updates or []:
+        item = item or {}
+        if field == "both":
+            values = {
+                price_field: _parse_amount(value)
+                for price_field, value in (item.get("values") or {}).items()
+                if price_field in WORKBOOK_PRICE_FIELDS
+            }
+            parsed.append((_row_id(item.get("id")), values))
+        else:
+            parsed.append((_row_id(item.get("id")), _parse_amount(item.get("value"))))
+    if not parsed:
+        raise PriceUpdateError("Select at least one part to update.")
+
+    by_id = {row_id: amount for row_id, amount in parsed}
+    batch_id = uuid.uuid4().hex
+    label = _clean(source_name) or "uploaded workbook"
+    summary = f"{WORKBOOK_FIELD_LABELS[field]} updated from {label} ({len(by_id)} records)"
+
+    with get_session() as session:
+        rows = session.execute(select(CatalogPart).where(CatalogPart.id.in_(list(by_id)))).scalars().all()
+        if not rows:
+            raise PriceUpdateError("None of the selected parts were found.", status_code=404)
+        updated = []
+        for row in rows:
+            changes = by_id[row.id] if field == "both" else {field: by_id[row.id]}
+            for price_field, amount in changes.items():
+                if amount is None:
+                    raise PriceUpdateError(f"{WORKBOOK_FIELD_LABELS[price_field]} must be a valid non-negative amount.")
+                new_value = amount.quantize(STORAGE_QUANT)
+                old_value = getattr(row, price_field)
+                if old_value is not None and Decimal(str(old_value)).quantize(STORAGE_QUANT) == new_value:
+                    continue
+                _apply_value(row, price_field, new_value)
+                _log_change(
+                    session,
+                    table_name="catalog_parts",
+                    row=row,
+                    field_name=price_field,
+                    old_value=old_value,
+                    new_value=new_value,
+                    change_type="upload",
+                    actor=actor,
+                    batch_id=batch_id,
+                    batch_summary=summary,
+                )
+                updated.append({
+                    "id": row.id,
+                    "field": price_field,
+                    "value": f"{new_value.quantize(MONEY_QUANT):.2f}",
+                    "formatted": format_money(new_value),
+                })
+        session.commit()
+
+    return {"updated": updated, "count": len(updated), "batch_id": batch_id, "summary": summary}
+
+
+PRICE_TEMPLATE_HEADERS = ["Part Number", "Part Name", "Unit Cost", "Sell Price", "Vendors"]
+
+
+def build_price_template_workbook():
+    """Return an in-memory .xlsx upload template matching the catalog columns."""
+    from io import BytesIO
+
+    from openpyxl import Workbook
+    from openpyxl.styles import Font
+
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "Price Update"
+    sheet.append(PRICE_TEMPLATE_HEADERS)
+    for cell in sheet[1]:
+        cell.font = Font(bold=True)
+    for column, width in zip("ABCDE", (22, 44, 14, 14, 40)):
+        sheet.column_dimensions[column].width = width
+
+    with get_session() as session:
+        parts = session.execute(
+            select(CatalogPart).order_by(CatalogPart.part_number)
+        ).scalars().all()
+        for part in parts:
+            sheet.append([
+                part.part_number,
+                part.description or "",
+                float(part.unit_cost) if part.unit_cost is not None else None,
+                float(part.sell_price) if part.sell_price is not None else None,
+                (part.vendors or "").replace("\n", "; "),
+            ])
+
+    buffer = BytesIO()
+    workbook.save(buffer)
+    workbook.close()
+    buffer.seek(0)
+    return buffer
 

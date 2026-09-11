@@ -1,0 +1,262 @@
+[
+  {
+    "caller": "app.create_app",
+    "callee": "app::web"
+  },
+  {
+    "caller": "app::catalog",
+    "callee": "cylinder_quote_engine/data"
+  },
+  {
+    "caller": "app::db",
+    "callee": "CREATE INDEX ix_approval_submissions_quote_id ON approval_submissions (quote_id)"
+  },
+  {
+    "caller": "app::db",
+    "callee": "CREATE UNIQUE INDEX ix_users_display_name_lower ON users (lower(display_name))"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"approval_submissions\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"base_assembly_prices\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"catalog_parts\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"common_modification_prices\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"customers\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"email_logs\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"orders\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"part_families\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"ph_va_prices\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"price_change_log\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"quote_documents\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"quote_line_items\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"quote_number_sequences\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"quotes\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA main.table_info(\"users\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA table_info(catalog_parts)"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA table_info(customers)"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA table_info(price_change_log)"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA table_info(quotes)"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA table_info(users)"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"approval_submissions\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"base_assembly_prices\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"catalog_parts\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"common_modification_prices\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"customers\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"email_logs\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"orders\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"part_families\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"ph_va_prices\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"price_change_log\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"quote_documents\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"quote_line_items\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"quote_number_sequences\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"quotes\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "PRAGMA temp.table_info(\"users\")"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\n            UPDATE users\n            SET approval_status = 'pending'\n            WHERE is_active = 0\n              AND (approval_status IS NULL OR approval_status = 'approved')\n            "
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE approval_submissions (\n\tid INTEGER NOT NULL, \n\tquote_id INTEGER NOT NULL, \n\trevision INTEGER NOT NULL, \n\tidempotency_key VARCHAR(255) NOT NULL, \n\trequest_payload JSON, \n\trequest_sent_at DATETIME, \n\tresponse_status_code INTEGER, \n\tresponse_body TEXT, \n\tsuccess BOOLEAN NOT NULL, \n\terror_message TEXT, \n\tcreated_by_user_id INTEGER NOT NULL, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(quote_id) REFERENCES quotes (id), \n\tUNIQUE (idempotency_key)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE base_assembly_prices (\n\tid INTEGER NOT NULL, \n\tpricing_type VARCHAR(80) NOT NULL, \n\tseries VARCHAR(120), \n\tbore VARCHAR(60), \n\trod VARCHAR(60), \n\tmount_group TEXT, \n\tbase_price NUMERIC(14, 4), \n\tbase_price_raw TEXT, \n\tcushion_base NUMERIC(14, 4), \n\tcushion_base_raw TEXT, \n\tper_unit_price NUMERIC(14, 4), \n\tper_unit_price_raw TEXT, \n\tcushion_per_end NUMERIC(14, 4), \n\tcushion_per_end_raw TEXT, \n\trod_thread_std VARCHAR(120), \n\trod_thread_oversize VARCHAR(120), \n\tunit VARCHAR(30), \n\tsource_sheet VARCHAR(60) NOT NULL, \n\tsource_row INTEGER NOT NULL, \n\tsource_import_index INTEGER NOT NULL, \n\tPRIMARY KEY (id), \n\tUNIQUE (source_import_index)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE catalog_parts (\n\tid INTEGER NOT NULL, \n\tpart_number VARCHAR(120) NOT NULL, \n\tdescription TEXT, \n\tfamily_code VARCHAR(40), \n\tcategory VARCHAR(80), \n\tunit_cost NUMERIC(14, 4), \n\tsell_price NUMERIC(14, 4), \n\tsell_price_source VARCHAR(255), \n\tinventory_cost_values TEXT, \n\tshipvia_sell_values TEXT, \n\tacc_sell_values TEXT, \n\tall_descriptions TEXT, \n\tsource_locations TEXT, \n\tvendors TEXT, \n\treview_needed VARCHAR(20), \n\treview_reason TEXT, \n\tactive VARCHAR(20), \n\tPRIMARY KEY (id), \n\tUNIQUE (part_number)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE common_modification_prices (\n\tid INTEGER NOT NULL, \n\tseries VARCHAR(120), \n\tbore VARCHAR(60), \n\trod VARCHAR(60), \n\toption_name VARCHAR(255) NOT NULL, \n\tbase_price NUMERIC(14, 4), \n\tbase_price_raw TEXT, \n\tper_unit_price NUMERIC(14, 4), \n\tper_unit_price_raw TEXT, \n\tunit VARCHAR(30), \n\tsource_sheet VARCHAR(60) NOT NULL, \n\tsource_row INTEGER NOT NULL, \n\tsource_import_index INTEGER NOT NULL, \n\tPRIMARY KEY (id), \n\tUNIQUE (source_import_index)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE customers (\n\tid INTEGER NOT NULL, \n\tname VARCHAR(255) NOT NULL, \n\taddress TEXT, \n\tcity_state_zip VARCHAR(255), \n\tphone VARCHAR(255), \n\temail VARCHAR(255), \n\tcreated_at DATETIME NOT NULL, \n\tupdated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE email_logs (\n\tid INTEGER NOT NULL, \n\tquote_id INTEGER NOT NULL, \n\trevision INTEGER NOT NULL, \n\trecipients JSON NOT NULL, \n\tsubject VARCHAR(500) NOT NULL, \n\tsent_at DATETIME NOT NULL, \n\tsent_by_user_id INTEGER NOT NULL, \n\tstatus VARCHAR(30) NOT NULL, \n\terror_message TEXT, \n\tdocument_id INTEGER, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(quote_id) REFERENCES quotes (id), \n\tFOREIGN KEY(document_id) REFERENCES quote_documents (id)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE orders (\n\tid INTEGER NOT NULL, \n\tquote_id INTEGER NOT NULL, \n\tquote_number VARCHAR(60), \n\torder_form_snapshot JSON, \n\tcreated_at DATETIME NOT NULL, \n\tupdated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id), \n\tUNIQUE (quote_id)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE part_families (\n\tid INTEGER NOT NULL, \n\tfamily_code VARCHAR(40) NOT NULL, \n\tdisplay_name VARCHAR(120) NOT NULL, \n\tmaterial VARCHAR(80), \n\tpart_type VARCHAR(80), \n\timage_path VARCHAR(255), \n\tdescription_template TEXT, \n\tsize_rule VARCHAR(255), \n\tauto_description_enabled BOOLEAN NOT NULL, \n\tcreated_at DATETIME NOT NULL, \n\tupdated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id), \n\tUNIQUE (family_code)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE ph_va_prices (\n\tid INTEGER NOT NULL, \n\tpricing_group VARCHAR(80) NOT NULL, \n\tseries VARCHAR(120), \n\tbore VARCHAR(60), \n\trod VARCHAR(60), \n\toption_name VARCHAR(255) NOT NULL, \n\tbase_price NUMERIC(14, 4), \n\tbase_price_raw TEXT, \n\tper_unit_price NUMERIC(14, 4), \n\tper_unit_price_raw TEXT, \n\tunit VARCHAR(30), \n\tsource_sheet VARCHAR(60) NOT NULL, \n\tsource_row INTEGER NOT NULL, \n\tsource_import_index INTEGER NOT NULL, \n\tPRIMARY KEY (id), \n\tUNIQUE (source_import_index)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE price_change_log (\n\tid INTEGER NOT NULL, \n\ttable_name VARCHAR(60) NOT NULL, \n\trow_id INTEGER NOT NULL, \n\tfield_name VARCHAR(60) NOT NULL, \n\trecord_label VARCHAR(255), \n\trecord_description TEXT, \n\told_value NUMERIC(14, 4), \n\tnew_value NUMERIC(14, 4), \n\told_text TEXT, \n\tnew_text TEXT, \n\tchange_type VARCHAR(20) NOT NULL, \n\tbatch_id VARCHAR(40), \n\tbatch_summary VARCHAR(255), \n\tchanged_by_user_id INTEGER, \n\tchanged_by_name VARCHAR(120), \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE quote_documents (\n\tid INTEGER NOT NULL, \n\tquote_id INTEGER NOT NULL, \n\trevision INTEGER NOT NULL, \n\tfile_path VARCHAR(500) NOT NULL, \n\tcreated_at DATETIME NOT NULL, \n\tcreated_by_user_id INTEGER NOT NULL, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(quote_id) REFERENCES quotes (id)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE quote_line_items (\n\tid INTEGER NOT NULL, \n\tquote_id INTEGER NOT NULL, \n\treference_part_number VARCHAR(120), \n\tdescription VARCHAR(500) NOT NULL, \n\tquantity NUMERIC(12, 4) NOT NULL, \n\tunit_price NUMERIC(12, 4) NOT NULL, \n\textended_price NUMERIC(12, 4) NOT NULL, \n\tinternal_note TEXT, \n\tshow_on_customer_quote BOOLEAN NOT NULL, \n\tsort_order INTEGER NOT NULL, \n\tPRIMARY KEY (id), \n\tFOREIGN KEY(quote_id) REFERENCES quotes (id)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE quote_number_sequences (\n\tyear INTEGER NOT NULL, \n\tnext_sequence INTEGER NOT NULL, \n\tPRIMARY KEY (year)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE quotes (\n\tid INTEGER NOT NULL, \n\tquote_number VARCHAR(60) NOT NULL, \n\tstatus VARCHAR(30) NOT NULL, \n\tcustomer_name VARCHAR(255), \n\tcustomer_address TEXT, \n\tcustomer_contact TEXT, \n\tcustomer_reference VARCHAR(255), \n\tcomments TEXT, \n\tspecial_instructions TEXT, \n\torder_form_snapshot JSON, \n\tpricing_version VARCHAR(20) NOT NULL, \n\trevision INTEGER NOT NULL, \n\tquantity INTEGER NOT NULL, \n\tdiscount NUMERIC(8, 4), \n\tmodel_code VARCHAR(120), \n\tcylinder_inputs_snapshot JSON, \n\tprice_breakdown_snapshot JSON, \n\tcreated_by_user_id INTEGER NOT NULL, \n\tcreated_at DATETIME NOT NULL, \n\tedited_by_user_id INTEGER, \n\tedited_at DATETIME, \n\temailed_by_user_id INTEGER, \n\temailed_at DATETIME, \n\tapproved_by_user_id INTEGER, \n\tapproved_at DATETIME, \n\tassigned_employee_user_id INTEGER, \n\tassigned_at DATETIME, \n\tcustomer_update_pending BOOLEAN NOT NULL, \n\tPRIMARY KEY (id), \n\tUNIQUE (quote_number)\n)\n\n"
+  },
+  {
+    "caller": "app::db",
+    "callee": "\nCREATE TABLE users (\n\tid INTEGER NOT NULL, \n\tdisplay_name VARCHAR(120) NOT NULL, \n\temail VARCHAR(255), \n\tusername VARCHAR(120), \n\tpassword_hash VARCHAR(255), \n\trole VARCHAR(20) NOT NULL, \n\taccess_level VARCHAR(20) NOT NULL, \n\tcompany_name VARCHAR(255), \n\tphone VARCHAR(60), \n\tphone_extension VARCHAR(20), \n\tshipping_name VARCHAR(255), \n\tshipping_address TEXT, \n\tbilling_address TEXT, \n\tshipping_same_as_billing BOOLEAN, \n\tassigned_promo_code VARCHAR(40), \n\tassigned_discount_percent INTEGER, \n\tapproval_status VARCHAR(20), \n\tapproval_decided_at DATETIME, \n\tapproval_decided_by_user_id INTEGER, \n\tis_active BOOLEAN NOT NULL, \n\tcreated_at DATETIME NOT NULL, \n\tPRIMARY KEY (id), \n\tUNIQUE (email), \n\tUNIQUE (username)\n)\n\n"
+  },
+  {
+    "caller": "app::portal",
+    "callee": "SELECT users.id AS users_id, users.display_name AS users_display_name, users.email AS users_email, users.username AS users_username, users.password_hash AS users_password_hash, users.role AS users_role, users.access_level AS users_access_level, users.company_name AS users_company_name, users.phone AS users_phone, users.phone_extension AS users_phone_extension, users.shipping_name AS users_shipping_name, users.shipping_address AS users_shipping_address, users.billing_address AS users_billing_address, users.shipping_same_as_billing AS users_shipping_same_as_billing, users.assigned_promo_code AS users_assigned_promo_code, users.assigned_discount_percent AS users_assigned_discount_percent, users.approval_status AS users_approval_status, users.approval_decided_at AS users_approval_decided_at, users.approval_decided_by_user_id AS users_approval_decided_by_user_id, users.is_active AS users_is_active, users.created_at AS users_created_at \nFROM users \nWHERE users.id = ?"
+  },
+  {
+    "caller": "app::portal",
+    "callee": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE users.role = ? AND users.is_active IS 1 AND (lower(users.username) = ? OR lower(users.email) = ?)"
+  },
+  {
+    "caller": "app::portal",
+    "callee": "app::db"
+  },
+  {
+    "caller": "app::portal",
+    "callee": "werkzeug/security"
+  },
+  {
+    "caller": "app::pricing_catalog_service",
+    "callee": "SELECT catalog_parts.id, catalog_parts.part_number, catalog_parts.description, catalog_parts.family_code, catalog_parts.category, catalog_parts.unit_cost, catalog_parts.sell_price, catalog_parts.sell_price_source, catalog_parts.inventory_cost_values, catalog_parts.shipvia_sell_values, catalog_parts.acc_sell_values, catalog_parts.all_descriptions, catalog_parts.source_locations, catalog_parts.vendors, catalog_parts.review_needed, catalog_parts.review_reason, catalog_parts.active \nFROM catalog_parts"
+  },
+  {
+    "caller": "app::pricing_catalog_service",
+    "callee": "app::db"
+  },
+  {
+    "caller": "app::service",
+    "callee": "cylinder_quote_engine/data"
+  },
+  {
+    "caller": "app::web",
+    "callee": "app::catalog"
+  },
+  {
+    "caller": "app::web",
+    "callee": "app::db"
+  },
+  {
+    "caller": "app::web",
+    "callee": "app::service"
+  }
+]

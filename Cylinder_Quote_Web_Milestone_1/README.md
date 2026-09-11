@@ -53,8 +53,11 @@ contains the current database path, default user name, and quote-number format.
 8. Start the app: `py run.py`
 9. Open `http://localhost:5055`
 
-The database is created at `instance/cylinder_quote.db` by default (WAL mode
-enabled). The `instance/` directory is ignored by git.
+Runtime data is stored in separate SQLite files under `Databases/` (WAL mode
+enabled): `User_accounts.db`, `Employee_Contacts.db`, `Quote.db`, `Order.db`,
+`Pricing.db`, and `Application.db`. The preserved legacy source is kept as
+`Databases/Legacy_cylinder_quote.db` until archival is explicitly approved.
+Generated PDF files remain under the configured quote-document directory.
 
 ## API
 - `GET /api/health`

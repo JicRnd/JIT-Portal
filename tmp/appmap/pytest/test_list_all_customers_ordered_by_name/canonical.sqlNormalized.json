@@ -1,0 +1,6 @@
+[
+  "INSERT INTO users (display_name, email, username, password_hash, role, access_level, company_name, phone, phone_extension, shipping_name, shipping_address, billing_address, shipping_same_as_billing, assigned_promo_code, assigned_discount_percent, approval_status, approval_decided_at, approval_decided_by_user_id, is_active, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+  "SELECT customers.id, customers.name, customers.address, customers.city_state_zip, customers.phone, customers.email, customers.created_at, customers.updated_at \nFROM customers ORDER BY customers.name",
+  "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE users.role = ? AND users.email IS NOT ? AND lower(users.email) = ?",
+  "\nINSERT INTO customers (name, address, city_state_zip, phone, email, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id"
+]

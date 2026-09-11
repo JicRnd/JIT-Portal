@@ -1,0 +1,17 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "mcp": {
+    "appmap": {
+      "type": "local",
+      "command": [
+        "C:\\Users\\Kane\\.appmap\\bin\\appmap.exe",
+        "query",
+        "mcp",
+        "--directory",
+        "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML"
+      ],
+      "enabled": true,
+      "timeout": 15000
+    }
+  }
+}

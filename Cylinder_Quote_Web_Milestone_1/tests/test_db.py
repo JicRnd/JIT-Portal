@@ -4,7 +4,14 @@ import pytest
 from sqlalchemy import inspect
 
 from app.current_user import DEFAULT_USER_NAME, get_or_create_current_user
-from app.db import get_accounts_engine, get_engine, get_session, init_db
+from app.db import (
+    get_accounts_engine,
+    get_contacts_engine,
+    get_engine,
+    get_quotes_engine,
+    get_session,
+    init_db,
+)
 from app.models_db import User
 
 
@@ -14,24 +21,30 @@ def temp_db(tmp_path, monkeypatch):
     db_path = tmp_path / "test.db"
     monkeypatch.setenv("DATABASE_PATH", str(db_path))
     monkeypatch.setenv("ACCOUNTS_DATABASE_PATH", str(tmp_path / "test_accounts.db"))
+    monkeypatch.setenv("CONTACTS_DATABASE_PATH", str(tmp_path / "test_contacts.db"))
 
     import app.db as db_mod
 
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._contacts_engine = None
     db_mod._Session = None
     init_db()
     yield db_path
     db_mod._engine = None
     db_mod._accounts_engine = None
+    db_mod._contacts_engine = None
     db_mod._Session = None
 
 
 def test_init_creates_tables(temp_db):
     engine = get_engine()
-    table_names = inspect(engine).get_table_names()
-    assert "quotes" in table_names
-    assert "quote_number_sequences" in table_names
+    contacts_table_names = inspect(get_contacts_engine()).get_table_names()
+    assert "customers" in contacts_table_names
+
+    quote_table_names = inspect(get_quotes_engine()).get_table_names()
+    assert "quotes" in quote_table_names
+    assert "quote_number_sequences" in quote_table_names
 
     accounts_table_names = inspect(get_accounts_engine()).get_table_names()
     assert "users" in accounts_table_names

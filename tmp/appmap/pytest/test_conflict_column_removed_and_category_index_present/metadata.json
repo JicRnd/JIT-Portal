@@ -1,0 +1,35 @@
+{
+  "language": {
+    "name": "python",
+    "engine": "CPython",
+    "version": "3.11.9"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-python"
+  },
+  "git": {
+    "repository": "https://github.com/JicRnd/JIT-Portal.git",
+    "branch": "main",
+    "commit": "d8043876156966c1430a6e407f852a54a9f0f101"
+  },
+  "frameworks": [
+    {
+      "name": "pytest",
+      "version": "9.1.1"
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.0.51"
+    }
+  ],
+  "source_location": "tests\\test_pricing_catalog_conflicts_and_categories.py:54",
+  "name": "conflict column removed and category index present",
+  "feature": "Conflict column removed and category index present",
+  "app": "Cylinder_Quote_To_HTML",
+  "recorder": {
+    "name": "pytest",
+    "type": "tests"
+  },
+  "test_status": "succeeded"
+}

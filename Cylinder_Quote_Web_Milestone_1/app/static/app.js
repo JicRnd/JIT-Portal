@@ -161,20 +161,17 @@ function updateTieRodCost() {
 function buildSpecialRows() {
   const host = $('specialParts');
   host.innerHTML = '';
-  let dl = $('specialPartsList');
-  if (!dl) {
-    dl = document.createElement('datalist');
-    dl.id = 'specialPartsList';
-    catalog.special_parts.forEach(p => { const o = document.createElement('option'); o.value = p; dl.appendChild(o); });
-    document.body.appendChild(dl);
-  }
   for (let i=0;i<6;i++) {
     const row=document.createElement('div'); row.className='part-row special-row';
-    const inp=document.createElement('input'); inp.type='text'; inp.className='special-part-name'; inp.setAttribute('list','specialPartsList'); inp.setAttribute('autocomplete','off');
+    const inp=document.createElement('select'); inp.className='special-part-name';
+    const blank=document.createElement('option'); blank.value=''; blank.textContent=''; inp.appendChild(blank);
+    catalog.special_parts.forEach(part => {
+      const option=document.createElement('option'); option.value=part; option.textContent=part; inp.appendChild(option);
+    });
     const desc=document.createElement('input'); desc.className='special-part-description'; desc.readOnly=true;
     const qty=document.createElement('input'); qty.type='number';qty.min='0';qty.step='1';qty.value='';qty.className='special-part-qty';
     const price=document.createElement('input'); price.className='special-part-price'; price.readOnly=true;
-    inp.addEventListener('input',()=>{
+    inp.addEventListener('change',()=>{
       const detail=(catalog.special_part_details||{})[inp.value]||{};
       desc.value=detail.description||'';
       price.value=detail.price ? fmtMoney(detail.price) : '';
@@ -418,8 +415,17 @@ $('quoteForm').addEventListener('submit', async e => {
     const body = await res.json();
     if (!res.ok || !body.ok) throw new Error(body.error || 'Quote draft failed');
 
-    // Hand off to the dedicated Quote Form page, which re-runs the draft calc itself.
-    sessionStorage.setItem('jitQuoteDraft', JSON.stringify(payload));
+    if (PORTAL_MODE === 'customer') {
+      sessionStorage.setItem('jitQuoteDraft', JSON.stringify(payload));
+      window.location.assign('/customer/quote-form?draft=1');
+      return;
+    }
+
+    // Preserve the authoritative server draft for the employee Quote Form.
+    sessionStorage.setItem('jitQuoteDraft', JSON.stringify({
+      payload,
+      draft: body.draft
+    }));
     window.location.assign(`/${PORTAL_MODE}/quote-entry?draft=1`);
     return;
   } catch (e) {

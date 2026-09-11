@@ -1,0 +1,47 @@
+[
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_items[0]: description is required",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:223",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:263"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_items[0]: description is required",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:263"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_items[0]: quantity must be greater than 0",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:223",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:263"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_items[0]: quantity must be greater than 0",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:263"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_items[0]: unit_price must be non-negative",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:223",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:263"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_items[0]: unit_price must be non-negative",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:263"
+    ]
+  }
+]

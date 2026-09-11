@@ -43,6 +43,11 @@ th {
   color: #215716;
 }
 
+.status.denied {
+  background: #ffd9d9;
+  color: #8b1e1e;
+}
+
 .empty-state {
   padding: 4rem;
   text-align: center;

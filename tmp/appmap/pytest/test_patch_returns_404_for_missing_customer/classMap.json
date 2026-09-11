@@ -1,0 +1,104 @@
+[
+  {
+    "name": "app",
+    "type": "package",
+    "children": [
+      {
+        "name": "current_user",
+        "type": "class",
+        "children": [
+          {
+            "name": "get_or_create_current_user",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:62"
+          },
+          {
+            "name": "_extract_display_name",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:24"
+          },
+          {
+            "name": "_normalize_display_name",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:17"
+          },
+          {
+            "name": "_get_or_create_user",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:37"
+          }
+        ]
+      },
+      {
+        "name": "db",
+        "type": "class",
+        "children": [
+          {
+            "name": "get_session",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:165"
+          },
+          {
+            "name": "get_session_factory",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:133"
+          },
+          {
+            "name": "get_quotes_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:109"
+          },
+          {
+            "name": "get_orders_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:117"
+          },
+          {
+            "name": "get_pricing_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:125"
+          },
+          {
+            "name": "get_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:93"
+          },
+          {
+            "name": "get_accounts_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:101"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "database",
+    "name": "Database",
+    "children": [
+      {
+        "type": "query",
+        "name": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE lower(users.display_name) = ?"
+      },
+      {
+        "type": "query",
+        "name": "INSERT INTO users (display_name, email, username, password_hash, role, access_level, company_name, phone, phone_extension, shipping_name, shipping_address, billing_address, shipping_same_as_billing, assigned_promo_code, assigned_discount_percent, approval_status, approval_decided_at, approval_decided_by_user_id, is_active, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+      },
+      {
+        "type": "query",
+        "name": "SELECT customers.id AS customers_id, customers.name AS customers_name, customers.address AS customers_address, customers.city_state_zip AS customers_city_state_zip, customers.phone AS customers_phone, customers.email AS customers_email, customers.created_at AS customers_created_at, customers.updated_at AS customers_updated_at \nFROM customers \nWHERE customers.id = ?"
+      }
+    ]
+  }
+]

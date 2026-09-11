@@ -1,0 +1,17 @@
+[
+  {
+    "class": "builtins.RuntimeError",
+    "message": "Failed to generate a unique quote number",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_numbering.py:32",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  },
+  {
+    "class": "builtins.RuntimeError",
+    "message": "Failed to generate a unique quote number",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  }
+]

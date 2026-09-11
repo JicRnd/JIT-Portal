@@ -19,12 +19,14 @@ try:
         render_template,
         request,
         send_file,
+        send_from_directory,
     )
 except ModuleNotFoundError as exc:  # pragma: no cover - developer environment may not have Flask installed
     raise RuntimeError("Flask is required for the web layer. Install with: pip install -r requirements.txt") from exc
 
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import selectinload
+from jinja2 import ChoiceLoader, FileSystemLoader
 
 from .catalog import build_catalog
 from .current_user import get_or_create_current_user
@@ -41,6 +43,7 @@ from .email_service import (
     validate_recipients,
 )
 from .models_db import ApprovalSubmission, Customer, Order, Quote, QuoteDocument, User, utc_now
+from .pricing_catalog_service import quote_special_parts, search_catalog_parts
 from .pdf_service import (
     PdfEngineUnavailableError,
     generate_and_store_pdf,
@@ -61,6 +64,22 @@ logger = logging.getLogger(__name__)
 
 def create_app() -> Flask:
     app = Flask(__name__, template_folder="templates", static_folder="static")
+    app.jinja_loader = ChoiceLoader([
+        app.jinja_loader,
+        FileSystemLoader(Path(__file__).resolve().parent),
+        FileSystemLoader(Path(__file__).resolve().parent / "customer dashboard"),
+        FileSystemLoader(Path(__file__).resolve().parent / "customer_quote_form"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Employee_dashboard"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Admin_Dashboard"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Employee_quote_form"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Order_Form"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Employee_"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Quote_Form"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Parts_catalog_page"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Landing_page"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Landing_page" / "Employee_signup"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Landing_page" / "Customer_signup"),
+    ])
     # JIT portal session key. Set SECRET_KEY in .env before public deployment.
     app.secret_key = os.environ.get(
         "SECRET_KEY",
@@ -83,11 +102,11 @@ def create_app() -> Flask:
         # goes straight to the dedicated Quote Form page instead of the calculator.
         if request.args.get("quote_id") or request.args.get("draft"):
             return render_template(
-                "quote_form_employee.html",
+                "employee_quote_forms.html",
                 current_user_name=getattr(current_user, "display_name", "") or "",
             )
         return render_template(
-            "index.html",
+            "employee_calculator.html",
             portal_mode="employee",
             current_user_name=getattr(current_user, "display_name", "") or "",
         )
@@ -96,7 +115,14 @@ def create_app() -> Flask:
     @app.get("/order-form")
     def order_approval():
         quote_id = (request.args.get("quote_id") or "").strip()
+        order_id = (request.args.get("order_id") or "").strip()
         current_user = get_or_create_current_user(request)
+
+        with get_session() as session:
+            if not quote_id and order_id.isdigit():
+                order = session.get(Order, int(order_id))
+                if order:
+                    quote_id = str(order.quote_id)
 
         if quote_id.isdigit():
             with get_session() as session:
@@ -117,13 +143,85 @@ def create_app() -> Flask:
             quote_id=quote_id,
         )
 
+    @app.get("/order-form.css")
+    def order_form_css():
+        return send_from_directory(
+            Path(__file__).resolve().parent / "Order_Form",
+            "order_form.css",
+        )
+
+    @app.get("/quote-form.css")
+    def quote_form_css():
+        return send_from_directory(
+            Path(__file__).resolve().parent / "Quote_Form",
+            "quote_form.css",
+        )
+
+    @app.get("/quote-form.js")
+    def quote_form_js():
+        return send_from_directory(
+            Path(__file__).resolve().parent / "Quote_Form",
+            "quote_form.js",
+        )
+
+    @app.get("/order-form.js")
+    def order_form_js():
+        return send_from_directory(
+            Path(__file__).resolve().parent / "Order_Form",
+            "order_form.js",
+        )
+
+    @app.get("/images/<path:filename>")
+    def quote_image(filename):
+        return send_from_directory(
+            Path(__file__).resolve().parent / "PNG",
+            filename,
+        )
+
+    @app.get("/employee/quote-form.js")
+    def employee_quote_form_js():
+        return send_from_directory(
+            Path(__file__).resolve().parent / "Employee_quote_form",
+            "employee_quote_form.js",
+        )
+
+    @app.get("/employee/quote-form.css")
+    def employee_quote_form_css():
+        return send_from_directory(
+            Path(__file__).resolve().parent / "Employee_quote_form",
+            "employee_quote_form.css",
+        )
+
+    @app.get("/admin/dashboard.css")
+    def admin_dashboard_css():
+        return send_from_directory(
+            Path(__file__).resolve().parent / "Admin_Dashboard",
+            "admin_dashboard.css",
+        )
+
     @app.get("/api/health")
     def health():
         return jsonify({"status": "ok", "engine": "Pricing Engine v1.2"})
 
     @app.get("/api/catalog")
     def get_catalog():
-        return jsonify(catalog)
+        response_catalog = dict(catalog)
+        database_parts = quote_special_parts(row["part_number"] for row in engine.data.special_parts)
+        if database_parts:
+            response_catalog["special_parts"] = [row["part_number"] for row in database_parts]
+            response_catalog["special_part_details"] = {
+                row["part_number"]: {
+                    "description": row["description"],
+                    "price": row["sell_price"],
+                }
+                for row in database_parts
+            }
+        return jsonify(response_catalog)
+
+    @app.get("/api/catalog-parts/search")
+    def search_catalog_parts_endpoint():
+        results = search_catalog_parts(request.args.get("q", ""), limit=25)
+        return jsonify({"ok": True, "parts": results})
 
     def _customer_status(session, customer: Customer) -> str:
         """Return 'Member' if a customer-role user shares this customer's email."""
@@ -483,6 +581,27 @@ def create_app() -> Flask:
 
         return jsonify({"ok": True, "quote": result})
 
+    @app.get("/api/quotes/by-number/<path:quote_number>")
+    def get_quote_by_number_route(quote_number: str):
+        current_user = get_or_create_current_user(request)
+
+        with get_session() as session:
+            quote = session.scalar(
+                select(Quote).where(Quote.quote_number == quote_number)
+            )
+            if quote is None:
+                return jsonify({"ok": False, "error": "Quote not found"}), 404
+            if (
+                quote.customer_update_pending
+                and getattr(current_user, "role", "employee") == "employee"
+                and quote.assigned_employee_user_id == current_user.id
+            ):
+                quote.customer_update_pending = False
+                session.commit()
+            result = quote_to_json(quote)
+
+        return jsonify({"ok": True, "quote": result})
+
     @app.post("/api/quotes/<int:quote_id>/duplicate")
     def duplicate_quote_route(quote_id: int):
         current_user = get_or_create_current_user(request)
@@ -525,6 +644,39 @@ def create_app() -> Flask:
             except (LookupError, KeyError) as exc:
                 session.rollback()
                 return jsonify({"ok": False, "error": str(exc)}), 400
+            result = quote_to_json(quote)
+
+        return jsonify({"ok": True, "quote": result})
+
+    @app.post("/api/quotes/<int:quote_id>/cancel")
+    def cancel_quote(quote_id: int):
+        current_user = get_or_create_current_user(request)
+
+        with get_session() as session:
+            quote = get_quote(session, quote_id)
+            if quote is None:
+                return jsonify({"ok": False, "error": "Quote not found"}), 404
+            if (
+                getattr(current_user, "role", "employee") == "customer"
+                and quote.created_by_user_id != current_user.id
+            ):
+                return jsonify({"ok": False, "error": "Quote not found"}), 404
+            if quote.status == "canceled":
+                return jsonify({"ok": True, "quote": quote_to_json(quote)})
+
+            quote.status = "canceled"
+            quote.edited_by_user_id = current_user.id
+            quote.edited_at = utc_now()
+            session.add(quote)
+
+            order = session.execute(
+                select(Order).where(Order.quote_id == quote.id)
+            ).scalar_one_or_none()
+            if order is not None:
+                order.status = "canceled"
+                session.add(order)
+
+            session.commit()
             result = quote_to_json(quote)
 
         return jsonify({"ok": True, "quote": result})
@@ -583,6 +735,7 @@ def create_app() -> Flask:
         presentation_keys = {
             "customer_name",
             "customer_address",
+            "person_of_contact",
             "customer_contact",
             "reference_notes",
             "comments",
@@ -669,9 +822,14 @@ def create_app() -> Flask:
             saved_order_form["order_number"] = order_timestamp.strftime("J%m%d%y%H%M")
             saved_order_form["order_created_at"] = order_timestamp.isoformat()
             saved_order_form["order_date"] = order_timestamp.strftime("%m/%d/%Y, %I:%M %p")
+            saved_order_form["person_of_contact"] = quote.person_of_contact
             quote.order_form_snapshot = saved_order_form
 
-            quote.status = "pending_approval"
+            quote.status = (
+                "new"
+                if getattr(current_user, "role", "employee") == "customer"
+                else "pending_approval"
+            )
             quote.edited_by_user_id = current_user.id
             quote.edited_at = utc_now()
             session.add(quote)
@@ -683,12 +841,14 @@ def create_app() -> Flask:
             if order_row is None:
                 order_row = Order(quote_id=quote.id)
             order_row.quote_number = quote.quote_number
+            order_row.status = quote.status
             order_row.order_form_snapshot = saved_order_form
             session.add(order_row)
+            session.flush()
 
             configured_base = (os.environ.get("ORDER_APPROVAL_BASE_URL") or "").strip().rstrip("/")
             base_url = configured_base or request.url_root.rstrip("/")
-            approval_url = f"{base_url}/order-approval?quote_id={quote.id}"
+            approval_url = f"{base_url}/order-form?order_id={order_row.id}"
             email_log = send_order_approval_email(
                 quote, approval_url, recipient, sent_by_user=current_user
             )
@@ -701,10 +861,47 @@ def create_app() -> Flask:
             return jsonify({
                 "ok": True,
                 "quote": quote_to_json(quote),
+                "order_id": order_row.id,
+                "order_number": saved_order_form["order_number"],
                 "approval_url": approval_url,
                 "approval_recipient": recipient,
                 "email_log": email_log_to_json(email_log),
             })
+
+    @app.post("/api/quotes/<int:quote_id>/order/hold")
+    def hold_internal_order(quote_id: int):
+        payload = request.get_json(silent=True) or {}
+        order_form = payload.get("order_form")
+        if order_form is not None and not isinstance(order_form, dict):
+            return jsonify({"ok": False, "error": "order_form must be an object"}), 400
+
+        current_user = get_or_create_current_user(request)
+        with get_session() as session:
+            quote = get_quote(session, quote_id)
+            if quote is None:
+                return jsonify({"ok": False, "error": "Quote not found"}), 404
+            if quote.assigned_employee_user_id not in (None, current_user.id):
+                return jsonify({"ok": False, "error": "Quote is assigned to another employee"}), 409
+
+            if order_form:
+                quote.order_form_snapshot = dict(quote.order_form_snapshot or {}) | order_form
+            quote.status = "pending_approval"
+            quote.assigned_employee_user_id = current_user.id
+            quote.assigned_at = quote.assigned_at or utc_now()
+            quote.edited_by_user_id = current_user.id
+            quote.edited_at = utc_now()
+            session.add(quote)
+
+            order_row = session.execute(
+                select(Order).where(Order.quote_id == quote.id)
+            ).scalar_one_or_none()
+            if order_row is not None:
+                order_row.status = "pending_approval"
+                order_row.order_form_snapshot = quote.order_form_snapshot
+                session.add(order_row)
+
+            session.commit()
+            return jsonify({"ok": True, "quote": quote_to_json(quote)})
 
     @app.post("/api/quotes/<int:quote_id>/order/approve")
     def approve_internal_order(quote_id: int):
@@ -733,11 +930,41 @@ def create_app() -> Flask:
             if order_row is None:
                 order_row = Order(quote_id=quote.id)
             order_row.quote_number = quote.quote_number
+            order_row.status = "approved"
             order_row.order_form_snapshot = order_form
             session.add(order_row)
 
             session.commit()
             return jsonify({"ok": True, "quote": quote_to_json(quote)})
+
+    @app.post("/api/quotes/<int:quote_id>/order/deny")
+    def deny_internal_order(quote_id: int):
+        current_user = get_or_create_current_user(request)
+        with get_session() as session:
+            quote = get_quote(session, quote_id)
+            if quote is None:
+                return jsonify({"ok": False, "error": "Quote not found"}), 404
+            if quote.status != "pending_approval":
+                return jsonify({
+                    "ok": False,
+                    "error": "Only pending approval orders can be denied",
+                }), 409
+
+            quote.status = "denied"
+            quote.edited_by_user_id = current_user.id
+            quote.edited_at = utc_now()
+            session.add(quote)
+
+            order_row = session.execute(
+                select(Order).where(Order.quote_id == quote.id)
+            ).scalar_one_or_none()
+            if order_row is not None:
+                order_row.status = "denied"
+                session.add(order_row)
+
+            session.commit()
+            return jsonify({"ok": True, "quote": quote_to_json(quote)})
+
     @app.post("/api/quotes/<int:quote_id>/approve")
     def approve_quote(quote_id: int):
         current_user = get_or_create_current_user(request)

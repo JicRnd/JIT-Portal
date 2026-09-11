@@ -1,0 +1,37 @@
+Example: for modelcode          H-MF1-5x12x2-1-NC-S-P-S       
+	
+
+Formula Used 
+E =IF(B$13="","",CONCATENATE("E = ",IF(Data!B$3="h",VLOOKUP(Data!B$4,AJ$12:AM$26,4),VLOOKUP(Data!B$4,AJ$29:AM$40,4)),""""))
+G =IF(B$13="","",CONCATENATE("G = ",IF(Data!B$3="h",VLOOKUP(Data!B$4,AJ$12:AN$26,5),VLOOKUP(Data!B$4,AJ$29:AN$40,5)),""""))
+J =IF(B$13="","",CONCATENATE("J = ",IF(Data!B$3="h",VLOOKUP(Data!B$4,AJ$12:AO$26,6),VLOOKUP(Data!B$4,AJ$29:AO$40,6)),""""))
+LB =IF(B$13="","",CONCATENATE("LB = ",IF(Data!B$3="h",VLOOKUP(Data!B$4,AJ$12:AP$26,7)+B18,IF(OR(Data!B$3="lh",Data!B$3="a"),VLOOKUP(Data!B$4,AJ$29:AP$40,7)+B18)),""""))
+TF =AJ8
+R =AK8
+FB =IF(AL8="","",AL8)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+E = look at pre-determined value in the series table in the bore size row in column AM
+G = Rod size
+J = what's in series table column in AO
+
+LB = look at the series to know what table to look at then find the bore size in that table AJ12:AP26 then give me what's in the 7th column for the chosen bore size row,   AP=Lbs column  then look at the stroke length and add the lbs. total to the stroke length 
+
+TF = Find the series table and then find the bore size row and then insert value of column BL
+R = Find the series table and find bore size row and then insert pre-determined value that's in column BB for that row 
+FB = find what's in cell AL8 and return value 
+F =  find what's in cell AM8 and return value 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+E = 6.5"	
+G = 2"	
+J = 1.75"	
+LB = 18.25"	
+TF = 8.19"	
+R = 4.95"	
+FB = 0.94"	
+F = 0.88"
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

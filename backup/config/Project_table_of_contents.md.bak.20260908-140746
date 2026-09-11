@@ -1,0 +1,100 @@
+# Project Table of Contents
+
+## Pages/Features
+
+### Order Entry
+- UI components and templates
+- Data flow from input to calculation
+- Quote form generation
+
+### Quote Management
+- Quote creation and saving
+- Quote numbering system
+- Quote database interactions
+
+### Pricing Engine
+- Core pricing logic
+- Catalog data management
+- Model calculations
+
+## Files
+
+### Main Application
+- `app/web.py` - Web routes and handlers
+- `run.py` - Application entry point
+- `app/quote_service.py` - Quote business logic
+- `app/db.py` - Database interactions
+
+### Pricing Engine
+- `cylinder_quote_engine/engine.py` - Core pricing engine
+- `cylinder_quote_engine/models.py` - Model definitions
+- `cylinder_quote_engine/data.py` - Data handling
+
+### Templates and Static Assets
+- `templates/` - HTML templates
+- `static/` - CSS, JS, images
+
+## Symbols
+
+### Routes
+- `/` - Home page (Order Entry)
+- `/quote` - Quote form generation
+- `/save_quote` - Save quote endpoint
+
+### Functions
+- `calculate_cylinder()` - Core pricing calculation
+- `get_quote_data()` - Retrieve quote information
+- `save_quote()` - Save quote to database
+
+## Data Flow
+
+### Input Processing
+1. User enters cylinder parameters in Order Entry form
+2. Form data submitted to `/` route
+3. Data processed by pricing engine
+4. Calculated values returned to client
+
+### Quote Generation
+1. User clicks "Quote" button
+2. Data sent to `/quote` route
+3. Quote form HTML generated from calculated data
+4. User can modify presentation fields before saving
+
+## Runtime Evidence
+
+### Entry Points
+- `app/web.py` - Main application entry point
+- `run.py` - Starts Flask server
+
+### Database Access
+- SQLite database interactions via `app/db.py`
+- Transactional quote saves with WAL mode
+
+### Call Paths
+- OrderEntry → `/` → pricing engine → calculation → return values
+- Quote button → `/quote` → generate HTML form
+- Quote save → `/save_quote` → set status to "pending_approval" → database update
+
+## Pending Approval System
+
+### Static Implementation
+- `app/portal.py` - Contains logic for pending approval queue queries
+- Templates: `Admin_dashboard.html` and `employee_dashboard.html`
+- Routes: `/employee/dashboard`
+
+### Runtime Evidence  
+- When a quote is saved, status is set to "pending_approval" in `app/web.py` (line 698)
+- Pending quotes are queried in `app/portal.py` (lines 553, 574) 
+- Displayed on employee dashboard at `/employee/dashboard`
+
+## Verification
+
+### Testing
+- Test suite in `tests/` directory
+- Regression tests for pricing engine
+- End-to-end functionality tests
+
+### Documentation
+- `ARCHITECTURE_MAP.md`
+- `business-rules.md`
+- AGENTS.md

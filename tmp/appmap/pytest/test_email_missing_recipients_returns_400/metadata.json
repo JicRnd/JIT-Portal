@@ -1,0 +1,43 @@
+{
+  "language": {
+    "name": "python",
+    "engine": "CPython",
+    "version": "3.11.9"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-python"
+  },
+  "git": {
+    "repository": "https://github.com/JicRnd/JIT-Portal.git",
+    "branch": "main",
+    "commit": "f2e7614efdedec25c863a0ef3f19a88ecda85fa4"
+  },
+  "frameworks": [
+    {
+      "name": "pytest",
+      "version": "9.1.1"
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.0.51"
+    }
+  ],
+  "source_location": "tests\\test_email_service.py:269",
+  "name": "email missing recipients returns 400",
+  "feature": "Email missing recipients returns 400",
+  "app": "Cylinder_Quote_To_HTML",
+  "recorder": {
+    "name": "pytest",
+    "type": "tests"
+  },
+  "test_failure": {
+    "message": "RuntimeError: Failed to generate a unique quote number",
+    "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_numbering.py:69"
+  },
+  "test_status": "failed",
+  "exception": {
+    "class": "RuntimeError",
+    "message": "Failed to generate a unique quote number"
+  }
+}

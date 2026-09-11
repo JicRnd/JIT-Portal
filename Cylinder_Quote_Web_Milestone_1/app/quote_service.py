@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 
 from cylinder_quote_engine import QuotePricingEngine
 
+from .component_bom import generated_cylinder_parts
 from .models_db import Customer, Quote, QuoteLineItem, utc_now
 from .quote_numbering import generate_quote_number
 from .service import calculate_payload, decimal_to_json, quote_inputs_from_payload
@@ -113,6 +114,7 @@ def create_quote_snapshot(
 
     customer_name = _optional_str(payload.get("customer_name"))
     customer_address = _optional_str(payload.get("customer_address"))
+    person_of_contact = _optional_str(payload.get("person_of_contact"))
     customer_contact = _optional_str(payload.get("customer_contact"))
     customer_reference = _optional_str(payload.get("reference_notes"))
     comments = _optional_str(payload.get("comments"))
@@ -135,7 +137,7 @@ def create_quote_snapshot(
                     quote_number = generate_quote_number(session, customer_name)
                 quote = Quote(
                     quote_number=quote_number,
-                    status="draft",
+                    status="new",
                     pricing_version=PRICING_VERSION,
                     quantity=quantity,
                     discount=inputs.discount,
@@ -144,6 +146,7 @@ def create_quote_snapshot(
                     price_breakdown_snapshot=breakdown,
                     customer_name=customer_name,
                     customer_address=customer_address,
+                    person_of_contact=person_of_contact,
                     customer_contact=customer_contact,
                     customer_reference=customer_reference,
                     comments=comments,
@@ -212,6 +215,8 @@ def update_quote_edits(
         quote.customer_name = _optional_str(payload["customer_name"])
     if "customer_address" in payload:
         quote.customer_address = _optional_str(payload["customer_address"])
+    if "person_of_contact" in payload:
+        quote.person_of_contact = _optional_str(payload["person_of_contact"])
     if "customer_contact" in payload:
         quote.customer_contact = _optional_str(payload["customer_contact"])
     if "reference_notes" in payload:
@@ -279,7 +284,7 @@ def duplicate_quote(session: Session, source: Quote, current_user) -> Quote:
             with session.begin_nested():
                 new_quote = Quote(
                     quote_number=generate_quote_number(session, source.customer_name),
-                    status="draft",
+                    status="new",
                     pricing_version=source.pricing_version or PRICING_VERSION,
                     revision=1,
                     quantity=max(1, int(source.quantity or 1)),
@@ -337,6 +342,8 @@ def _line_item_to_json(item: QuoteLineItem) -> dict[str, Any]:
 
 def quote_to_json(quote: Quote) -> dict[str, Any]:
     """Serialize a Quote and its line items for API responses."""
+    inputs = quote.cylinder_inputs_snapshot or {}
+    generated_parts = generated_cylinder_parts(inputs)
     return {
         "id": quote.id,
         "quote_number": quote.quote_number,
@@ -348,12 +355,14 @@ def quote_to_json(quote: Quote) -> dict[str, Any]:
         "discount": decimal_to_json(quote.discount),
         "customer_name": quote.customer_name,
         "customer_address": quote.customer_address,
+        "person_of_contact": quote.person_of_contact,
         "customer_contact": quote.customer_contact,
         "reference_notes": quote.customer_reference,
         "comments": quote.comments,
         "special_instructions": quote.special_instructions,
         "order_form_snapshot": quote.order_form_snapshot,
         "cylinder_inputs_snapshot": quote.cylinder_inputs_snapshot,
+        "generated_parts": generated_parts,
         "price_breakdown_snapshot": quote.price_breakdown_snapshot,
         "manual_line_items": [_line_item_to_json(item) for item in quote.line_items],
         "created_by": quote.created_by.display_name if quote.created_by else None,

@@ -12,3 +12,4 @@ Cylinder_Quote_Web_Milestone_1/instance copy/
 **/*.db-wal
 **/*.db-shm
 **/.env
+tmp/appmap/

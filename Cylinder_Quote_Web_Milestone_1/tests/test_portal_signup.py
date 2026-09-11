@@ -270,8 +270,16 @@ def test_employee_dashboard_lists_pending_customer_account_requests(portal_app):
     assert dashboard_response.status_code == 200
     text = dashboard_response.get_data(as_text=True)
     assert "Pending Approvals" in text
-    assert "Pending Customer" in text
-    assert "Pending Co" in text
+    accept_section = text.split("<h2>New Accept Request</h2>", 1)[1].split(
+        "</section>", 1
+    )[0]
+    pending_section = text.split("<h2>Pending Approvals</h2>", 1)[1].split(
+        "</section>", 1
+    )[0]
+    assert "Pending Customer" in accept_section
+    assert "Pending Co" in accept_section
+    assert "Pending Customer" not in pending_section
+    assert "Pending Co" not in pending_section
 
 
 def test_manage_users_can_update_password_and_employee_access_level(portal_app):
@@ -331,6 +339,89 @@ def test_manage_users_can_update_password_and_employee_access_level(portal_app):
 
     assert target.access_level == "admin"
     assert check_password_hash(target.password_hash, "new-password")
+
+
+def test_account_directories_are_separated_by_role(portal_app):
+    with get_session() as db:
+        db.add_all(
+            [
+                User(
+                    display_name="Directory Employee",
+                    username="directory-employee@example.com",
+                    email="directory-employee@example.com",
+                    password_hash=generate_password_hash("pw"),
+                    role="employee",
+                    is_active=True,
+                ),
+                User(
+                    display_name="Directory Customer",
+                    username="directory-customer@example.com",
+                    email="directory-customer@example.com",
+                    password_hash=generate_password_hash("pw"),
+                    role="customer",
+                    is_active=True,
+                    company_name="Directory Co",
+                ),
+            ]
+        )
+        db.commit()
+
+    client = portal_app.test_client()
+    client.post(
+        "/employee/login",
+        data={"identity": "directory-employee@example.com", "password": "pw"},
+    )
+
+    employee_page = client.get("/manage-users")
+    customer_page = client.get("/customer-accounts")
+
+    assert employee_page.status_code == 200
+    assert customer_page.status_code == 200
+    assert "Directory Employee" in employee_page.get_data(as_text=True)
+    assert "Directory Customer" not in employee_page.get_data(as_text=True)
+    assert "Directory Customer" in customer_page.get_data(as_text=True)
+    assert ">Directory Employee</strong></td>" not in customer_page.get_data(as_text=True)
+    assert "Access Level" not in customer_page.get_data(as_text=True)
+
+
+def test_customer_account_password_action_returns_to_customer_directory(portal_app):
+    with get_session() as db:
+        admin = User(
+            display_name="Account Admin",
+            username="account-admin@example.com",
+            email="account-admin@example.com",
+            password_hash=generate_password_hash("pw"),
+            role="employee",
+            is_active=True,
+        )
+        customer = User(
+            display_name="Password Customer",
+            username="password-customer@example.com",
+            email="password-customer@example.com",
+            password_hash=generate_password_hash("old-password"),
+            role="customer",
+            is_active=True,
+        )
+        db.add_all([admin, customer])
+        db.commit()
+        customer_id = customer.id
+
+    client = portal_app.test_client()
+    client.post(
+        "/employee/login",
+        data={"identity": "account-admin@example.com", "password": "pw"},
+    )
+
+    response = client.post(
+        f"/manage-users/{customer_id}/password",
+        data={"new_password": "new-password", "return_to": "customer_accounts"},
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/customer-accounts")
+    with get_session() as db:
+        assert check_password_hash(db.get(User, customer_id).password_hash, "new-password")
 
 
 def test_employee_dashboard_customer_lookup_has_email_and_attachment_controls(portal_app):

@@ -1,0 +1,47 @@
+# VS Code AI Orchestration Setup
+
+Installed by `setup_vscode_ai_orchestrator.py`.
+
+## Installed agents
+
+- **AI Orchestrator** — Claude Sonnet 5; user-facing coordinator.
+- **AI Lightweight Worker** — Claude Haiku 4.5; read-only search/inspection.
+- **AI Coding Worker** — Kimi K2.7 Code; implementation + focused validation.
+
+The workers are hidden from the normal agent picker (`user-invocable: false`)
+but remain available to the orchestrator as subagents.
+
+## How to use
+
+1. Restart or reload VS Code after installation.
+2. Open Chat.
+3. Start a **new session**.
+4. Choose **AI Orchestrator** from the agent picker.
+5. If VS Code exposes Thinking Effort for Sonnet, use **Medium** for routine
+   development and raise it only for genuinely difficult reasoning.
+6. Give the orchestrator normal requests, for example:
+   `Fix the scanner so it automatically reconnects after the Jetson reboots.`
+
+You should not need to switch worker models manually.
+
+## Design
+
+The orchestrator has only delegation/todo tools, so repository exploration and
+editing happen in isolated worker contexts instead of accumulating in the main
+Sonnet conversation.
+
+Routing:
+- read/search/research -> Haiku
+- routine implementation/testing -> Kimi
+- architecture, ambiguity, hard debugging, review -> Sonnet
+
+## Verification
+
+The coding worker is instructed to run focused validation. Failed/uncertain
+results return to the Sonnet orchestrator for retry or escalation.
+
+## Important
+
+Custom-agent support and model availability depend on the VS Code/Copilot
+version and account. If a model is unavailable, edit the corresponding
+`.agent.md` file's `model:` line to a model shown in your VS Code model picker.

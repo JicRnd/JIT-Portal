@@ -4,9 +4,11 @@ from decimal import Decimal
 from pathlib import Path
 
 import pytest
+from sqlalchemy import select
 
 from app import create_app
-from app.db import init_db
+from app.db import get_session, init_db
+from app.models_db import Order, Quote, User
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -149,9 +151,84 @@ def test_quote_preview_flow_create_get_patch_preserves_breakdown(temp_db):
     assert line_items[0]["show_on_customer_quote"] is False
 
 
-def test_index_page_renders_quote_preview(temp_db):
-    """The calculator still renders without Jinja errors, and the Quote Form
-    controls now live on the dedicated Quote Form page reached via ?draft=1."""
+def test_order_now_creates_order_and_opens_order_form_by_order_id(temp_db):
+    client = temp_db.test_client()
+    create_resp = client.post("/api/quotes", json=sample_payload(), headers=_headers("alice"))
+    quote_id = create_resp.get_json()["quote"]["id"]
+
+    order_resp = client.post(f"/api/quotes/{quote_id}/order", json={}, headers=_headers("alice"))
+
+    assert order_resp.status_code == 200
+    order_body = order_resp.get_json()
+    assert order_body["order_id"] > 0
+    assert order_body["order_number"].startswith("J")
+    assert order_body["approval_url"].endswith(f"/order-form?order_id={order_body['order_id']}")
+
+    form_resp = client.get(
+        f"/order-form?order_id={order_body['order_id']}", headers=_headers("alice")
+    )
+    assert form_resp.status_code == 200
+    assert 'data-quote-id="' + str(quote_id) + '"' in form_resp.get_data(as_text=True)
+
+
+def test_customer_can_cancel_quote_and_order_status_is_updated(temp_db):
+    client = temp_db.test_client()
+    create_resp = client.post(
+        "/api/quotes", json=sample_payload(), headers=_headers("alice")
+    )
+    quote_id = create_resp.get_json()["quote"]["id"]
+
+    order_resp = client.post(
+        f"/api/quotes/{quote_id}/order", json={}, headers=_headers("alice")
+    )
+    assert order_resp.status_code == 200
+
+    cancel_resp = client.post(
+        f"/api/quotes/{quote_id}/cancel", json={}, headers=_headers("alice")
+    )
+    assert cancel_resp.status_code == 200
+    assert cancel_resp.get_json()["quote"]["status"] == "canceled"
+
+    with get_session() as session:
+        quote = session.get(Quote, quote_id)
+        order = session.execute(
+            select(Order).where(Order.quote_id == quote_id)
+        ).scalar_one()
+        assert quote.status == "canceled"
+        assert order.status == "canceled"
+
+
+def test_customer_quote_entry_stays_on_calculator(temp_db):
+    client = temp_db.test_client()
+    create_resp = client.post(
+        "/api/quotes", json=sample_payload(), headers=_headers("alice")
+    )
+    quote_id = create_resp.get_json()["quote"]["id"]
+
+    with get_session() as session:
+        customer = session.execute(
+            select(User).where(User.display_name == "alice")
+        ).scalar_one()
+        customer.role = "customer"
+        session.commit()
+        customer_id = customer.id
+    with client.session_transaction() as session:
+        session["user_id"] = customer_id
+        session["role"] = "customer"
+
+    response = client.get(
+        f"/customer/quote-entry?quote_id={quote_id}", headers=_headers("alice")
+    )
+    text = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert 'id="series"' in text
+    assert 'id="pv_customer_name"' not in text
+    assert 'JIT Customer Quote Form' not in text
+
+
+def test_index_page_renders_calculator_and_employee_quote_preview(temp_db):
+    """The customer and employee calculators remain separate from quote forms."""
     client = temp_db.test_client()
     resp = client.get("/quote-entry")
     assert resp.status_code == 200
@@ -175,6 +252,11 @@ def test_index_page_renders_quote_preview(temp_db):
     assert "Email Customer" in order_text
     assert "Attach Quote Form" in order_text
     assert "Attach Report Images" in order_text
+    assert 'id="orderBarcode"' in order_text
+    assert 'data-field="ordered_by"' in order_text
+    assert order_text.index('data-field="ordered_by"') < order_text.index('data-field="quote_number"')
+    assert order_text.index('data-field="quote_number"') < order_text.index('data-field="assembled_by"')
+    assert order_text.index('data-field="assembled_by"') < order_text.index('data-field="date_passed_test"')
 
 
 def test_quote_form_page_omits_internal_note_controls(temp_db):

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "app",
+    "type": "package",
+    "children": [
+      {
+        "name": "email_service",
+        "type": "class",
+        "children": [
+          {
+            "name": "is_email_configured",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\email_service.py:26"
+          }
+        ]
+      }
+    ]
+  }
+]

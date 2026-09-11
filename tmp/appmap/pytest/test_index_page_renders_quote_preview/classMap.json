@@ -1,0 +1,137 @@
+[
+  {
+    "name": "app",
+    "type": "package",
+    "children": [
+      {
+        "name": "current_user",
+        "type": "class",
+        "children": [
+          {
+            "name": "get_or_create_current_user",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:62"
+          },
+          {
+            "name": "_extract_display_name",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:24"
+          },
+          {
+            "name": "_normalize_display_name",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:17"
+          },
+          {
+            "name": "_get_or_create_user",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:37"
+          }
+        ]
+      },
+      {
+        "name": "db",
+        "type": "class",
+        "children": [
+          {
+            "name": "get_session",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:165"
+          },
+          {
+            "name": "get_session_factory",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:133"
+          },
+          {
+            "name": "get_quotes_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:109"
+          },
+          {
+            "name": "get_orders_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:117"
+          },
+          {
+            "name": "get_pricing_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:125"
+          },
+          {
+            "name": "get_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:93"
+          },
+          {
+            "name": "get_accounts_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:101"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "database",
+    "name": "Database",
+    "children": [
+      {
+        "type": "query",
+        "name": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE lower(users.display_name) = ?"
+      },
+      {
+        "type": "query",
+        "name": "INSERT INTO users (display_name, email, username, password_hash, role, access_level, company_name, phone, phone_extension, shipping_name, shipping_address, billing_address, shipping_same_as_billing, assigned_promo_code, assigned_discount_percent, approval_status, approval_decided_at, approval_decided_by_user_id, is_active, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+      },
+      {
+        "type": "query",
+        "name": "SELECT quotes.id AS quotes_id, quotes.quote_number AS quotes_quote_number, quotes.status AS quotes_status, quotes.customer_name AS quotes_customer_name, quotes.customer_address AS quotes_customer_address, quotes.customer_contact AS quotes_customer_contact, quotes.customer_reference AS quotes_customer_reference, quotes.comments AS quotes_comments, quotes.special_instructions AS quotes_special_instructions, quotes.order_form_snapshot AS quotes_order_form_snapshot, quotes.pricing_version AS quotes_pricing_version, quotes.revision AS quotes_revision, quotes.quantity AS quotes_quantity, quotes.discount AS quotes_discount, quotes.model_code AS quotes_model_code, quotes.cylinder_inputs_snapshot AS quotes_cylinder_inputs_snapshot, quotes.price_breakdown_snapshot AS quotes_price_breakdown_snapshot, quotes.created_by_user_id AS quotes_created_by_user_id, quotes.created_at AS quotes_created_at, quotes.edited_by_user_id AS quotes_edited_by_user_id, quotes.edited_at AS quotes_edited_at, quotes.emailed_by_user_id AS quotes_emailed_by_user_id, quotes.emailed_at AS quotes_emailed_at, quotes.approved_by_user_id AS quotes_approved_by_user_id, quotes.approved_at AS quotes_approved_at, quotes.assigned_employee_user_id AS quotes_assigned_employee_user_id, quotes.assigned_at AS quotes_assigned_at, quotes.customer_update_pending AS quotes_customer_update_pending \nFROM quotes \nWHERE quotes.id = ?"
+      }
+    ]
+  },
+  {
+    "type": "class",
+    "name": "<templates>/CUsersKaneDocumentsProjectsCylinder_Quote_To_HtmlCylinder_Quote_Web_Milestone_1AppTemplatesIndexHtml",
+    "children": [
+      {
+        "type": "function",
+        "name": "render",
+        "static": false
+      }
+    ]
+  },
+  {
+    "type": "class",
+    "name": "<templates>/CUsersKaneDocumentsProjectsCylinder_Quote_To_HtmlCylinder_Quote_Web_Milestone_1AppTemplatesQuote_Form_EmployeeHtml",
+    "children": [
+      {
+        "type": "function",
+        "name": "render",
+        "static": false
+      }
+    ]
+  },
+  {
+    "type": "class",
+    "name": "<templates>/CUsersKaneDocumentsProjectsCylinder_Quote_To_HtmlCylinder_Quote_Web_Milestone_1AppTemplatesOrder_FormHtml",
+    "children": [
+      {
+        "type": "function",
+        "name": "render",
+        "static": false
+      }
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "caller": "app/portal",
+    "callee": "SELECT users.id AS users_id, users.display_name AS users_display_name, users.email AS users_email, users.username AS users_username, users.password_hash AS users_password_hash, users.role AS users_role, users.access_level AS users_access_level, users.company_name AS users_company_name, users.phone AS users_phone, users.phone_extension AS users_phone_extension, users.shipping_name AS users_shipping_name, users.shipping_address AS users_shipping_address, users.billing_address AS users_billing_address, users.shipping_same_as_billing AS users_shipping_same_as_billing, users.assigned_promo_code AS users_assigned_promo_code, users.assigned_discount_percent AS users_assigned_discount_percent, users.approval_status AS users_approval_status, users.approval_decided_at AS users_approval_decided_at, users.approval_decided_by_user_id AS users_approval_decided_by_user_id, users.is_active AS users_is_active, users.created_at AS users_created_at \nFROM users \nWHERE users.id = ?"
+  },
+  {
+    "caller": "app/portal",
+    "callee": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE users.role = ? AND users.is_active IS 1 AND (lower(users.username) = ? OR lower(users.email) = ?)"
+  },
+  {
+    "caller": "app/portal",
+    "callee": "app/db"
+  },
+  {
+    "caller": "app/portal",
+    "callee": "werkzeug/security"
+  }
+]

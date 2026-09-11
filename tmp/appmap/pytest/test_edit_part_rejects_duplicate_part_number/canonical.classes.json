@@ -1,0 +1,11 @@
+[
+  "app",
+  "app::catalog",
+  "app::db",
+  "app::portal",
+  "app::pricing_catalog_service",
+  "app::service",
+  "app::web",
+  "cylinder_quote_engine/data/PricingData",
+  "werkzeug/security"
+]

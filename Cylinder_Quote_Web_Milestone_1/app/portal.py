@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, url_for, flash
 from datetime import datetime
 from functools import wraps
 from os import name
+from pathlib import Path
 
 from flask import (
     Blueprint,
@@ -11,10 +12,11 @@ from flask import (
     render_template,
     request,
     send_file,
+    send_from_directory,
     session,
     url_for,
 )
-from sqlalchemy import func, or_, select, update
+from sqlalchemy import case, func, or_, select, update
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -45,6 +47,7 @@ from .pricing_catalog_service import (
     resolve_conflict,
     restore_price_change,
     update_catalog_part,
+    update_catalog_inventory_bulk,
     update_pricing_amount,
 )
 from .quote_service import quote_to_json
@@ -144,10 +147,29 @@ def total_for(quote):
 def status_label(value):
     value = (value or "pending_approval").lower().replace("-", "_")
 
+    labels = {
+        "pending_approval": "Pending Approval",
+        "approved": "Approved",
+        "denied": "Denied",
+        "canceled": "Canceled",
+    }
+    if value in labels:
+        return labels[value]
+
+    return value.replace("_", " ").title()
+
+
+def customer_status_label(value):
+    """Collapse internal quote states into the four customer-facing labels."""
+    value = (value or "pending_approval").lower().replace("-", "_")
+
     if value == "approved":
         return "Approved"
-
-    return "Approval Pending"
+    if value == "denied":
+        return "Denied"
+    if value == "canceled":
+        return "Canceled"
+    return "Pending Approval"
 
 
 def safe_next(default_endpoint):
@@ -161,6 +183,13 @@ def safe_next(default_endpoint):
         return target
 
     return url_for(default_endpoint)
+
+
+def account_directory_redirect():
+    endpoint = request.form.get("return_to")
+    if endpoint == "customer_accounts":
+        return url_for("portal.customer_accounts")
+    return url_for("portal.manage_users")
 
 
 @portal_bp.get("/")
@@ -243,7 +272,7 @@ def login(role):
                 session["role"] = user.role
 
                 if role == "customer":
-                    endpoint = "portal.customer_history"
+                    endpoint = "portal.customer_dashboard"
                 else:
                     endpoint = "portal.employee_dashboard"
 
@@ -453,31 +482,66 @@ def forgot_access():
     )
 
 
-@portal_bp.get("/customer/history")
+@portal_bp.get("/customer/dashboard")
 @require_role("customer")
-def customer_history():
+def customer_dashboard():
     user = signed_in_user()
 
     with get_session() as db:
         quotes = db.execute(
             select(Quote)
             .where(_customer_quote_filter(user))
-            .order_by(Quote.created_at.desc())
+            .order_by(
+                case((Quote.status == "canceled", 1), else_=0),
+                Quote.created_at.desc(),
+            )
         ).scalars().all()
 
         rows = [
             (
                 quote,
                 total_for(quote),
-                status_label(quote.status),
+                customer_status_label(quote.status),
             )
             for quote in quotes
         ]
 
     return render_template(
-        "customer_history.html",
+        "customer_dashboard.html",
         user=user,
         rows=rows,
+    )
+
+
+@portal_bp.get("/customer/dashboard.css")
+def customer_dashboard_css():
+    return send_from_directory(
+        Path(__file__).resolve().parent / "customer dashboard",
+        "customer_dashboard.css",
+    )
+
+
+@portal_bp.get("/customer/quote-form.css")
+def customer_quote_css():
+    return send_from_directory(
+        Path(__file__).resolve().parent / "customer_quote_form",
+        "customer_quote_form.css",
+    )
+
+
+@portal_bp.get("/customer/quote-form.js")
+def customer_quote_form_js():
+    return send_from_directory(
+        Path(__file__).resolve().parent / "customer_quote_form",
+        "customer_quote_form.js",
+    )
+
+
+@portal_bp.get("/employee/dashboard.css")
+def employee_dashboard_css():
+    return send_from_directory(
+        Path(__file__).resolve().parent / "Employee_dashboard",
+        "Employees_dashboard.css",
     )
 
 
@@ -497,8 +561,8 @@ def employee_dashboard():
     month_start = datetime(now.year, now.month, 1)
 
     with get_session() as db:
-        # Fetch customer account requests awaiting employee approval.
-        pending_users = db.execute(
+        # Fetch new account requests that are awaiting employee approval (not yet assigned to any employee)
+        new_accept_users = db.execute(
             select(User)
             .where(
                 User.role.in_(["customer", "employee"]),
@@ -506,6 +570,7 @@ def employee_dashboard():
                 User.approval_decided_at.is_(None),
             )
             .order_by(User.created_at.desc())
+            .limit(25)
         ).scalars().all()
 
         quotes_this_month = db.execute(
@@ -525,17 +590,38 @@ def employee_dashboard():
         ).scalars().all()
         approved_orders_count_this_month = len(approved_quotes_this_month)
 
-        # Pending-approval queue for quotes
+        # New accept requests - quotes that are pending approval but not yet assigned to any employee
+        new_accept_quotes = db.execute(
+            select(Quote)
+            .where(
+                Quote.status.in_(["new", "pending_approval"]),
+                Quote.assigned_employee_user_id.is_(None),
+            )
+            .order_by(Quote.created_at.asc())
+            .limit(25)
+        ).scalars().all()
+        new_accept_queue = [
+            {
+                "id": quote.id,
+                "quote_id": quote.quote_number,
+                "model_code": quote.model_code,
+                "customer_name": quote.customer_name,
+                "created_at": quote.created_at,
+                "status": quote.status,
+            }
+            for quote in new_accept_quotes
+        ]
+
+        # Pending-approval queue for quotes already accepted by the current user.
+        # Unassigned quotes belong only in the New Accept Request section.
         pending_quotes = db.execute(
             select(Quote)
             .where(
-                Quote.status == "pending_approval",
-                or_(
-                    Quote.assigned_employee_user_id.is_(None),
-                    Quote.assigned_employee_user_id == user.id,
-                ),
+                Quote.status.in_(["accepted", "pending_approval"]),
+                Quote.assigned_employee_user_id == user.id,
             )
             .order_by(Quote.created_at.asc())
+            .limit(25)
         ).scalars().all()
         pending_queue = [
             {
@@ -544,7 +630,7 @@ def employee_dashboard():
                 "model_code": quote.model_code,
                 "customer_name": quote.customer_name,
                 "created_at": quote.created_at,
-                "claimed_by_me": quote.assigned_employee_user_id == user.id,
+                "status": quote.status,
             }
             for quote in pending_quotes
         ]
@@ -554,6 +640,7 @@ def employee_dashboard():
             .where(
                 Quote.assigned_employee_user_id == user.id,
                 Quote.customer_update_pending.is_(True),
+                Quote.status != "canceled",
             )
             .order_by(Quote.edited_at.desc())
         ).scalars().all()
@@ -618,8 +705,14 @@ def employee_dashboard():
                 .limit(50)
             ).scalars().all()
 
+    dashboard_template = (
+        "Admin_dashboard.html"
+        if user.access_level == "admin"
+        else "employee_dashboard.html"
+    )
+
     return render_template(
-        "employee_dashboard.html",
+        dashboard_template,
         user=user,
         rows=rows,
         query=query,
@@ -627,15 +720,16 @@ def employee_dashboard():
         quotes_this_month=quotes_this_month,
         approved_orders_count_this_month=approved_orders_count_this_month,
         current_month_label=month_start.strftime("%B"),
+        new_accept_users=new_accept_users,
+        new_accept_queue=new_accept_queue,
         pending_queue=pending_queue,
         updated_queue=updated_queue,
-        pending_users=pending_users,
     )
 
 @portal_bp.post("/employee/quotes/<int:quote_id>/accept")
 @require_role("employee")
 def accept_pending_quote(quote_id: int):
-    """Race-safe claim of an unassigned pending-approval quote."""
+    """Race-safe acceptance of an unassigned new quote."""
     user = signed_in_user()
 
     with get_session() as db:
@@ -643,10 +737,11 @@ def accept_pending_quote(quote_id: int):
             update(Quote)
             .where(
                 Quote.id == quote_id,
-                Quote.status == "pending_approval",
+                Quote.status.in_(["new", "pending_approval"]),
                 Quote.assigned_employee_user_id.is_(None),
             )
             .values(
+                status="accepted",
                 assigned_employee_user_id=user.id,
                 assigned_at=datetime.utcnow(),
             )
@@ -701,7 +796,7 @@ def employee_history():
                     Quote.assigned_employee_user_id == user.id,
                 )
             )
-            .where(Quote.status != "pending_approval")
+            .where(Quote.status.notin_(["accepted", "pending_approval", "canceled"]))
         )
         if query:
             like = f"%{query}%"
@@ -723,8 +818,17 @@ def employee_history():
                 )
             )
 
+        order_number = func.json_extract(Quote.order_form_snapshot, "$.order_number")
+        order_submission_priority = case(
+            (func.coalesce(order_number, "") == "", 0),
+            else_=1,
+        )
         quotes = db.execute(
-            stmt.order_by(Quote.created_at.desc())
+            stmt.order_by(
+                case((Quote.status == "denied", 1), else_=0),
+                order_submission_priority,
+                Quote.created_at.desc(),
+            ).limit(25)
         ).scalars().all()
 
         rows = [
@@ -751,7 +855,7 @@ def employee_quote_history():
     query = (request.args.get("q") or "").strip()
 
     with get_session() as db:
-        stmt = select(Quote)
+        stmt = select(Quote).where(Quote.status != "canceled")
         if query:
             like = f"%{query}%"
             # Users live in a separate database file, so resolve matching
@@ -770,8 +874,22 @@ def employee_quote_history():
                     func.json_extract(Quote.order_form_snapshot, "$.order_number").ilike(like),
                 )
             )
+        quote_action_priority = case(
+            (
+                or_(
+                    Quote.status != "pending_approval",
+                    Quote.assigned_employee_user_id == user.id,
+                ),
+                0,
+            ),
+            else_=1,
+        )
         quotes = db.execute(
-            stmt.order_by(Quote.created_at.desc()).limit(200)
+            stmt.order_by(
+                case((Quote.status == "denied", 1), else_=0),
+                quote_action_priority,
+                Quote.created_at.desc(),
+            ).limit(25)
         ).scalars().all()
 
         rows = [
@@ -791,17 +909,10 @@ def employee_quote_history():
 @require_role("customer")
 def customer_quote_entry():
     user = signed_in_user()
-    # A quote_id (opening a saved quote) or draft flag (from the "Quote" button)
-    # goes straight to the dedicated Quote Form page instead of the calculator.
-    if request.args.get("quote_id") or request.args.get("draft"):
-        return render_template(
-            "quote_form_customer.html",
-            current_user_name=user.display_name if user else "",
-            prefill_customer_name=user.company_name or user.display_name or "",
-            prefill_customer_address=user.billing_address or user.shipping_address or "",
-        )
+    # Customer quote entry is the calculator only. The dedicated customer
+    # quote-form route is the sole route that renders the canonical form.
     return render_template(
-        "index.html",
+        "customer_calculator.html",
         portal_mode="customer",
         current_user_name=user.display_name if user else "",
         prefill_customer_name=user.company_name or user.display_name or "",
@@ -809,6 +920,24 @@ def customer_quote_entry():
         assigned_promo_code=user.assigned_promo_code or "",
         assigned_discount_percent=user.assigned_discount_percent,
     )
+
+
+@portal_bp.get("/customer/quote-form")
+@require_role("customer")
+def customer_quote_form():
+    user = signed_in_user()
+    return render_template(
+        "customer_quote_form/customer_quote_form.html",
+        current_user_name=user.display_name if user else "",
+        prefill_customer_name=user.company_name or user.display_name or "",
+        prefill_customer_address=user.billing_address or user.shipping_address or "",
+        is_existing_quote=bool(request.args.get("quote_id") or request.args.get("quote_number")) and request.args.get("new") != "1",
+    )
+
+
+@portal_bp.get("/quote_form_customer")
+def legacy_customer_quote_form():
+    return redirect(url_for("portal.customer_quote_form", **request.args.to_dict(flat=True)))
 
 
 @portal_bp.get("/employee/quote-entry")
@@ -826,11 +955,11 @@ def employee_quote_entry():
 
     if quote_id or request.args.get("draft"):
         return render_template(
-            "quote_form_employee.html",
+            "employee_quote_forms.html",
             current_user_name=user.display_name if user else "",
         )
     return render_template(
-        "index.html",
+        "employee_calculator.html",
         portal_mode="employee",
         current_user_name=user.display_name if user else "",
     )
@@ -984,14 +1113,38 @@ def portal_quote(quote_id):
 def manage_users():
     user = signed_in_user()
     with get_session() as db:
-        # Fetch all approved, active users
+        # Employee management stays separate from customer account management.
         approved_users = db.scalars(
             select(User)
-            .where(User.is_active == True)
+            .where(User.is_active == True, User.role == "employee")
             .order_by(User.display_name.asc())
         ).all()
-        
-    return render_template("manage_users.html", user=user, users=approved_users)
+
+    return render_template(
+        "manage_users.html",
+        user=user,
+        users=approved_users,
+        directory_type="employee",
+    )
+
+
+@portal_bp.get("/customer-accounts")
+@require_role("employee")
+def customer_accounts():
+    user = signed_in_user()
+    with get_session() as db:
+        customer_users = db.scalars(
+            select(User)
+            .where(User.is_active == True, User.role == "customer")
+            .order_by(User.display_name.asc())
+        ).all()
+
+    return render_template(
+        "customer_accounts.html",
+        user=user,
+        users=customer_users,
+        directory_type="customer",
+    )
 
 
 @portal_bp.get("/parts-catalog")
@@ -1076,8 +1229,9 @@ def preview_parts_catalog_workbook():
 def apply_parts_catalog_workbook():
     payload = request.get_json(silent=True) or {}
     try:
+        field = (payload.get("field") or "sell_price").strip()
         result = apply_workbook_price_update(
-            (payload.get("field") or "sell_price").strip(),
+            field,
             payload.get("updates") or [],
             actor=signed_in_user(),
             source_name=(payload.get("source_name") or "")[:120],
@@ -1175,6 +1329,21 @@ def update_parts_catalog_part(row_id: int):
     return jsonify({"ok": True, **result})
 
 
+@portal_bp.post("/parts-catalog/inventory/bulk")
+@require_admin
+def update_parts_catalog_inventory_bulk():
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = update_catalog_inventory_bulk(
+            payload.get("ids") or [],
+            payload.get("inventory"),
+            actor=signed_in_user(),
+        )
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
 @portal_bp.get("/parts-catalog/families")
 @require_admin
 def parts_catalog_families():
@@ -1237,6 +1406,17 @@ def assign_parts_catalog_family():
 def ai_usage_dashboard():
     user = signed_in_user()
 
+    def _parse_filter_date(raw_value: str | None):
+        if not raw_value:
+            return None
+        try:
+            return datetime.strptime(raw_value, "%Y-%m-%d").date()
+        except ValueError:
+            return None
+
+    start_date = _parse_filter_date(request.args.get("start_date"))
+    end_date = _parse_filter_date(request.args.get("end_date"))
+
     if request.method == "POST":
         try:
             ai_usage_service.add_credit_entry(
@@ -1248,12 +1428,12 @@ def ai_usage_dashboard():
             flash("Credit entry saved.", "success")
         except ai_usage_service.CreditEntryError as exc:
             flash(str(exc), "error")
-        return redirect(url_for("portal.ai_usage_dashboard"))
+        return redirect(url_for("portal.ai_usage_dashboard", **request.args.to_dict(flat=True)))
 
     return render_template(
-        "ai_usage_dashboard.html",
+        "ai_usage_dashboard_simplified.html",
         user=user,
-        data=ai_usage_service.get_dashboard_data(),
+        data=ai_usage_service.get_dashboard_data(start_date, end_date),
     )
 
 
@@ -1264,7 +1444,7 @@ def update_user_password(user_id: int):
 
     if not new_password:
         flash("Enter a new password before saving.", "error")
-        return redirect(url_for("portal.manage_users"))
+        return redirect(account_directory_redirect())
 
     with get_session() as db:
         target_user = db.get(User, user_id)
@@ -1273,7 +1453,7 @@ def update_user_password(user_id: int):
             db.commit()
             flash(f"Password updated for '{target_user.display_name}'.", "success")
 
-    return redirect(url_for("portal.manage_users"))
+    return redirect(account_directory_redirect())
 
 
 @portal_bp.post("/manage-users/<int:user_id>/access-level")
@@ -1284,7 +1464,7 @@ def update_user_access_level(user_id: int):
 
     if access_level not in allowed_levels:
         flash("Choose a valid access level.", "error")
-        return redirect(url_for("portal.manage_users"))
+        return redirect(account_directory_redirect())
 
     with get_session() as db:
         target_user = db.get(User, user_id)
@@ -1293,7 +1473,7 @@ def update_user_access_level(user_id: int):
             db.commit()
             flash(f"Access level updated for '{target_user.display_name}'.", "success")
 
-    return redirect(url_for("portal.manage_users"))
+    return redirect(account_directory_redirect())
 
 
 @portal_bp.post("/delete-user/<int:user_id>")
@@ -1307,12 +1487,11 @@ def delete_user(user_id: int):
             # Prevent an employee from deleting their own active account
             if current_user and current_user.id == target_user.id:
                 flash("You cannot delete your own active account.", "error")
-                return redirect(url_for("portal.manage_users"))
+                return redirect(account_directory_redirect())
                 
             db.delete(target_user)
             db.commit()
             flash(f"User account for '{target_user.display_name}' was permanently deleted.", "success")
             
     # Redirect back to caller (either dashboard or manage users page)
-    return_to = request.referrer or url_for("portal.manage_users")
-    return redirect(return_to)
+    return redirect(account_directory_redirect())

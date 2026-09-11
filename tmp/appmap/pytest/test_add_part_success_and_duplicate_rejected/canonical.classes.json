@@ -1,0 +1,13 @@
+[
+  "<templates>/CUsersKaneDocumentsProjectsCylinder_Quote_To_HtmlCylinder_Quote_Web_Milestone_1AppTemplatesParts_CatalogHtml",
+  "app",
+  "app::catalog",
+  "app::db",
+  "app::part_family_service",
+  "app::portal",
+  "app::pricing_catalog_service",
+  "app::service",
+  "app::web",
+  "cylinder_quote_engine/data/PricingData",
+  "werkzeug/security"
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "class": "app.pricing_catalog_service.PriceUpdateError",
+    "message": "That file could not be read as an Excel (.xlsx) workbook.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:1143"
+    ]
+  }
+]

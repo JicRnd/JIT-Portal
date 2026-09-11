@@ -38,6 +38,7 @@ def test_pricing_catalog_import_and_admin_page(tmp_path, monkeypatch):
             "base_assembly_prices",
             "catalog_parts",
             "common_modification_prices",
+            "part_families",
             "ph_va_prices",
             "price_change_log",
         }

@@ -1,0 +1,8 @@
+appmap_dir: tmp\appmap
+language: python
+name: Cylinder_Quote_To_HTML
+packages:
+- path: dimensions
+- path: cylinder_quote_engine
+- path: app
+record_test_cases: true

@@ -1,0 +1,5 @@
+[
+  "app/current_user",
+  "app/db",
+  "app/quote_service"
+]

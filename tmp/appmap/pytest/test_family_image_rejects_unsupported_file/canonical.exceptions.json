@@ -1,0 +1,9 @@
+[
+  {
+    "class": "app.part_family_service.FamilyError",
+    "message": "Image must be a PNG, JPG, GIF or WEBP file.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\part_family_service.py:340"
+    ]
+  }
+]

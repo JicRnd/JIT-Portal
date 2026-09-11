@@ -1,0 +1,35 @@
+{
+  "language": {
+    "name": "python",
+    "engine": "CPython",
+    "version": "3.11.9"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-python"
+  },
+  "git": {
+    "repository": "https://github.com/JicRnd/JIT-Portal.git",
+    "branch": "main",
+    "commit": "f2e7614efdedec25c863a0ef3f19a88ecda85fa4"
+  },
+  "frameworks": [
+    {
+      "name": "pytest",
+      "version": "9.1.1"
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.0.51"
+    }
+  ],
+  "source_location": "tests\\test_pdf_service.py:71",
+  "name": "build quote pdf context filters hidden line items",
+  "feature": "Build quote pdf context filters hidden line items",
+  "app": "Cylinder_Quote_To_HTML",
+  "recorder": {
+    "name": "pytest",
+    "type": "tests"
+  },
+  "test_status": "succeeded"
+}

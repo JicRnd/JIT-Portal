@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JIT Customer Quote Form</title>
+  <link rel="stylesheet" href="{{ url_for('portal.customer_quote_css', v='3') }}">
+</head>
+<body class="customer-mode"
+      data-portal-mode="customer"
+      data-current-user-name="{{ current_user_name|default('') }}"
+      data-prefill-customer-name="{{ prefill_customer_name|default('') }}"
+      data-prefill-customer-address="{{ prefill_customer_address|default('') }}">
+  <main class="quote-form-page">
+    <div class="qf-toolbar">
+      
+      <button type="button" id="newQuoteButton" class="preview-btn primary">New Quote</button>
+      <span class="quote-zoom-controls" aria-label="Quote Form zoom controls">
+        <button type="button" id="quoteZoomOutButton" class="preview-btn zoom-icon-btn" aria-label="Zoom Quote Form out"><span aria-hidden="true">&#128269;</span><span aria-hidden="true">&minus;</span></button>
+        <output id="quoteZoomLevel" class="quote-zoom-level" aria-live="polite">100%</output>
+        <button type="button" id="quoteZoomInButton" class="preview-btn zoom-icon-btn" aria-label="Zoom Quote Form in"><span aria-hidden="true">&#128269;</span><span aria-hidden="true">+</span></button>
+      </span>
+      <button type="button" id="verifyQuoteButton" class="preview-btn">Verify</button>
+      <button type="button" id="saveQuoteButton" class="preview-btn primary">{{ 'Update Order' if is_existing_quote else 'Order Now' }}</button>
+      {% if is_existing_quote %}
+      <button type="button" id="cancelOrderButton" class="preview-btn">Cancel</button>
+      {% endif %}
+      <span class="qf-toolbar-meta"><strong id="pv_status">&mdash;</strong></span>
+      <span id="verifyMessage" class="verify-message" role="status" aria-live="polite"></span>
+      <span id="previewErrorMessage" class="error" role="alert"></span>
+      <a href="{{ url_for('portal.customer_dashboard') }}" id="employeeDashboardButton" class="preview-btn qf-toolbar-dashboard">Dashboard</a>
+    </div>
+
+    <div class="excel-quote-sheet" aria-label="Cylinder Quote Form">
+      <header class="xq-header">
+        <div class="xq-logo-wrap">
+          <img class="xq-logo" src="{{ url_for('quote_image', filename='quote_form_logo.png') }}" alt="JIT Cylinders">
+        </div>
+        <h1>Quote Form</h1>
+      </header>
+
+      <section class="xq-customer">
+        <div class="xq-customer-fields">
+          <label>Customer</label><input id="pv_customer_name" type="text" autocomplete="off">
+          <label>POC:</label><input id="pv_person_of_contact" type="text" autocomplete="off">
+          <label>Address:</label><input id="pv_customer_address" type="text" autocomplete="off">
+          <label>Phone/Email:</label><input id="pv_customer_contact" type="text" autocomplete="off">
+          <label>Attn:</label><input id="pv_customer_attn" type="text" autocomplete="off">
+        </div>
+        <div class="xq-meta-stack">
+          <table class="xq-meta-table xq-quote-meta">
+            <tr><th>Quote</th><td id="pv_quote_number">&mdash;</td></tr>
+            <tr><th>Date</th><td id="pv_created_at">&mdash;</td></tr>
+            <tr><th>Terms</th><td><input id="pv_terms" value="Net 30" aria-label="Terms"></td></tr>
+          </table>
+          <table class="xq-meta-table xq-side-table">
+            <tr><th>Days:</th><td><input id="pv_days" type="number" min="0" value="30" aria-label="Quoted delivery days"></td></tr>
+            <tr><th>Ref:</th><td><input id="pv_reference_notes" type="text" autocomplete="off"></td></tr>
+            <tr><th>FOB</th><td><input id="pv_fob" value="Hartselle, AL" aria-label="FOB location"></td></tr>
+          </table>
+        </div>
+      </section>
+
+      <section class="xq-grid">
+        <div class="xq-head xq-desc-head">Description</div>
+        <div class="xq-head xq-qty-head">Qty</div>
+        <div class="xq-head xq-list-head">List</div>
+        <div class="xq-head xq-discount-head">Discount</div>
+        <div class="xq-head xq-net-head">Net Each</div>
+
+        <div class="xq-label row-series">Series</div>
+        <div class="xq-value row-series" id="pv_series_desc">&mdash;</div>
+        <div class="xq-qty row-series"><input id="pv_quantity" type="number" min="1" step="1" value="1" aria-label="Cylinder quantity"></div>
+        <div class="xq-list row-series" id="pv_quote_list_price">&mdash;</div>
+        <div class="xq-discount row-series" id="pv_discount">&mdash;</div>
+        <div class="xq-net row-series"><span id="pv_quote_net_each">&mdash;</span> - <span id="pv_net_days">30</span> Days</div>
+
+        <div class="xq-label row-model">Model Code</div>
+        <div class="xq-value row-model" id="pv_model_code">&mdash;</div>
+        <div class="xq-label row-expedited">Expedited - Emergency</div>
+        <div class="xq-wide-price row-expedited"><span id="pv_expedited_price">&mdash;</span> (<span id="pv_expedited_days">15</span> Days) &nbsp; <span id="pv_emergency_price">&mdash;</span> (NOW)</div>
+
+        <div class="xq-label row-bore">Bore Size (&quot;)</div>
+        <div class="xq-value row-bore" id="pv_bore">&mdash;</div>
+        <div class="xq-label row-cares-price">JIT Foster Care Program*</div>
+        <div class="xq-wide-price row-cares-price"><span id="pv_cares_price">&mdash;</span> - <span id="pv_cares_days">30</span> Days</div>
+
+        <div class="xq-label row-mount">Mount</div>
+        <div class="xq-value row-mount" id="pv_mount">&mdash;</div>
+        <div class="xq-repair row-repair">
+          <div class="xq-repair-title">Recommended Cylinder Components</div>
+          <label>Piston &amp; Rod Assembly<input id="pv_repair_assembly" value="N/A" readonly></label>
+          <label><span id="pv_repair_rod_label">Hyd Rod Seal Kit</span><input id="pv_repair_rod_kit" value="N/A" readonly></label>
+          <label><span id="pv_repair_piston_label">Hyd Piston Seal Kit</span><input id="pv_repair_piston_kit" value="N/A" readonly></label>
+          <label><span id="pv_repair_gland_label">Hyd Gland Seal Kit</span><input id="pv_repair_gland_kit" value="N/A" readonly></label>
+          <label>Cylinder Weight<input id="pv_weight" placeholder="&mdash;" readonly></label>
+          <label><span>Push @ <span id="pv_pressure_push">0</span> PSI</span><span id="pv_push_lbs">0 lbs</span></label>
+          <label><span>Pull @ <span id="pv_pressure_pull">0</span> PSI</span><span id="pv_pull_lbs">0 lbs</span></label>
+        </div>
+
+        <div class="xq-label row-rod">Rod Size (&quot;)</div><div class="xq-value row-rod" id="pv_rod_diameter">&mdash;</div>
+        <div class="xq-label row-cushions">Cushions</div><div class="xq-value row-cushions" id="pv_cushion">&mdash;</div>
+        <div class="xq-label row-ports">Ports</div><div class="xq-value row-ports" id="pv_port_code">&mdash;</div>
+        <div class="xq-label row-stroke">Stroke (&quot;)</div><div class="xq-value row-stroke" id="pv_stroke">&mdash;</div>
+        <div class="xq-label row-thread">Rod Thread</div><div class="xq-value row-thread" id="pv_rod_style">&mdash;</div>
+        <div class="xq-label row-seals">Seals</div><div class="xq-value row-seals" id="pv_seal_code">&mdash;</div>
+        <div class="xq-diagram row-diagram" aria-label="Cylinder dimension diagram">
+          <div class="xq-drawing-wrap">
+            <img src="{{ url_for('quote_image', filename='Quoteformdrawing.png') }}" alt="Front and side cylinder dimension drawing">
+          </div>
+          <div class="xq-dimensions">
+            <div class="xq-dim-left-wrap">
+              <div class="xq-dim-left">
+                <label>E = <input id="pv_dim_e" readonly placeholder="&mdash;"></label>
+                <label>G = <input id="pv_dim_g" readonly placeholder="&mdash;"></label>
+                <label>J = <input id="pv_dim_j" readonly placeholder="&mdash;"></label>
+                <label>LB = <input id="pv_dim_lb" readonly placeholder="&mdash;"></label>
+                <label>TF = <input id="pv_dim_tf" readonly placeholder="&mdash;"></label>
+                <label>R = <input id="pv_dim_r" readonly placeholder="&mdash;"></label>
+                <label>FB = <input id="pv_dim_fb" readonly placeholder="&mdash;"></label>
+                <label>F = <input id="pv_dim_f" readonly placeholder="&mdash;"></label>
+              </div>
+            </div>
+            <div class="xq-dim-right-group">
+              <strong>Cylinder<br>Dimensions</strong>
+              <div class="xq-dim-right">
+                <label>A = <input id="pv_dim_a" placeholder="&mdash;"></label>
+                <label>WF = <input id="pv_dim_wf" placeholder="&mdash;"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="xq-comments row-comments">
+          <section class="xq-includes-panel" aria-label="Included options">
+            <div class="xq-label row-includes">Includes:</div>
+            <div id="pv_includes" class="xq-comments-includes" hidden></div>
+          </section>
+          <section class="xq-comments-panel" aria-label="Comments">
+            <label for="pv_comments">Comments:</label>
+            <textarea id="pv_comments" rows="5"></textarea>
+            <div class="xq-quoted-by">Quoted for <span id="pv_created_by_footer">&mdash;</span></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="xq-manual-section">
+        <h2>Additional Quoted Items</h2>
+        <div class="parts-header manual-header">
+          <span>Ref</span><span>Description</span><span>Qty</span><span>Unit Price</span><span>Total</span><span></span>
+        </div>
+        <div id="previewManualItems" class="manual-items"></div>
+        <button type="button" id="addManualItemButton" class="preview-btn secondary">+ Add Line Item</button>
+      </section>
+
+      <section class="xq-special-section">
+        <label for="pv_special_instructions">Special Instructions / Questions</label>
+        <textarea id="pv_special_instructions" rows="5"></textarea>
+      </section>
+
+      <footer class="xq-footer">
+        <div class="xq-footer-valid">*Quote is valid for 60 Days</div>
+        <div class="xq-footer-emergency">- For Emergency orders please call to verify achievable delivery.</div>
+        <div class="xq-footer-orders">- Orders of $25K+ are subject to JIT Progress Payment Terms</div>
+        <div class="xq-signature"><input id="pv_prepared_by" value="Matt McComb" aria-label="Prepared by"><span> - </span><input id="pv_prepared_title" value="Cylinder Application Eng." aria-label="Prepared by title"></div>
+        <div class="xq-terms">JIT Terms of Sale are available at www.jitindustries.com/terms.html</div>
+      </footer>
+    </div>
+  </main>
+
+  <script src="{{ url_for('portal.customer_quote_form_js', v='2') }}"></script>
+</body>
+</html>

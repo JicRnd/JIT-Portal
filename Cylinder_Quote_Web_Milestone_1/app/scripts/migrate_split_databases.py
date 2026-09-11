@@ -2,9 +2,9 @@
 
 Reads the existing ``instance/cylinder_quote.db`` in read-only mode and creates:
 
-* instance/Employee_Contacts.db
-* instance/Quote.db
-* instance/Order.db
+* Databases/Employee_Contacts.db
+* Databases/Quote.db
+* Databases/Order.db
 
 The original database is never modified.
 """
@@ -59,6 +59,10 @@ def project_root() -> Path:
 
 def instance_path() -> Path:
     return project_root() / "instance"
+
+
+def databases_path() -> Path:
+    return project_root() / "Databases"
 
 
 def source_db_path() -> Path:
@@ -327,10 +331,10 @@ def migrate() -> dict[str, Any]:
 
     # Create new databases.
     contacts_engine = create_engine_for_db(
-        instance_path() / "Employee_Contacts.db", EmployeeContactsBase
+        databases_path() / "Employee_Contacts.db", EmployeeContactsBase
     )
-    quote_engine = create_engine_for_db(instance_path() / "Quote.db", QuoteBase)
-    order_engine = create_engine_for_db(instance_path() / "Order.db", OrderBase)
+    quote_engine = create_engine_for_db(databases_path() / "Quote.db", QuoteBase)
+    order_engine = create_engine_for_db(databases_path() / "Order.db", OrderBase)
 
     ContactsSession = sessionmaker(bind=contacts_engine)
     QuoteSession = sessionmaker(bind=quote_engine)

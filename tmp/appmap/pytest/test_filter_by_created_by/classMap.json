@@ -1,0 +1,420 @@
+[
+  {
+    "name": "app",
+    "type": "package",
+    "children": [
+      {
+        "name": "current_user",
+        "type": "class",
+        "children": [
+          {
+            "name": "get_or_create_current_user",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:62"
+          },
+          {
+            "name": "_extract_display_name",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:24"
+          },
+          {
+            "name": "_normalize_display_name",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:17"
+          },
+          {
+            "name": "_get_or_create_user",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\current_user.py:37"
+          }
+        ]
+      },
+      {
+        "name": "db",
+        "type": "class",
+        "children": [
+          {
+            "name": "get_session",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:165"
+          },
+          {
+            "name": "get_session_factory",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:133"
+          },
+          {
+            "name": "get_quotes_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:109"
+          },
+          {
+            "name": "get_orders_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:117"
+          },
+          {
+            "name": "get_pricing_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:125"
+          },
+          {
+            "name": "get_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:93"
+          },
+          {
+            "name": "get_accounts_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:101"
+          }
+        ]
+      },
+      {
+        "name": "quote_service",
+        "type": "class",
+        "children": [
+          {
+            "name": "create_quote_snapshot",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+          },
+          {
+            "name": "_validate_manual_line_items",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:41"
+          },
+          {
+            "name": "_optional_str",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:20"
+          },
+          {
+            "name": "upsert_customer",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:78"
+          },
+          {
+            "name": "quote_to_json",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:338"
+          }
+        ]
+      },
+      {
+        "name": "service",
+        "type": "class",
+        "children": [
+          {
+            "name": "quote_inputs_from_payload",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:110"
+          },
+          {
+            "name": "_decimal",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:88"
+          },
+          {
+            "name": "_mapping_decimals",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:97"
+          },
+          {
+            "name": "_bool",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:80"
+          },
+          {
+            "name": "calculate_payload",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:170"
+          },
+          {
+            "name": "decimal_to_json",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:143"
+          },
+          {
+            "name": "compute_profit",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:18"
+          },
+          {
+            "name": "_calculate_dimensions",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\service.py:155"
+          }
+        ]
+      },
+      {
+        "name": "quote_numbering",
+        "type": "class",
+        "children": [
+          {
+            "name": "generate_quote_number",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_numbering.py:32"
+          },
+          {
+            "name": "_customer_initial",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_numbering.py:23"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cylinder_quote_engine",
+    "type": "package",
+    "children": [
+      {
+        "name": "data",
+        "type": "class",
+        "children": [
+          {
+            "name": "parse_dimension",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\data.py:18"
+          },
+          {
+            "name": "PricingData",
+            "type": "class",
+            "children": [
+              {
+                "name": "find_series_price",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\data.py:60"
+              },
+              {
+                "name": "_aliases",
+                "type": "function",
+                "static": true,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\data.py:56"
+              },
+              {
+                "name": "find_series_row",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\data.py:75"
+              }
+            ]
+          },
+          {
+            "name": "dec",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\data.py:10"
+          }
+        ]
+      },
+      {
+        "name": "engine",
+        "type": "package",
+        "children": [
+          {
+            "name": "QuotePricingEngine",
+            "type": "class",
+            "children": [
+              {
+                "name": "calculate",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:38"
+              },
+              {
+                "name": "_cushion_multiplier",
+                "type": "function",
+                "static": true,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:97"
+              },
+              {
+                "name": "_modification_total",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:157"
+              },
+              {
+                "name": "_legacy_ungated_modifications",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:120"
+              },
+              {
+                "name": "_accessory_total",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:246"
+              },
+              {
+                "name": "_rod_thread",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:217"
+              },
+              {
+                "name": "_accessory_bucket",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:228"
+              },
+              {
+                "name": "_special_parts_total",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:298"
+              },
+              {
+                "name": "_position_sensing",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:306"
+              },
+              {
+                "name": "model_code",
+                "type": "function",
+                "static": false,
+                "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:29"
+              }
+            ]
+          },
+          {
+            "name": "excel_roundup",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:10"
+          },
+          {
+            "name": "fmt_code_number",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\cylinder_quote_engine\\engine.py:18"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dimensions",
+    "type": "package",
+    "children": [
+      {
+        "name": "cylinder_dimension_tables",
+        "type": "class",
+        "children": [
+          {
+            "name": "get_cylinder_dimensions",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\dimensions\\cylinder_dimension_tables.py:330"
+          },
+          {
+            "name": "_to_decimal",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\dimensions\\cylinder_dimension_tables.py:323"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "database",
+    "name": "Database",
+    "children": [
+      {
+        "type": "query",
+        "name": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE lower(users.display_name) = ?"
+      },
+      {
+        "type": "query",
+        "name": "SAVEPOINT sa_savepoint_1"
+      },
+      {
+        "type": "query",
+        "name": "SELECT quotes.id \nFROM quotes \nWHERE quotes.quote_number = ?\n LIMIT ? OFFSET ?"
+      },
+      {
+        "type": "query",
+        "name": "INSERT INTO quotes (quote_number, status, customer_name, customer_address, customer_contact, customer_reference, comments, special_instructions, pricing_version, revision, quantity, discount, model_code, cylinder_inputs_snapshot, price_breakdown_snapshot, created_by_user_id, created_at, edited_by_user_id, edited_at, emailed_by_user_id, emailed_at, approved_by_user_id, approved_at, assigned_employee_user_id, assigned_at, customer_update_pending) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+      },
+      {
+        "type": "query",
+        "name": "RELEASE SAVEPOINT sa_savepoint_1"
+      },
+      {
+        "type": "query",
+        "name": "SELECT customers.id, customers.name, customers.address, customers.city_state_zip, customers.phone, customers.email, customers.created_at, customers.updated_at \nFROM customers \nWHERE lower(customers.name) = ?"
+      },
+      {
+        "type": "query",
+        "name": "INSERT INTO customers (name, address, city_state_zip, phone, email, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)"
+      },
+      {
+        "type": "query",
+        "name": "SELECT quote_line_items.id AS quote_line_items_id, quote_line_items.quote_id AS quote_line_items_quote_id, quote_line_items.reference_part_number AS quote_line_items_reference_part_number, quote_line_items.description AS quote_line_items_description, quote_line_items.quantity AS quote_line_items_quantity, quote_line_items.unit_price AS quote_line_items_unit_price, quote_line_items.extended_price AS quote_line_items_extended_price, quote_line_items.internal_note AS quote_line_items_internal_note, quote_line_items.show_on_customer_quote AS quote_line_items_show_on_customer_quote, quote_line_items.sort_order AS quote_line_items_sort_order \nFROM quote_line_items \nWHERE ? = quote_line_items.quote_id ORDER BY quote_line_items.sort_order"
+      },
+      {
+        "type": "query",
+        "name": "SELECT users.id AS users_id, users.display_name AS users_display_name, users.email AS users_email, users.username AS users_username, users.password_hash AS users_password_hash, users.role AS users_role, users.access_level AS users_access_level, users.company_name AS users_company_name, users.phone AS users_phone, users.phone_extension AS users_phone_extension, users.shipping_name AS users_shipping_name, users.shipping_address AS users_shipping_address, users.billing_address AS users_billing_address, users.shipping_same_as_billing AS users_shipping_same_as_billing, users.assigned_promo_code AS users_assigned_promo_code, users.assigned_discount_percent AS users_assigned_discount_percent, users.approval_status AS users_approval_status, users.approval_decided_at AS users_approval_decided_at, users.approval_decided_by_user_id AS users_approval_decided_by_user_id, users.is_active AS users_is_active, users.created_at AS users_created_at \nFROM users \nWHERE users.id = ?"
+      },
+      {
+        "type": "query",
+        "name": "SELECT quotes.id AS quotes_id, quotes.quote_number AS quotes_quote_number, quotes.status AS quotes_status, quotes.customer_name AS quotes_customer_name, quotes.customer_address AS quotes_customer_address, quotes.customer_contact AS quotes_customer_contact, quotes.customer_reference AS quotes_customer_reference, quotes.comments AS quotes_comments, quotes.special_instructions AS quotes_special_instructions, quotes.order_form_snapshot AS quotes_order_form_snapshot, quotes.pricing_version AS quotes_pricing_version, quotes.revision AS quotes_revision, quotes.quantity AS quotes_quantity, quotes.discount AS quotes_discount, quotes.model_code AS quotes_model_code, quotes.cylinder_inputs_snapshot AS quotes_cylinder_inputs_snapshot, quotes.price_breakdown_snapshot AS quotes_price_breakdown_snapshot, quotes.created_by_user_id AS quotes_created_by_user_id, quotes.created_at AS quotes_created_at, quotes.edited_by_user_id AS quotes_edited_by_user_id, quotes.edited_at AS quotes_edited_at, quotes.emailed_by_user_id AS quotes_emailed_by_user_id, quotes.emailed_at AS quotes_emailed_at, quotes.approved_by_user_id AS quotes_approved_by_user_id, quotes.approved_at AS quotes_approved_at, quotes.assigned_employee_user_id AS quotes_assigned_employee_user_id, quotes.assigned_at AS quotes_assigned_at, quotes.customer_update_pending AS quotes_customer_update_pending \nFROM quotes \nWHERE quotes.id = ?"
+      },
+      {
+        "type": "query",
+        "name": "UPDATE quotes SET created_at=? WHERE quotes.id = ?"
+      },
+      {
+        "type": "query",
+        "name": "UPDATE quotes SET status=?, created_at=? WHERE quotes.id = ?"
+      },
+      {
+        "type": "query",
+        "name": "SELECT users.id \nFROM users \nWHERE lower(users.display_name) LIKE lower(?)"
+      },
+      {
+        "type": "query",
+        "name": "SELECT count(quotes.id) AS count_1 \nFROM quotes \nWHERE quotes.created_by_user_id IN (?)"
+      },
+      {
+        "type": "query",
+        "name": "SELECT quotes.id, quotes.quote_number, quotes.status, quotes.customer_name, quotes.customer_address, quotes.customer_contact, quotes.customer_reference, quotes.comments, quotes.special_instructions, quotes.order_form_snapshot, quotes.pricing_version, quotes.revision, quotes.quantity, quotes.discount, quotes.model_code, quotes.cylinder_inputs_snapshot, quotes.price_breakdown_snapshot, quotes.created_by_user_id, quotes.created_at, quotes.edited_by_user_id, quotes.edited_at, quotes.emailed_by_user_id, quotes.emailed_at, quotes.approved_by_user_id, quotes.approved_at, quotes.assigned_employee_user_id, quotes.assigned_at, quotes.customer_update_pending \nFROM quotes \nWHERE quotes.created_by_user_id IN (?) ORDER BY quotes.created_at DESC\n LIMIT ? OFFSET ?"
+      },
+      {
+        "type": "query",
+        "name": "SELECT users.id AS users_id, users.display_name AS users_display_name, users.email AS users_email, users.username AS users_username, users.password_hash AS users_password_hash, users.role AS users_role, users.access_level AS users_access_level, users.company_name AS users_company_name, users.phone AS users_phone, users.phone_extension AS users_phone_extension, users.shipping_name AS users_shipping_name, users.shipping_address AS users_shipping_address, users.billing_address AS users_billing_address, users.shipping_same_as_billing AS users_shipping_same_as_billing, users.assigned_promo_code AS users_assigned_promo_code, users.assigned_discount_percent AS users_assigned_discount_percent, users.approval_status AS users_approval_status, users.approval_decided_at AS users_approval_decided_at, users.approval_decided_by_user_id AS users_approval_decided_by_user_id, users.is_active AS users_is_active, users.created_at AS users_created_at \nFROM users \nWHERE users.id IN (?)"
+      }
+    ]
+  }
+]

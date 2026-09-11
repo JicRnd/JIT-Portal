@@ -8,14 +8,20 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 Base = declarative_base()
 
+# Non-business application telemetry is isolated from the five business
+# databases. The runtime never uses the legacy instance database.
 DEFAULT_DATABASE_PATH = str(
-    Path(__file__).resolve().parents[1] / "instance" / "cylinder_quote.db"
+    Path(__file__).resolve().parents[1] / "Databases" / "Application.db"
 )
 
 # All employee/customer account and login records live in their own dedicated
 # SQLite file, separate from quotes/customers, so account data stays isolated.
 DEFAULT_ACCOUNTS_DATABASE_PATH = str(
     Path(__file__).resolve().parents[1] / "Databases" / "User_accounts.db"
+)
+
+DEFAULT_CONTACTS_DATABASE_PATH = str(
+    Path(__file__).resolve().parents[1] / "Databases" / "Employee_Contacts.db"
 )
 
 # Saved quotes/orders and everything tied to them live in their own dedicated
@@ -38,10 +44,31 @@ DEFAULT_PRICING_DATABASE_PATH = str(
 
 _engine = None
 _accounts_engine = None
+_contacts_engine = None
 _quotes_engine = None
 _orders_engine = None
 _pricing_engine = None
 _Session = None
+
+
+def reset_engines() -> None:
+    """Dispose cached engines and clear the session factory.
+
+    This is primarily useful for tests that switch database paths between
+    application instances.
+    """
+    global _engine, _accounts_engine, _contacts_engine, _quotes_engine, _orders_engine, _pricing_engine, _Session
+
+    for engine in (_engine, _accounts_engine, _contacts_engine, _quotes_engine, _orders_engine, _pricing_engine):
+        if engine is not None:
+            engine.dispose()
+    _engine = None
+    _accounts_engine = None
+    _contacts_engine = None
+    _quotes_engine = None
+    _orders_engine = None
+    _pricing_engine = None
+    _Session = None
 
 
 def _resolve_database_path() -> str:
@@ -52,6 +79,11 @@ def _resolve_database_path() -> str:
 def _resolve_accounts_database_path() -> str:
     """Resolve the user-accounts database path from the environment each time."""
     return os.environ.get("ACCOUNTS_DATABASE_PATH", DEFAULT_ACCOUNTS_DATABASE_PATH)
+
+
+def _resolve_contacts_database_path() -> str:
+    """Resolve the employee/customer contacts database path."""
+    return os.environ.get("CONTACTS_DATABASE_PATH", DEFAULT_CONTACTS_DATABASE_PATH)
 
 
 def _resolve_quotes_database_path() -> str:
@@ -85,7 +117,7 @@ def _build_sqlite_engine(db_path: Path):
     @event.listens_for(engine, "connect")
     def _set_sqlite_pragma(dbapi_conn, _connection_record):
         dbapi_conn.execute("PRAGMA foreign_keys = ON")
-        dbapi_conn.execute("PRAGMA journal_mode = DELETE")
+        dbapi_conn.execute("PRAGMA busy_timeout = 30000")
 
     return engine
 
@@ -104,6 +136,14 @@ def get_accounts_engine():
     if _accounts_engine is None:
         _accounts_engine = _build_sqlite_engine(Path(_resolve_accounts_database_path()))
     return _accounts_engine
+
+
+def get_contacts_engine():
+    """Return the singleton engine for Employee_Contacts.db."""
+    global _contacts_engine
+    if _contacts_engine is None:
+        _contacts_engine = _build_sqlite_engine(Path(_resolve_contacts_database_path()))
+    return _contacts_engine
 
 
 def get_quotes_engine():
@@ -156,7 +196,11 @@ def get_session_factory():
 
         _Session = sessionmaker(
             bind=get_engine(),
-            binds={models_db.User: get_accounts_engine(), **quote_binds},
+            binds={
+                models_db.User: get_accounts_engine(),
+                models_db.Customer: get_contacts_engine(),
+                **quote_binds,
+            },
             expire_on_commit=False,
         )
     return _Session
@@ -178,11 +222,13 @@ def init_db():
 
     engine = get_engine()
     accounts_engine = get_accounts_engine()
+    contacts_engine = get_contacts_engine()
     quotes_engine = get_quotes_engine()
     orders_engine = get_orders_engine()
     pricing_engine = get_pricing_engine()
 
     user_tables = [models_db.User.__table__]
+    contact_tables = [models_db.Customer.__table__]
     quote_tables = [
         models_db.Quote.__table__,
         models_db.QuoteLineItem.__table__,
@@ -203,10 +249,11 @@ def init_db():
     other_tables = [
         table
         for table in Base.metadata.sorted_tables
-        if table not in user_tables and table not in quote_tables and table not in order_tables and table not in pricing_tables
+        if table not in user_tables and table not in contact_tables and table not in quote_tables and table not in order_tables and table not in pricing_tables
     ]
 
     Base.metadata.create_all(bind=accounts_engine, tables=user_tables)
+    Base.metadata.create_all(bind=contacts_engine, tables=contact_tables)
     Base.metadata.create_all(bind=quotes_engine, tables=quote_tables)
     Base.metadata.create_all(bind=orders_engine, tables=order_tables)
     Base.metadata.create_all(bind=pricing_engine, tables=pricing_tables)
@@ -252,6 +299,7 @@ def init_db():
             connection.exec_driver_sql("ALTER TABLE quotes ADD COLUMN special_instructions TEXT")
         required_quote_columns = {
             "customer_address": "TEXT",
+            "person_of_contact": "TEXT",
             "customer_contact": "TEXT",
             "comments": "TEXT",
             "revision": "INTEGER NOT NULL DEFAULT 1",
@@ -292,14 +340,27 @@ def init_db():
             connection.exec_driver_sql("ALTER TABLE catalog_parts ADD COLUMN family_code VARCHAR(40)")
         if "vendors" not in catalog_part_columns:
             connection.exec_driver_sql("ALTER TABLE catalog_parts ADD COLUMN vendors TEXT")
+        if "inventory" not in catalog_part_columns:
+            connection.exec_driver_sql("ALTER TABLE catalog_parts ADD COLUMN inventory INTEGER")
 
         price_log_columns = {row[1] for row in connection.exec_driver_sql("PRAGMA table_info(price_change_log)")}
         if price_log_columns and "old_text" not in price_log_columns:
             connection.exec_driver_sql("ALTER TABLE price_change_log ADD COLUMN old_text TEXT")
             connection.exec_driver_sql("ALTER TABLE price_change_log ADD COLUMN new_text TEXT")
 
+    # Order status is kept separately from the quote status so Order.db can be
+    # queried independently for approval and fulfillment workflows.
+    with orders_engine.begin() as connection:
+        order_columns = {
+            row[1] for row in connection.exec_driver_sql("PRAGMA table_info(orders)")
+        }
+        if "status" not in order_columns:
+            connection.exec_driver_sql(
+                "ALTER TABLE orders ADD COLUMN status VARCHAR(30) NOT NULL DEFAULT 'pending_approval'"
+            )
+
     # Customer directory column rename: contact -> phone, plus email.
-    with engine.begin() as connection:
+    with contacts_engine.begin() as connection:
         customer_columns = {row[1] for row in connection.exec_driver_sql("PRAGMA table_info(customers)")}
         if "contact" in customer_columns and "phone" not in customer_columns:
             connection.exec_driver_sql("ALTER TABLE customers RENAME COLUMN contact TO phone")

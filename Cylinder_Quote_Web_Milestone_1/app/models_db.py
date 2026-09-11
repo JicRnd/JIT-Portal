@@ -95,6 +95,9 @@ class Order(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     quote_id: Mapped[int] = mapped_column(Integer, nullable=False, unique=True)
     quote_number: Mapped[str | None] = mapped_column(String(60), nullable=True)
+    status: Mapped[str] = mapped_column(
+        String(30), default="pending_approval", nullable=False
+    )
     order_form_snapshot: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=utc_now, nullable=False
@@ -163,6 +166,7 @@ class CatalogPart(Base):
     category: Mapped[str | None] = mapped_column(String(80), nullable=True)
     unit_cost: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
     sell_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    inventory: Mapped[int | None] = mapped_column(Integer, nullable=True)
     sell_price_source: Mapped[str | None] = mapped_column(String(255), nullable=True)
     inventory_cost_values: Mapped[str | None] = mapped_column(Text, nullable=True)
     shipvia_sell_values: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -287,13 +291,14 @@ class Quote(Base):
         String(60), unique=True, nullable=False
     )
     status: Mapped[str] = mapped_column(
-        String(30), default="draft", nullable=False
+        String(30), default="new", nullable=False
     )
 
     # Business/presentation snapshot fields. These are free-text because they
     # record what was printed on the quote, not a normalized customer master.
     customer_name: Mapped[str | None] = mapped_column(String(255), nullable=True)
     customer_address: Mapped[str | None] = mapped_column(Text, nullable=True)
+    person_of_contact: Mapped[str | None] = mapped_column(Text, nullable=True)
     customer_contact: Mapped[str | None] = mapped_column(Text, nullable=True)
     customer_reference: Mapped[str | None] = mapped_column(String(255), nullable=True)
     comments: Mapped[str | None] = mapped_column(Text, nullable=True)

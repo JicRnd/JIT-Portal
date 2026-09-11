@@ -67,7 +67,7 @@ class SplitQuote(QuoteBase):
         String(60), unique=True, nullable=False
     )
     status: Mapped[str] = mapped_column(
-        String(30), default="draft", nullable=False
+        String(30), default="new", nullable=False
     )
 
     # Presentation/business fields.

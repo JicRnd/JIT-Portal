@@ -1,0 +1,20 @@
+[
+  {
+    "name": "app",
+    "type": "package",
+    "children": [
+      {
+        "name": "pricing_catalog_service",
+        "type": "class",
+        "children": [
+          {
+            "name": "part_subgroup",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:333"
+          }
+        ]
+      }
+    ]
+  }
+]

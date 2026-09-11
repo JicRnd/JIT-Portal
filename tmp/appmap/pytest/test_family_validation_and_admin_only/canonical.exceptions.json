@@ -1,0 +1,39 @@
+[
+  {
+    "class": "app.part_family_service.FamilyError",
+    "message": "Configure a size-decoding rule before using {size} automatically.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\part_family_service.py:178",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\part_family_service.py:247"
+    ]
+  },
+  {
+    "class": "app.part_family_service.FamilyError",
+    "message": "Configure a size-decoding rule before using {size} automatically.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\part_family_service.py:247"
+    ]
+  },
+  {
+    "class": "app.part_family_service.FamilyError",
+    "message": "Family 'GV' already exists.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\part_family_service.py:247"
+    ]
+  },
+  {
+    "class": "app.part_family_service.FamilyError",
+    "message": "Unknown template variable '{bogus}'.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\part_family_service.py:178",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\part_family_service.py:247"
+    ]
+  },
+  {
+    "class": "app.part_family_service.FamilyError",
+    "message": "Unknown template variable '{bogus}'.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\part_family_service.py:247"
+    ]
+  }
+]

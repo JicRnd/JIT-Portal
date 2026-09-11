@@ -231,7 +231,7 @@ def test_pagination_page_size_capped_and_invalid_defaults(temp_db):
     assert data["total"] == 5
 
 
-def test_duplicate_quote_creates_new_draft_copy(temp_db):
+def test_duplicate_quote_creates_new_quote_copy(temp_db):
     client = temp_db.test_client()
     source = _create_quote(
         client,
@@ -267,7 +267,7 @@ def test_duplicate_quote_creates_new_draft_copy(temp_db):
     duplicate = data["quote"]
     assert duplicate["id"] != source["id"]
     assert duplicate["quote_number"] != source["quote_number"]
-    assert duplicate["status"] == "draft"
+    assert duplicate["status"] == "new"
     assert duplicate["revision"] == 1
     assert duplicate["created_by"] == "bob"
     assert duplicate["model_code"] == source["model_code"]

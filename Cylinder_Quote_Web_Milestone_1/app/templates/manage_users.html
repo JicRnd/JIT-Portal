@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Directory - JIT Portal</title>
+    <title>{{ 'Employee Accounts' if directory_type == 'employee' else 'Customer Accounts' }} - JIT Portal</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Portal Common CSS -->
@@ -30,7 +30,7 @@
 
 <div class="container my-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="h3 mb-0">Approved User Directory</h2>
+        <h2 class="h3 mb-0">{{ 'Employee Accounts' if directory_type == 'employee' else 'Customer Accounts' }}</h2>
         <a href="{{ url_for('portal.employee_dashboard') }}" class="btn btn-outline-secondary">
             &larr; Back to Dashboard
         </a>
@@ -57,8 +57,10 @@
                             <th>Company</th>
                             <th>Email / Username</th>
                             <th>Phone</th>
+                            {% if directory_type == 'employee' %}
                             <th>Role</th>
                             <th>Access Level</th>
+                            {% endif %}
                             <th>Password</th>
                             <th class="text-end px-3">Actions</th>
                         </tr>
@@ -69,6 +71,7 @@
                             <td class="px-3"><strong>{{ u.display_name }}</strong></td>
                             <td>{{ u.company_name or '—' }}</td>
                             <td>{{ u.email or u.username }}</td>
+                            {% if directory_type == 'employee' %}
                             <td>
                                 {{ u.phone or '—' }}
                                 {% if u.phone_extension %} x{{ u.phone_extension }}{% endif %}
@@ -79,26 +82,26 @@
                                 </span>
                             </td>
                             <td style="min-width: 180px;">
-                                {% if u.role == 'employee' %}
                                 <form method="POST" action="{{ url_for('portal.update_user_access_level', user_id=u.id) }}" class="d-flex gap-2 align-items-center">
+                                    <input type="hidden" name="return_to" value="{{ directory_type }}_accounts">
                                     <select name="access_level" class="form-select form-select-sm" aria-label="Access level for {{ u.display_name }}">
                                         <option value="standard" {% if (u.access_level or 'standard') == 'standard' %}selected{% endif %}>Standard User</option>
                                         <option value="admin" {% if u.access_level == 'admin' %}selected{% endif %}>Admin User</option>
                                     </select>
                                     <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
                                 </form>
-                                {% else %}
-                                <span class="text-muted">Customer</span>
-                                {% endif %}
                             </td>
+                            {% endif %}
                             <td style="min-width: 260px;">
                                 <form method="POST" action="{{ url_for('portal.update_user_password', user_id=u.id) }}" class="d-flex gap-2 align-items-center">
+                                    <input type="hidden" name="return_to" value="{{ directory_type }}_accounts">
                                     <input name="new_password" type="password" class="form-control form-control-sm" placeholder="New password" autocomplete="new-password" aria-label="New password for {{ u.display_name }}">
                                     <button type="submit" class="btn btn-sm btn-outline-primary">Set</button>
                                 </form>
                             </td>
                             <td class="text-end px-3">
                                 <form method="POST" action="{{ url_for('portal.delete_user', user_id=u.id) }}" onsubmit="return confirm('Are you sure you want to permanently delete {{ u.display_name }}?');" class="d-inline">
+                                    <input type="hidden" name="return_to" value="{{ directory_type }}_accounts">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">
                                         Delete
                                     </button>
@@ -107,7 +110,7 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="8" class="text-center text-muted py-4">No approved users found.</td>
+                            <td colspan="{{ 8 if directory_type == 'employee' else 6 }}" class="text-center text-muted py-4">No approved users found.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

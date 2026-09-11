@@ -1,0 +1,65 @@
+[
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_line_items[0].description is required",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_line_items[0].description is required",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:41",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_line_items[0].quantity cannot be negative",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_line_items[0].quantity cannot be negative",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:28",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:41",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_line_items[0].quantity cannot be negative",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:41",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_line_items[0].unit_price cannot be negative",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_line_items[0].unit_price cannot be negative",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:28",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:41",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  },
+  {
+    "class": "builtins.ValueError",
+    "message": "manual_line_items[0].unit_price cannot be negative",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:41",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\quote_service.py:101"
+    ]
+  }
+]

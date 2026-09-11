@@ -1,0 +1,6 @@
+[
+  {
+    "caller": "app/quote_numbering",
+    "callee": "SELECT quotes.id \nFROM quotes \nWHERE quotes.quote_number = ?\n LIMIT ? OFFSET ?"
+  }
+]

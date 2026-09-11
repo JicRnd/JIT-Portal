@@ -1,16 +1,9 @@
 # JIT Cylinder Quote HTML - Agent Instructions
 
-## Current milestone purpose
-This repository is the active replacement for the JIT Excel/VBA cylinder quoting workflow.
+## Project purpose
+This repository is the active JIT Cylinder Quote web application. Maintain and extend the existing application according to the user's current requests while preserving verified pricing behavior, existing workflows, database integrity, and regression-tested functionality.
 
-The CURRENT milestone is intentionally narrow:
-
-1. finish/stabilize the OrderEntry-style HTML calculator;
-2. preserve Pricing Engine v1.2 exactly;
-3. make the existing Quote button transfer the current calculated quote into an editable Quote Form HTML page;
-4. build local database persistence so the user can save that quote.
-
-Do not expand this milestone beyond those goals.
+Current user instructions override older historical scope statements when they conflict. Existing implemented features are considered valid project scope unless the user explicitly asks to remove them.
 
 ## Workspace root
 Expected Windows project root:
@@ -99,10 +92,8 @@ Appropriate presentation fields may be editable before saving, including custome
 
 If calculated cylinder pricing is manually overridden, preserve the original calculated value separately from the override rather than destroying it.
 
-## Database scope for this milestone
-The database exists ONLY to save quote records from the Quote Form HTML page.
-
-SQLite is acceptable for the first implementation. Use WAL mode, foreign keys, parameterized queries, and short transactions.
+## Database scope
+Use SQLite (or another persisted store only if explicitly requested). Use WAL mode, foreign keys, parameterized queries, and short transactions.
 
 Saved quote data should include enough of the current quote snapshot to preserve what was saved, such as:
 - quote identifier/number;
@@ -125,14 +116,8 @@ If the exact final JIT quote-number convention is not yet proven, isolate genera
 
 Do not scatter temporary numbering logic throughout the application.
 
-## Scope exception (2026-08-19)
-The user explicitly authorized, one time, building a shared pending-approval queue across employee dashboards with an Accept/assign button, overriding the "approval workflow or Approve button" restriction below for that feature only. Quote History UI was also separately requested and built. All other items in the out-of-scope list below still apply.
-
-## Scope exception (2026-08-20)
-The user explicitly authorized extending the shared pending-approval queue pattern to account provisioning: a "Dashboard" button on the order form; simplified employee sign-up (name/email/password + a "Location" dropdown, currently only "Hartselle, AL") that creates a cross-dashboard approval request instead of auto-creating the account; a customer sign-up approval request using the same pattern, which on approval notifies the customer's own page client-side (no email) and loads their dashboard; and a billing/shipping address UI restructure on the customer form (stored in existing customer DB columns). Actual email sending remains explicitly out of scope — only a no-op placeholder/hook may be added for a future email address/config. All other items in the out-of-scope list below still apply, including full user authentication infrastructure (SSO/OAuth/password reset) beyond this local approval-queue mechanism.
-
 ## Explicitly OUT OF SCOPE right now
-Do NOT build, scaffold, wire, or spend time on any of the following in this milestone:
+Do NOT build, scaffold, wire, or spend time on any of the following unless the user explicitly requests it:
 - Data1;
 - outbound HTTP transmission of quote data;
 - email sending;
@@ -141,7 +126,7 @@ Do NOT build, scaffold, wire, or spend time on any of the following in this mile
 - PDF generation;
 - Playwright/Chromium PDF setup;
 - customer-contact synchronization with external systems;
-- full user authentication/login system;
+- full user authentication/login system (SSO/OAuth/password reset);
 - PostgreSQL migration;
 - external integrations of any kind.
 
@@ -202,13 +187,3 @@ Preserve/update a simple run experience such as:
 
 The user should be able to launch the local calculator in a browser without manually starting several services.
 
-## Completion criteria for this milestone
-This milestone is complete only when:
-1. the OrderEntry calculator remains working and pricing tests pass;
-2. Quote opens the editable Quote Form HTML page;
-3. manual special-order items transfer correctly;
-4. Save Quote stores a full local snapshot in SQLite;
-5. transactional quote numbering works;
-6. no Quote History, Data1, approval, email, PDF, or outbound integration has been added;
-7. README documents exact Windows startup and database location;
-8. the agent reports tests run and pass/fail count.

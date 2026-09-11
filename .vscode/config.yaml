@@ -1,0 +1,16 @@
+model_list:
+  - model_name: qwen3-coder
+    litellm_params:
+      model: ollama/qwen3-coder:30b # Primary Qwen3-Coder model
+      api_base: http://localhost:11434
+      temperature: 0.2
+      top_p: 0.9
+  - model_name: vscode-chat
+    litellm_params:
+      model: ollama/llama3:latest # This is your cleanser model (or use ollama/mistral)
+      api_base: http://localhost:11434
+      system_prompt: >
+        You are a text sanitizer for VS Code. You will receive raw output from an upstream Qwen3-Coder model.
+        Your job is to strip out any broken streaming fragments, weird tool tokens, or raw XML tags, and 
+        format the final response into clean, beautiful Markdown for the chat window. 
+        CRITICAL: Keep all programming code blocks exactly as they are. Do not change the logic.

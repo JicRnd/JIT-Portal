@@ -1,0 +1,78 @@
+[
+  {
+    "name": "app",
+    "type": "package",
+    "children": [
+      {
+        "name": "db",
+        "type": "class",
+        "children": [
+          {
+            "name": "get_session",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:165"
+          },
+          {
+            "name": "get_session_factory",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:133"
+          },
+          {
+            "name": "get_quotes_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:109"
+          },
+          {
+            "name": "get_orders_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:117"
+          },
+          {
+            "name": "get_pricing_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:125"
+          },
+          {
+            "name": "get_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:93"
+          },
+          {
+            "name": "get_accounts_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:101"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "database",
+    "name": "Database",
+    "children": [
+      {
+        "type": "query",
+        "name": "-- 7 times\nINSERT INTO customers (name, address, city_state_zip, phone, email, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id"
+      },
+      {
+        "type": "query",
+        "name": "INSERT INTO users (display_name, email, username, password_hash, role, access_level, company_name, phone, phone_extension, shipping_name, shipping_address, billing_address, shipping_same_as_billing, assigned_promo_code, assigned_discount_percent, approval_status, approval_decided_at, approval_decided_by_user_id, is_active, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+      },
+      {
+        "type": "query",
+        "name": "SELECT customers.id, customers.name, customers.address, customers.city_state_zip, customers.phone, customers.email, customers.created_at, customers.updated_at \nFROM customers \nWHERE lower(customers.name) LIKE lower(?) OR lower(customers.address) LIKE lower(?) OR lower(customers.city_state_zip) LIKE lower(?) OR lower(customers.phone) LIKE lower(?) OR lower(customers.email) LIKE lower(?) ORDER BY customers.name\n LIMIT ? OFFSET ?"
+      },
+      {
+        "type": "query",
+        "name": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE users.role = ? AND users.email IS NOT NULL AND lower(users.email) = ?"
+      }
+    ]
+  }
+]

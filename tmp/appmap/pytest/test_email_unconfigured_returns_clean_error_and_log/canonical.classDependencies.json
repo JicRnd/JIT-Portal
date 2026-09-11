@@ -1,0 +1,50 @@
+[
+  {
+    "caller": "app/current_user",
+    "callee": "INSERT INTO users (display_name, email, username, password_hash, role, access_level, company_name, phone, phone_extension, shipping_name, shipping_address, billing_address, shipping_same_as_billing, assigned_promo_code, assigned_discount_percent, approval_status, approval_decided_at, approval_decided_by_user_id, is_active, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  },
+  {
+    "caller": "app/current_user",
+    "callee": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE lower(users.display_name) = ?"
+  },
+  {
+    "caller": "app/current_user",
+    "callee": "app/db"
+  },
+  {
+    "caller": "app/quote_numbering",
+    "callee": "SAVEPOINT sa_savepoint_1"
+  },
+  {
+    "caller": "app/quote_numbering",
+    "callee": "SELECT quotes.id \nFROM quotes \nWHERE quotes.quote_number = ?\n LIMIT ? OFFSET ?"
+  },
+  {
+    "caller": "app/quote_service",
+    "callee": "ROLLBACK TO SAVEPOINT sa_savepoint_1"
+  },
+  {
+    "caller": "app/quote_service",
+    "callee": "app/quote_numbering"
+  },
+  {
+    "caller": "app/quote_service",
+    "callee": "app/service"
+  },
+  {
+    "caller": "app/service",
+    "callee": "cylinder_quote_engine/data"
+  },
+  {
+    "caller": "app/service",
+    "callee": "cylinder_quote_engine/engine"
+  },
+  {
+    "caller": "app/service",
+    "callee": "dimensions/cylinder_dimension_tables"
+  },
+  {
+    "caller": "cylinder_quote_engine/engine",
+    "callee": "cylinder_quote_engine/data"
+  }
+]

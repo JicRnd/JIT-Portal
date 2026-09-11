@@ -1,0 +1,24 @@
+[
+  {
+    "class": "app.pricing_catalog_service.PriceUpdateError",
+    "message": "Part Number is required.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:898"
+    ]
+  },
+  {
+    "class": "app.pricing_catalog_service.PriceUpdateError",
+    "message": "Sell Price must be non-negative.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:886",
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:898"
+    ]
+  },
+  {
+    "class": "app.pricing_catalog_service.PriceUpdateError",
+    "message": "Sell Price must be non-negative.",
+    "stack": [
+      "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:898"
+    ]
+  }
+]

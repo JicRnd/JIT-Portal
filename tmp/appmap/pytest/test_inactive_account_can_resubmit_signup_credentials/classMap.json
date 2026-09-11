@@ -1,0 +1,111 @@
+[
+  {
+    "name": "app",
+    "type": "package",
+    "children": [
+      {
+        "name": "db",
+        "type": "class",
+        "children": [
+          {
+            "name": "get_session",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:165"
+          },
+          {
+            "name": "get_session_factory",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:133"
+          },
+          {
+            "name": "get_quotes_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:109"
+          },
+          {
+            "name": "get_orders_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:117"
+          },
+          {
+            "name": "get_pricing_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:125"
+          },
+          {
+            "name": "get_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:93"
+          },
+          {
+            "name": "get_accounts_engine",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\db.py:101"
+          }
+        ]
+      },
+      {
+        "name": "portal",
+        "type": "class",
+        "children": [
+          {
+            "name": "signup",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\portal.py:276"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "werkzeug",
+    "type": "package",
+    "children": [
+      {
+        "name": "security",
+        "type": "class",
+        "children": [
+          {
+            "name": "check_password_hash",
+            "type": "function",
+            "labels": [
+              "security.authentication"
+            ],
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\.venv\\Lib\\site-packages\\werkzeug\\security.py:123"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "database",
+    "name": "Database",
+    "children": [
+      {
+        "type": "query",
+        "name": "INSERT INTO users (display_name, email, username, password_hash, role, access_level, company_name, phone, phone_extension, shipping_name, shipping_address, billing_address, shipping_same_as_billing, assigned_promo_code, assigned_discount_percent, approval_status, approval_decided_at, approval_decided_by_user_id, is_active, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+      },
+      {
+        "type": "query",
+        "name": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE lower(users.username) = ? OR lower(users.email) = ?"
+      },
+      {
+        "type": "query",
+        "name": "UPDATE users SET password_hash=?, phone=?, approval_status=? WHERE users.id = ?"
+      },
+      {
+        "type": "query",
+        "name": "SELECT users.id AS users_id, users.display_name AS users_display_name, users.email AS users_email, users.username AS users_username, users.password_hash AS users_password_hash, users.role AS users_role, users.access_level AS users_access_level, users.company_name AS users_company_name, users.phone AS users_phone, users.phone_extension AS users_phone_extension, users.shipping_name AS users_shipping_name, users.shipping_address AS users_shipping_address, users.billing_address AS users_billing_address, users.shipping_same_as_billing AS users_shipping_same_as_billing, users.assigned_promo_code AS users_assigned_promo_code, users.assigned_discount_percent AS users_assigned_discount_percent, users.approval_status AS users_approval_status, users.approval_decided_at AS users_approval_decided_at, users.approval_decided_by_user_id AS users_approval_decided_by_user_id, users.is_active AS users_is_active, users.created_at AS users_created_at \nFROM users \nWHERE users.email = ?"
+      }
+    ]
+  }
+]

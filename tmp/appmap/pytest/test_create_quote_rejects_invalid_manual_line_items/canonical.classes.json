@@ -1,0 +1,10 @@
+[
+  "app/current_user",
+  "app/db",
+  "app/quote_service",
+  "app/service",
+  "cylinder_quote_engine/data",
+  "cylinder_quote_engine/data::PricingData",
+  "cylinder_quote_engine/engine/QuotePricingEngine",
+  "dimensions/cylinder_dimension_tables"
+]

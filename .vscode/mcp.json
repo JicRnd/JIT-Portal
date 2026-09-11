@@ -9,6 +9,17 @@
       ],
       "cwd": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML",
       "type": "stdio"
+    },
+    "appmap": {
+      "command": "C:\\Users\\Kane\\.appmap\\bin\\appmap.exe",
+      "args": [
+        "query",
+        "mcp",
+        "--directory",
+        "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML"
+      ],
+      "cwd": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML",
+      "type": "stdio"
     }
   }
 }

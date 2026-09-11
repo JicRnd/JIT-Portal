@@ -1,0 +1,43 @@
+{
+  "language": {
+    "name": "python",
+    "engine": "CPython",
+    "version": "3.11.9"
+  },
+  "client": {
+    "name": "appmap",
+    "url": "https://github.com/applandinc/appmap-python"
+  },
+  "git": {
+    "repository": "https://github.com/JicRnd/JIT-Portal.git",
+    "branch": "main",
+    "commit": "f2e7614efdedec25c863a0ef3f19a88ecda85fa4"
+  },
+  "frameworks": [
+    {
+      "name": "pytest",
+      "version": "9.1.1"
+    },
+    {
+      "name": "SQLAlchemy",
+      "version": "2.0.51"
+    }
+  ],
+  "source_location": "tests\\test_quote_history.py:151",
+  "name": "filter by model code",
+  "feature": "Filter by model code",
+  "app": "Cylinder_Quote_To_HTML",
+  "recorder": {
+    "name": "pytest",
+    "type": "tests"
+  },
+  "test_failure": {
+    "message": "AssertionError: assert 8 == 2\n +  where 8 = len([{'id': 3, 'quote_number': 'G0902261036', 'status': 'approved', 'model_code': 'H-MX0-2x12x1-2-NC-N--S', ...}, {'id': 8...S', ...}, {'id': 7, 'quote_number': 'B0902261037', 'status': 'sent', 'model_code': 'H-MX0-2x12x1-2-NC-N--S', ...}, ...])",
+    "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\tests\\test_quote_history.py:159"
+  },
+  "test_status": "failed",
+  "exception": {
+    "class": "AssertionError",
+    "message": "assert 8 == 2\n +  where 8 = len([{'id': 3, 'quote_number': 'G0902261036', 'status': 'approved', 'model_code': 'H-MX0-2x12x1-2-NC-N--S', ...}, {'id': 8...S', ...}, {'id': 7, 'quote_number': 'B0902261037', 'status': 'sent', 'model_code': 'H-MX0-2x12x1-2-NC-N--S', ...}, ...])"
+  }
+}

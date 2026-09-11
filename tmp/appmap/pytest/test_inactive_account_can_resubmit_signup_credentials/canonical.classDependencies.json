@@ -1,0 +1,14 @@
+[
+  {
+    "caller": "app/portal",
+    "callee": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE lower(users.username) = ? OR lower(users.email) = ?"
+  },
+  {
+    "caller": "app/portal",
+    "callee": "UPDATE users SET password_hash=?, phone=?, approval_status=? WHERE users.id = ?"
+  },
+  {
+    "caller": "app/portal",
+    "callee": "app/db"
+  }
+]

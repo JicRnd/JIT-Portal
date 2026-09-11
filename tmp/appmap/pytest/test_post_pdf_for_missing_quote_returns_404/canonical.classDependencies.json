@@ -1,0 +1,18 @@
+[
+  {
+    "caller": "app/current_user",
+    "callee": "INSERT INTO users (display_name, email, username, password_hash, role, access_level, company_name, phone, phone_extension, shipping_name, shipping_address, billing_address, shipping_same_as_billing, assigned_promo_code, assigned_discount_percent, approval_status, approval_decided_at, approval_decided_by_user_id, is_active, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  },
+  {
+    "caller": "app/current_user",
+    "callee": "SELECT users.id, users.display_name, users.email, users.username, users.password_hash, users.role, users.access_level, users.company_name, users.phone, users.phone_extension, users.shipping_name, users.shipping_address, users.billing_address, users.shipping_same_as_billing, users.assigned_promo_code, users.assigned_discount_percent, users.approval_status, users.approval_decided_at, users.approval_decided_by_user_id, users.is_active, users.created_at \nFROM users \nWHERE lower(users.display_name) = ?"
+  },
+  {
+    "caller": "app/current_user",
+    "callee": "app/db"
+  },
+  {
+    "caller": "app/quote_service",
+    "callee": "SELECT quotes.id, quotes.quote_number, quotes.status, quotes.customer_name, quotes.customer_address, quotes.customer_contact, quotes.customer_reference, quotes.comments, quotes.special_instructions, quotes.order_form_snapshot, quotes.pricing_version, quotes.revision, quotes.quantity, quotes.discount, quotes.model_code, quotes.cylinder_inputs_snapshot, quotes.price_breakdown_snapshot, quotes.created_by_user_id, quotes.created_at, quotes.edited_by_user_id, quotes.edited_at, quotes.emailed_by_user_id, quotes.emailed_at, quotes.approved_by_user_id, quotes.approved_at, quotes.assigned_employee_user_id, quotes.assigned_at, quotes.customer_update_pending \nFROM quotes \nWHERE quotes.id = ?"
+  }
+]

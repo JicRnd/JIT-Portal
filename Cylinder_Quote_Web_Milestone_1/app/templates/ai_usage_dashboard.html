@@ -37,6 +37,36 @@
       padding: 1rem 1.25rem;
       margin-bottom: 1.25rem;
     }
+    .dashboard-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: end;
+      justify-content: space-between;
+    }
+    .filter-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: end;
+      margin-top: 0.75rem;
+    }
+    .filter-form label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.85rem;
+    }
+    .filter-form input {
+      min-width: 10rem;
+      padding: 0.35rem;
+    }
+    .filter-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
     h2 {
       margin-top: 0;
       font-size: 1.1rem;
@@ -90,6 +120,41 @@
       color: #666;
       display: block;
     }
+    .trend-chart-shell {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+      padding: 0.75rem;
+      margin-top: 0.75rem;
+    }
+    .trend-chart {
+      width: 100%;
+      height: 280px;
+      display: block;
+    }
+    .trend-chart-empty {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .chart-legend {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0 0;
+      font-size: 0.8rem;
+      color: #444;
+    }
+    .legend-swatch {
+      display: inline-block;
+      width: 0.9rem;
+      height: 0.9rem;
+      border-radius: 999px;
+      vertical-align: middle;
+      margin-right: 0.35rem;
+    }
+    .legend-estimated { background: #2563eb; }
+    .legend-actual { background: #16a34a; }
     form.entry-form label {
       display: block;
       margin-bottom: 0.6rem;
@@ -120,6 +185,30 @@
         <div class="flash {{ category }}">{{ message }}</div>
       {% endfor %}
     {% endwith %}
+
+    <section>
+      <div class="dashboard-toolbar">
+        <div>
+          <h2>Dashboard Filters</h2>
+          <p class="metric-note">Trend cards, chart, and trend table use the selected date range. Other summary cards remain current.</p>
+        </div>
+        <div class="filter-actions">
+          <button type="button" id="refresh-dashboard">Refresh Now</button>
+          <a href="{{ url_for('portal.ai_usage_dashboard') }}">Clear Filters</a>
+        </div>
+      </div>
+      <form class="filter-form" method="get">
+        <label>
+          Start date
+          <input type="date" name="start_date" value="{{ data.trend_start_date }}">
+        </label>
+        <label>
+          End date
+          <input type="date" name="end_date" value="{{ data.trend_end_date }}">
+        </label>
+        <button type="submit">Apply Filter</button>
+      </form>
+    </section>
 
     <section>
       <h2>Budget Status</h2>
@@ -193,6 +282,18 @@
       </div>
 
       <h2 style="font-size:1rem;margin-top:1.25rem;">Estimated vs. Actual Trend (daily, most recent first)</h2>
+      <div class="trend-chart-shell">
+        {% if data.trend_chart_data %}
+          <canvas id="trend-chart" class="trend-chart" aria-label="Estimated vs actual savings chart"></canvas>
+          <div class="chart-legend" aria-hidden="true">
+            <span><span class="legend-swatch legend-estimated"></span>Estimated savings</span>
+            <span><span class="legend-swatch legend-actual"></span>Actual savings</span>
+          </div>
+        {% else %}
+          <p class="trend-chart-empty">No finalized days in the selected range.</p>
+        {% endif %}
+      </div>
+      <script type="application/json" id="trend-chart-data">{{ data.trend_chart_data | tojson }}</script>
       <table>
         <thead>
           <tr>
@@ -431,7 +532,7 @@
         <tbody>
           {% for snap in data.intraday_snapshots %}
             <tr>
-              <td>{{ snap.captured_at }}</td>
+              <td>{{ snap.captured_at_display }}</td>
               <td>{{ snap.cumulative_credits_used }}</td>
               <td>{{ snap.delta_credits if snap.delta_credits is not none else '—' }}</td>
               <td>{{ snap.delta_seconds if snap.delta_seconds is not none else '—' }}</td>
@@ -451,7 +552,7 @@
         <tbody>
           {% for spike in data.intraday_spikes %}
             <tr>
-              <td>{{ spike.captured_at }}</td>
+              <td>{{ spike.captured_at_display }}</td>
               <td>{{ spike.delta_credits }}</td>
               <td>
                 {% if spike.likely_sources.value %}
@@ -498,5 +599,138 @@
       </form>
     </section>
   </main>
+  <script>
+    (function () {
+      const refreshButton = document.getElementById('refresh-dashboard');
+      if (refreshButton) {
+        refreshButton.addEventListener('click', () => window.location.reload());
+      }
+
+      const canvas = document.getElementById('trend-chart');
+      const dataNode = document.getElementById('trend-chart-data');
+      if (!canvas || !dataNode || !canvas.getContext) {
+        return;
+      }
+
+      let chartData = [];
+      try {
+        chartData = JSON.parse(dataNode.textContent || '[]');
+      } catch (error) {
+        chartData = [];
+      }
+
+      if (!chartData.length) {
+        return;
+      }
+
+      const context = canvas.getContext('2d');
+      if (!context) {
+        return;
+      }
+
+      const estimatedColor = '#2563eb';
+      const actualColor = '#16a34a';
+      const padding = { top: 18, right: 18, bottom: 42, left: 54 };
+      const height = 280;
+
+      function numericValue(value) {
+        return typeof value === 'number' && Number.isFinite(value) ? value : null;
+      }
+
+      function drawChart() {
+        const width = canvas.parentElement ? canvas.parentElement.clientWidth : 600;
+        const pixelRatio = window.devicePixelRatio || 1;
+        canvas.width = Math.max(1, Math.floor(width * pixelRatio));
+        canvas.height = Math.max(1, Math.floor(height * pixelRatio));
+        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        context.clearRect(0, 0, width, height);
+
+        const estimated = chartData.map((row) => numericValue(row.estimated_savings)).filter((value) => value !== null);
+        const actual = chartData.map((row) => numericValue(row.actual_savings)).filter((value) => value !== null);
+        const values = estimated.concat(actual);
+        const maxValue = values.length ? Math.max(...values) : 1;
+        const minValue = 0;
+        const plotWidth = Math.max(1, width - padding.left - padding.right);
+        const plotHeight = Math.max(1, height - padding.top - padding.bottom);
+        const step = chartData.length > 1 ? plotWidth / (chartData.length - 1) : 0;
+
+        context.strokeStyle = '#d1d5db';
+        context.fillStyle = '#6b7280';
+        context.lineWidth = 1;
+        context.font = '12px Arial, sans-serif';
+
+        for (let i = 0; i <= 4; i += 1) {
+          const y = padding.top + (plotHeight / 4) * i;
+          context.beginPath();
+          context.moveTo(padding.left, y);
+          context.lineTo(width - padding.right, y);
+          context.stroke();
+
+          const value = Math.round((maxValue - ((maxValue - minValue) / 4) * i) * 10) / 10;
+          context.fillText(String(value), 6, y + 4);
+        }
+
+        function yForValue(value) {
+          const safeValue = value === null ? 0 : value;
+          if (maxValue === minValue) {
+            return padding.top + plotHeight;
+          }
+          return padding.top + plotHeight - ((safeValue - minValue) / (maxValue - minValue)) * plotHeight;
+        }
+
+        function drawSeries(key, color) {
+          context.beginPath();
+          let pathStarted = false;
+          chartData.forEach((row, index) => {
+            const value = numericValue(row[key]);
+            if (value === null) {
+              return;
+            }
+            const x = padding.left + step * index;
+            const y = yForValue(value);
+            if (!pathStarted) {
+              context.moveTo(x, y);
+              pathStarted = true;
+            } else {
+              context.lineTo(x, y);
+            }
+          });
+          context.strokeStyle = color;
+          context.lineWidth = 2.5;
+          context.stroke();
+
+          chartData.forEach((row, index) => {
+            const value = numericValue(row[key]);
+            if (value === null) {
+              return;
+            }
+            const x = padding.left + step * index;
+            const y = yForValue(value);
+            context.beginPath();
+            context.arc(x, y, 3.5, 0, Math.PI * 2);
+            context.fillStyle = color;
+            context.fill();
+          });
+        }
+
+        drawSeries('estimated_savings', estimatedColor);
+        drawSeries('actual_savings', actualColor);
+
+        context.fillStyle = '#374151';
+        chartData.forEach((row, index) => {
+          const x = padding.left + step * index;
+          const y = height - 18;
+          context.save();
+          context.translate(x, y);
+          context.rotate(-Math.PI / 4);
+          context.fillText(row.date, 0, 0);
+          context.restore();
+        });
+      }
+
+      drawChart();
+      window.addEventListener('resize', drawChart);
+    }());
+  </script>
 </body>
 </html>

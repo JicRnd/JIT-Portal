@@ -1,0 +1,62 @@
+[
+  {
+    "name": "app",
+    "type": "package",
+    "children": [
+      {
+        "name": "pricing_catalog_service",
+        "type": "class",
+        "children": [
+          {
+            "name": "build_category_sections",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:384"
+          },
+          {
+            "name": "_annotate_family_display",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:349"
+          },
+          {
+            "name": "categorize_part",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:297"
+          },
+          {
+            "name": "_part_text",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:293"
+          },
+          {
+            "name": "part_subgroup",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:333"
+          },
+          {
+            "name": "_split_family_blocks",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:362"
+          },
+          {
+            "name": "part_sort_key",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:316"
+          },
+          {
+            "name": "_slugify",
+            "type": "function",
+            "static": true,
+            "location": "C:\\Users\\Kane\\Documents\\Projects\\Cylinder_Quote_To_HTML\\Cylinder_Quote_Web_Milestone_1\\app\\pricing_catalog_service.py:345"
+          }
+        ]
+      }
+    ]
+  }
+]
