@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='pricing_calculator.css') }}">
   {% if portal_mode|default('employee') == 'customer' %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='customer_quote.css') }}">
+  <link rel="stylesheet" href="{{ url_for('portal.customer_quote_css') }}">
   {% endif %}
 </head>
 <body class="{{ portal_mode|default('employee') }}-mode" data-portal-mode="{{ portal_mode|default('employee') }}" data-current-user-name="{{ current_user_name|default('') }}" data-prefill-customer-name="{{ prefill_customer_name|default('') }}" data-prefill-customer-address="{{ prefill_customer_address|default('') }}" data-assigned-promo-code="{{ assigned_promo_code|default('') }}" data-assigned-discount-percent="{{ assigned_discount_percent if assigned_discount_percent is not none else '' }}">
   <main class="orderentry-window" aria-label="JIT Crew Pricing Calculator">
     <div class="window-titlebar">
       <strong>{{ 'JIT Cylinder Calculator' if portal_mode|default('employee') == 'customer' else 'JIT Crew Pricing Calculator' }}</strong>
-      <a id="dashboardButton" class="dashboard-button" href="{{ url_for('portal.customer_history') if portal_mode|default('employee') == 'customer' else url_for('portal.employee_dashboard') }}">Dashboard</a>
+      <a id="dashboardButton" class="dashboard-button" href="{{ url_for('portal.customer_dashboard') if portal_mode|default('employee') == 'customer' else url_for('portal.employee_dashboard') }}">Dashboard</a>
       <span class="window-close" aria-hidden="true">×</span>
     </div>
 
@@ -56,7 +56,7 @@
             <div class="special-columns">
               <div class="legacy-option-row"><span>Rod Extension (#)</span><input id="rod_extension" type="number" min="0" step="1" value=""></div>
               <div class="legacy-option-row"><span>Rod Boot (#)</span><input id="standard_rod_boot_qty" type="number" min="0" step="1" value=""></div>
-              <div class="legacy-option-row"><span>Stop Tube (#)</span><input id="stop_tube" type="number" min="0" step="0.001" value=""></div>
+              <div class="legacy-option-row"><span>Stop Tube (#)</span><input id="stop_tube" type="number" min="0" step="1" value=""></div>
               <div class="legacy-option-row"><span>Air Bleed (#)</span><input id="air_bleed_qty" type="number" min="0" step="1" value=""></div>
               <div class="legacy-option-row"><span>Extra/Boss Ports (#)</span><input id="extra_port_qty" type="number" min="0" step="1" value=""></div>
               <div class="legacy-option-row"><span>Thread Ext (#)</span><input id="extra_thread" type="number" min="0" step="1" value=""></div>
@@ -190,7 +190,7 @@
     </form>
   </dialog>
 
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <script src="{{ url_for('static', filename='app.js', v=('employee-handoff-2' if portal_mode|default('employee') == 'employee' else 'customer-quote-save-1')) }}"></script>
   <script src="{{ url_for('static', filename='portal_quote_bridge.js') }}"></script>
 </body>
 </html>
