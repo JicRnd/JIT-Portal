@@ -1,0 +1,5635 @@
+{
+  "source_workbook": "2026 JIT Order Entry V3.xlsm",
+  "source_sheet": "TieRod",
+  "purpose": "Normalized TieRod lookup and MT4 calculation rules for the Order Form testing section.",
+  "tie_rod_rules": [
+    {
+      "source_row": 7,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.25,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 0.5,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.2490000000000006,
+      "assembly_formula": "=D7+F7+J7+K7+L7+M7"
+    },
+    {
+      "source_row": 8,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.25,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 0.5,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.6240000000000006,
+      "assembly_formula": "=D8+F8+J8+K8+L8+M8"
+    },
+    {
+      "source_row": 10,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.2490000000000006,
+      "assembly_formula": "=D10+F10+J10+K10+L10+M10"
+    },
+    {
+      "source_row": 11,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.2490000000000006,
+      "assembly_formula": "=D11+F11+J11+K11+L11+M11"
+    },
+    {
+      "source_row": 12,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.6240000000000006,
+      "assembly_formula": "=N11"
+    },
+    {
+      "source_row": 14,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.3740000000000006,
+      "assembly_formula": "=D14+F14+J14+K14+L14+M14"
+    },
+    {
+      "source_row": 15,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.3740000000000006,
+      "assembly_formula": "=D15+F15+J15+K15+L15+M15"
+    },
+    {
+      "source_row": 16,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.3740000000000006,
+      "assembly_formula": "=D16+F16+J16+K16+L16+M16"
+    },
+    {
+      "source_row": 17,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.7490000000000006,
+      "assembly_formula": "=N16"
+    },
+    {
+      "source_row": 19,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.375,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 5.0,
+      "assembly_formula": "=D19+F19+J19+K19+L19+M19"
+    },
+    {
+      "source_row": 21,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.375,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 5.0,
+      "assembly_formula": "=D21+F21+J21+K21+L21+M21"
+    },
+    {
+      "source_row": 23,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 5.5,
+      "assembly_formula": "=D23+F23+J23+K23+L23+M23"
+    },
+    {
+      "source_row": 24,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.5,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 6.0,
+      "assembly_formula": "=D24+F24+J24+K24+L24+M24"
+    },
+    {
+      "source_row": 25,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 6.375,
+      "assembly_formula": "=D25+F25+J25+K25+L25+M25"
+    },
+    {
+      "source_row": 26,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 6.375,
+      "assembly_formula": "=D26+F26+J26+K26+L26+M26"
+    },
+    {
+      "source_row": 27,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 1.5,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.75,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D27+F27+J27+K27+L27+M27"
+    },
+    {
+      "source_row": 28,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 1.5,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.75,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D28+F28+J28+K28+L28+M28"
+    },
+    {
+      "source_row": 29,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MT2",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 1.75,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 0.875,
+      "k_cap_end": 0.875,
+      "through_rod": 2.75,
+      "through_cap": 2.25,
+      "assembly_length": null,
+      "assembly_formula": "=D29+F29+J29+K29+L29+M29"
+    },
+    {
+      "source_row": 34,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.25,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 0.5,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 0.375,
+      "assembly_length": 3.624,
+      "assembly_formula": "=D34+F34+J34+L34+M34"
+    },
+    {
+      "source_row": 35,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.25,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 0.5,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 0.375,
+      "assembly_length": 3.999,
+      "assembly_formula": "=N34"
+    },
+    {
+      "source_row": 37,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 0.469,
+      "assembly_length": 3.718,
+      "assembly_formula": "=D37+F37+J37+L37+M37"
+    },
+    {
+      "source_row": 38,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 0.469,
+      "assembly_length": 3.718,
+      "assembly_formula": "=D38+F38+J38+L38+M38"
+    },
+    {
+      "source_row": 39,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 0.469,
+      "assembly_length": 4.093,
+      "assembly_formula": "=N38"
+    },
+    {
+      "source_row": 41,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 0.469,
+      "assembly_length": 3.843,
+      "assembly_formula": "=D41+F41+J41+L41+M41"
+    },
+    {
+      "source_row": 42,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 0.469,
+      "assembly_length": 3.843,
+      "assembly_formula": "=D42+F42+J42+L42+M42"
+    },
+    {
+      "source_row": 43,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 0.469,
+      "assembly_length": 3.843,
+      "assembly_formula": "=D43+F43+J43+L43+M43"
+    },
+    {
+      "source_row": 44,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.312,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 0.469,
+      "assembly_length": 4.218,
+      "assembly_formula": "=N43"
+    },
+    {
+      "source_row": 46,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.375,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 0.562,
+      "assembly_length": 4.312,
+      "assembly_formula": "=D46+F46+J46+L46+M46"
+    },
+    {
+      "source_row": 48,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.375,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 5.0,
+      "assembly_formula": "=D48+F48+J48+K48+L48+M48"
+    },
+    {
+      "source_row": 50,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 5.5,
+      "assembly_formula": "=D50+F50+J50+K50+L50+M50"
+    },
+    {
+      "source_row": 51,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.5,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 6.0,
+      "assembly_formula": "=D51+F51+J51+K51+L51+M51"
+    },
+    {
+      "source_row": 52,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME4",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 6.375,
+      "assembly_formula": "=D52+F52+J52+K52+L52+M52"
+    },
+    {
+      "source_row": 53,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME4",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 6.375,
+      "assembly_formula": "=D53+F53+J53+K53+L53+M53"
+    },
+    {
+      "source_row": 54,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME4",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 1.5,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.75,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D54+F54+J54+K54+L54+M54"
+    },
+    {
+      "source_row": 55,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME4",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 1.5,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.75,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D55+F55+J55+K55+L55+M55"
+    },
+    {
+      "source_row": 56,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME4",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 1.75,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 0.875,
+      "k_cap_end": 0.875,
+      "through_rod": 2.75,
+      "through_cap": 2.25,
+      "assembly_length": null,
+      "assembly_formula": "=D56+F56+J56+K56+L56+M56"
+    },
+    {
+      "source_row": 62,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.25,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 1,
+      "k_cap_end": 1,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 6.0,
+      "assembly_formula": "=D62+F62+J62+K62+L62+M62"
+    },
+    {
+      "source_row": 64,
+      "series": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 1.375,
+      "cap_end_thread_length": 1.375,
+      "k_rod_end": 1.125,
+      "k_cap_end": 1.125,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 6.25,
+      "assembly_formula": "=D64+F64+J64+K64+L64+M64"
+    },
+    {
+      "source_row": 66,
+      "series": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 1.375,
+      "cap_end_thread_length": 1.375,
+      "k_rod_end": 1.125,
+      "k_cap_end": 1.125,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 6.375,
+      "assembly_formula": "=D66+F66+J66+K66+L66+M66"
+    },
+    {
+      "source_row": 68,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 1.625,
+      "cap_end_thread_length": 1.625,
+      "k_rod_end": 1.375,
+      "k_cap_end": 1.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 7.625,
+      "assembly_formula": "=D68+F68+J68+K68+L68+M68"
+    },
+    {
+      "source_row": 70,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 1.625,
+      "cap_end_thread_length": 1.625,
+      "k_rod_end": 1.375,
+      "k_cap_end": 1.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 7.625,
+      "assembly_formula": "=D70+F70+J70+K70+L70+M70"
+    },
+    {
+      "source_row": 72,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 2.0629999999999997,
+      "cap_end_thread_length": 2.0629999999999997,
+      "k_rod_end": 1.813,
+      "k_cap_end": 1.813,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 8.751,
+      "assembly_formula": "=D72+F72+J72+K72+L72+M72"
+    },
+    {
+      "source_row": 73,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 2.0629999999999997,
+      "cap_end_thread_length": 2.0629999999999997,
+      "k_rod_end": 1.813,
+      "k_cap_end": 1.813,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 9.376,
+      "assembly_formula": "=D73+F73+J73+K73+L73+M73"
+    },
+    {
+      "source_row": 74,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 2.562,
+      "cap_end_thread_length": 2.562,
+      "k_rod_end": 2.312,
+      "k_cap_end": 2.312,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 9.748999999999999,
+      "assembly_formula": "=D74+F74+J74+K74+L74+M74"
+    },
+    {
+      "source_row": 75,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 2.562,
+      "cap_end_thread_length": 2.562,
+      "k_rod_end": 2.312,
+      "k_cap_end": 2.312,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 9.748999999999999,
+      "assembly_formula": "=D75+F75+J75+K75+L75+M75"
+    },
+    {
+      "source_row": 76,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 2.94,
+      "cap_end_thread_length": 2.94,
+      "k_rod_end": 2.688,
+      "k_cap_end": 2.688,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D76+F76+J76+K76+L76+M76"
+    },
+    {
+      "source_row": 77,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 2.94,
+      "cap_end_thread_length": 2.94,
+      "k_rod_end": 2.688,
+      "k_cap_end": 2.688,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D77+F77+J77+K77+L77+M77"
+    },
+    {
+      "source_row": 78,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 3.44,
+      "cap_end_thread_length": 3.44,
+      "k_rod_end": 3.188,
+      "k_cap_end": 3.188,
+      "through_rod": 2.75,
+      "through_cap": 2.25,
+      "assembly_length": null,
+      "assembly_formula": "=D78+F78+J78+K78+L78+M78"
+    },
+    {
+      "source_row": 84,
+      "series": [
+        "A",
+        "LH"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.25,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 0.5,
+      "k_rod_end": 1,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.311999999999999,
+      "assembly_formula": "=D84+F84+J84+K84+L84+M84"
+    },
+    {
+      "source_row": 86,
+      "series": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 1.375,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 1.125,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.436999999999999,
+      "assembly_formula": "=D86+F86+J86+K86+L86+M86"
+    },
+    {
+      "source_row": 88,
+      "series": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 1.375,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 1.125,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.561999999999999,
+      "assembly_formula": "=D88+F88+J88+K88+L88+M88"
+    },
+    {
+      "source_row": 90,
+      "series": [
+        "A",
+        "LH"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 1.625,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 1.375,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 6.625,
+      "assembly_formula": "=D90+F90+J90+K90+L90+M90"
+    },
+    {
+      "source_row": 92,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 1.625,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 1.375,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 6.625,
+      "assembly_formula": "=D92+F92+J92+K92+L92+M92"
+    },
+    {
+      "source_row": 94,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 2.0629999999999997,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.813,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 7.438,
+      "assembly_formula": "=D94+F94+J94+K94+L94+M94"
+    },
+    {
+      "source_row": 95,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 2.0629999999999997,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.813,
+      "k_cap_end": 0.5,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 8.062999999999999,
+      "assembly_formula": "=D95+F95+J95+K95+L95+M95"
+    },
+    {
+      "source_row": 96,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 2.562,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 2.312,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 8.062,
+      "assembly_formula": "=D96+F96+J96+K96+L96+M96"
+    },
+    {
+      "source_row": 97,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 2.562,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 2.312,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 8.062,
+      "assembly_formula": "=D97+F97+J97+K97+L97+M97"
+    },
+    {
+      "source_row": 98,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 2.94,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 2.688,
+      "k_cap_end": 0.75,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D98+F98+J98+K98+L98+M98"
+    },
+    {
+      "source_row": 99,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 2.94,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 2.688,
+      "k_cap_end": 0.75,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D99+F99+J99+K99+L99+M99"
+    },
+    {
+      "source_row": 100,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 3.44,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 3.188,
+      "k_cap_end": 0.875,
+      "through_rod": 2.75,
+      "through_cap": 2.25,
+      "assembly_length": null,
+      "assembly_formula": "=D100+F100+J100+K100+L100+M100"
+    },
+    {
+      "source_row": 106,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.25,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.312,
+      "k_cap_end": 1,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.937,
+      "assembly_formula": "=D106+F106+J106+K106+L106+M106"
+    },
+    {
+      "source_row": 107,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.25,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.312,
+      "k_cap_end": 1,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.312,
+      "assembly_formula": "=N106"
+    },
+    {
+      "source_row": 109,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.375,
+      "k_rod_end": 0.312,
+      "k_cap_end": 1.125,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.062,
+      "assembly_formula": "=D109+F109+J109+K109+L109+M109"
+    },
+    {
+      "source_row": 110,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.375,
+      "k_rod_end": 0.312,
+      "k_cap_end": 1.125,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.062,
+      "assembly_formula": "=D110+F110+J110+K110+L110+M110"
+    },
+    {
+      "source_row": 111,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.375,
+      "k_rod_end": 0.312,
+      "k_cap_end": 1.125,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.437,
+      "assembly_formula": "=N110"
+    },
+    {
+      "source_row": 113,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.375,
+      "k_rod_end": 0.312,
+      "k_cap_end": 1.125,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.187,
+      "assembly_formula": "=D113+F113+J113+K113+L113+M113"
+    },
+    {
+      "source_row": 114,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.375,
+      "k_rod_end": 0.312,
+      "k_cap_end": 1.125,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.187,
+      "assembly_formula": "=D114+F114+J114+K114+L114+M114"
+    },
+    {
+      "source_row": 115,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.375,
+      "k_rod_end": 0.312,
+      "k_cap_end": 1.125,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.187,
+      "assembly_formula": "=D115+F115+J115+K115+L115+M115"
+    },
+    {
+      "source_row": 116,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.375,
+      "k_rod_end": 0.312,
+      "k_cap_end": 1.125,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 5.562,
+      "assembly_formula": "=N115"
+    },
+    {
+      "source_row": 118,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.625,
+      "k_rod_end": 0.375,
+      "k_cap_end": 1.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 6.0,
+      "assembly_formula": "=D118+F118+J118+K118+L118+M118"
+    },
+    {
+      "source_row": 120,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.625,
+      "k_rod_end": 0.375,
+      "k_cap_end": 1.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 6.0,
+      "assembly_formula": "=D120+F120+J120+K120+L120+M120"
+    },
+    {
+      "source_row": 122,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 2.0629999999999997,
+      "k_rod_end": 0.5,
+      "k_cap_end": 1.813,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 6.813,
+      "assembly_formula": "=D122+F122+J122+K122+L122+M122"
+    },
+    {
+      "source_row": 123,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 2.0629999999999997,
+      "k_rod_end": 0.5,
+      "k_cap_end": 1.813,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 7.313,
+      "assembly_formula": "=D123+F123+J123+K123+L123+M123"
+    },
+    {
+      "source_row": 124,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 2.562,
+      "k_rod_end": 0.625,
+      "k_cap_end": 2.312,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 8.062,
+      "assembly_formula": "=D124+F124+J124+K124+L124+M124"
+    },
+    {
+      "source_row": 125,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 2.562,
+      "k_rod_end": 0.625,
+      "k_cap_end": 2.312,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 8.062,
+      "assembly_formula": "=D125+F125+J125+K125+L125+M125"
+    },
+    {
+      "source_row": 126,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 1.5,
+      "cap_end_thread_length": 2.94,
+      "k_rod_end": 2.688,
+      "k_cap_end": 0.75,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D126+F126+J126+K126+L126+M126"
+    },
+    {
+      "source_row": 127,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.75,
+      "rod_end_thread_length": 1.5,
+      "cap_end_thread_length": 2.94,
+      "k_rod_end": 2.688,
+      "k_cap_end": 0.75,
+      "through_rod": 2.25,
+      "through_cap": 2,
+      "assembly_length": null,
+      "assembly_formula": "=D127+F127+J127+K127+L127+M127"
+    },
+    {
+      "source_row": 128,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 1.75,
+      "cap_end_thread_length": 3.44,
+      "k_rod_end": 3.188,
+      "k_cap_end": 0.875,
+      "through_rod": 2.75,
+      "through_cap": 2.25,
+      "assembly_length": null,
+      "assembly_formula": "=D128+F128+J128+K128+L128+M128"
+    },
+    {
+      "source_row": 133,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.25,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 0.5,
+      "k_rod_end": 0,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.312,
+      "assembly_formula": "=D133+F133+J133+K133+L133+M133"
+    },
+    {
+      "source_row": 135,
+      "series": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.312,
+      "assembly_formula": "=D135+F135+J135+K135+L135+M135"
+    },
+    {
+      "source_row": 137,
+      "series": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.312,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0,
+      "k_cap_end": 0.312,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 4.437,
+      "assembly_formula": "=D137+F137+J137+K137+L137+M137"
+    },
+    {
+      "source_row": 139,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 5.25,
+      "assembly_formula": "=D139+F139+J139+K139+L139+M139"
+    },
+    {
+      "source_row": 141,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 5.25,
+      "assembly_formula": "=D141+F141+J141+K141+L141+M141"
+    },
+    {
+      "source_row": 143,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.25,
+      "assembly_length": 5.625,
+      "assembly_formula": "=D143+F143+J143+K143+L143+M143"
+    },
+    {
+      "source_row": 145,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0,
+      "k_cap_end": 0.5,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 6.25,
+      "assembly_formula": "=D145+F145+J145+K145+L145+M145"
+    },
+    {
+      "source_row": 147,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 5.75,
+      "assembly_formula": "=D147+F147+J147+K147+L147+M147"
+    },
+    {
+      "source_row": 149,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.5,
+      "assembly_length": 5.75,
+      "assembly_formula": "=D149+F149+J149+K149+L149+M149"
+    },
+    {
+      "source_row": 155,
+      "series": [
+        "H"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.375,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 5.375,
+      "assembly_formula": "=D155+F155+J155+K155+L155+M155"
+    },
+    {
+      "source_row": 157,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 5.625,
+      "assembly_formula": "=D157+F157+J157+K157+L157+M157"
+    },
+    {
+      "source_row": 159,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 5.75,
+      "assembly_formula": "=D159+F159+J159+K159+L159+M159"
+    },
+    {
+      "source_row": 161,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 6.75,
+      "assembly_formula": "=D161+F161+J161+K161+L161+M161"
+    },
+    {
+      "source_row": 163,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 7.0,
+      "assembly_formula": "=D163+F163+J163+K163+L163+M163"
+    },
+    {
+      "source_row": 165,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MX0"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 1.75,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 0.875,
+      "k_cap_end": 0.875,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 8.0,
+      "assembly_formula": "=D165+F165+J165+K165+L165+M165"
+    },
+    {
+      "source_row": 167,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MX0"
+      ],
+      "tie_rod_diameter": 1,
+      "rod_end_thread_length": 2,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 1,
+      "k_cap_end": 1,
+      "through_rod": 2.25,
+      "through_cap": 2.25,
+      "assembly_length": 9.375,
+      "assembly_formula": "=D167+F167+J167+K167+L167+M167"
+    },
+    {
+      "source_row": 169,
+      "series": [
+        "H"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MX0"
+      ],
+      "tie_rod_diameter": 1.125,
+      "rod_end_thread_length": 2.25,
+      "cap_end_thread_length": 2.25,
+      "k_rod_end": 1.125,
+      "k_cap_end": 1.125,
+      "through_rod": 2.75,
+      "through_cap": 2.75,
+      "assembly_length": 10.75,
+      "assembly_formula": "=D169+F169+J169+K169+L169+M169"
+    },
+    {
+      "source_row": 171,
+      "series": [
+        "H"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MS2",
+        "MS3",
+        "MS4",
+        "MS7",
+        "MT1",
+        "MX0"
+      ],
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 2.5,
+      "cap_end_thread_length": 2.5,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1.25,
+      "through_rod": 3,
+      "through_cap": 3,
+      "assembly_length": 12.0,
+      "assembly_formula": "=D171+F171+J171+K171+L171+M171"
+    },
+    {
+      "source_row": 173,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6"
+      ],
+      "tie_rod_diameter": null,
+      "rod_end_thread_length": null,
+      "cap_end_thread_length": null,
+      "k_rod_end": null,
+      "k_cap_end": null,
+      "through_rod": null,
+      "through_cap": null,
+      "assembly_length": null,
+      "assembly_formula": null
+    },
+    {
+      "source_row": 177,
+      "series": [
+        "H"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "CF",
+        "ME6",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.375,
+      "k_cap_end": 0,
+      "through_rod": 1.75,
+      "through_cap": 0.562,
+      "assembly_length": 4.062,
+      "assembly_formula": "=D177+F177+J177+K177+L177+M177"
+    },
+    {
+      "source_row": 179,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "CF",
+        "ME6",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0,
+      "through_rod": 1.75,
+      "through_cap": 0.75,
+      "assembly_length": 4.375,
+      "assembly_formula": "=D179+F179+J179+K179+L179+M179"
+    },
+    {
+      "source_row": 181,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "CF",
+        "ME6",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0,
+      "through_rod": 1.75,
+      "through_cap": 0.75,
+      "assembly_length": 4.5,
+      "assembly_formula": "=D181+F181+J181+K181+L181+M181"
+    },
+    {
+      "source_row": 183,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "CF",
+        "ME6",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0,
+      "through_rod": 2,
+      "through_cap": 0.937,
+      "assembly_length": 5.312,
+      "assembly_formula": "=D183+F183+J183+K183+L183+M183"
+    },
+    {
+      "source_row": 185,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "CF",
+        "ME6",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0,
+      "through_rod": 2,
+      "through_cap": 0.937,
+      "assembly_length": 5.562,
+      "assembly_formula": "=D185+F185+J185+K185+L185+M185"
+    },
+    {
+      "source_row": 187,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "CF",
+        "ME6",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 1.75,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 0.875,
+      "k_cap_end": 0,
+      "through_rod": 2,
+      "through_cap": 1.312,
+      "assembly_length": 6.687,
+      "assembly_formula": "=D187+F187+J187+K187+L187+M187"
+    },
+    {
+      "source_row": 189,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "CF",
+        "ME6",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 1,
+      "rod_end_thread_length": 2,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 1,
+      "k_cap_end": 0,
+      "through_rod": 2.25,
+      "through_cap": 1.5,
+      "assembly_length": 7.625,
+      "assembly_formula": "=D189+F189+J189+K189+L189+M189"
+    },
+    {
+      "source_row": 191,
+      "series": [
+        "H"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "CF",
+        "ME6",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 1.125,
+      "rod_end_thread_length": 2.25,
+      "cap_end_thread_length": 2.25,
+      "k_rod_end": 1.125,
+      "k_cap_end": 0,
+      "through_rod": 2.75,
+      "through_cap": 1.75,
+      "assembly_length": 8.625,
+      "assembly_formula": "=D191+F191+J191+K191+L191+M191"
+    },
+    {
+      "source_row": 193,
+      "series": [
+        "H"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "CF",
+        "ME6",
+        "MP1",
+        "MP3",
+        "MPU3"
+      ],
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 2.5,
+      "cap_end_thread_length": 2.5,
+      "k_rod_end": 1.25,
+      "k_cap_end": 0,
+      "through_rod": 3,
+      "through_cap": 1.875,
+      "assembly_length": 9.625,
+      "assembly_formula": "=D193+F193+J193+K193+L193+M193"
+    },
+    {
+      "source_row": 199,
+      "series": [
+        "H"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 1.625,
+      "cap_end_thread_length": 1.625,
+      "k_rod_end": 1.375,
+      "k_cap_end": 1.375,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 7.75,
+      "assembly_formula": "=D199+F199+J199+K199+L199+M199"
+    },
+    {
+      "source_row": 201,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 2.0629999999999997,
+      "cap_end_thread_length": 2.0629999999999997,
+      "k_rod_end": 1.813,
+      "k_cap_end": 1.813,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 8.876,
+      "assembly_formula": "=D201+F201+J201+K201+L201+M201"
+    },
+    {
+      "source_row": 203,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 2.0629999999999997,
+      "cap_end_thread_length": 2.0629999999999997,
+      "k_rod_end": 1.813,
+      "k_cap_end": 1.813,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 9.001,
+      "assembly_formula": "=D203+F203+J203+K203+L203+M203"
+    },
+    {
+      "source_row": 205,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 2.562,
+      "cap_end_thread_length": 2.562,
+      "k_rod_end": 2.312,
+      "k_cap_end": 2.312,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 10.873999999999999,
+      "assembly_formula": "=D205+F205+J205+K205+L205+M205"
+    },
+    {
+      "source_row": 207,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 2.562,
+      "cap_end_thread_length": 2.562,
+      "k_rod_end": 2.312,
+      "k_cap_end": 2.312,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 11.248999999999999,
+      "assembly_formula": "=D207+F207+J207+K207+L207+M207"
+    },
+    {
+      "source_row": 209,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 3.438,
+      "cap_end_thread_length": 3.438,
+      "k_rod_end": 3.188,
+      "k_cap_end": 3.188,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 13.501000000000001,
+      "assembly_formula": "=D209+F209+J209+K209+L209+M209"
+    },
+    {
+      "source_row": 211,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 1,
+      "rod_end_thread_length": 3.875,
+      "cap_end_thread_length": 3.875,
+      "k_rod_end": 3.625,
+      "k_cap_end": 3.625,
+      "through_rod": 2.25,
+      "through_cap": 2.25,
+      "assembly_length": 15.625,
+      "assembly_formula": "=D211+F211+J211+K211+L211+M211"
+    },
+    {
+      "source_row": 213,
+      "series": [
+        "H"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 1.125,
+      "rod_end_thread_length": 2.25,
+      "cap_end_thread_length": 4.375,
+      "k_rod_end": 4.125,
+      "k_cap_end": 4.125,
+      "through_rod": 2.75,
+      "through_cap": 2.75,
+      "assembly_length": 16.75,
+      "assembly_formula": "=D213+F213+J213+K213+L213+M213"
+    },
+    {
+      "source_row": 215,
+      "series": [
+        "H"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MX1"
+      ],
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 4.75,
+      "cap_end_thread_length": 4.75,
+      "k_rod_end": 4.5,
+      "k_cap_end": 4.5,
+      "through_rod": 3,
+      "through_cap": 3,
+      "assembly_length": 19.5,
+      "assembly_formula": "=D215+F215+J215+K215+L215+M215"
+    },
+    {
+      "source_row": 221,
+      "series": [
+        "H"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "MT2"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.375,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 5.375,
+      "assembly_formula": "=D221+F221+J221+K221+L221+M221"
+    },
+    {
+      "source_row": 223,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "MT2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 5.625,
+      "assembly_formula": "=D223+F223+J223+K223+L223+M223"
+    },
+    {
+      "source_row": 225,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "MT2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 5.75,
+      "assembly_formula": "=D225+F225+J225+K225+L225+M225"
+    },
+    {
+      "source_row": 227,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MT2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.813,
+      "assembly_length": 6.813,
+      "assembly_formula": "=D227+F227+J227+K227+L227+M227"
+    },
+    {
+      "source_row": 229,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MT2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.813,
+      "assembly_length": 7.063,
+      "assembly_formula": "=D229+F229+J229+K229+L229+M229"
+    },
+    {
+      "source_row": 231,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MT2"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 1.75,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 0.875,
+      "k_cap_end": 0.875,
+      "through_rod": 2,
+      "through_cap": 1.813,
+      "assembly_length": 8.063,
+      "assembly_formula": "=D231+F231+J231+K231+L231+M231"
+    },
+    {
+      "source_row": 233,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MT2"
+      ],
+      "tie_rod_diameter": 1,
+      "rod_end_thread_length": 2,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 1,
+      "k_cap_end": 1,
+      "through_rod": 2.25,
+      "through_cap": 2.25,
+      "assembly_length": 9.375,
+      "assembly_formula": "=D233+F233+J233+K233+L233+M233"
+    },
+    {
+      "source_row": 235,
+      "series": [
+        "H"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MT2"
+      ],
+      "tie_rod_diameter": 1.125,
+      "rod_end_thread_length": 2.25,
+      "cap_end_thread_length": 2.25,
+      "k_rod_end": 1.125,
+      "k_cap_end": 1.125,
+      "through_rod": 2.75,
+      "through_cap": 2.75,
+      "assembly_length": 10.75,
+      "assembly_formula": "=D235+F235+J235+K235+L235+M235"
+    },
+    {
+      "source_row": 237,
+      "series": [
+        "H"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MT2"
+      ],
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 2.5,
+      "cap_end_thread_length": 2.5,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1.25,
+      "through_rod": 3,
+      "through_cap": 3.125,
+      "assembly_length": 12.125,
+      "assembly_formula": "=D237+F237+J237+K237+L237+M237"
+    },
+    {
+      "source_row": 243,
+      "series": [
+        "H"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": null,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 1.375,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 6.875,
+      "assembly_formula": "=D243+F243+J243+K243+L243+M243"
+    },
+    {
+      "source_row": 245,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": null,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.813,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 7.563,
+      "assembly_formula": "=D245+F245+J245+K245+L245+M245"
+    },
+    {
+      "source_row": 247,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": null,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.813,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 7.688,
+      "assembly_formula": "=D247+F247+J247+K247+L247+M247"
+    },
+    {
+      "source_row": 249,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": null,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 2.312,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 9.187,
+      "assembly_formula": "=D249+F249+J249+K249+L249+M249"
+    },
+    {
+      "source_row": 251,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": null,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 2.312,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 9.562,
+      "assembly_formula": "=D251+F251+J251+K251+L251+M251"
+    },
+    {
+      "source_row": 253,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": null,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 3.188,
+      "k_cap_end": 0.875,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 11.188,
+      "assembly_formula": "=D253+F253+J253+K253+L253+M253"
+    },
+    {
+      "source_row": 255,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 1,
+      "rod_end_thread_length": null,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 3.625,
+      "k_cap_end": 1,
+      "through_rod": 2.25,
+      "through_cap": 2.25,
+      "assembly_length": 13.0,
+      "assembly_formula": "=D255+F255+J255+K255+L255+M255"
+    },
+    {
+      "source_row": 257,
+      "series": [
+        "H"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 1.125,
+      "rod_end_thread_length": 2.25,
+      "cap_end_thread_length": 4.375,
+      "k_rod_end": 4.125,
+      "k_cap_end": 1.125,
+      "through_rod": 2.75,
+      "through_cap": 2.75,
+      "assembly_length": 13.75,
+      "assembly_formula": "=D257+F257+J257+K257+L257+M257"
+    },
+    {
+      "source_row": 259,
+      "series": [
+        "H"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MX3"
+      ],
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": null,
+      "cap_end_thread_length": 2.5,
+      "k_rod_end": 4.5,
+      "k_cap_end": 1.25,
+      "through_rod": 3,
+      "through_cap": 3,
+      "assembly_length": 16.25,
+      "assembly_formula": "=D259+F259+J259+K259+L259+M259"
+    },
+    {
+      "source_row": 265,
+      "series": [
+        "H",
+        "SH"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": null,
+      "k_rod_end": 0.375,
+      "k_cap_end": 1.375,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 6.375,
+      "assembly_formula": "=D265+F265+J265+K265+L265+M265"
+    },
+    {
+      "source_row": 267,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": null,
+      "k_rod_end": 0.5,
+      "k_cap_end": 1.813,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 6.938,
+      "assembly_formula": "=D267+F267+J267+K267+L267+M267"
+    },
+    {
+      "source_row": 269,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": null,
+      "k_rod_end": 0.5,
+      "k_cap_end": 1.813,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 7.063,
+      "assembly_formula": "=D269+F269+J269+K269+L269+M269"
+    },
+    {
+      "source_row": 271,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": null,
+      "k_rod_end": 0.625,
+      "k_cap_end": 2.312,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 8.437,
+      "assembly_formula": "=D271+F271+J271+K271+L271+M271"
+    },
+    {
+      "source_row": 273,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": null,
+      "k_rod_end": 0.625,
+      "k_cap_end": 2.312,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 8.687,
+      "assembly_formula": "=D273+F273+J273+K273+L273+M273"
+    },
+    {
+      "source_row": 275,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 1.75,
+      "cap_end_thread_length": null,
+      "k_rod_end": 0.875,
+      "k_cap_end": 3.188,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 10.313,
+      "assembly_formula": "=D275+F275+J275+K275+L275+M275"
+    },
+    {
+      "source_row": 277,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 1,
+      "rod_end_thread_length": 2,
+      "cap_end_thread_length": null,
+      "k_rod_end": 1,
+      "k_cap_end": 3.625,
+      "through_rod": 2.25,
+      "through_cap": 2.25,
+      "assembly_length": 12.0,
+      "assembly_formula": "=D277+F277+J277+K277+L277+M277"
+    },
+    {
+      "source_row": 279,
+      "series": [
+        "H"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 1.125,
+      "rod_end_thread_length": 2.25,
+      "cap_end_thread_length": 4.375,
+      "k_rod_end": 1.125,
+      "k_cap_end": 4.125,
+      "through_rod": 2.75,
+      "through_cap": 2.75,
+      "assembly_length": 13.75,
+      "assembly_formula": "=D279+F279+J279+K279+L279+M279"
+    },
+    {
+      "source_row": 281,
+      "series": [
+        "H"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MX2"
+      ],
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 2.5,
+      "cap_end_thread_length": null,
+      "k_rod_end": 1.25,
+      "k_cap_end": 4.5,
+      "through_rod": 3,
+      "through_cap": 3,
+      "assembly_length": 15.25,
+      "assembly_formula": "=D281+F281+J281+K281+L281+M281"
+    },
+    {
+      "source_row": 287,
+      "series": [
+        "H"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0,
+      "k_cap_end": 0.375,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 5.375,
+      "assembly_formula": "=D287+F287+J287+K287+L287+M287"
+    },
+    {
+      "source_row": 289,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 5.75,
+      "assembly_formula": "=D289+F289+J289+K289+L289+M289"
+    },
+    {
+      "source_row": 291,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0,
+      "k_cap_end": 0.5,
+      "through_rod": 1.75,
+      "through_cap": 1.5,
+      "assembly_length": 5.875,
+      "assembly_formula": "=D291+F291+J291+K291+L291+M291"
+    },
+    {
+      "source_row": 293,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 6.875,
+      "assembly_formula": "=D293+F293+J293+K293+L293+M293"
+    },
+    {
+      "source_row": 295,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0,
+      "k_cap_end": 0.625,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 7.25,
+      "assembly_formula": "=D295+F295+J295+K295+L295+M295"
+    },
+    {
+      "source_row": 297,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 1.75,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 0,
+      "k_cap_end": 0.875,
+      "through_rod": 2,
+      "through_cap": 1.75,
+      "assembly_length": 8.0,
+      "assembly_formula": "=D297+F297+J297+K297+L297+M297"
+    },
+    {
+      "source_row": 299,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 1,
+      "rod_end_thread_length": 2,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 0,
+      "k_cap_end": 1,
+      "through_rod": 2.25,
+      "through_cap": 2.25,
+      "assembly_length": 9.375,
+      "assembly_formula": "=D299+F299+J299+K299+L299+M299"
+    },
+    {
+      "source_row": 301,
+      "series": [
+        "H"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 1.125,
+      "rod_end_thread_length": 2.25,
+      "cap_end_thread_length": 2.25,
+      "k_rod_end": 0,
+      "k_cap_end": 1.125,
+      "through_rod": 2.75,
+      "through_cap": 2.75,
+      "assembly_length": 10.625,
+      "assembly_formula": "=D301+F301+J301+K301+L301+M301"
+    },
+    {
+      "source_row": 303,
+      "series": [
+        "H"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "MF1",
+        "MF2",
+        "MF5",
+        "MF6",
+        "MP2"
+      ],
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 2.5,
+      "cap_end_thread_length": 2.5,
+      "k_rod_end": 0,
+      "k_cap_end": 1.25,
+      "through_rod": 3,
+      "through_cap": 3,
+      "assembly_length": 11.75,
+      "assembly_formula": "=D303+F303+J303+K303+L303+M303"
+    },
+    {
+      "source_row": 309,
+      "series": [
+        "H"
+      ],
+      "bore": 1.5,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME5"
+      ],
+      "tie_rod_diameter": 0.375,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0,
+      "k_cap_end": 0.375,
+      "through_rod": 0.562,
+      "through_cap": 1.5,
+      "assembly_length": 3.8120000000000003,
+      "assembly_formula": "=D309+F309+J309+K309+L309+M309"
+    },
+    {
+      "source_row": 311,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME5"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0,
+      "k_cap_end": 0.5,
+      "through_rod": 0.75,
+      "through_cap": 1.5,
+      "assembly_length": 4.125,
+      "assembly_formula": "=D311+F311+J311+K311+L311+M311"
+    },
+    {
+      "source_row": 313,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME5"
+      ],
+      "tie_rod_diameter": 0.5,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 0,
+      "k_cap_end": 0.5,
+      "through_rod": 0.75,
+      "through_cap": 1.5,
+      "assembly_length": 4.25,
+      "assembly_formula": "=D313+F313+J313+K313+L313+M313"
+    },
+    {
+      "source_row": 315,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME5"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0,
+      "k_cap_end": 0.625,
+      "through_rod": 0.937,
+      "through_cap": 1.75,
+      "assembly_length": 5.062,
+      "assembly_formula": "=D315+F315+J315+K315+L315+M315"
+    },
+    {
+      "source_row": 317,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME5"
+      ],
+      "tie_rod_diameter": 0.625,
+      "rod_end_thread_length": 1.25,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 0,
+      "k_cap_end": 0.625,
+      "through_rod": 0.937,
+      "through_cap": 1.75,
+      "assembly_length": 5.312,
+      "assembly_formula": "=D317+F317+J317+K317+L317+M317"
+    },
+    {
+      "source_row": 319,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME5"
+      ],
+      "tie_rod_diameter": 0.875,
+      "rod_end_thread_length": 1.75,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 0,
+      "k_cap_end": 0.875,
+      "through_rod": 1.312,
+      "through_cap": 1.75,
+      "assembly_length": 6.437,
+      "assembly_formula": "=D319+F319+J319+K319+L319+M319"
+    },
+    {
+      "source_row": 321,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME5"
+      ],
+      "tie_rod_diameter": 1,
+      "rod_end_thread_length": 2,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 0,
+      "k_cap_end": 1,
+      "through_rod": 1.5,
+      "through_cap": 2.25,
+      "assembly_length": 7.625,
+      "assembly_formula": "=D321+F321+J321+K321+L321+M321"
+    },
+    {
+      "source_row": 323,
+      "series": [
+        "H"
+      ],
+      "bore": 7.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME5"
+      ],
+      "tie_rod_diameter": 1.125,
+      "rod_end_thread_length": 2.25,
+      "cap_end_thread_length": 2.25,
+      "k_rod_end": 0,
+      "k_cap_end": 1.125,
+      "through_rod": 1.75,
+      "through_cap": 2.75,
+      "assembly_length": 8.625,
+      "assembly_formula": "=D323+F323+J323+K323+L323+M323"
+    },
+    {
+      "source_row": 325,
+      "series": [
+        "H"
+      ],
+      "bore": 8.0,
+      "rod": null,
+      "mounts": [
+        "ME3",
+        "ME5"
+      ],
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 2.5,
+      "cap_end_thread_length": 2.5,
+      "k_rod_end": 0,
+      "k_cap_end": 1.25,
+      "through_rod": 1.875,
+      "through_cap": 3,
+      "assembly_length": 9.625,
+      "assembly_formula": "=D325+F325+J325+K325+L325+M325"
+    }
+  ],
+  "mt4_rules": [
+    {
+      "source_row": 333,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=1.5,Data!B$6=0.625),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=1.5,Data!B$6=0.625),B$1,0)",
+        "s": "=IF(R333>1,Data!B$8,0)",
+        "t": "=R333-E333+P333",
+        "u": "=O333+S333-T333-V333",
+        "v": "=G333-(2*K333)",
+        "x": "=IF(R333>0.1,T333-Data!B$11,\"\")",
+        "y": "=IF(S333>0.1,U333+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 0.25,
+      "cap_end_thread_length": 0.5,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.375,
+      "through_rod": 0.375,
+      "through_cap": 0.312,
+      "assembly_length": 3.687,
+      "assembly_formula": 0.312
+    },
+    {
+      "source_row": 334,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=1.5,Data!B$6=1),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=1.5,Data!B$6=1),B$1,0)",
+        "s": "=IF(R334>1,Data!B$8,0)",
+        "t": "=R334-E334+P334+W334",
+        "u": "=O334+S334-T334-V334",
+        "v": "=G334-(2*K334)",
+        "x": "=IF(R334>0.1,T334-Data!B$11,\"\")",
+        "y": "=IF(S334>0.1,U334+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 0.25,
+      "cap_end_thread_length": 0.5,
+      "k_rod_end": 0.5,
+      "k_cap_end": 0.375,
+      "through_rod": 0.375,
+      "through_cap": 0.312,
+      "assembly_length": 4.062,
+      "assembly_formula": 0.312
+    },
+    {
+      "source_row": 336,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2,Data!B$6=0.625),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2,Data!B$6=0.625),B$1,0)",
+        "s": "=IF(R336>1,Data!B$8,0)",
+        "t": "=R336-E336+P336",
+        "u": "=O336+S336-T336-V336",
+        "v": "=G336-(2*K336)",
+        "x": "=IF(R336>0.1,T336-Data!B$11,\"\")",
+        "y": "=IF(S336>0.1,U336+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.312,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.468,
+      "through_rod": 0.468,
+      "through_cap": 0.312,
+      "assembly_length": 3.9979999999999998,
+      "assembly_formula": 0.312
+    },
+    {
+      "source_row": 337,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2,Data!B$6=1),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2,Data!B$6=1),B$1,0)",
+        "s": "=IF(R337>1,Data!B$8,0)",
+        "t": "=R337-E337+P337",
+        "u": "=O337+S337-T337-V337",
+        "v": "=G337-(2*K337)",
+        "x": "=IF(R337>0.1,T337-Data!B$11,\"\")",
+        "y": "=IF(S337>0.1,U337+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.312,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.468,
+      "through_rod": 0.468,
+      "through_cap": 0.312,
+      "assembly_length": 4.373,
+      "assembly_formula": 0.312
+    },
+    {
+      "source_row": 338,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\",),Data!$B$5=\"MT4\",Data!B$4=2,Data!B$6=1.375),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\",),Data!$B$5=\"MT4\",Data!B$4=2,Data!B$6=1.375),B$1,0)",
+        "s": "=IF(R338>1,Data!B$8,0)",
+        "t": "=R338-E338+P338",
+        "u": "=O338+S338-T338-V338",
+        "v": "=G338-(2*K338)",
+        "x": "=IF(R338>0.1,T338-Data!B$11,\"\")",
+        "y": "=IF(S338>0.1,U338+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.312,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.468,
+      "through_rod": 0.468,
+      "through_cap": 0.312,
+      "assembly_length": 4.623,
+      "assembly_formula": 0.312
+    },
+    {
+      "source_row": 340,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2.5,Data!B$6=0.625),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2.5,Data!B$6=0.625),B$1,0)",
+        "s": "=IF(R340>1,Data!B$8,0)",
+        "t": "=R340-E340+P340",
+        "u": "=O340+S340-T340-V340",
+        "v": "=G340-(2*K340)",
+        "x": "=IF(R340>0.1,T340-Data!B$11,\"\")",
+        "y": "=IF(S340>0.1,U340+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.312,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.468,
+      "through_rod": 0.468,
+      "through_cap": 0.312,
+      "assembly_length": 4.123,
+      "assembly_formula": 0.312
+    },
+    {
+      "source_row": 341,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2.5,Data!B$6=1),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2.5,Data!B$6=1),B$1,0)",
+        "s": "=IF(R341>1,Data!B$8,0)",
+        "t": "=R341-E341+P341",
+        "u": "=O341+S341-T341-V341",
+        "v": "=G341-(2*K341)",
+        "x": "=IF(R341>0.1,T341-Data!B$11,\"\")",
+        "y": "=IF(S341>0.1,U341+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.312,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.468,
+      "through_rod": 0.468,
+      "through_cap": 0.312,
+      "assembly_length": 4.498,
+      "assembly_formula": 0.312
+    },
+    {
+      "source_row": 342,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2.5,Data!B$6=1.375),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2.5,Data!B$6=1.375),B$1,0)",
+        "s": "=IF(R342>1,Data!B$8,0)",
+        "t": "=R342-E342+P342",
+        "u": "=O342+S342-T342-V342",
+        "v": "=G342-(2*K342)",
+        "x": "=IF(R342>0.1,T342-Data!B$11,\"\")",
+        "y": "=IF(S342>0.1,U342+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.312,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.468,
+      "through_rod": 0.468,
+      "through_cap": 0.312,
+      "assembly_length": 4.748,
+      "assembly_formula": 0.312
+    },
+    {
+      "source_row": 343,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2.5,Data!B$6=1.75),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=2.5,Data!B$6=1.75),B$1,0)",
+        "s": "=IF(R343>1,Data!B$8,0)",
+        "t": "=R343-E343+P343",
+        "u": "=O343+S343-T343-V343",
+        "v": "=G343-(2*K343)",
+        "x": "=IF(R343>0.1,T343-Data!B$11,\"\")",
+        "y": "=IF(S343>0.1,U343+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.312,
+      "cap_end_thread_length": 0.625,
+      "k_rod_end": 0.625,
+      "k_cap_end": 0.468,
+      "through_rod": 0.468,
+      "through_cap": 0.312,
+      "assembly_length": 4.998,
+      "assembly_formula": 0.312
+    },
+    {
+      "source_row": 345,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=3.25,Data!B$6=1),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=3.25,Data!B$6=1),B$1,0)",
+        "s": "=IF(R345>1,Data!B$8,0)",
+        "t": "=R345-E345+P345",
+        "u": "=O345+S345-T345-V345",
+        "v": "=G345-(2*K345)",
+        "x": "=IF(R345>0.1,T345-Data!B$11,\"\")",
+        "y": "=IF(S345>0.1,U345+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 4.8740000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 346,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=3.25,Data!B$6=1.375),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=3.25,Data!B$6=1.375),B$1,0)",
+        "s": "=IF(R346>1,Data!B$8,0)",
+        "t": "=R346-E346+P346",
+        "u": "=O346+S346-T346-V346",
+        "v": "=G346-(2*K346)",
+        "x": "=IF(R346>0.1,T346-Data!B$11,\"\")",
+        "y": "=IF(S346>0.1,U346+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 5.1240000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 347,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=3.25,Data!B$6=1.75),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=3.25,Data!B$6=1.75),B$1,0)",
+        "s": "=IF(R347>1,Data!B$8,0)",
+        "t": "=R347-E347+P347",
+        "u": "=O347+S347-T347-V347",
+        "v": "=G347-(2*K347)",
+        "x": "=IF(R347>0.1,T347-Data!B$11,\"\")",
+        "y": "=IF(S347>0.1,U347+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 5.3740000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 348,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=3.25,Data!B$6=2),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=3.25,Data!B$6=2),B$1,0)",
+        "s": "=IF(R348>1,Data!B$8,0)",
+        "t": "=R348-E348+P348",
+        "u": "=O348+S348-T348-V348",
+        "v": "=G348-(2*K348)",
+        "x": "=IF(R348>0.1,T348-Data!B$11,\"\")",
+        "y": "=IF(S348>0.1,U348+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 5.4990000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 350,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=4,Data!B$6=1),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=4,Data!B$6=1),B$1,0)",
+        "s": "=IF(R350>1,Data!B$8,0)",
+        "t": "=R350-E350+P350",
+        "u": "=O350+S350-T350-V350",
+        "v": "=G350-(2*K350)",
+        "x": "=IF(R350>0.1,T350-Data!B$11,\"\")",
+        "y": "=IF(S350>0.1,U350+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 4.8740000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 351,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=4,Data!B$6=1.375),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=4,Data!B$6=1.375),B$1,0)",
+        "s": "=IF(R351>1,Data!B$8,0)",
+        "t": "=R351-E351+P351",
+        "u": "=O351+S351-T351-V351",
+        "v": "=G351-(2*K351)",
+        "x": "=IF(R351>0.1,T351-Data!B$11,\"\")",
+        "y": "=IF(S351>0.1,U351+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 5.1240000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 352,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=4,Data!B$6=1.75),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=4,Data!B$6=1.75),B$1,0)",
+        "s": "=IF(R352>1,Data!B$8,0)",
+        "t": "=R352-E352+P352",
+        "u": "=O352+S352-T352-V352",
+        "v": "=G352-(2*K352)",
+        "x": "=IF(R352>0.1,T352-Data!B$11,\"\")",
+        "y": "=IF(S352>0.1,U352+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 5.3740000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 353,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=4,Data!B$6=2),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=4,Data!B$6=2),B$1,0)",
+        "s": "=IF(R353>1,Data!B$8,0)",
+        "t": "=R353-E353+P353",
+        "u": "=O353+S353-T353-V353",
+        "v": "=G353-(2*K353)",
+        "x": "=IF(R353>0.1,T353-Data!B$11,\"\")",
+        "y": "=IF(S353>0.1,U353+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 5.4990000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 355,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=5,Data!B$6=1),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=5,Data!B$6=1),B$1,0)",
+        "s": "=IF(R355>1,Data!B$8,0)",
+        "t": "=R355-E355+P355",
+        "u": "=O355+S355-T355-V355",
+        "v": "=G355-(2*K355)",
+        "x": "=IF(R355>0.1,T355-Data!B$11,\"\")",
+        "y": "=IF(S355>0.1,U355+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 5.625,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 356,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=5,Data!B$6=1.375),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=5,Data!B$6=1.375),B$1,0)",
+        "s": "=IF(R356>1,Data!B$8,0)",
+        "t": "=R356-E356+P356",
+        "u": "=O356+S356-T356-V356",
+        "v": "=G356-(2*K356)",
+        "x": "=IF(R356>0.1,T356-Data!B$11,\"\")",
+        "y": "=IF(S356>0.1,U356+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 5.875,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 357,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=5,Data!B$6=1.75),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=5,Data!B$6=1.75),B$1,0)",
+        "s": "=IF(R357>1,Data!B$8,0)",
+        "t": "=R357-E357+P357",
+        "u": "=O357+S357-T357-V357",
+        "v": "=G357-(2*K357)",
+        "x": "=IF(R357>0.1,T357-Data!B$11,\"\")",
+        "y": "=IF(S357>0.1,U357+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 6.125,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 358,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=5,Data!B$6=2),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=5,Data!B$6=2),B$1,0)",
+        "s": "=IF(R358>1,Data!B$8,0)",
+        "t": "=R358-E358+P358",
+        "u": "=O358+S358-T358-V358",
+        "v": "=G358-(2*K358)",
+        "x": "=IF(R358>0.1,T358-Data!B$11,\"\")",
+        "y": "=IF(S358>0.1,U358+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 6.25,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 360,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=6,Data!B$6=1.375),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=6,Data!B$6=1.375),B$1,0)",
+        "s": "=IF(R360>1,Data!B$8,0)",
+        "t": "=R360-E360+P360",
+        "u": "=O360+S360-T360-V360",
+        "v": "=G360-(2*K360)",
+        "x": "=IF(R360>0.1,T360-Data!B$11,\"\")",
+        "y": "=IF(S360>0.1,U360+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 6.125,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 361,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=6,Data!B$6=1.75),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=6,Data!B$6=1.75),B$1,0)",
+        "s": "=IF(R361>1,Data!B$8,0)",
+        "t": "=R361-E361+P361",
+        "u": "=O361+S361-T361-V361",
+        "v": "=G361-(2*K361)",
+        "x": "=IF(R361>0.1,T361-Data!B$11,\"\")",
+        "y": "=IF(S361>0.1,U361+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 6.375,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 362,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=6,Data!B$6=2),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=6,Data!B$6=2),B$1,0)",
+        "s": "=IF(R362>1,Data!B$8,0)",
+        "t": "=R362-E362+P362",
+        "u": "=O362+S362-T362-V362",
+        "v": "=G362-(2*K362)",
+        "x": "=IF(R362>0.1,T362-Data!B$11,\"\")",
+        "y": "=IF(S362>0.1,U362+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 6.5,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 363,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=6,Data!B$6=2.5),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=6,Data!B$6=2.5),B$1,0)",
+        "s": "=IF(R363>1,Data!B$8,0)",
+        "t": "=R363-E363+P363",
+        "u": "=O363+S363-T363-V363",
+        "v": "=G363-(2*K363)",
+        "x": "=IF(R363>0.1,T363-Data!B$11,\"\")",
+        "y": "=IF(S363>0.1,U363+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 6.75,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 365,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=7,Data!B$6=1.375),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=7,Data!B$6=1.375),B$1,0)",
+        "s": "=IF(R365>1,Data!B$8,0)",
+        "t": "=R365-E365+P365",
+        "u": "=O365+S365-T365-V365",
+        "v": "=G365-(2*K365)",
+        "x": "=IF(R365>0.1,T365-Data!B$11,\"\")",
+        "y": "=IF(S365>0.1,U365+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.625,
+      "assembly_length": 7.125,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 366,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=7,Data!B$6=1.75),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=7,Data!B$6=1.75),B$1,0)",
+        "s": "=IF(R366>1,Data!B$8,0)",
+        "t": "=R366-E366+P366",
+        "u": "=O366+S366-T366-V366",
+        "v": "=G366-(2*K366)",
+        "x": "=IF(R366>0.1,T366-Data!B$11,\"\")",
+        "y": "=IF(S366>0.1,U366+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.625,
+      "assembly_length": 7.375,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 367,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=7,Data!B$6=2),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=7,Data!B$6=2),B$1,0)",
+        "s": "=IF(R367>1,Data!B$8,0)",
+        "t": "=R367-E367+P367",
+        "u": "=O367+S367-T367-V367",
+        "v": "=G367-(2*K367)",
+        "x": "=IF(R367>0.1,T367-Data!B$11,\"\")",
+        "y": "=IF(S367>0.1,U367+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.625,
+      "assembly_length": 7.5,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 368,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=7,Data!B$6=2.5),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=7,Data!B$6=2.5),B$1,0)",
+        "s": "=IF(R368>1,Data!B$8,0)",
+        "t": "=R368-E368+P368",
+        "u": "=O368+S368-T368-V368",
+        "v": "=G368-(2*K368)",
+        "x": "=IF(R368>0.1,T368-Data!B$11,\"\")",
+        "y": "=IF(S368>0.1,U368+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.625,
+      "assembly_length": 7.75,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 370,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=8,Data!B$6=1.375),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=8,Data!B$6=1.375),B$1,0)",
+        "s": "=IF(R370>1,Data!B$8,0)",
+        "t": "=R370-E370+P370",
+        "u": "=O370+S370-T370-V370",
+        "v": "=G370-(2*K370)",
+        "x": "=IF(R370>0.1,T370-Data!B$11,\"\")",
+        "y": "=IF(S370>0.1,U370+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.625,
+      "assembly_length": 7.125,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 371,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=8,Data!B$6=1.75),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=8,Data!B$6=1.75),B$1,0)",
+        "s": "=IF(R371>1,Data!B$8,0)",
+        "t": "=R371-E371+P371",
+        "u": "=O371+S371-T371-V371",
+        "v": "=G371-(2*K371)",
+        "x": "=IF(R371>0.1,T371-Data!B$11,\"\")",
+        "y": "=IF(S371>0.1,U371+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.625,
+      "assembly_length": 7.375,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 372,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=8,Data!B$6=2),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=8,Data!B$6=2),B$1,0)",
+        "s": "=IF(R372>1,Data!B$8,0)",
+        "t": "=R372-E372+P372",
+        "u": "=O372+S372-T372-V372",
+        "v": "=G372-(2*K372)",
+        "x": "=IF(R372>0.1,T372-Data!B$11,\"\")",
+        "y": "=IF(S372>0.1,U372+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.625,
+      "assembly_length": 7.5,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 373,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=8,Data!B$6=2.5),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=8,Data!B$6=2.5),B$1,0)",
+        "s": "=IF(R373>1,Data!B$8,0)",
+        "t": "=R373-E373+P373",
+        "u": "=O373+S373-T373-V373",
+        "v": "=G373-(2*K373)",
+        "x": "=IF(R373>0.1,T373-Data!B$11,\"\")",
+        "y": "=IF(S373>0.1,U373+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2.5,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1.25,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.625,
+      "assembly_length": 7.75,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 375,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=10,Data!B$6=1.75),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=10,Data!B$6=1.75),B$1,0)",
+        "s": "=IF(R375>1,Data!B$8,0)",
+        "t": "=R375-E375+P375",
+        "u": "=O375+S375-T375-V375",
+        "v": "=G375-(2*K375)",
+        "x": "=IF(R375>0.1,T375-Data!B$11,\"\")",
+        "y": "=IF(S375>0.1,U375+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 1.5,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.75,
+      "assembly_length": 8.75,
+      "assembly_formula": 0.75
+    },
+    {
+      "source_row": 376,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=10,Data!B$6=2),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=10,Data!B$6=2),B$1,0)",
+        "s": "=IF(R376>1,Data!B$8,0)",
+        "t": "=R376-E376+P376",
+        "u": "=O376+S376-T376-V376",
+        "v": "=G376-(2*K376)",
+        "x": "=IF(R376>0.1,T376-Data!B$11,\"\")",
+        "y": "=IF(S376>0.1,U376+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 1.5,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.75,
+      "assembly_length": 8.875,
+      "assembly_formula": 0.75
+    },
+    {
+      "source_row": 377,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=10,Data!B$6=2.5),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=10,Data!B$6=2.5),B$1,0)",
+        "s": "=IF(R377>1,Data!B$8,0)",
+        "t": "=R377-E377+P377",
+        "u": "=O377+S377-T377-V377",
+        "v": "=G377-(2*K377)",
+        "x": "=IF(R377>0.1,T377-Data!B$11,\"\")",
+        "y": "=IF(S377>0.1,U377+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 1.5,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.75,
+      "assembly_length": 9.125,
+      "assembly_formula": 0.75
+    },
+    {
+      "source_row": 378,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 3.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=10,Data!B$6=3),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=10,Data!B$6=3),B$1,0)",
+        "s": "=IF(R378>1,Data!B$8,0)",
+        "t": "=R378-E378+P378",
+        "u": "=O378+S378-T378-V378",
+        "v": "=G378-(2*K378)",
+        "x": "=IF(R378>0.1,T378-Data!B$11,\"\")",
+        "y": "=IF(S378>0.1,U378+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 1.5,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.75,
+      "assembly_length": 9.125,
+      "assembly_formula": 0.75
+    },
+    {
+      "source_row": 380,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=12,Data!B$6=2),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=12,Data!B$6=2),B$1,0)",
+        "s": "=IF(R380>1,Data!B$8,0)",
+        "t": "=R380-E380+P380",
+        "u": "=O380+S380-T380-V380",
+        "v": "=G380-(2*K380)",
+        "x": "=IF(R380>0.1,T380-Data!B$11,\"\")",
+        "y": "=IF(S380>0.1,U380+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 1.5,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.75,
+      "assembly_length": 9.375,
+      "assembly_formula": 0.75
+    },
+    {
+      "source_row": 381,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=12,Data!B$6=2.5),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=12,Data!B$6=2.5),B$1,0)",
+        "s": "=IF(R381>1,Data!B$8,0)",
+        "t": "=R381-E381+P381",
+        "u": "=O381+S381-T381-V381",
+        "v": "=G381-(2*K381)",
+        "x": "=IF(R381>0.1,T381-Data!B$11,\"\")",
+        "y": "=IF(S381>0.1,U381+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 1.5,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.75,
+      "assembly_length": 9.625,
+      "assembly_formula": 0.75
+    },
+    {
+      "source_row": 382,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=12,Data!B$6=3),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=12,Data!B$6=3),B$1,0)",
+        "s": "=IF(R382>1,Data!B$8,0)",
+        "t": "=R382-E382+P382",
+        "u": "=O382+S382-T382-V382",
+        "v": "=G382-(2*K382)",
+        "x": "=IF(R382>0.1,T382-Data!B$11,\"\")",
+        "y": "=IF(S382>0.1,U382+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 1.5,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.75,
+      "assembly_length": 9.625,
+      "assembly_formula": 0.75
+    },
+    {
+      "source_row": 383,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=12,Data!B$6=3.5),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=12,Data!B$6=3.5),B$1,0)",
+        "s": "=IF(R383>1,Data!B$8,0)",
+        "t": "=R383-E383+P383",
+        "u": "=O383+S383-T383-V383",
+        "v": "=G383-(2*K383)",
+        "x": "=IF(R383>0.1,T383-Data!B$11,\"\")",
+        "y": "=IF(S383>0.1,U383+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 0.75,
+      "cap_end_thread_length": 1.5,
+      "k_rod_end": 1.5,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.75,
+      "assembly_length": 9.625,
+      "assembly_formula": 0.75
+    },
+    {
+      "source_row": 385,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 2.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=14,Data!B$6=2.5),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=14,Data!B$6=2.5),B$1,0)",
+        "s": "=IF(R385>1,Data!B$8,0)",
+        "t": "=R385-E385+P385",
+        "u": "=O385+S385-T385-V385",
+        "v": "=G385-(2*K385)",
+        "x": "=IF(R385>0.1,T385-Data!B$11,\"\")",
+        "y": "=IF(S385>0.1,U385+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3.5,
+      "rod_end_thread_length": 0.875,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 1.75,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.875,
+      "assembly_length": 10.5,
+      "assembly_formula": 0.875
+    },
+    {
+      "source_row": 386,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=14,Data!B$6=3),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=14,Data!B$6=3),B$1,0)",
+        "s": "=IF(R386>1,Data!B$8,0)",
+        "t": "=R386-E386+P386",
+        "u": "=O386+S386-T386-V386",
+        "v": "=G386-(2*K386)",
+        "x": "=IF(R386>0.1,T386-Data!B$11,\"\")",
+        "y": "=IF(S386>0.1,U386+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3.5,
+      "rod_end_thread_length": 0.875,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 1.75,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.875,
+      "assembly_length": 10.5,
+      "assembly_formula": 0.875
+    },
+    {
+      "source_row": 387,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=14,Data!B$6=3.5),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=14,Data!B$6=3.5),B$1,0)",
+        "s": "=IF(R387>1,Data!B$8,0)",
+        "t": "=R387-E387+P387",
+        "u": "=O387+S387-T387-V387",
+        "v": "=G387-(2*K387)",
+        "x": "=IF(R387>0.1,T387-Data!B$11,\"\")",
+        "y": "=IF(S387>0.1,U387+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3.5,
+      "rod_end_thread_length": 0.875,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 1.75,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.875,
+      "assembly_length": 10.5,
+      "assembly_formula": 0.875
+    },
+    {
+      "source_row": 388,
+      "series": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 4.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=14,Data!B$6=4),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(OR(Data!B$3=\"A\",Data!$B$3=\"LH\",Data!$B$3=\"SA\"),Data!$B$5=\"MT4\",Data!B$4=14,Data!B$6=4),B$1,0)",
+        "s": "=IF(R388>1,Data!B$8,0)",
+        "t": "=R388-E388+P388",
+        "u": "=O388+S388-T388-V388",
+        "v": "=G388-(2*K388)",
+        "x": "=IF(R388>0.1,T388-Data!B$11,\"\")",
+        "y": "=IF(S388>0.1,U388+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3.5,
+      "rod_end_thread_length": 0.875,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 1.75,
+      "k_cap_end": 1.25,
+      "through_rod": 1.25,
+      "through_cap": 0.875,
+      "assembly_length": 10.5,
+      "assembly_formula": 0.875
+    },
+    {
+      "source_row": 395,
+      "series": [
+        "H"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=1.5,Data!B$6=0.625,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=1.5,Data!B$6=0.625,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R395>1,Data!B$8,0)",
+        "t": "=R395-E395+P395",
+        "u": "=O395+S395-T395-V395",
+        "v": "=G395-(2*K395)",
+        "x": "=IF(R395>0.1,T395-Data!B$11,\"\")",
+        "y": "=IF(S395>0.1,U395+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 4.6240000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 396,
+      "series": [
+        "H"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=1.5,Data!B$6=1,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=1.5,Data!B$6=1,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R396>1,Data!B$8,0)",
+        "t": "=R396-E396+P396",
+        "u": "=O396+S396-T396-V396",
+        "v": "=G396-(2*K396)",
+        "x": "=IF(R396>0.1,T396-Data!B$11,\"\")",
+        "y": "=IF(S396>0.1,U396+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.25,
+      "rod_end_thread_length": 0.375,
+      "cap_end_thread_length": 0.75,
+      "k_rod_end": 0.75,
+      "k_cap_end": 0.562,
+      "through_rod": 0.562,
+      "through_cap": 0.375,
+      "assembly_length": 4.9990000000000006,
+      "assembly_formula": 0.375
+    },
+    {
+      "source_row": 398,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2,Data!B$6=1,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2,Data!B$6=1,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R398>1,Data!B$8,0)",
+        "t": "=R398-E398+P398",
+        "u": "=O398+S398-T398-V398",
+        "v": "=G398-(2*K398)",
+        "x": "=IF(R398>0.1,T398-Data!B$11,\"\")",
+        "y": "=IF(S398>0.1,U398+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 5.75,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 399,
+      "series": [
+        "H"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2,Data!B$6=1.375,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2,Data!B$6=1.375,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R399>1,Data!B$8,0)",
+        "t": "=R399-E399+P399",
+        "u": "=O399+S399-T399-V399",
+        "v": "=G399-(2*K399)",
+        "x": "=IF(R399>0.1,T399-Data!B$11,\"\")",
+        "y": "=IF(S399>0.1,U399+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 6.0,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 401,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2.5,Data!B$6=1,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2.5,Data!B$6=1,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R401>1,Data!B$8,0)",
+        "t": "=R401-E401+P401",
+        "u": "=O401+S401-T401-V401",
+        "v": "=G401-(2*K401)",
+        "x": "=IF(R401>0.1,T401-Data!B$11,\"\")",
+        "y": "=IF(S401>0.1,U401+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 5.875,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 402,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2.5,Data!B$6=1.375,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2.5,Data!B$6=1.375,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R402>1,Data!B$8,0)",
+        "t": "=R402-E402+P402",
+        "u": "=O402+S402-T402-V402",
+        "v": "=G402-(2*K402)",
+        "x": "=IF(R402>0.1,T402-Data!B$11,\"\")",
+        "y": "=IF(S402>0.1,U402+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 6.125,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 403,
+      "series": [
+        "H"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2.5,Data!B$6=1.75,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=2.5,Data!B$6=1.75,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R403>1,Data!B$8,0)",
+        "t": "=R403-E403+P403",
+        "u": "=O403+S403-T403-V403",
+        "v": "=G403-(2*K403)",
+        "x": "=IF(R403>0.1,T403-Data!B$11,\"\")",
+        "y": "=IF(S403>0.1,U403+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 1.5,
+      "rod_end_thread_length": 0.5,
+      "cap_end_thread_length": 1,
+      "k_rod_end": 1,
+      "k_cap_end": 0.75,
+      "through_rod": 0.75,
+      "through_cap": 0.5,
+      "assembly_length": 6.375,
+      "assembly_formula": 0.5
+    },
+    {
+      "source_row": 405,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=3.25,Data!B$6=1.375,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=3.25,Data!B$6=1.375,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R405>1,Data!B$8,0)",
+        "t": "=R405-E405+P405",
+        "u": "=O405+S405-T405-V405",
+        "v": "=G405-(2*K405)",
+        "x": "=IF(R405>0.1,T405-Data!B$11,\"\")",
+        "y": "=IF(S405>0.1,U405+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 1.25,
+      "k_cap_end": 0.937,
+      "through_rod": 0.937,
+      "through_cap": 0.625,
+      "assembly_length": 7.1240000000000006,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 406,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=3.25,Data!B$6=1.75,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=3.25,Data!B$6=1.75,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R406>1,Data!B$8,0)",
+        "t": "=R406-E406+P406",
+        "u": "=O406+S406-T406-V406",
+        "v": "=G406-(2*K406)",
+        "x": "=IF(R406>0.1,T406-Data!B$11,\"\")",
+        "y": "=IF(S406>0.1,U406+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 1.25,
+      "k_cap_end": 0.937,
+      "through_rod": 0.937,
+      "through_cap": 0.625,
+      "assembly_length": 7.3740000000000006,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 407,
+      "series": [
+        "H"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=3.25,Data!B$6=2,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=3.25,Data!B$6=2,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R407>1,Data!B$8,0)",
+        "t": "=R407-E407+P407",
+        "u": "=O407+S407-T407-V407",
+        "v": "=G407-(2*K407)",
+        "x": "=IF(R407>0.1,T407-Data!B$11,\"\")",
+        "y": "=IF(S407>0.1,U407+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 1.25,
+      "k_cap_end": 0.937,
+      "through_rod": 0.937,
+      "through_cap": 0.625,
+      "assembly_length": 7.4990000000000006,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 409,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=4,Data!B$6=1.75,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=4,Data!B$6=1.75,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R409>1,Data!B$8,0)",
+        "t": "=R409-E409+P409",
+        "u": "=O409+S409-T409-V409",
+        "v": "=G409-(2*K409)",
+        "x": "=IF(R409>0.1,T409-Data!B$11,\"\")",
+        "y": "=IF(S409>0.1,U409+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 1.25,
+      "k_cap_end": 0.937,
+      "through_rod": 0.937,
+      "through_cap": 0.625,
+      "assembly_length": 7.6240000000000006,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 410,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=4,Data!B$6=2,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=4,Data!B$6=2,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R410>1,Data!B$8,0)",
+        "t": "=R410-E410+P410",
+        "u": "=O410+S410-T410-V410",
+        "v": "=G410-(2*K410)",
+        "x": "=IF(R410>0.1,T410-Data!B$11,\"\")",
+        "y": "=IF(S410>0.1,U410+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 1.25,
+      "k_cap_end": 0.937,
+      "through_rod": 0.937,
+      "through_cap": 0.625,
+      "assembly_length": 7.7490000000000006,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 411,
+      "series": [
+        "H"
+      ],
+      "bore": 4.0,
+      "rod": 2.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=4,Data!B$6=2.5,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=4,Data!B$6=2.5,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R411>1,Data!B$8,0)",
+        "t": "=R411-E411+P411",
+        "u": "=O411+S411-T411-V411",
+        "v": "=G411-(2*K411)",
+        "x": "=IF(R411>0.1,T411-Data!B$11,\"\")",
+        "y": "=IF(S411>0.1,U411+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.625,
+      "cap_end_thread_length": 1.25,
+      "k_rod_end": 1.25,
+      "k_cap_end": 0.937,
+      "through_rod": 0.937,
+      "through_cap": 0.625,
+      "assembly_length": 7.9990000000000006,
+      "assembly_formula": 0.625
+    },
+    {
+      "source_row": 413,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=5,Data!B$6=2,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=5,Data!B$6=2,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R413>1,Data!B$8,0)",
+        "t": "=R413-E413+P413",
+        "u": "=O413+S413-T413-V413",
+        "v": "=G413-(2*K413)",
+        "x": "=IF(R413>0.1,T413-Data!B$11,\"\")",
+        "y": "=IF(S413>0.1,U413+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.875,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 1.75,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.875,
+      "assembly_length": 9.125,
+      "assembly_formula": 0.875
+    },
+    {
+      "source_row": 414,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": 2.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=5,Data!B$6=2.5,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=5,Data!B$6=2.5,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R414>1,Data!B$8,0)",
+        "t": "=R414-E414+P414",
+        "u": "=O414+S414-T414-V414",
+        "v": "=G414-(2*K414)",
+        "x": "=IF(R414>0.1,T414-Data!B$11,\"\")",
+        "y": "=IF(S414>0.1,U414+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.875,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 1.75,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.875,
+      "assembly_length": 9.375,
+      "assembly_formula": 0.875
+    },
+    {
+      "source_row": 415,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": 3.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=5,Data!B$6=3,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=5,Data!B$6=3,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R415>1,Data!B$8,0)",
+        "t": "=R415-E415+P415",
+        "u": "=O415+S415-T415-V415",
+        "v": "=G415-(2*K415)",
+        "x": "=IF(R415>0.1,T415-Data!B$11,\"\")",
+        "y": "=IF(S415>0.1,U415+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.875,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 1.75,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.875,
+      "assembly_length": 9.375,
+      "assembly_formula": 0.875
+    },
+    {
+      "source_row": 416,
+      "series": [
+        "H"
+      ],
+      "bore": 5.0,
+      "rod": 3.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=5,Data!B$6=3.5,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=5,Data!B$6=3.5,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R416>1,Data!B$8,0)",
+        "t": "=R416-E416+P416",
+        "u": "=O416+S416-T416-V416",
+        "v": "=G416-(2*K416)",
+        "x": "=IF(R416>0.1,T416-Data!B$11,\"\")",
+        "y": "=IF(S416>0.1,U416+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 2,
+      "rod_end_thread_length": 0.875,
+      "cap_end_thread_length": 1.75,
+      "k_rod_end": 1.75,
+      "k_cap_end": 1,
+      "through_rod": 1,
+      "through_cap": 0.875,
+      "assembly_length": 9.375,
+      "assembly_formula": 0.875
+    },
+    {
+      "source_row": 418,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=6,Data!B$6=2.5,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=6,Data!B$6=2.5,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R418>1,Data!B$8,0)",
+        "t": "=R418-E418+P418",
+        "u": "=O418+S418-T418-V418",
+        "v": "=G418-(2*K418)",
+        "x": "=IF(R418>0.1,T418-Data!B$11,\"\")",
+        "y": "=IF(S418>0.1,U418+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 2,
+      "k_cap_end": 1.5,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 11.125,
+      "assembly_formula": 1
+    },
+    {
+      "source_row": 419,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": 3.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=6,Data!B$6=3,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=6,Data!B$6=3,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R419>1,Data!B$8,0)",
+        "t": "=R419-E419+P419",
+        "u": "=O419+S419-T419-V419",
+        "v": "=G419-(2*K419)",
+        "x": "=IF(R419>0.1,T419-Data!B$11,\"\")",
+        "y": "=IF(S419>0.1,U419+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 2,
+      "k_cap_end": 1.5,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 11.125,
+      "assembly_formula": 1
+    },
+    {
+      "source_row": 420,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": 3.5,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=6,Data!B$6=3.5,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=6,Data!B$6=3.5,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R420>1,Data!B$8,0)",
+        "t": "=R420-E420+P420",
+        "u": "=O420+S420-T420-V420",
+        "v": "=G420-(2*K420)",
+        "x": "=IF(R420>0.1,T420-Data!B$11,\"\")",
+        "y": "=IF(S420>0.1,U420+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 2,
+      "k_cap_end": 1.5,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 11.125,
+      "assembly_formula": 1
+    },
+    {
+      "source_row": 421,
+      "series": [
+        "H"
+      ],
+      "bore": 6.0,
+      "rod": 4.0,
+      "mount": "MT4",
+      "selector_formula": "=IF(AND(Data!$B$3=\"H\",Data!B$4=6,Data!B$6=4,Data!B5=\"MT4\"),B$1,0)",
+      "calculation_formulas": {
+        "r": "=IF(AND(Data!$B$3=\"H\",Data!B$4=6,Data!B$6=4,Data!B5=\"MT4\"),B$1,0)",
+        "s": "=IF(R421>1,Data!B$8,0)",
+        "t": "=R421-E421+P421",
+        "u": "=O421+S421-T421-V421",
+        "v": "=G421-(2*K421)",
+        "x": "=IF(R421>0.1,T421-Data!B$11,\"\")",
+        "y": "=IF(S421>0.1,U421+Data!B$11,\"\")"
+      },
+      "tie_rod_diameter": 3,
+      "rod_end_thread_length": 1,
+      "cap_end_thread_length": 2,
+      "k_rod_end": 2,
+      "k_cap_end": 1.5,
+      "through_rod": 1.5,
+      "through_cap": 1,
+      "assembly_length": 11.125,
+      "assembly_formula": 1
+    }
+  ]
+}

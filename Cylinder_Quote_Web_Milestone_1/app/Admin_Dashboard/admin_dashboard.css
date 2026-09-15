@@ -1,5 +1,6 @@
 :root {
   font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(12px, 1.333vw, 16px);
   color: #17202a;
   background: #f3f5f7;
 }
@@ -66,12 +67,12 @@ a {
 }
 
 .portal-header {
-  min-height: 72px;
+  min-height: 8vh;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem 2rem;
+  padding: 1% 2%;
   background: #fff;
   border-bottom: 4px solid #a41414;
 }
@@ -118,18 +119,117 @@ a {
   color: #555;
 }
 
+.pending-queue-section table {
+  width: 100%;
+  min-width: 100%;
+  table-layout: fixed;
+}
+
+.pending-queue-section th:nth-child(1),
+.pending-queue-section td:nth-child(1) {
+  width: 13%;
+}
+
+.pending-queue-section th:nth-child(2),
+.pending-queue-section td:nth-child(2) {
+  width: 13%;
+}
+
+.pending-queue-section th:nth-child(3),
+.pending-queue-section td:nth-child(3) {
+  width: 18%;
+}
+
+.pending-queue-section th:nth-child(4),
+.pending-queue-section td:nth-child(4) {
+  width: 21%;
+}
+
+.pending-queue-section th:nth-child(5),
+.pending-queue-section td:nth-child(5) {
+  width: 14%;
+}
+
+.pending-queue-section th:nth-child(6),
+.pending-queue-section td:nth-child(6) {
+  width: 12%;
+}
+
+.pending-queue-section th:nth-child(7),
+.pending-queue-section td:nth-child(7) {
+  width: 19%;
+}
+
+.pending-queue-section td {
+  white-space: nowrap;
+}
+
+.pending-queue-section td:last-child {
+  white-space: nowrap;
+}
+
 .portal-shell {
-  width: min(1200px, 96vw);
-  margin: 2rem auto;
+  width: 96%;
+  margin: 2% auto;
+}
+
+.pending-quote-row {
+  font-size: clamp(10%, 1.25vw, 100%);
+  line-height: 1.2;
+}
+
+.pending-queue-section td:last-child .small-button {
+  font-size: clamp(10%, 1.25vw, 100%);
+}
+
+.pending-queue-section {
+  font-size: clamp(10%, 1.25vw, 100%);
 }
 
 .page-actions,
 .dashboard-actions {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
+  flex-wrap: nowrap;
   gap: 1rem;
   margin-bottom: 1.25rem;
+}
+
+.dashboard-actions .portal-button {
+  flex: 1 1 clamp(10%, 16%, 100%);
+  min-width: clamp(10%, 10%, 100%);
+  font-size: clamp(10%, 1.25vw, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.dashboard-actions > a {
+  flex: 1 1 clamp(10%, 16%, 100%);
+  min-width: clamp(10%, 10%, 100%);
+  font-size: clamp(10%, 1.25vw, 100%);
+}
+
+.portal-shell .dashboard-actions {
+  flex-direction: row;
+}
+
+@media (max-width: 700px) {
+  .dashboard-actions .portal-button,
+  .dashboard-actions > a {
+    flex-basis: clamp(10%, 16%, 100%);
+    min-width: clamp(10%, 10%, 100%);
+  }
+}
+
+@media (max-width: 450px) {
+  .dashboard-actions .portal-button,
+  .dashboard-actions > a {
+    flex-basis: clamp(10%, 16%, 100%);
+    min-width: clamp(10%, 10%, 100%);
+  }
 }
 
 .form-error {

@@ -259,6 +259,22 @@ def init_db():
     Base.metadata.create_all(bind=pricing_engine, tables=pricing_tables)
     Base.metadata.create_all(bind=engine, tables=other_tables)
 
+    # Lightweight migration for customer directory presentation and notes.
+    with contacts_engine.begin() as connection:
+        customer_columns = {
+            row[1] for row in connection.exec_driver_sql("PRAGMA table_info(customers)")
+        }
+        required_customer_columns = {
+            "company_name": "VARCHAR(255)",
+            "poc": "VARCHAR(255)",
+            "notes": "TEXT",
+        }
+        for column_name, column_type in required_customer_columns.items():
+            if column_name not in customer_columns:
+                connection.exec_driver_sql(
+                    f"ALTER TABLE customers ADD COLUMN {column_name} {column_type}"
+                )
+
     # Lightweight SQLite migration for accounts created before the current schema.
     with accounts_engine.begin() as connection:
         user_columns = {row[1] for row in connection.exec_driver_sql("PRAGMA table_info(users)")}
@@ -323,6 +339,8 @@ def init_db():
             "assigned_employee_user_id": "INTEGER",
             "assigned_at": "DATETIME",
             "customer_update_pending": "BOOLEAN NOT NULL DEFAULT 0",
+            "deleted_by_user_id": "INTEGER",
+            "deleted_at": "DATETIME",
         }
         for column_name, column_type in required_quote_columns.items():
             if column_name not in quote_columns:

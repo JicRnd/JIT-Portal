@@ -298,6 +298,29 @@ def test_pending_queue_is_capped_at_25_oldest_quotes(temp_db):
     assert "Queue Customer 25" not in text
 
 
+def test_delete_pending_quote_preserves_canceled_record_and_redirects(temp_db):
+    client = temp_db.test_client()
+    employee = _create_employee_user("delete employee")
+    quote = _create_quote(client, employee.display_name, "Delete Customer")
+    _set_quote_status(quote["id"], "pending_approval")
+    _assign_quote(quote["id"], employee.id)
+
+    _login_client(client, employee)
+    response = client.post(f"/employee/quotes/{quote['id']}/delete")
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/employee/dashboard")
+    with get_session() as session:
+        saved_quote = session.get(Quote, quote["id"])
+        assert saved_quote is not None
+        assert saved_quote.status == "canceled"
+        assert saved_quote.deleted_by_user_id == employee.id
+        assert saved_quote.deleted_at is not None
+
+    dashboard = client.get("/employee/dashboard")
+    assert quote["quote_number"] not in dashboard.get_data(as_text=True)
+
+
 def test_pending_approval_types_use_new_labels(temp_db):
     client = temp_db.test_client()
     employee = _create_employee_user("Employee One")
@@ -322,6 +345,9 @@ def test_pending_approval_types_use_new_labels(temp_db):
 
     quote = _create_quote(client, employee.display_name, "Pending Quote")
     _set_quote_status(quote["id"], "pending_approval")
+    assigned_quote = _create_quote(client, employee.display_name, "Assigned Pending Quote")
+    _set_quote_status(assigned_quote["id"], "pending_approval")
+    _assign_quote(assigned_quote["id"], employee.id)
     _login_client(client, employee)
     response = client.get("/employee/dashboard")
     assert response.status_code == 200
@@ -330,10 +356,14 @@ def test_pending_approval_types_use_new_labels(temp_db):
     assert "NEW - Customer Request" in text
     assert "NEW - Employee Request" in text
     assert "Pending Approval" in text
-    assert "Accepted Pending Quote" not in text
     pending_section = text.split("<h2>Pending Approvals</h2>", 1)[1].split(
         "</section>", 1
     )[0]
+    assert "<td>Quote</td>" in pending_section
+    assert "<td>Pending Approval</td>" in pending_section
+    assert "<td>Accepted</td>" not in pending_section
+    assert "<td>Pending</td>" not in pending_section
+    assert "Accepted Pending Quote" not in text
     assert "Pending Customer" not in pending_section
     assert "Pending Employee" not in pending_section
 
@@ -372,12 +402,18 @@ def test_quote_history_includes_new_quotes(temp_db):
     _set_quote_created_at(open_quote["id"], datetime(2024, 1, 1))
     _set_quote_created_at(pending["id"], datetime(2024, 1, 2))
 
-    _login_client(client, other)
+    _login_client(client, creator)
     response = client.get("/employee/quote-history")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "Open History Customer" in text
     assert "Blocked History Customer" in text
+
+    _login_client(client, other)
+    response = client.get("/employee/quote-history")
+    assert response.status_code == 200
+    assert "Open History Customer" not in response.get_data(as_text=True)
+    assert "Blocked History Customer" not in response.get_data(as_text=True)
 
 
 def test_order_history_includes_new_quotes(temp_db):
@@ -398,7 +434,7 @@ def test_order_history_includes_new_quotes(temp_db):
     _set_quote_created_at(submitted["id"], datetime(2024, 1, 2))
 
     _login_client(client, creator)
-    response = client.get("/employee/history")
+    response = client.get("/employee_order_history/employee_order_history.html")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "Unsubmitted Order Customer" in text
@@ -422,7 +458,7 @@ def test_employee_histories_are_capped_at_25_newest_quotes(temp_db):
         _set_quote_status(quote["id"], "approved")
 
     _login_client(client, creator)
-    for path in ("/employee/history", "/employee/quote-history"):
+    for path in ("/employee_order_history/employee_order_history.html", "/employee/quote-history"):
         resp = client.get(path)
         assert resp.status_code == 200
         text = resp.get_data(as_text=True)
@@ -576,7 +612,7 @@ def test_unchanged_pending_quote_not_in_order_history(temp_db):
 
     for employee in (creator, other):
         _login_client(client, employee)
-        resp = client.get("/employee/history")
+        resp = client.get("/employee_order_history/employee_order_history.html")
         assert resp.status_code == 200
         text = resp.get_data(as_text=True)
         assert "Pending History Customer" not in text
@@ -597,7 +633,7 @@ def test_accepted_then_approved_quote_appears_in_claimer_history(temp_db):
 
     _set_quote_status(quote["id"], "approved")
 
-    resp = client.get("/employee/history")
+    resp = client.get("/employee_order_history/employee_order_history.html")
     assert resp.status_code == 200
     text = resp.get_data(as_text=True)
     assert "Claimed Approved Customer" in text
@@ -613,7 +649,7 @@ def test_created_approved_quote_appears_in_creator_history(temp_db):
     _set_quote_status(quote["id"], "approved")
 
     _login_client(client, creator)
-    resp = client.get("/employee/history")
+    resp = client.get("/employee_order_history/employee_order_history.html")
     assert resp.status_code == 200
     text = resp.get_data(as_text=True)
     assert "Created Approved Customer" in text
@@ -643,7 +679,7 @@ def test_accepted_unordered_quote_stays_pending_and_is_quote_history_only(temp_d
     assert quote_history.status_code == 200
     assert "Accepted But Unordered" in quote_history.get_data(as_text=True)
 
-    order_history = client.get("/employee/history")
+    order_history = client.get("/employee_order_history/employee_order_history.html")
     assert order_history.status_code == 200
     assert "Accepted But Unordered" not in order_history.get_data(as_text=True)
 
@@ -662,6 +698,13 @@ def test_admin_dashboard_renders_pending_approval_queue(temp_db):
     text = response.get_data(as_text=True)
     assert "Pending Approvals" in text
     assert "Admin Pending Customer" in text
+    pending_section = text.split("<h2>Pending Approvals</h2>", 1)[1].split(
+        "</section>", 1
+    )[0]
+    assert "<td>Quote</td>" in pending_section
+    assert "<td>Pending Approval</td>" in pending_section
+    assert "<td>Accepted</td>" not in pending_section
+    assert "<td>Pending</td>" not in pending_section
 
 
 def test_denied_order_is_stored_and_sorted_last_in_histories(temp_db):
@@ -698,7 +741,7 @@ def test_denied_order_is_stored_and_sorted_last_in_histories(temp_db):
         assert order.status == "denied"
 
     _login_client(client, employee)
-    for path in ("/employee/history", "/employee/quote-history"):
+    for path in ("/employee_order_history/employee_order_history.html", "/employee/quote-history"):
         response = client.get(path)
         assert response.status_code == 200
         text = response.get_data(as_text=True)

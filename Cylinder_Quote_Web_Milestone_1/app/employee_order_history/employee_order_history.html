@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+  <title>Employee Order History</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('employee_order_history.employee_order_history_css') }}"
+  >
+</head>
+<body class="employee-order-history-page">
+  <header class="employee-order-history-header">
+    <div>{{ user.display_name }}</div>
+    <h1>{{ user.display_name }} Order History</h1>
+    <a href="/employee/dashboard">
+      Dashboard
+    </a>
+  </header>
+
+  <main class="employee-order-history-shell">
+    <div class="page-actions">
+      <button
+        class="employee_order_history_button new-quote"
+        data-standard="/employee/quote-entry"
+        data-metric="/metric-coming-soon"
+      >
+        + New Quote
+      </button>
+
+      {% if show_all %}
+        <a
+          class="employee_order_history_button small"
+          href="{{ url_for('employee_order_history.employee_order_history_page') }}"
+        >
+          Employee Order History
+        </a>
+      {% else %}
+        <a
+          class="employee_order_history_button small"
+          href="{{ url_for('employee_order_history.employee_order_history_page', all='1') }}"
+        >
+          See All
+        </a>
+      {% endif %}
+    </div>
+
+    <form class="search-form" method="get">
+      {% if show_all %}
+        <input type="hidden" name="all" value="1">
+      {% endif %}
+      <label for="orderHistorySearch">
+        Search all order information
+      </label>
+
+      <div id="search_box">
+        <input
+          id="orderHistorySearch"
+          name="q"
+          value="{{ query }}"
+          autocomplete="off"
+          placeholder="Search any text in order..."
+        >
+
+        <button
+          id="clearOrderHistorySearchButton"
+          class="employee_order_history_button secondary"
+          type="button"
+          aria-label="Clear search"
+        >
+          X
+        </button>
+
+        <button class="employee_order_history_button" type="submit">
+          Search
+        </button>
+      </div>
+
+      <div
+        id="searchSuggestions"
+        class="suggestions"
+        hidden
+      ></div>
+    </form>
+
+{% if rows %}
+  <div class="employee_order_history_wrapper">
+    <table id="order_history_table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Model Code</th>
+          <th>Customer</th>
+          <th>Date</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for order in rows %}
+          {% set snapshot = order.order_form_snapshot or {} %}
+          <tr>
+            <td>{{ snapshot.get('order_number') or order.quote_number or '—' }}</td>
+            <td>{{ snapshot.get('model_code') or '—' }}</td>
+            <td>{{ snapshot.get('ship_to_1') or snapshot.get('bill_to_1') or '—' }}</td>
+
+            <td>
+              {{
+                order.created_at.strftime('%b %d, %Y')
+                if order.created_at
+                else '—'
+              }}
+            </td>
+
+            <td>${{ '%.2f'|format(snapshot.get('order_total')|float) }}</td>
+
+            <td>
+              <span class="status {{
+                'approved'
+                if order.status == 'approved'
+                else 'pending'
+              }}">
+                {{ order.status.replace('_', ' ').title() }}
+              </span>
+            </td>
+
+            <td>
+              <a
+                class="employee_order_history_button small"
+                href="/order-form?order_id={{ order.id }}"
+              >
+                Open
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="empty-state">
+    No saved quotes or orders yet.
+  </div>
+{% endif %}
+
+  </main>
+
+  <div class="quote-modal" hidden>
+    <div>
+      <h2>Select Measurement Type</h2>
+
+      <button class="employee_order_history_button standard-choice">
+        Standard
+      </button>
+
+      <button class="employee_order_history_button secondary metric-choice">
+        Metric
+      </button>
+
+      <button class="text-button modal-close">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <script
+    src="{{ url_for('employee_order_history.employee_order_history_js') }}"
+  ></script>
+</body>
+</html>

@@ -1,0 +1,10025 @@
+{
+  "source_workbook": "2026 JIT Order Entry V3.xlsm",
+  "source_sheet": "H",
+  "purpose": "Order Form testing-section engineering lookups",
+  "rod_addition_rules": [
+    {
+      "source_row": 8,
+      "source_column": "AM",
+      "helper_cell": "AM68",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 8,
+      "source_column": "AN",
+      "helper_cell": "AN68",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 4.355
+    },
+    {
+      "source_row": 8,
+      "source_column": "AO",
+      "helper_cell": "AO68",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.355
+    },
+    {
+      "source_row": 8,
+      "source_column": "AP",
+      "helper_cell": "AP68",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 3.605
+    },
+    {
+      "source_row": 8,
+      "source_column": "AQ",
+      "helper_cell": "AQ68",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 8,
+      "source_column": "AR",
+      "helper_cell": "AR68",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 4.355
+    },
+    {
+      "source_row": 8,
+      "source_column": "AV",
+      "helper_cell": "AV53",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.875
+    },
+    {
+      "source_row": 8,
+      "source_column": "AW",
+      "helper_cell": "AW53",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 4.855
+    },
+    {
+      "source_row": 8,
+      "source_column": "AX",
+      "helper_cell": "AX53",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.125
+    },
+    {
+      "source_row": 8,
+      "source_column": "AY",
+      "helper_cell": "AY53",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.105
+    },
+    {
+      "source_row": 8,
+      "source_column": "AZ",
+      "helper_cell": "AZ53",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.875
+    },
+    {
+      "source_row": 8,
+      "source_column": "BA",
+      "helper_cell": "BA53",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 4.855
+    },
+    {
+      "source_row": 9,
+      "source_column": "AM",
+      "helper_cell": "AM69",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 9,
+      "source_column": "AN",
+      "helper_cell": "AN69",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 9,
+      "source_column": "AO",
+      "helper_cell": "AO69",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.73
+    },
+    {
+      "source_row": 9,
+      "source_column": "AP",
+      "helper_cell": "AP69",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 3.98
+    },
+    {
+      "source_row": 9,
+      "source_column": "AQ",
+      "helper_cell": "AQ69",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 9,
+      "source_column": "AR",
+      "helper_cell": "AR69",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 9,
+      "source_column": "AV",
+      "helper_cell": "AV54",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.625
+    },
+    {
+      "source_row": 9,
+      "source_column": "AW",
+      "helper_cell": "AW54",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.625
+    },
+    {
+      "source_row": 9,
+      "source_column": "AX",
+      "helper_cell": "AX54",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.5
+    },
+    {
+      "source_row": 9,
+      "source_column": "AY",
+      "helper_cell": "AY54",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.5
+    },
+    {
+      "source_row": 9,
+      "source_column": "AZ",
+      "helper_cell": "AZ54",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.625
+    },
+    {
+      "source_row": 9,
+      "source_column": "BA",
+      "helper_cell": "BA54",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.625
+    },
+    {
+      "source_row": 11,
+      "source_column": "AM",
+      "helper_cell": "AM71",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 11,
+      "source_column": "AN",
+      "helper_cell": "AN71",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 4.355
+    },
+    {
+      "source_row": 11,
+      "source_column": "AO",
+      "helper_cell": "AO71",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.355
+    },
+    {
+      "source_row": 11,
+      "source_column": "AP",
+      "helper_cell": "AP71",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 3.605
+    },
+    {
+      "source_row": 11,
+      "source_column": "AQ",
+      "helper_cell": "AQ71",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 11,
+      "source_column": "AR",
+      "helper_cell": "AR71",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 4.355
+    },
+    {
+      "source_row": 11,
+      "source_column": "AV",
+      "helper_cell": "AV56",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.625
+    },
+    {
+      "source_row": 11,
+      "source_column": "AW",
+      "helper_cell": "AW56",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.605
+    },
+    {
+      "source_row": 11,
+      "source_column": "AX",
+      "helper_cell": "AX56",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.5
+    },
+    {
+      "source_row": 11,
+      "source_column": "AY",
+      "helper_cell": "AY56",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.48
+    },
+    {
+      "source_row": 11,
+      "source_column": "AZ",
+      "helper_cell": "AZ56",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.625
+    },
+    {
+      "source_row": 11,
+      "source_column": "BA",
+      "helper_cell": "BA56",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.605
+    },
+    {
+      "source_row": 12,
+      "source_column": "AM",
+      "helper_cell": "AM72",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 12,
+      "source_column": "AN",
+      "helper_cell": "AN72",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 12,
+      "source_column": "AO",
+      "helper_cell": "AO72",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.73
+    },
+    {
+      "source_row": 12,
+      "source_column": "AP",
+      "helper_cell": "AP72",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 3.98
+    },
+    {
+      "source_row": 12,
+      "source_column": "AQ",
+      "helper_cell": "AQ72",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 12,
+      "source_column": "AR",
+      "helper_cell": "AR72",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 12,
+      "source_column": "AV",
+      "helper_cell": "AV57",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.875
+    },
+    {
+      "source_row": 12,
+      "source_column": "AW",
+      "helper_cell": "AW57",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.875
+    },
+    {
+      "source_row": 12,
+      "source_column": "AX",
+      "helper_cell": "AX57",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.75
+    },
+    {
+      "source_row": 12,
+      "source_column": "AY",
+      "helper_cell": "AY57",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.75
+    },
+    {
+      "source_row": 12,
+      "source_column": "AZ",
+      "helper_cell": "AZ57",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.375
+    },
+    {
+      "source_row": 12,
+      "source_column": "BA",
+      "helper_cell": "BA57",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.375
+    },
+    {
+      "source_row": 13,
+      "source_column": "AM",
+      "helper_cell": "AM73",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.105
+    },
+    {
+      "source_row": 13,
+      "source_column": "AN",
+      "helper_cell": "AN73",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.355
+    },
+    {
+      "source_row": 13,
+      "source_column": "AO",
+      "helper_cell": "AO73",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.98
+    },
+    {
+      "source_row": 13,
+      "source_column": "AP",
+      "helper_cell": "AP73",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.23
+    },
+    {
+      "source_row": 13,
+      "source_column": "AQ",
+      "helper_cell": "AQ73",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.605
+    },
+    {
+      "source_row": 13,
+      "source_column": "AR",
+      "helper_cell": "AR73",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 14,
+      "source_column": "AV",
+      "helper_cell": "AV59",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.75
+    },
+    {
+      "source_row": 14,
+      "source_column": "AW",
+      "helper_cell": "AW59",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.73
+    },
+    {
+      "source_row": 14,
+      "source_column": "AX",
+      "helper_cell": "AX59",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.625
+    },
+    {
+      "source_row": 14,
+      "source_column": "AY",
+      "helper_cell": "AY59",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.605
+    },
+    {
+      "source_row": 14,
+      "source_column": "AZ",
+      "helper_cell": "AZ59",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.75
+    },
+    {
+      "source_row": 14,
+      "source_column": "BA",
+      "helper_cell": "BA59",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.73
+    },
+    {
+      "source_row": 15,
+      "source_column": "AM",
+      "helper_cell": "AM75",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.23
+    },
+    {
+      "source_row": 15,
+      "source_column": "AN",
+      "helper_cell": "AN75",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 4.48
+    },
+    {
+      "source_row": 15,
+      "source_column": "AO",
+      "helper_cell": "AO75",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.48
+    },
+    {
+      "source_row": 15,
+      "source_column": "AP",
+      "helper_cell": "AP75",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 3.73
+    },
+    {
+      "source_row": 15,
+      "source_column": "AQ",
+      "helper_cell": "AQ75",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.23
+    },
+    {
+      "source_row": 15,
+      "source_column": "AR",
+      "helper_cell": "AR75",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 4.48
+    },
+    {
+      "source_row": 15,
+      "source_column": "AV",
+      "helper_cell": "AV60",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7
+    },
+    {
+      "source_row": 15,
+      "source_column": "AW",
+      "helper_cell": "AW60",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.98
+    },
+    {
+      "source_row": 15,
+      "source_column": "AX",
+      "helper_cell": "AX60",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.875
+    },
+    {
+      "source_row": 15,
+      "source_column": "AY",
+      "helper_cell": "AY60",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.855
+    },
+    {
+      "source_row": 15,
+      "source_column": "AZ",
+      "helper_cell": "AZ60",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.5
+    },
+    {
+      "source_row": 15,
+      "source_column": "BA",
+      "helper_cell": "BA60",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 16,
+      "source_column": "AM",
+      "helper_cell": "AM76",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.98
+    },
+    {
+      "source_row": 16,
+      "source_column": "AN",
+      "helper_cell": "AN76",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.23
+    },
+    {
+      "source_row": 16,
+      "source_column": "AO",
+      "helper_cell": "AO76",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.855
+    },
+    {
+      "source_row": 16,
+      "source_column": "AP",
+      "helper_cell": "AP76",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.105
+    },
+    {
+      "source_row": 16,
+      "source_column": "AQ",
+      "helper_cell": "AQ76",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.98
+    },
+    {
+      "source_row": 16,
+      "source_column": "AR",
+      "helper_cell": "AR76",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.23
+    },
+    {
+      "source_row": 16,
+      "source_column": "AV",
+      "helper_cell": "AV61",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.375
+    },
+    {
+      "source_row": 16,
+      "source_column": "AW",
+      "helper_cell": "AW61",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.375
+    },
+    {
+      "source_row": 16,
+      "source_column": "AX",
+      "helper_cell": "AX61",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.125
+    },
+    {
+      "source_row": 16,
+      "source_column": "AY",
+      "helper_cell": "AY61",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.125
+    },
+    {
+      "source_row": 16,
+      "source_column": "AZ",
+      "helper_cell": "AZ61",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.125
+    },
+    {
+      "source_row": 16,
+      "source_column": "BA",
+      "helper_cell": "BA61",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.125
+    },
+    {
+      "source_row": 17,
+      "source_column": "AM",
+      "helper_cell": "AM77",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.23
+    },
+    {
+      "source_row": 17,
+      "source_column": "AN",
+      "helper_cell": "AN77",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.48
+    },
+    {
+      "source_row": 17,
+      "source_column": "AO",
+      "helper_cell": "AO77",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 17,
+      "source_column": "AP",
+      "helper_cell": "AP77",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.355
+    },
+    {
+      "source_row": 17,
+      "source_column": "AQ",
+      "helper_cell": "AQ77",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 17,
+      "source_column": "AR",
+      "helper_cell": "AR77",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.98
+    },
+    {
+      "source_row": 18,
+      "source_column": "AM",
+      "helper_cell": "AM78",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.605
+    },
+    {
+      "source_row": 18,
+      "source_column": "AN",
+      "helper_cell": "AN78",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 18,
+      "source_column": "AO",
+      "helper_cell": "AO78",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.355
+    },
+    {
+      "source_row": 18,
+      "source_column": "AP",
+      "helper_cell": "AP78",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.605
+    },
+    {
+      "source_row": 18,
+      "source_column": "AQ",
+      "helper_cell": "AQ78",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.355
+    },
+    {
+      "source_row": 18,
+      "source_column": "AR",
+      "helper_cell": "AR78",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.605
+    },
+    {
+      "source_row": 18,
+      "source_column": "AV",
+      "helper_cell": "AV63",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.75
+    },
+    {
+      "source_row": 18,
+      "source_column": "AW",
+      "helper_cell": "AW63",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 18,
+      "source_column": "AX",
+      "helper_cell": "AX63",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.625
+    },
+    {
+      "source_row": 18,
+      "source_column": "AY",
+      "helper_cell": "AY63",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.355
+    },
+    {
+      "source_row": 18,
+      "source_column": "AZ",
+      "helper_cell": "AZ63",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.25
+    },
+    {
+      "source_row": 18,
+      "source_column": "BA",
+      "helper_cell": "BA63",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.98
+    },
+    {
+      "source_row": 19,
+      "source_column": "AV",
+      "helper_cell": "AV64",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.125
+    },
+    {
+      "source_row": 19,
+      "source_column": "AW",
+      "helper_cell": "AW64",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.855
+    },
+    {
+      "source_row": 19,
+      "source_column": "AX",
+      "helper_cell": "AX64",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.875
+    },
+    {
+      "source_row": 19,
+      "source_column": "AY",
+      "helper_cell": "AY64",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.605
+    },
+    {
+      "source_row": 19,
+      "source_column": "AZ",
+      "helper_cell": "AZ64",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.875
+    },
+    {
+      "source_row": 19,
+      "source_column": "BA",
+      "helper_cell": "BA64",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.605
+    },
+    {
+      "source_row": 20,
+      "source_column": "AM",
+      "helper_cell": "AM80",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 20,
+      "source_column": "AN",
+      "helper_cell": "AN80",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.48
+    },
+    {
+      "source_row": 20,
+      "source_column": "AO",
+      "helper_cell": "AO80",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.355
+    },
+    {
+      "source_row": 20,
+      "source_column": "AP",
+      "helper_cell": "AP80",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.355
+    },
+    {
+      "source_row": 20,
+      "source_column": "AQ",
+      "helper_cell": "AQ80",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 20,
+      "source_column": "AR",
+      "helper_cell": "AR80",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.48
+    },
+    {
+      "source_row": 20,
+      "source_column": "AV",
+      "helper_cell": "AV65",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.75
+    },
+    {
+      "source_row": 20,
+      "source_column": "AW",
+      "helper_cell": "AW65",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.48
+    },
+    {
+      "source_row": 20,
+      "source_column": "AX",
+      "helper_cell": "AX65",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7
+    },
+    {
+      "source_row": 20,
+      "source_column": "AY",
+      "helper_cell": "AY65",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.73
+    },
+    {
+      "source_row": 20,
+      "source_column": "AZ",
+      "helper_cell": "AZ65",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.25
+    },
+    {
+      "source_row": 20,
+      "source_column": "BA",
+      "helper_cell": "BA65",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 21,
+      "source_column": "AM",
+      "helper_cell": "AM81",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 21,
+      "source_column": "AN",
+      "helper_cell": "AN81",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.73
+    },
+    {
+      "source_row": 21,
+      "source_column": "AO",
+      "helper_cell": "AO81",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.605
+    },
+    {
+      "source_row": 21,
+      "source_column": "AP",
+      "helper_cell": "AP81",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.605
+    },
+    {
+      "source_row": 21,
+      "source_column": "AQ",
+      "helper_cell": "AQ81",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.23
+    },
+    {
+      "source_row": 21,
+      "source_column": "AR",
+      "helper_cell": "AR81",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.23
+    },
+    {
+      "source_row": 22,
+      "source_column": "AM",
+      "helper_cell": "AM82",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.105
+    },
+    {
+      "source_row": 22,
+      "source_column": "AN",
+      "helper_cell": "AN82",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.105
+    },
+    {
+      "source_row": 22,
+      "source_column": "AO",
+      "helper_cell": "AO82",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 22,
+      "source_column": "AP",
+      "helper_cell": "AP82",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.855
+    },
+    {
+      "source_row": 22,
+      "source_column": "AQ",
+      "helper_cell": "AQ82",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.855
+    },
+    {
+      "source_row": 22,
+      "source_column": "AR",
+      "helper_cell": "AR82",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.855
+    },
+    {
+      "source_row": 22,
+      "source_column": "AV",
+      "helper_cell": "AV67",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.375
+    },
+    {
+      "source_row": 22,
+      "source_column": "AW",
+      "helper_cell": "AW67",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.105
+    },
+    {
+      "source_row": 22,
+      "source_column": "AX",
+      "helper_cell": "AX67",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.125
+    },
+    {
+      "source_row": 22,
+      "source_column": "AY",
+      "helper_cell": "AY67",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 22,
+      "source_column": "AZ",
+      "helper_cell": "AZ67",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.125
+    },
+    {
+      "source_row": 22,
+      "source_column": "BA",
+      "helper_cell": "BA67",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.855
+    },
+    {
+      "source_row": 23,
+      "source_column": "AM",
+      "helper_cell": "AM83",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.73
+    },
+    {
+      "source_row": 23,
+      "source_column": "AN",
+      "helper_cell": "AN83",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 23,
+      "source_column": "AO",
+      "helper_cell": "AO83",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.98
+    },
+    {
+      "source_row": 23,
+      "source_column": "AP",
+      "helper_cell": "AP83",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.98
+    },
+    {
+      "source_row": 23,
+      "source_column": "AQ",
+      "helper_cell": "AQ83",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.23
+    },
+    {
+      "source_row": 23,
+      "source_column": "AR",
+      "helper_cell": "AR83",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.23
+    },
+    {
+      "source_row": 23,
+      "source_column": "AV",
+      "helper_cell": "AV68",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9
+    },
+    {
+      "source_row": 23,
+      "source_column": "AW",
+      "helper_cell": "AW68",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.73
+    },
+    {
+      "source_row": 23,
+      "source_column": "AX",
+      "helper_cell": "AX68",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.25
+    },
+    {
+      "source_row": 23,
+      "source_column": "AY",
+      "helper_cell": "AY68",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.98
+    },
+    {
+      "source_row": 23,
+      "source_column": "AZ",
+      "helper_cell": "AZ68",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.5
+    },
+    {
+      "source_row": 23,
+      "source_column": "BA",
+      "helper_cell": "BA68",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.23
+    },
+    {
+      "source_row": 24,
+      "source_column": "AV",
+      "helper_cell": "AV69",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.75
+    },
+    {
+      "source_row": 24,
+      "source_column": "AW",
+      "helper_cell": "AW69",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.48
+    },
+    {
+      "source_row": 24,
+      "source_column": "AX",
+      "helper_cell": "AX69",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.5
+    },
+    {
+      "source_row": 24,
+      "source_column": "AY",
+      "helper_cell": "AY69",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.23
+    },
+    {
+      "source_row": 24,
+      "source_column": "AZ",
+      "helper_cell": "AZ69",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.5
+    },
+    {
+      "source_row": 24,
+      "source_column": "BA",
+      "helper_cell": "BA69",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 4.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.23
+    },
+    {
+      "source_row": 25,
+      "source_column": "AM",
+      "helper_cell": "AM85",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 25,
+      "source_column": "AN",
+      "helper_cell": "AN85",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.48
+    },
+    {
+      "source_row": 25,
+      "source_column": "AO",
+      "helper_cell": "AO85",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.355
+    },
+    {
+      "source_row": 25,
+      "source_column": "AP",
+      "helper_cell": "AP85",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.355
+    },
+    {
+      "source_row": 25,
+      "source_column": "AQ",
+      "helper_cell": "AQ85",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 25,
+      "source_column": "AR",
+      "helper_cell": "AR85",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.48
+    },
+    {
+      "source_row": 26,
+      "source_column": "AM",
+      "helper_cell": "AM86",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 26,
+      "source_column": "AN",
+      "helper_cell": "AN86",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.73
+    },
+    {
+      "source_row": 26,
+      "source_column": "AO",
+      "helper_cell": "AO86",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.605
+    },
+    {
+      "source_row": 26,
+      "source_column": "AP",
+      "helper_cell": "AP86",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.605
+    },
+    {
+      "source_row": 26,
+      "source_column": "AQ",
+      "helper_cell": "AQ86",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.23
+    },
+    {
+      "source_row": 26,
+      "source_column": "AR",
+      "helper_cell": "AR86",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.23
+    },
+    {
+      "source_row": 26,
+      "source_column": "AV",
+      "helper_cell": "AV71",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.5
+    },
+    {
+      "source_row": 26,
+      "source_column": "AW",
+      "helper_cell": "AW71",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.23
+    },
+    {
+      "source_row": 26,
+      "source_column": "AX",
+      "helper_cell": "AX71",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.75
+    },
+    {
+      "source_row": 26,
+      "source_column": "AY",
+      "helper_cell": "AY71",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 26,
+      "source_column": "AZ",
+      "helper_cell": "AZ71",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10
+    },
+    {
+      "source_row": 26,
+      "source_column": "BA",
+      "helper_cell": "BA71",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.73
+    },
+    {
+      "source_row": 27,
+      "source_column": "AM",
+      "helper_cell": "AM87",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.105
+    },
+    {
+      "source_row": 27,
+      "source_column": "AN",
+      "helper_cell": "AN87",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.105
+    },
+    {
+      "source_row": 27,
+      "source_column": "AO",
+      "helper_cell": "AO87",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 27,
+      "source_column": "AP",
+      "helper_cell": "AP87",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.855
+    },
+    {
+      "source_row": 27,
+      "source_column": "AQ",
+      "helper_cell": "AQ87",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.855
+    },
+    {
+      "source_row": 27,
+      "source_column": "AR",
+      "helper_cell": "AR87",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.855
+    },
+    {
+      "source_row": 27,
+      "source_column": "AV",
+      "helper_cell": "AV72",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.25
+    },
+    {
+      "source_row": 27,
+      "source_column": "AW",
+      "helper_cell": "AW72",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.98
+    },
+    {
+      "source_row": 27,
+      "source_column": "AX",
+      "helper_cell": "AX72",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8
+    },
+    {
+      "source_row": 27,
+      "source_column": "AY",
+      "helper_cell": "AY72",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 27,
+      "source_column": "AZ",
+      "helper_cell": "AZ72",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11
+    },
+    {
+      "source_row": 27,
+      "source_column": "BA",
+      "helper_cell": "BA72",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.73
+    },
+    {
+      "source_row": 28,
+      "source_column": "AM",
+      "helper_cell": "AM88",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.73
+    },
+    {
+      "source_row": 28,
+      "source_column": "AN",
+      "helper_cell": "AN88",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 28,
+      "source_column": "AO",
+      "helper_cell": "AO88",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.98
+    },
+    {
+      "source_row": 28,
+      "source_column": "AP",
+      "helper_cell": "AP88",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.98
+    },
+    {
+      "source_row": 28,
+      "source_column": "AQ",
+      "helper_cell": "AQ88",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.23
+    },
+    {
+      "source_row": 28,
+      "source_column": "AR",
+      "helper_cell": "AR88",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.23
+    },
+    {
+      "source_row": 28,
+      "source_column": "AV",
+      "helper_cell": "AV73",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.625
+    },
+    {
+      "source_row": 28,
+      "source_column": "AW",
+      "helper_cell": "AW73",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.355
+    },
+    {
+      "source_row": 28,
+      "source_column": "AX",
+      "helper_cell": "AX73",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8
+    },
+    {
+      "source_row": 28,
+      "source_column": "AY",
+      "helper_cell": "AY73",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 28,
+      "source_column": "AZ",
+      "helper_cell": "AZ73",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.5
+    },
+    {
+      "source_row": 28,
+      "source_column": "BA",
+      "helper_cell": "BA73",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.23
+    },
+    {
+      "source_row": 29,
+      "source_column": "AV",
+      "helper_cell": "AV74",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 11.375
+    },
+    {
+      "source_row": 29,
+      "source_column": "AW",
+      "helper_cell": "AW74",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.105
+    },
+    {
+      "source_row": 29,
+      "source_column": "AX",
+      "helper_cell": "AX74",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8
+    },
+    {
+      "source_row": 29,
+      "source_column": "AY",
+      "helper_cell": "AY74",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 29,
+      "source_column": "AZ",
+      "helper_cell": "AZ74",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.5
+    },
+    {
+      "source_row": 29,
+      "source_column": "BA",
+      "helper_cell": "BA74",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 5.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.23
+    },
+    {
+      "source_row": 30,
+      "source_column": "AM",
+      "helper_cell": "AM90",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 30,
+      "source_column": "AN",
+      "helper_cell": "AN90",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.73
+    },
+    {
+      "source_row": 30,
+      "source_column": "AO",
+      "helper_cell": "AO90",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.605
+    },
+    {
+      "source_row": 30,
+      "source_column": "AP",
+      "helper_cell": "AP90",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.605
+    },
+    {
+      "source_row": 30,
+      "source_column": "AQ",
+      "helper_cell": "AQ90",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 30,
+      "source_column": "AR",
+      "helper_cell": "AR90",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 5.73
+    },
+    {
+      "source_row": 31,
+      "source_column": "AM",
+      "helper_cell": "AM91",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.98
+    },
+    {
+      "source_row": 31,
+      "source_column": "AN",
+      "helper_cell": "AN91",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 5.98
+    },
+    {
+      "source_row": 31,
+      "source_column": "AO",
+      "helper_cell": "AO91",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 31,
+      "source_column": "AP",
+      "helper_cell": "AP91",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 4.855
+    },
+    {
+      "source_row": 31,
+      "source_column": "AQ",
+      "helper_cell": "AQ91",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.48
+    },
+    {
+      "source_row": 31,
+      "source_column": "AR",
+      "helper_cell": "AR91",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 31,
+      "source_column": "AV",
+      "helper_cell": "AV76",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.875
+    },
+    {
+      "source_row": 31,
+      "source_column": "AW",
+      "helper_cell": "AW76",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.605
+    },
+    {
+      "source_row": 31,
+      "source_column": "AX",
+      "helper_cell": "AX76",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.825
+    },
+    {
+      "source_row": 31,
+      "source_column": "AY",
+      "helper_cell": "AY76",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.355
+    },
+    {
+      "source_row": 31,
+      "source_column": "AZ",
+      "helper_cell": "AZ76",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.875
+    },
+    {
+      "source_row": 31,
+      "source_column": "BA",
+      "helper_cell": "BA76",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.355
+    },
+    {
+      "source_row": 32,
+      "source_column": "AM",
+      "helper_cell": "AM92",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.355
+    },
+    {
+      "source_row": 32,
+      "source_column": "AN",
+      "helper_cell": "AN92",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.355
+    },
+    {
+      "source_row": 32,
+      "source_column": "AO",
+      "helper_cell": "AO92",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.105
+    },
+    {
+      "source_row": 32,
+      "source_column": "AP",
+      "helper_cell": "AP92",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 32,
+      "source_column": "AQ",
+      "helper_cell": "AQ92",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 32,
+      "source_column": "AR",
+      "helper_cell": "AR92",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.105
+    },
+    {
+      "source_row": 32,
+      "source_column": "AV",
+      "helper_cell": "AV77",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 11.25
+    },
+    {
+      "source_row": 32,
+      "source_column": "AW",
+      "helper_cell": "AW77",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.98
+    },
+    {
+      "source_row": 32,
+      "source_column": "AX",
+      "helper_cell": "AX77",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.825
+    },
+    {
+      "source_row": 32,
+      "source_column": "AY",
+      "helper_cell": "AY77",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.355
+    },
+    {
+      "source_row": 32,
+      "source_column": "AZ",
+      "helper_cell": "AZ77",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.375
+    },
+    {
+      "source_row": 32,
+      "source_column": "BA",
+      "helper_cell": "BA77",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.855
+    },
+    {
+      "source_row": 33,
+      "source_column": "AM",
+      "helper_cell": "AM93",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 33,
+      "source_column": "AN",
+      "helper_cell": "AN93",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.98
+    },
+    {
+      "source_row": 33,
+      "source_column": "AO",
+      "helper_cell": "AO93",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.23
+    },
+    {
+      "source_row": 33,
+      "source_column": "AP",
+      "helper_cell": "AP93",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.23
+    },
+    {
+      "source_row": 33,
+      "source_column": "AQ",
+      "helper_cell": "AQ93",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.48
+    },
+    {
+      "source_row": 33,
+      "source_column": "AR",
+      "helper_cell": "AR93",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.48
+    },
+    {
+      "source_row": 33,
+      "source_column": "AV",
+      "helper_cell": "AV78",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 12
+    },
+    {
+      "source_row": 33,
+      "source_column": "AW",
+      "helper_cell": "AW78",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.73
+    },
+    {
+      "source_row": 33,
+      "source_column": "AX",
+      "helper_cell": "AX78",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.825
+    },
+    {
+      "source_row": 33,
+      "source_column": "AY",
+      "helper_cell": "AY78",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.355
+    },
+    {
+      "source_row": 33,
+      "source_column": "AZ",
+      "helper_cell": "AZ78",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.375
+    },
+    {
+      "source_row": 33,
+      "source_column": "BA",
+      "helper_cell": "BA78",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.855
+    },
+    {
+      "source_row": 34,
+      "source_column": "AV",
+      "helper_cell": "AV79",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 12.125
+    },
+    {
+      "source_row": 34,
+      "source_column": "AW",
+      "helper_cell": "AW79",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.855
+    },
+    {
+      "source_row": 34,
+      "source_column": "AX",
+      "helper_cell": "AX79",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.825
+    },
+    {
+      "source_row": 34,
+      "source_column": "AY",
+      "helper_cell": "AY79",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.355
+    },
+    {
+      "source_row": 34,
+      "source_column": "AZ",
+      "helper_cell": "AZ79",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.875
+    },
+    {
+      "source_row": 34,
+      "source_column": "BA",
+      "helper_cell": "BA79",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 6.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.355
+    },
+    {
+      "source_row": 35,
+      "source_column": "AM",
+      "helper_cell": "AM95",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.48
+    },
+    {
+      "source_row": 35,
+      "source_column": "AN",
+      "helper_cell": "AN95",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.23
+    },
+    {
+      "source_row": 35,
+      "source_column": "AO",
+      "helper_cell": "AO95",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.355
+    },
+    {
+      "source_row": 35,
+      "source_column": "AP",
+      "helper_cell": "AP95",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.105
+    },
+    {
+      "source_row": 35,
+      "source_column": "AQ",
+      "helper_cell": "AQ95",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 35,
+      "source_column": "AR",
+      "helper_cell": "AR95",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 36,
+      "source_column": "AM",
+      "helper_cell": "AM96",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.855
+    },
+    {
+      "source_row": 36,
+      "source_column": "AN",
+      "helper_cell": "AN96",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.605
+    },
+    {
+      "source_row": 36,
+      "source_column": "AO",
+      "helper_cell": "AO96",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.605
+    },
+    {
+      "source_row": 36,
+      "source_column": "AP",
+      "helper_cell": "AP96",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.355
+    },
+    {
+      "source_row": 36,
+      "source_column": "AQ",
+      "helper_cell": "AQ96",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.605
+    },
+    {
+      "source_row": 36,
+      "source_column": "AR",
+      "helper_cell": "AR96",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.355
+    },
+    {
+      "source_row": 36,
+      "source_column": "AV",
+      "helper_cell": "AV81",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 12.375
+    },
+    {
+      "source_row": 36,
+      "source_column": "AW",
+      "helper_cell": "AW81",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.605
+    },
+    {
+      "source_row": 36,
+      "source_column": "AX",
+      "helper_cell": "AX81",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 9.75
+    },
+    {
+      "source_row": 36,
+      "source_column": "AY",
+      "helper_cell": "AY81",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 36,
+      "source_column": "AZ",
+      "helper_cell": "AZ81",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 13.25
+    },
+    {
+      "source_row": 36,
+      "source_column": "BA",
+      "helper_cell": "BA81",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.48
+    },
+    {
+      "source_row": 37,
+      "source_column": "AM",
+      "helper_cell": "AM97",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.48
+    },
+    {
+      "source_row": 37,
+      "source_column": "AN",
+      "helper_cell": "AN97",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.23
+    },
+    {
+      "source_row": 37,
+      "source_column": "AO",
+      "helper_cell": "AO97",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 37,
+      "source_column": "AP",
+      "helper_cell": "AP97",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.48
+    },
+    {
+      "source_row": 37,
+      "source_column": "AQ",
+      "helper_cell": "AQ97",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.98
+    },
+    {
+      "source_row": 37,
+      "source_column": "AR",
+      "helper_cell": "AR97",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.73
+    },
+    {
+      "source_row": 37,
+      "source_column": "AV",
+      "helper_cell": "AV82",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 13.125
+    },
+    {
+      "source_row": 37,
+      "source_column": "AW",
+      "helper_cell": "AW82",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 11.355
+    },
+    {
+      "source_row": 37,
+      "source_column": "AX",
+      "helper_cell": "AX82",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 9.75
+    },
+    {
+      "source_row": 37,
+      "source_column": "AY",
+      "helper_cell": "AY82",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 37,
+      "source_column": "AZ",
+      "helper_cell": "AZ82",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 13.25
+    },
+    {
+      "source_row": 37,
+      "source_column": "BA",
+      "helper_cell": "BA82",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.48
+    },
+    {
+      "source_row": 38,
+      "source_column": "AM",
+      "helper_cell": "AM98",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.23
+    },
+    {
+      "source_row": 38,
+      "source_column": "AN",
+      "helper_cell": "AN98",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 38,
+      "source_column": "AO",
+      "helper_cell": "AO98",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.98
+    },
+    {
+      "source_row": 38,
+      "source_column": "AP",
+      "helper_cell": "AP98",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.73
+    },
+    {
+      "source_row": 38,
+      "source_column": "AQ",
+      "helper_cell": "AQ98",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.98
+    },
+    {
+      "source_row": 38,
+      "source_column": "AR",
+      "helper_cell": "AR98",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.73
+    },
+    {
+      "source_row": 38,
+      "source_column": "AV",
+      "helper_cell": "AV83",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 13.25
+    },
+    {
+      "source_row": 38,
+      "source_column": "AW",
+      "helper_cell": "AW83",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 11.48
+    },
+    {
+      "source_row": 38,
+      "source_column": "AX",
+      "helper_cell": "AX83",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 9.75
+    },
+    {
+      "source_row": 38,
+      "source_column": "AY",
+      "helper_cell": "AY83",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 38,
+      "source_column": "AZ",
+      "helper_cell": "AZ83",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 13.75
+    },
+    {
+      "source_row": 38,
+      "source_column": "BA",
+      "helper_cell": "BA83",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.98
+    },
+    {
+      "source_row": 39,
+      "source_column": "AV",
+      "helper_cell": "AV84",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 14
+    },
+    {
+      "source_row": 39,
+      "source_column": "AW",
+      "helper_cell": "AW84",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 12.23
+    },
+    {
+      "source_row": 39,
+      "source_column": "AX",
+      "helper_cell": "AX84",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 9.75
+    },
+    {
+      "source_row": 39,
+      "source_column": "AY",
+      "helper_cell": "AY84",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 39,
+      "source_column": "AZ",
+      "helper_cell": "AZ84",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 14.25
+    },
+    {
+      "source_row": 39,
+      "source_column": "BA",
+      "helper_cell": "BA84",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 7.0,
+      "rod": 4.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.48
+    },
+    {
+      "source_row": 40,
+      "source_column": "AM",
+      "helper_cell": "AM100",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.605
+    },
+    {
+      "source_row": 40,
+      "source_column": "AN",
+      "helper_cell": "AN100",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.355
+    },
+    {
+      "source_row": 40,
+      "source_column": "AO",
+      "helper_cell": "AO100",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 40,
+      "source_column": "AP",
+      "helper_cell": "AP100",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.23
+    },
+    {
+      "source_row": 40,
+      "source_column": "AQ",
+      "helper_cell": "AQ100",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 40,
+      "source_column": "AR",
+      "helper_cell": "AR100",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.855
+    },
+    {
+      "source_row": 41,
+      "source_column": "AM",
+      "helper_cell": "AM101",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 41,
+      "source_column": "AN",
+      "helper_cell": "AN101",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 41,
+      "source_column": "AO",
+      "helper_cell": "AO101",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 41,
+      "source_column": "AP",
+      "helper_cell": "AP101",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.48
+    },
+    {
+      "source_row": 41,
+      "source_column": "AQ",
+      "helper_cell": "AQ101",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.73
+    },
+    {
+      "source_row": 41,
+      "source_column": "AR",
+      "helper_cell": "AR101",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.48
+    },
+    {
+      "source_row": 41,
+      "source_column": "AV",
+      "helper_cell": "AV86",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 14.125
+    },
+    {
+      "source_row": 41,
+      "source_column": "AW",
+      "helper_cell": "AW86",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 12.105
+    },
+    {
+      "source_row": 41,
+      "source_column": "AX",
+      "helper_cell": "AX86",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 10.75
+    },
+    {
+      "source_row": 41,
+      "source_column": "AY",
+      "helper_cell": "AY86",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.73
+    },
+    {
+      "source_row": 41,
+      "source_column": "AZ",
+      "helper_cell": "AZ86",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 14.25
+    },
+    {
+      "source_row": 41,
+      "source_column": "BA",
+      "helper_cell": "BA86",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.23
+    },
+    {
+      "source_row": 42,
+      "source_column": "AM",
+      "helper_cell": "AM102",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.605
+    },
+    {
+      "source_row": 42,
+      "source_column": "AN",
+      "helper_cell": "AN102",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.355
+    },
+    {
+      "source_row": 42,
+      "source_column": "AO",
+      "helper_cell": "AO102",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.855
+    },
+    {
+      "source_row": 42,
+      "source_column": "AP",
+      "helper_cell": "AP102",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.605
+    },
+    {
+      "source_row": 42,
+      "source_column": "AQ",
+      "helper_cell": "AQ102",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.105
+    },
+    {
+      "source_row": 42,
+      "source_column": "AR",
+      "helper_cell": "AR102",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.855
+    },
+    {
+      "source_row": 42,
+      "source_column": "AV",
+      "helper_cell": "AV87",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 14.25
+    },
+    {
+      "source_row": 42,
+      "source_column": "AW",
+      "helper_cell": "AW87",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 12.23
+    },
+    {
+      "source_row": 42,
+      "source_column": "AX",
+      "helper_cell": "AX87",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 10.75
+    },
+    {
+      "source_row": 42,
+      "source_column": "AY",
+      "helper_cell": "AY87",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.73
+    },
+    {
+      "source_row": 42,
+      "source_column": "AZ",
+      "helper_cell": "AZ87",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 14.75
+    },
+    {
+      "source_row": 42,
+      "source_column": "BA",
+      "helper_cell": "BA87",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.73
+    },
+    {
+      "source_row": 43,
+      "source_column": "AM",
+      "helper_cell": "AM103",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.355
+    },
+    {
+      "source_row": 43,
+      "source_column": "AN",
+      "helper_cell": "AN103",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 43,
+      "source_column": "AO",
+      "helper_cell": "AO103",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.105
+    },
+    {
+      "source_row": 43,
+      "source_column": "AP",
+      "helper_cell": "AP103",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 43,
+      "source_column": "AQ",
+      "helper_cell": "AQ103",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.105
+    },
+    {
+      "source_row": 43,
+      "source_column": "AR",
+      "helper_cell": "AR103",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 7.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.855
+    },
+    {
+      "source_row": 43,
+      "source_column": "AV",
+      "helper_cell": "AV88",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 15
+    },
+    {
+      "source_row": 43,
+      "source_column": "AW",
+      "helper_cell": "AW88",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 12.98
+    },
+    {
+      "source_row": 43,
+      "source_column": "AX",
+      "helper_cell": "AX88",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 10.75
+    },
+    {
+      "source_row": 43,
+      "source_column": "AY",
+      "helper_cell": "AY88",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.73
+    },
+    {
+      "source_row": 43,
+      "source_column": "AZ",
+      "helper_cell": "AZ88",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 15.25
+    },
+    {
+      "source_row": 43,
+      "source_column": "BA",
+      "helper_cell": "BA88",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 4.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 13.23
+    },
+    {
+      "source_row": 44,
+      "source_column": "AV",
+      "helper_cell": "AV89",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 15.125
+    },
+    {
+      "source_row": 44,
+      "source_column": "AW",
+      "helper_cell": "AW89",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 13.105
+    },
+    {
+      "source_row": 44,
+      "source_column": "AX",
+      "helper_cell": "AX89",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 10.75
+    },
+    {
+      "source_row": 44,
+      "source_column": "AY",
+      "helper_cell": "AY89",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.73
+    },
+    {
+      "source_row": 44,
+      "source_column": "AZ",
+      "helper_cell": "AZ89",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 15.75
+    },
+    {
+      "source_row": 44,
+      "source_column": "BA",
+      "helper_cell": "BA89",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 13.73
+    },
+    {
+      "source_row": 45,
+      "source_column": "AM",
+      "helper_cell": "AM105",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.605
+    },
+    {
+      "source_row": 45,
+      "source_column": "AN",
+      "helper_cell": "AN105",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.355
+    },
+    {
+      "source_row": 45,
+      "source_column": "AO",
+      "helper_cell": "AO105",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.48
+    },
+    {
+      "source_row": 45,
+      "source_column": "AP",
+      "helper_cell": "AP105",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.23
+    },
+    {
+      "source_row": 45,
+      "source_column": "AQ",
+      "helper_cell": "AQ105",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.375,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 45,
+      "source_column": "AR",
+      "helper_cell": "AR105",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.375,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 6.855
+    },
+    {
+      "source_row": 45,
+      "source_column": "AV",
+      "helper_cell": "AV90",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 16
+    },
+    {
+      "source_row": 45,
+      "source_column": "AW",
+      "helper_cell": "AW90",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 13.98
+    },
+    {
+      "source_row": 45,
+      "source_column": "AX",
+      "helper_cell": "AX90",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 10.75
+    },
+    {
+      "source_row": 45,
+      "source_column": "AY",
+      "helper_cell": "AY90",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.73
+    },
+    {
+      "source_row": 45,
+      "source_column": "AZ",
+      "helper_cell": "AZ90",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 16.25
+    },
+    {
+      "source_row": 45,
+      "source_column": "BA",
+      "helper_cell": "BA90",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 8.0,
+      "rod": 5.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 14.23
+    },
+    {
+      "source_row": 46,
+      "source_column": "AM",
+      "helper_cell": "AM106",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 46,
+      "source_column": "AN",
+      "helper_cell": "AN106",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 46,
+      "source_column": "AO",
+      "helper_cell": "AO106",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.73
+    },
+    {
+      "source_row": 46,
+      "source_column": "AP",
+      "helper_cell": "AP106",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.48
+    },
+    {
+      "source_row": 46,
+      "source_column": "AQ",
+      "helper_cell": "AQ106",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.73
+    },
+    {
+      "source_row": 46,
+      "source_column": "AR",
+      "helper_cell": "AR106",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.48
+    },
+    {
+      "source_row": 47,
+      "source_column": "AM",
+      "helper_cell": "AM107",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.605
+    },
+    {
+      "source_row": 47,
+      "source_column": "AN",
+      "helper_cell": "AN107",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.355
+    },
+    {
+      "source_row": 47,
+      "source_column": "AO",
+      "helper_cell": "AO107",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.855
+    },
+    {
+      "source_row": 47,
+      "source_column": "AP",
+      "helper_cell": "AP107",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.605
+    },
+    {
+      "source_row": 47,
+      "source_column": "AQ",
+      "helper_cell": "AQ107",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.105
+    },
+    {
+      "source_row": 47,
+      "source_column": "AR",
+      "helper_cell": "AR107",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 7.855
+    },
+    {
+      "source_row": 47,
+      "source_column": "AV",
+      "helper_cell": "AV92",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 4.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 17.4175
+    },
+    {
+      "source_row": 47,
+      "source_column": "AW",
+      "helper_cell": "AW92",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 4.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 14.9175
+    },
+    {
+      "source_row": 47,
+      "source_column": "AX",
+      "helper_cell": "AX92",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 4.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 13.1675
+    },
+    {
+      "source_row": 47,
+      "source_column": "AY",
+      "helper_cell": "AY92",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 4.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 10.6675
+    },
+    {
+      "source_row": 47,
+      "source_column": "AZ",
+      "helper_cell": "AZ92",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 4.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 17.6675
+    },
+    {
+      "source_row": 47,
+      "source_column": "BA",
+      "helper_cell": "BA92",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 4.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 15.1675
+    },
+    {
+      "source_row": 48,
+      "source_column": "AM",
+      "helper_cell": "AM108",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.355
+    },
+    {
+      "source_row": 48,
+      "source_column": "AN",
+      "helper_cell": "AN108",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 48,
+      "source_column": "AO",
+      "helper_cell": "AO108",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.105
+    },
+    {
+      "source_row": 48,
+      "source_column": "AP",
+      "helper_cell": "AP108",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 5.855
+    },
+    {
+      "source_row": 48,
+      "source_column": "AQ",
+      "helper_cell": "AQ108",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.105
+    },
+    {
+      "source_row": 48,
+      "source_column": "AR",
+      "helper_cell": "AR108",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 8.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.855
+    },
+    {
+      "source_row": 48,
+      "source_column": "AV",
+      "helper_cell": "AV93",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 17.5425
+    },
+    {
+      "source_row": 48,
+      "source_column": "AW",
+      "helper_cell": "AW93",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 15.0425
+    },
+    {
+      "source_row": 48,
+      "source_column": "AX",
+      "helper_cell": "AX93",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 13.1675
+    },
+    {
+      "source_row": 48,
+      "source_column": "AY",
+      "helper_cell": "AY93",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 10.6675
+    },
+    {
+      "source_row": 48,
+      "source_column": "AZ",
+      "helper_cell": "AZ93",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 18.1675
+    },
+    {
+      "source_row": 48,
+      "source_column": "BA",
+      "helper_cell": "BA93",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 15.6675
+    },
+    {
+      "source_row": 49,
+      "source_column": "AV",
+      "helper_cell": "AV94",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 18.4175
+    },
+    {
+      "source_row": 49,
+      "source_column": "AW",
+      "helper_cell": "AW94",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 15.9175
+    },
+    {
+      "source_row": 49,
+      "source_column": "AX",
+      "helper_cell": "AX94",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 13.1675
+    },
+    {
+      "source_row": 49,
+      "source_column": "AY",
+      "helper_cell": "AY94",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 10.6675
+    },
+    {
+      "source_row": 49,
+      "source_column": "AZ",
+      "helper_cell": "AZ94",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 18.6675
+    },
+    {
+      "source_row": 49,
+      "source_column": "BA",
+      "helper_cell": "BA94",
+      "families": [
+        "H",
+        "HM"
+      ],
+      "bore": 10.0,
+      "rod": 5.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 16.1675
+    },
+    {
+      "source_row": 50,
+      "source_column": "AM",
+      "helper_cell": "AM110",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.855
+    },
+    {
+      "source_row": 50,
+      "source_column": "AN",
+      "helper_cell": "AN110",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 7.48
+    },
+    {
+      "source_row": 50,
+      "source_column": "AO",
+      "helper_cell": "AO110",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.605
+    },
+    {
+      "source_row": 50,
+      "source_column": "AP",
+      "helper_cell": "AP110",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.23
+    },
+    {
+      "source_row": 50,
+      "source_column": "AQ",
+      "helper_cell": "AQ110",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 1.75,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.605
+    },
+    {
+      "source_row": 50,
+      "source_column": "AR",
+      "helper_cell": "AR110",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 1.75,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.23
+    },
+    {
+      "source_row": 51,
+      "source_column": "AM",
+      "helper_cell": "AM111",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.48
+    },
+    {
+      "source_row": 51,
+      "source_column": "AN",
+      "helper_cell": "AN111",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 51,
+      "source_column": "AO",
+      "helper_cell": "AO111",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.73
+    },
+    {
+      "source_row": 51,
+      "source_column": "AP",
+      "helper_cell": "AP111",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.355
+    },
+    {
+      "source_row": 51,
+      "source_column": "AQ",
+      "helper_cell": "AQ111",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.98
+    },
+    {
+      "source_row": 51,
+      "source_column": "AR",
+      "helper_cell": "AR111",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 8.605
+    },
+    {
+      "source_row": 52,
+      "source_column": "AM",
+      "helper_cell": "AM112",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.23
+    },
+    {
+      "source_row": 52,
+      "source_column": "AN",
+      "helper_cell": "AN112",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.855
+    },
+    {
+      "source_row": 52,
+      "source_column": "AO",
+      "helper_cell": "AO112",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 52,
+      "source_column": "AP",
+      "helper_cell": "AP112",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.605
+    },
+    {
+      "source_row": 52,
+      "source_column": "AQ",
+      "helper_cell": "AQ112",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.98
+    },
+    {
+      "source_row": 52,
+      "source_column": "AR",
+      "helper_cell": "AR112",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.605
+    },
+    {
+      "source_row": 53,
+      "source_column": "AM",
+      "helper_cell": "AM113",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.605
+    },
+    {
+      "source_row": 53,
+      "source_column": "AN",
+      "helper_cell": "AN113",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.23
+    },
+    {
+      "source_row": 53,
+      "source_column": "AO",
+      "helper_cell": "AO113",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.98
+    },
+    {
+      "source_row": 53,
+      "source_column": "AP",
+      "helper_cell": "AP113",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.605
+    },
+    {
+      "source_row": 53,
+      "source_column": "AQ",
+      "helper_cell": "AQ113",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.48
+    },
+    {
+      "source_row": 53,
+      "source_column": "AR",
+      "helper_cell": "AR113",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 10.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.105
+    },
+    {
+      "source_row": 55,
+      "source_column": "AM",
+      "helper_cell": "AM115",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.043000000000001
+    },
+    {
+      "source_row": 55,
+      "source_column": "AN",
+      "helper_cell": "AN115",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 8.605
+    },
+    {
+      "source_row": 55,
+      "source_column": "AO",
+      "helper_cell": "AO115",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.293000000000001
+    },
+    {
+      "source_row": 55,
+      "source_column": "AP",
+      "helper_cell": "AP115",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 6.855
+    },
+    {
+      "source_row": 55,
+      "source_column": "AQ",
+      "helper_cell": "AQ115",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.543000000000001
+    },
+    {
+      "source_row": 55,
+      "source_column": "AR",
+      "helper_cell": "AR115",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 9.105
+    },
+    {
+      "source_row": 56,
+      "source_column": "AM",
+      "helper_cell": "AM116",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.793000000000001
+    },
+    {
+      "source_row": 56,
+      "source_column": "AN",
+      "helper_cell": "AN116",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.355
+    },
+    {
+      "source_row": 56,
+      "source_column": "AO",
+      "helper_cell": "AO116",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.543000000000001
+    },
+    {
+      "source_row": 56,
+      "source_column": "AP",
+      "helper_cell": "AP116",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.105
+    },
+    {
+      "source_row": 56,
+      "source_column": "AQ",
+      "helper_cell": "AQ116",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.543000000000001
+    },
+    {
+      "source_row": 56,
+      "source_column": "AR",
+      "helper_cell": "AR116",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.105
+    },
+    {
+      "source_row": 57,
+      "source_column": "AM",
+      "helper_cell": "AM117",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 11.168000000000001
+    },
+    {
+      "source_row": 57,
+      "source_column": "AN",
+      "helper_cell": "AN117",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 9.73
+    },
+    {
+      "source_row": 57,
+      "source_column": "AO",
+      "helper_cell": "AO117",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.543000000000001
+    },
+    {
+      "source_row": 57,
+      "source_column": "AP",
+      "helper_cell": "AP117",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.105
+    },
+    {
+      "source_row": 57,
+      "source_column": "AQ",
+      "helper_cell": "AQ117",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.043000000000001
+    },
+    {
+      "source_row": 57,
+      "source_column": "AR",
+      "helper_cell": "AR117",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.605
+    },
+    {
+      "source_row": 58,
+      "source_column": "AM",
+      "helper_cell": "AM118",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 11.918000000000001
+    },
+    {
+      "source_row": 58,
+      "source_column": "AN",
+      "helper_cell": "AN118",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.48
+    },
+    {
+      "source_row": 58,
+      "source_column": "AO",
+      "helper_cell": "AO118",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.543000000000001
+    },
+    {
+      "source_row": 58,
+      "source_column": "AP",
+      "helper_cell": "AP118",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 7.105
+    },
+    {
+      "source_row": 58,
+      "source_column": "AQ",
+      "helper_cell": "AQ118",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.043000000000001
+    },
+    {
+      "source_row": 58,
+      "source_column": "AR",
+      "helper_cell": "AR118",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 12.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 10.605
+    },
+    {
+      "source_row": 60,
+      "source_column": "AM",
+      "helper_cell": "AM120",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 11.98
+    },
+    {
+      "source_row": 60,
+      "source_column": "AN",
+      "helper_cell": "AN120",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.355
+    },
+    {
+      "source_row": 60,
+      "source_column": "AO",
+      "helper_cell": "AO120",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 9.73
+    },
+    {
+      "source_row": 60,
+      "source_column": "AP",
+      "helper_cell": "AP120",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 60,
+      "source_column": "AQ",
+      "helper_cell": "AQ120",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 2.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.73
+    },
+    {
+      "source_row": 60,
+      "source_column": "AR",
+      "helper_cell": "AR120",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 2.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.105
+    },
+    {
+      "source_row": 61,
+      "source_column": "AM",
+      "helper_cell": "AM121",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 12.355
+    },
+    {
+      "source_row": 61,
+      "source_column": "AN",
+      "helper_cell": "AN121",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 10.73
+    },
+    {
+      "source_row": 61,
+      "source_column": "AO",
+      "helper_cell": "AO121",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 9.73
+    },
+    {
+      "source_row": 61,
+      "source_column": "AP",
+      "helper_cell": "AP121",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 61,
+      "source_column": "AQ",
+      "helper_cell": "AQ121",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 13.23
+    },
+    {
+      "source_row": 61,
+      "source_column": "AR",
+      "helper_cell": "AR121",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.605
+    },
+    {
+      "source_row": 62,
+      "source_column": "AM",
+      "helper_cell": "AM122",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 13.105
+    },
+    {
+      "source_row": 62,
+      "source_column": "AN",
+      "helper_cell": "AN122",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 11.48
+    },
+    {
+      "source_row": 62,
+      "source_column": "AO",
+      "helper_cell": "AO122",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 9.73
+    },
+    {
+      "source_row": 62,
+      "source_column": "AP",
+      "helper_cell": "AP122",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 62,
+      "source_column": "AQ",
+      "helper_cell": "AQ122",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.5,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 13.23
+    },
+    {
+      "source_row": 62,
+      "source_column": "AR",
+      "helper_cell": "AR122",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 3.5,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 11.605
+    },
+    {
+      "source_row": 63,
+      "source_column": "AM",
+      "helper_cell": "AM123",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 13.23
+    },
+    {
+      "source_row": 63,
+      "source_column": "AN",
+      "helper_cell": "AN123",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        4
+      ],
+      "rod_length_addition": 11.605
+    },
+    {
+      "source_row": 63,
+      "source_column": "AO",
+      "helper_cell": "AO123",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 9.73
+    },
+    {
+      "source_row": 63,
+      "source_column": "AP",
+      "helper_cell": "AP123",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        3
+      ],
+      "rod_length_addition": 8.105
+    },
+    {
+      "source_row": 63,
+      "source_column": "AQ",
+      "helper_cell": "AQ123",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 4.0,
+      "cushions": [
+        "BE",
+        "CE"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 13.73
+    },
+    {
+      "source_row": 63,
+      "source_column": "AR",
+      "helper_cell": "AR123",
+      "families": [
+        "A",
+        "LH",
+        "SA"
+      ],
+      "bore": 14.0,
+      "rod": 4.0,
+      "cushions": [
+        "RE",
+        "NC"
+      ],
+      "rod_styles": [
+        1,
+        2,
+        6
+      ],
+      "rod_length_addition": 12.105
+    }
+  ],
+  "barrel_rules": [
+    {
+      "source_row": 7,
+      "bore": 1.5,
+      "families": {
+        "A": 1.25,
+        "LH": 1.25,
+        "SA": 1.25,
+        "H": 1.563,
+        "HM": 1.563
+      },
+      "non_h_addition": 1.25,
+      "h_addition": 1.563,
+      "selector_formula": "=IF(Data!B$4=1.5,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI7,AH7),0)"
+    },
+    {
+      "source_row": 8,
+      "bore": 2,
+      "families": {
+        "A": 1.25,
+        "LH": 1.25,
+        "SA": 1.25,
+        "H": 1.563,
+        "HM": 1.563
+      },
+      "non_h_addition": 1.25,
+      "h_addition": 1.563,
+      "selector_formula": "=IF(Data!B$4=2,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI8,AH8),0)"
+    },
+    {
+      "source_row": 9,
+      "bore": 2.5,
+      "families": {
+        "A": 1.375,
+        "LH": 1.375,
+        "SA": 1.375,
+        "H": 1.688,
+        "HM": 1.688
+      },
+      "non_h_addition": 1.375,
+      "h_addition": 1.688,
+      "selector_formula": "=IF(Data!B$4=2.5,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI9,AH9),0)"
+    },
+    {
+      "source_row": 10,
+      "bore": 3.25,
+      "families": {
+        "A": 1.375,
+        "LH": 1.375,
+        "SA": 1.375,
+        "H": 1.938,
+        "HM": 1.938
+      },
+      "non_h_addition": 1.375,
+      "h_addition": 1.938,
+      "selector_formula": "=IF(Data!B$4=3.25,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI10,AH10),0)"
+    },
+    {
+      "source_row": 11,
+      "bore": 4,
+      "families": {
+        "A": 1.375,
+        "LH": 1.375,
+        "SA": 1.375,
+        "H": 2.188,
+        "HM": 2.188
+      },
+      "non_h_addition": 1.375,
+      "h_addition": 2.188,
+      "selector_formula": "=IF(Data!B$4=4,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI11,AH11),0)"
+    },
+    {
+      "source_row": 12,
+      "bore": 5,
+      "families": {
+        "A": 1.625,
+        "LH": 1.625,
+        "SA": 1.625,
+        "H": 2.688,
+        "HM": 2.688
+      },
+      "non_h_addition": 1.625,
+      "h_addition": 2.688,
+      "selector_formula": "=IF(Data!B$4=5,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI12,AH12),0)"
+    },
+    {
+      "source_row": 13,
+      "bore": 6,
+      "families": {
+        "A": 1.625,
+        "LH": 1.625,
+        "SA": 1.625,
+        "H": 3.063,
+        "HM": 3.063
+      },
+      "non_h_addition": 1.625,
+      "h_addition": 3.063,
+      "selector_formula": "=IF(Data!B$4=6,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI13,AH13),0)"
+    },
+    {
+      "source_row": 14,
+      "bore": 7,
+      "families": {
+        "A": 1.75,
+        "LH": 1.75,
+        "SA": 1.75,
+        "H": 3.188,
+        "HM": 3.188
+      },
+      "non_h_addition": 1.75,
+      "h_addition": 3.188,
+      "selector_formula": "=IF(Data!B$4=7,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI14,AH14),0)"
+    },
+    {
+      "source_row": 15,
+      "bore": 8,
+      "families": {
+        "A": 1.75,
+        "LH": 1.75,
+        "SA": 1.75,
+        "H": 3.688,
+        "HM": 3.688
+      },
+      "non_h_addition": 1.75,
+      "h_addition": 3.688,
+      "selector_formula": "=IF(Data!B$4=8,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI15,AH15),0)"
+    },
+    {
+      "source_row": 16,
+      "bore": 10,
+      "families": {
+        "A": 2.25,
+        "LH": 2.25,
+        "SA": 2.25,
+        "H": 5.75,
+        "HM": 5.75
+      },
+      "non_h_addition": 2.25,
+      "h_addition": 5.75,
+      "selector_formula": "=IF(Data!B$4=10,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI16,AH16),0)"
+    },
+    {
+      "source_row": 17,
+      "bore": 12,
+      "families": {
+        "A": 2.75,
+        "LH": 2.75,
+        "SA": 2.75,
+        "H": 7.125,
+        "HM": 7.125
+      },
+      "non_h_addition": 2.75,
+      "h_addition": 7.125,
+      "selector_formula": "=IF(Data!B$4=12,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI17,AH17),0)"
+    },
+    {
+      "source_row": 18,
+      "bore": 14,
+      "families": {
+        "A": 3.25,
+        "LH": 3.25,
+        "SA": 3.25,
+        "H": 7.625,
+        "HM": 7.625
+      },
+      "non_h_addition": 3.25,
+      "h_addition": 7.625,
+      "selector_formula": "=IF(Data!B$4=14,IF(OR(Data!$B$3=\"H\",Data!$B$3=\"HM\"),AI18,AH18),0)"
+    }
+  ],
+  "torque_rules": [
+    {
+      "source_row": 2,
+      "bore": 1.5,
+      "families": {
+        "A": 10,
+        "LH": 10,
+        "H": 30,
+        "HM": 30
+      }
+    },
+    {
+      "source_row": 3,
+      "bore": 2,
+      "families": {
+        "A": 15,
+        "LH": 15,
+        "H": 80,
+        "HM": 80
+      }
+    },
+    {
+      "source_row": 4,
+      "bore": 2.5,
+      "families": {
+        "A": 15,
+        "LH": 15,
+        "H": 80,
+        "HM": 80
+      }
+    },
+    {
+      "source_row": 5,
+      "bore": 3.25,
+      "families": {
+        "A": 30,
+        "LH": 30,
+        "H": 125,
+        "HM": 125
+      }
+    },
+    {
+      "source_row": 6,
+      "bore": 4,
+      "families": {
+        "A": 30,
+        "LH": 30,
+        "H": 125,
+        "HM": 125
+      }
+    },
+    {
+      "source_row": 7,
+      "bore": 5,
+      "families": {
+        "A": 80,
+        "LH": 80,
+        "H": 300,
+        "HM": 300
+      }
+    },
+    {
+      "source_row": 8,
+      "bore": 6,
+      "families": {
+        "A": 80,
+        "LH": 80,
+        "H": 550,
+        "HM": 550
+      }
+    },
+    {
+      "source_row": 9,
+      "bore": 7,
+      "families": {
+        "A": 125,
+        "LH": 125,
+        "H": 800,
+        "HM": 800
+      }
+    },
+    {
+      "source_row": 10,
+      "bore": 8,
+      "families": {
+        "A": 125,
+        "LH": 125,
+        "H": 1100,
+        "HM": 1100
+      }
+    },
+    {
+      "source_row": 11,
+      "bore": 10,
+      "families": {
+        "A": 125,
+        "LH": 125,
+        "H": 1100,
+        "HM": 1100
+      }
+    }
+  ],
+  "weight_rules": [
+    {
+      "source_sheet": "Data",
+      "source_row": 31,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 1.5,
+      "rod": 0.625,
+      "weight_base": 6.0,
+      "weight_per_stroke": 0.35,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 32,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 1.5,
+      "rod": 1.0,
+      "weight_base": 6.3,
+      "weight_per_stroke": 0.5,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 33,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.0,
+      "rod": 0.625,
+      "weight_base": 8.0,
+      "weight_per_stroke": 0.6,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 34,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.0,
+      "rod": 1.375,
+      "weight_base": 9.0,
+      "weight_per_stroke": 1.0,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 35,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.5,
+      "rod": 0.625,
+      "weight_base": 11.0,
+      "weight_per_stroke": 0.9,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 36,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 2.5,
+      "rod": 1.75,
+      "weight_base": 12.0,
+      "weight_per_stroke": 1.5,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 37,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 3.25,
+      "rod": 1.0,
+      "weight_base": 22.0,
+      "weight_per_stroke": 0.9,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 38,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 3.25,
+      "rod": 2.0,
+      "weight_base": 23.0,
+      "weight_per_stroke": 2.0,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 39,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 4.0,
+      "rod": 1.0,
+      "weight_base": 30.0,
+      "weight_per_stroke": 1.2,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 40,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 4.0,
+      "rod": 2.0,
+      "weight_base": 32.0,
+      "weight_per_stroke": 2.2,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 41,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 5.0,
+      "rod": 1.0,
+      "weight_base": 45.0,
+      "weight_per_stroke": 2.0,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 42,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 5.0,
+      "rod": 2.0,
+      "weight_base": 48.0,
+      "weight_per_stroke": 2.5,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 43,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 6.0,
+      "rod": 1.375,
+      "weight_base": 70.0,
+      "weight_per_stroke": 2.5,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 44,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 6.0,
+      "rod": 2.5,
+      "weight_base": 74.0,
+      "weight_per_stroke": 3.8,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 45,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 7.0,
+      "rod": 1.375,
+      "weight_base": 85.0,
+      "weight_per_stroke": 3.0,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 46,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 7.0,
+      "rod": 2.5,
+      "weight_base": 90.0,
+      "weight_per_stroke": 4.0,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 47,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 8.0,
+      "rod": 1.375,
+      "weight_base": 100.0,
+      "weight_per_stroke": 4.0,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    },
+    {
+      "source_sheet": "Data",
+      "source_row": 48,
+      "source_range": "Y:AD",
+      "families": [
+        "A",
+        "LH"
+      ],
+      "bore": 8.0,
+      "rod": 2.5,
+      "weight_base": 115.0,
+      "weight_per_stroke": 5.4,
+      "calculation": "weight_base + weight_per_stroke * stroke",
+      "selector_formula": null
+    }
+  ]
+}

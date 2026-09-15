@@ -9,18 +9,27 @@
 <body>
   <main class="order-page" data-quote-id="{{ quote_id }}">
     <div class="order-toolbar">
-      <a href="/" class="toolbar-button">← Quote Entry</a>
       <a href="/employee/dashboard" id="employeeDashboardButton" class="toolbar-button">Dashboard</a>
       <span id="orderStatus" class="status-pill">Loading…</span>
       <span id="orderMessage" class="toolbar-message" role="status" aria-live="polite"></span>
       <button id="emailCustomerButton" class="toolbar-button" type="button">Email Customer</button>
-      <button class="toolbar-button" type="button" disabled title="Attachment workflow has not been implemented yet.">Attach Quote Form</button>
-      <button class="toolbar-button" type="button" disabled title="Attachment workflow has not been implemented yet.">Attach Report Images</button>
       <button id="addPartButton" class="toolbar-button" type="button">+ Add Part</button>
       <button id="denyOrderButton" class="toolbar-button" type="button">Deny Order</button>
       <button id="holdOrderButton" class="toolbar-button" type="button">Hold</button>
       <button id="approveOrderButton" class="approve-button" type="button">Approve Order</button>
     </div>
+
+    <dialog id="emailAttachmentDialog" class="email-attachment-dialog" aria-labelledby="emailAttachmentDialogTitle">
+      <form method="dialog" class="email-attachment-dialog-inner">
+        <h2 id="emailAttachmentDialogTitle">Attach?</h2>
+        <label><input id="attachQuoteForm" type="checkbox"> Attach Quote Form</label>
+        <label><input id="attachReportImage" type="checkbox"> Attach Report Image</label>
+        <div class="email-attachment-actions">
+          <button type="button" id="cancelEmailAttachmentButton" class="toolbar-button">Cancel</button>
+          <button type="button" id="continueEmailButton" class="toolbar-button">Continue</button>
+        </div>
+      </form>
+    </dialog>
 
     <form id="employeeOrderForm" class="order-sheet" autocomplete="off">
       <header class="order-header">
@@ -88,8 +97,6 @@
           <div class="assembly-fields">
             <label>Ordered By: <input data-field="ordered_by"></label>
             <label>Quote #: <input data-field="quote_number"></label>
-            <label>Assembled By: <input data-field="assembled_by"></label>
-            <label>Date Passed Test: <input data-field="date_passed_test"></label>
           </div>
         </div>
 

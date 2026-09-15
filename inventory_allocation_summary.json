@@ -1,0 +1,824 @@
+{
+  "max_row": 1029,
+  "populated_rows": 847,
+  "descriptions": [
+    [
+      "Hyd BEH Head",
+      79
+    ],
+    [
+      "Air BEH Head",
+      63
+    ],
+    [
+      "Hyd REH Head",
+      60
+    ],
+    [
+      "Air REH Head",
+      51
+    ],
+    [
+      "Air Piston",
+      33
+    ],
+    [
+      "H Piston",
+      31
+    ],
+    [
+      "Barrel",
+      18
+    ],
+    [
+      "Rod",
+      12
+    ],
+    [
+      "Teflon Gland Oring Backup Seal",
+      12
+    ],
+    [
+      "Polyurethane Rod Wiper",
+      12
+    ],
+    [
+      "Polyurethane Rod Seal",
+      12
+    ],
+    [
+      "Nitrile Piston ID Oring Seal",
+      12
+    ],
+    [
+      "Nitrile Gland Oring Seal",
+      12
+    ],
+    [
+      "Gland",
+      12
+    ],
+    [
+      "Viton Rod Wiper",
+      12
+    ],
+    [
+      "Viton Rod Seal",
+      12
+    ],
+    [
+      "Viton Gland Oring Seal",
+      12
+    ],
+    [
+      "Stainless Steel Rod",
+      12
+    ],
+    [
+      "Cushion Collar",
+      11
+    ],
+    [
+      "Safety Coupler",
+      10
+    ],
+    [
+      "Tie Rod",
+      9
+    ],
+    [
+      "Tie Rod Nuts",
+      9
+    ],
+    [
+      "H Nitrile Barrel Seal",
+      9
+    ],
+    [
+      "H MT4",
+      9
+    ],
+    [
+      "H Low Friction Piston Seal",
+      9
+    ],
+    [
+      "Air Nitrile Piston Seal",
+      9
+    ],
+    [
+      "Air Nitrile Barrel Seal",
+      9
+    ],
+    [
+      "H Polyurethane Piston Seal",
+      9
+    ],
+    [
+      "H MF5",
+      9
+    ],
+    [
+      "Stainless Steel Tie Rod",
+      9
+    ],
+    [
+      "Stainless Steel Nuts",
+      9
+    ],
+    [
+      "Hydraulic Retainer",
+      9
+    ],
+    [
+      "H Viton Piston Seal",
+      9
+    ],
+    [
+      "H Viton Barrel Seal",
+      9
+    ],
+    [
+      "H Nitrile/Buna Piston Seal",
+      9
+    ],
+    [
+      "H MF6",
+      9
+    ],
+    [
+      "H MF2",
+      9
+    ],
+    [
+      "H MF1",
+      9
+    ],
+    [
+      "H Cast Iron Piston Seal",
+      9
+    ],
+    [
+      "Air Viton Piston Seal",
+      9
+    ],
+    [
+      "Air Viton Barrel Seal",
+      9
+    ],
+    [
+      "Air MT4",
+      9
+    ],
+    [
+      "Air MF6",
+      9
+    ],
+    [
+      "Air MF5",
+      9
+    ],
+    [
+      "Air MF2",
+      9
+    ],
+    [
+      "Air MF1",
+      9
+    ],
+    [
+      "Air Low Friction Piston Seal",
+      9
+    ],
+    [
+      "Pivot Pin",
+      8
+    ],
+    [
+      "Eye Bracket",
+      8
+    ],
+    [
+      "Air Retainer",
+      8
+    ],
+    [
+      "Gland for Retainer",
+      6
+    ],
+    [
+      "SA Clevis Bracket",
+      6
+    ],
+    [
+      "Cushion Screw Nut",
+      1
+    ],
+    [
+      "Cushion Screw Long (Hyd)",
+      1
+    ],
+    [
+      "Rod Clevis 7/16-20",
+      1
+    ],
+    [
+      "Tie Rod Support",
+      1
+    ],
+    [
+      "Stop Tube",
+      1
+    ],
+    [
+      "SA Male Eye 7/16-20",
+      1
+    ],
+    [
+      "SA Male Eye 3/4-16",
+      1
+    ],
+    [
+      "SA Male Eye 1-14",
+      1
+    ],
+    [
+      "SA Male Eye 1 7/8-12",
+      1
+    ],
+    [
+      "SA Male Eye 1 1/4-12",
+      1
+    ],
+    [
+      "SA Male Eye 1 1/2-12",
+      1
+    ],
+    [
+      "Rod Stud 7/8-14",
+      1
+    ],
+    [
+      "Rod Stud 7/16-20",
+      1
+    ],
+    [
+      "Rod Stud 3/4-16",
+      1
+    ],
+    [
+      "Rod Stud 2 1/2-12",
+      1
+    ],
+    [
+      "Rod Stud 1-14",
+      1
+    ],
+    [
+      "Rod Stud 1/2-20",
+      1
+    ],
+    [
+      "Rod Stud 1 7/8-12",
+      1
+    ],
+    [
+      "Rod Stud 1 3/4-12",
+      1
+    ],
+    [
+      "Rod Stud 1 1/4-12",
+      1
+    ],
+    [
+      "Rod Stud 1 1/2-12",
+      1
+    ],
+    [
+      "Rod Clevis 7/8-14",
+      1
+    ],
+    [
+      "Rod Clevis 4-12",
+      1
+    ],
+    [
+      "Rod Clevis 3/4-16",
+      1
+    ],
+    [
+      "Rod Clevis 3 1/4-12",
+      1
+    ],
+    [
+      "Rod Clevis 3 1/2-12",
+      1
+    ],
+    [
+      "Rod Clevis 2 3/4-12",
+      1
+    ],
+    [
+      "Rod Clevis 2 1/4-12",
+      1
+    ],
+    [
+      "Rod Clevis 2 1/2-12",
+      1
+    ],
+    [
+      "Rod Clevis 1-14",
+      1
+    ],
+    [
+      "Rod Clevis 1/2-20",
+      1
+    ],
+    [
+      "Rod Clevis 1 7/8-12",
+      1
+    ],
+    [
+      "Rod Clevis 1 3/4-12",
+      1
+    ],
+    [
+      "Rod Clevis 1 1/4-12",
+      1
+    ],
+    [
+      "Rod Clevis 1 1/2-12",
+      1
+    ],
+    [
+      "Jam Nut 7/8-14",
+      1
+    ],
+    [
+      "Jam Nut 7/16-20",
+      1
+    ],
+    [
+      "Jam Nut 3/4-16",
+      1
+    ],
+    [
+      "Jam Nut 1-14",
+      1
+    ],
+    [
+      "Jam Nut 1/2-20",
+      1
+    ],
+    [
+      "Jam Nut 1 1/4-12",
+      1
+    ],
+    [
+      "Jam Nut 1 1/2-12",
+      1
+    ],
+    [
+      "H400LONG",
+      1
+    ],
+    [
+      "H150SCREW",
+      1
+    ],
+    [
+      "Female Rod Eye 7/8-14",
+      1
+    ],
+    [
+      "Female Rod Eye 7/16-20",
+      1
+    ],
+    [
+      "Female Rod Eye 4-12",
+      1
+    ],
+    [
+      "Female Rod Eye 3/4-16",
+      1
+    ],
+    [
+      "Female Rod Eye 3 1/4-12",
+      1
+    ],
+    [
+      "Female Rod Eye 3 1/2-12",
+      1
+    ],
+    [
+      "Female Rod Eye 2 3/4-12",
+      1
+    ],
+    [
+      "Female Rod Eye 2 1/4-12",
+      1
+    ],
+    [
+      "Female Rod Eye 2 1/2-12",
+      1
+    ],
+    [
+      "Female Rod Eye 1-14",
+      1
+    ],
+    [
+      "Female Rod Eye 1/2-20",
+      1
+    ],
+    [
+      "Female Rod Eye 1 7/8-12",
+      1
+    ],
+    [
+      "Female Rod Eye 1 3/4-12",
+      1
+    ],
+    [
+      "Female Rod Eye 1 1/4-12",
+      1
+    ],
+    [
+      "Female Rod Eye 1 1/2-12",
+      1
+    ],
+    [
+      "Cushion Screw Nut Large",
+      1
+    ],
+    [
+      "Clevis Bracket 3/4",
+      1
+    ],
+    [
+      "Clevis Bracket 3",
+      1
+    ],
+    [
+      "Clevis Bracket 2 1/2",
+      1
+    ],
+    [
+      "Clevis Bracket 2",
+      1
+    ],
+    [
+      "Clevis Bracket 1/2",
+      1
+    ],
+    [
+      "Clevis Bracket 1 3/8",
+      1
+    ],
+    [
+      "Clevis Bracket 1 3/4",
+      1
+    ],
+    [
+      "Clevis Bracket 1",
+      1
+    ],
+    [
+      "Alignment Coupler 7/8-14",
+      1
+    ],
+    [
+      "Alignment Coupler 7/16-20",
+      1
+    ],
+    [
+      "Alignment Coupler 3/4-16",
+      1
+    ],
+    [
+      "Alignment Coupler 1-14",
+      1
+    ],
+    [
+      "Alignment Coupler 1/2-20",
+      1
+    ],
+    [
+      "Alignment Coupler 1 7/8-12",
+      1
+    ],
+    [
+      "Alignment Coupler 1 3/4-12",
+      1
+    ],
+    [
+      "Alignment Coupler 1 1/4-12",
+      1
+    ],
+    [
+      "Alignment Coupler 1 1/2-12",
+      1
+    ],
+    [
+      "Air Bleed",
+      1
+    ],
+    [
+      "150ADJSHORT",
+      1
+    ],
+    [
+      "150ADJLONG",
+      1
+    ]
+  ],
+  "formula_reference_sheets": [
+    [
+      "Data",
+      5289
+    ],
+    [
+      "Acc",
+      102
+    ],
+    [
+      "H",
+      66
+    ],
+    [
+      "ShipVia",
+      1
+    ]
+  ],
+  "allocation_categories": {
+    "length_based": 60,
+    "quantity_or_option_based": 680,
+    "helper_or_other": 94,
+    "no_formula": 13
+  },
+  "data_references": [
+    [
+      "B3",
+      874
+    ],
+    [
+      "B2",
+      752
+    ],
+    [
+      "B5",
+      746
+    ],
+    [
+      "B4",
+      629
+    ],
+    [
+      "B6",
+      289
+    ],
+    [
+      "B10",
+      151
+    ],
+    [
+      "F26",
+      102
+    ],
+    [
+      "G26",
+      102
+    ],
+    [
+      "F27",
+      102
+    ],
+    [
+      "G27",
+      102
+    ],
+    [
+      "F28",
+      102
+    ],
+    [
+      "G28",
+      102
+    ],
+    [
+      "F29",
+      102
+    ],
+    [
+      "G29",
+      102
+    ],
+    [
+      "F30",
+      102
+    ],
+    [
+      "G30",
+      102
+    ],
+    [
+      "F31",
+      102
+    ],
+    [
+      "G31",
+      102
+    ],
+    [
+      "F32",
+      94
+    ],
+    [
+      "G32",
+      94
+    ],
+    [
+      "B8",
+      66
+    ],
+    [
+      "B16",
+      48
+    ],
+    [
+      "B7",
+      46
+    ],
+    [
+      "M2",
+      35
+    ],
+    [
+      "G9",
+      30
+    ],
+    [
+      "G11",
+      30
+    ],
+    [
+      "B17",
+      24
+    ],
+    [
+      "G19",
+      20
+    ],
+    [
+      "G20",
+      20
+    ],
+    [
+      "G17",
+      18
+    ],
+    [
+      "G10",
+      16
+    ],
+    [
+      "G12",
+      16
+    ],
+    [
+      "G22",
+      14
+    ],
+    [
+      "G14",
+      12
+    ],
+    [
+      "G15",
+      12
+    ],
+    [
+      "G13",
+      8
+    ],
+    [
+      "B22",
+      8
+    ],
+    [
+      "B1",
+      4
+    ],
+    [
+      "B9",
+      2
+    ],
+    [
+      "B20",
+      1
+    ],
+    [
+      "B30",
+      1
+    ],
+    [
+      "B36",
+      1
+    ],
+    [
+      "B12",
+      1
+    ],
+    [
+      "B14",
+      1
+    ],
+    [
+      "B26",
+      1
+    ],
+    [
+      "B23",
+      1
+    ]
+  ],
+  "allocation_without_formula": [
+    {
+      "row": 339,
+      "part_number": "H15CEHTT",
+      "description": "Hyd BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 348,
+      "part_number": "H20CEHTT",
+      "description": "Hyd BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 356,
+      "part_number": "H25CEHTT",
+      "description": "Hyd BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 364,
+      "part_number": "H32CEHTT",
+      "description": "Hyd BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 372,
+      "part_number": "H40CEHTT",
+      "description": "Hyd BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 381,
+      "part_number": "H50CEHTT",
+      "description": "Hyd BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 389,
+      "part_number": "H60CEHTT",
+      "description": "Hyd BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 397,
+      "part_number": "H70CEHTT",
+      "description": "Hyd BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 405,
+      "part_number": "H80CEHTT",
+      "description": "Hyd BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 789,
+      "part_number": "A15CEHTT",
+      "description": "Air BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 795,
+      "part_number": "A20CEHTT",
+      "description": "Air BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 802,
+      "part_number": "A25CEHTT",
+      "description": "Air BEH Head",
+      "allocated": 0
+    },
+    {
+      "row": 810,
+      "part_number": "A32CEHTT",
+      "description": "Air BEH Head",
+      "allocated": 0
+    }
+  ]
+}

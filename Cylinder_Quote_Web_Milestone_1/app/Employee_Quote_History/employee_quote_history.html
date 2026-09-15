@@ -6,58 +6,64 @@
     name="viewport"
     content="width=device-width,initial-scale=1"
   >
-  <title>Employee Order History</title>
+  <title>Employee Quote History</title>
   <link
     rel="stylesheet"
-    href="{{ url_for('static', filename='portal_common.css') }}"
-  >
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='portal_history.css') }}"
+    href="{{ url_for('employee_quote_history.employee_quote_history_css') }}"
   >
 </head>
-<body>
-  <header class="portal-header">
+<body class="employee-quote-history-page">
+  <header class="employee-quote-history-header">
     <div>{{ user.display_name }}</div>
-    <h1>My Order History</h1>
-    <a href="{{ url_for('portal.employee_dashboard') }}">
+    <h1>Quote History</h1>
+    <a href="/employee/dashboard">
       Dashboard
     </a>
   </header>
 
-  <main class="portal-shell">
+  <main class="employee-quote-history-shell">
     <div class="page-actions">
       <a
-        class="small-button"
-        href="{{ url_for('portal.employee_dashboard') }}"
+        class="employee_quote_history_button small"
+        href="/employee/dashboard"
       >
         ← Dashboard
       </a>
 
       <button
-        class="portal-button new-quote"
-        data-standard="{{ url_for('portal.employee_quote_entry') }}"
-        data-metric="{{ url_for('portal.metric_coming_soon') }}"
+        class="employee_quote_history_button new-quote"
+        data-standard="/employee/quote-entry"
+        data-metric="/metric-coming-soon"
       >
         + New Quote
       </button>
     </div>
 
     <form class="search-form" method="get">
-      <label for="orderHistorySearch">
-        Search orders by number, model code, customer or address
+      <label for="quoteHistorySearch">
+        Search quotes by number, model code, customer, status or creator
       </label>
 
-      <div>
+      <div id="search_box">
         <input
-          id="orderHistorySearch"
+          id="quoteHistorySearch"
           name="q"
           value="{{ query }}"
           autocomplete="off"
           placeholder="Start typing to search..."
         >
 
-        <button class="portal-button" type="submit">
+        <button
+          id="clearQuoteHistorySearchButton"
+          class="employee_quote_history_button secondary"
+          id="clearEmployeeQuoteHistorySearchButton"
+          type="button"
+          aria-label="Clear search"
+        >
+          X
+        </button>
+
+        <button id="employee_quote_history_button" class="employee_quote_history_button" type="submit">
           Search
         </button>
       </div>
@@ -69,14 +75,14 @@
       ></div>
     </form>
 
-    {% set entry_url=url_for('portal.employee_quote_entry') %}
+    {% set entry_url='/employee/quote-entry' %}
 
 {% if rows %}
-  <div class="table-wrap">
-    <table>
+  <div class="employee_quote_history_wrapper">
+    <table id="quote_history_table">
       <thead>
         <tr>
-          <th>Order ID</th>
+          <th>Quote ID</th>
           <th>Model Code</th>
           <th>Customer</th>
           <th>Date</th>
@@ -89,7 +95,7 @@
       <tbody>
         {% for quote, total, status in rows %}
           <tr>
-            <td>{{ (quote.order_form_snapshot or {}).get('order_number') or quote.quote_number }}</td>
+            <td>{{ quote.quote_number }}</td>
             <td>{{ quote.model_code or '—' }}</td>
             <td>{{ quote.customer_name or '—' }}</td>
 
@@ -114,10 +120,9 @@
             </td>
 
             <td>
-              {% set has_order = (status == 'Approved') or ((quote.order_form_snapshot or {}).get('order_number')) %}
               <a
-                class="small-button"
-                href="{{ '/order-form' if has_order else entry_url }}?quote_id={{ quote.id }}"
+                class="employee_quote_history_button small"
+                href="{{ entry_url }}?quote_id={{ quote.id }}"
               >
                 Open
               </a>
@@ -139,11 +144,11 @@
     <div>
       <h2>Select Measurement Type</h2>
 
-      <button class="portal-button standard-choice">
+      <button class="employee_quote_history_button standard-choice">
         Standard
       </button>
 
-      <button class="portal-button secondary metric-choice">
+      <button class="employee_quote_history_button secondary metric-choice">
         Metric
       </button>
 
@@ -154,7 +159,7 @@
   </div>
 
   <script
-    src="{{ url_for('static', filename='portal.js') }}"
+    src="{{ url_for('employee_quote_history.employee_quote_history_js') }}"
   ></script>
 </body>
 </html>

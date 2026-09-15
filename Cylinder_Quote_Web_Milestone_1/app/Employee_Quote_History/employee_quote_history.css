@@ -1,0 +1,233 @@
+.employee-quote-history-page {
+	width: 100%;
+	max-width: 100%;
+	overflow-x: hidden;
+	font-size: clamp(10%, 1.25vw, 100%);
+}
+
+.employee_quote_history_button {
+	display: inline-block;
+	border: 1px solid #781010;
+	border-radius: 7px;
+	background: linear-gradient(#d92727, #a80f0f);
+	box-shadow: 0 3px 0 #6e0909;
+	color: #fff;
+	text-decoration: none;
+	font-family: inherit;
+	font-size: 1rem;
+	line-height: 1.2;
+	text-align: center;
+	font-weight: 700;
+	padding: 0.72rem 1rem;
+	cursor: pointer;
+}
+
+.employee_quote_history_button:active {
+	transform: translateY(2px);
+	box-shadow: 0 1px 0 #6e0909;
+}
+
+.employee_quote_history_button.secondary {
+	background: linear-gradient(#fff, #e8ebee);
+	border-color: #7d858c;
+	box-shadow: 0 3px 0 #737b82;
+	color: #17202a;
+}
+
+.employee_quote_history_button.small {
+	padding: 0.4rem 0.65rem;
+}
+
+.employee-quote-history-page .employee-quote-history-header {
+	width: 100%;
+	display: grid;
+	grid-template-columns: minmax(10%, 1fr) minmax(10%, 2fr) minmax(10%, 1fr);
+	grid-template-rows: 1fr;
+	min-height: clamp(10%, 8vw, 72px);
+	gap: clamp(10%, 1.5vw, 1rem);
+	padding: clamp(10%, 1.5vw, 0.75rem) clamp(10%, 3vw, 2rem);
+}
+
+.employee-quote-history-page .employee-quote-history-header h1 {
+	min-width: 10%;
+	max-width: 100%;
+	font-size: clamp(10%, 3vw, 1.5rem);
+	white-space: nowrap;
+}
+
+.employee-quote-history-page .employee-quote-history-shell,
+.employee-quote-history-page .employee_quote_history_wrapper {
+	width: 100%;
+	max-width: 100%;
+}
+
+.employee-quote-history-page .employee-quote-history-shell {
+	margin: clamp(10%, 3vw, 2rem) auto;
+}
+
+.employee-quote-history-page .page-actions {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	gap: clamp(10%, 1.5vw, 1rem);
+	margin-bottom: clamp(10%, 2vw, 1.25rem);
+}
+
+.employee-quote-history-page .page-actions > *,
+.employee-quote-history-page #quote_history_table .small-button {
+	flex: 1 1 10%;
+	min-width: 10%;
+	max-width: 100%;
+	min-height: clamp(10%, 4vw, 2.75rem);
+	padding: clamp(10%, 1.25vw, 0.72rem) clamp(10%, 1.5vw, 1rem);
+	font-size: clamp(10%, 1.25vw, 100%);
+	white-space: nowrap;
+}
+
+.employee-quote-history-page .employee_quote_history_wrapper {
+	overflow: hidden;
+	background: #fff;
+	border: 1px solid #aab0b5;
+	border-radius: clamp(10%, 1.25vw, 8px);
+}
+
+.employee-quote-history-page .search-form {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	background: #fff;
+	border: 1px solid #bcc2c7;
+	padding: clamp(10%, 2vw, 1.4rem);
+	border-radius: clamp(10%, 1.25vw, 8px);
+	font-size: clamp(10%, 1.25vw, 100%);
+}
+
+.employee-quote-history-page .search-form label {
+	display: block;
+	font-weight: 700;
+	margin-bottom: clamp(10%, 0.75vw, 0.5rem);
+	white-space: nowrap;
+}
+
+.employee-quote-history-page .search-form > div:first-of-type {
+	display: flex;
+	gap: clamp(10%, 1vw, 0.6rem);
+}
+
+.employee-quote-history-page .search-form input {
+	flex: 1 1 10%;
+	width: 100%;
+	min-width: 10%;
+	padding: clamp(10%, 1.25vw, 0.8rem);
+	font-size: clamp(10%, 1.25vw, 100%);
+}
+
+.employee-quote-history-page #quote_history_table {
+	width: 100%;
+	min-width: 10%;
+	max-width: 100%;
+	border-collapse: collapse;
+	table-layout: fixed;
+	font-size: clamp(10%, 1.25vw, 100%);
+}
+
+.employee-quote-history-page #quote_history_table th,
+.employee-quote-history-page #quote_history_table td {
+	width: 10%;
+	max-width: 100%;
+	padding: clamp(10%, 1.25vw, 0.75rem);
+	border-bottom: 1px solid #d5d9dc;
+	text-align: left;
+	font-size: clamp(10%, 1.25vw, 100%);
+	white-space: nowrap;
+}
+
+.employee-quote-history-page #quote_history_table th {
+	background: #e9ecef;
+}
+
+.employee-quote-history-page .status {
+	display: inline-block;
+	max-width: 100%;
+	border-radius: 999px;
+	padding: clamp(10%, 1.25vw, 0.65rem);
+	font-size: clamp(10%, 1.25vw, 100%);
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.employee-quote-history-page .status.pending {
+	background: #fff1b8;
+	color: #604900;
+}
+
+.employee-quote-history-page .status.approved {
+	background: #d9f1d2;
+	color: #215716;
+}
+
+.employee-quote-history-page .status.denied {
+	background: #ffd9d9;
+	color: #8b1e1e;
+}
+
+.employee-quote-history-page .quote-modal > div {
+	width: min(420px, 90%);
+	min-width: 10%;
+	max-width: 100%;
+	padding: clamp(10%, 3vw, 2rem);
+	font-size: clamp(10%, 1.25vw, 100%);
+}
+
+.employee-quote-history-page .suggestions {
+	position: absolute;
+	left: clamp(10%, 2vw, 1.4rem);
+	right: clamp(10%, 2vw, 1.4rem);
+	top: clamp(10%, 9vw, 92px);
+	background: #fff;
+	border: 1px solid #999;
+	z-index: 5;
+}
+
+@media (max-width: 650px) {
+	.employee-quote-history-page .employee-quote-history-header {
+		grid-template-columns: minmax(10%, 1fr) minmax(10%, 2fr) minmax(10%, 1fr);
+		grid-template-rows: 1fr;
+	}
+
+	.employee-quote-history-page .page-actions {
+		flex-direction: row;
+	}
+}
+
+.employee-quote-history-page .empty-state {
+	padding: clamp(10%, 5vw, 4rem);
+	text-align: center;
+	background: #fff;
+	border: 1px dashed #999;
+	border-radius: clamp(10%, 1.25vw, 8px);
+}
+
+.employee-quote-history-page .quote-modal {
+	position: fixed;
+	inset: 0;
+	background: #0009;
+	display: grid;
+	place-items: center;
+	z-index: 50;
+}
+
+.employee-quote-history-page .quote-modal[hidden] {
+	display: none;
+}
+
+.employee-quote-history-page .quote-modal > div {
+	background: #fff;
+	border-radius: clamp(10%, 1.5vw, 10px);
+	width: min(420px, 90%);
+	min-width: 10%;
+	max-width: 100%;
+	padding: clamp(10%, 3vw, 2rem);
+	font-size: clamp(10%, 1.25vw, 100%);
+	text-align: center;
+}

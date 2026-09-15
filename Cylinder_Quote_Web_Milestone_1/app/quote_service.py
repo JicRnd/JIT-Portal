@@ -121,6 +121,12 @@ def create_quote_snapshot(
     special_instructions = _optional_str(payload.get("special_instructions"))
     quantity = max(1, int(payload.get("quantity", 1) or 1))
     inputs_snapshot = decimal_to_json(asdict(inputs))
+    quote_form_edits = payload.get("quote_form_edits")
+    order_form_snapshot = (
+        {"quote_form_edits": quote_form_edits}
+        if isinstance(quote_form_edits, dict)
+        else None
+    )
 
     # Prefer the Quote ID created when the Quote button was clicked
     # (first letter of Quote Entry name + mmddyyhhmm). Fall back to server
@@ -151,6 +157,7 @@ def create_quote_snapshot(
                     customer_reference=customer_reference,
                     comments=comments,
                     special_instructions=special_instructions,
+                    order_form_snapshot=order_form_snapshot,
                     created_by_user_id=current_user.id,
                 )
                 session.add(quote)
@@ -225,6 +232,11 @@ def update_quote_edits(
         quote.comments = _optional_str(payload["comments"])
     if "special_instructions" in payload:
         quote.special_instructions = _optional_str(payload["special_instructions"])
+
+    if "quote_form_edits" in payload and isinstance(payload["quote_form_edits"], dict):
+        snapshot = dict(quote.order_form_snapshot or {})
+        snapshot["quote_form_edits"] = payload["quote_form_edits"]
+        quote.order_form_snapshot = snapshot
 
     if "quantity" in payload:
         quote.quantity = max(1, int(payload.get("quantity", 1) or 1))

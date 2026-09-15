@@ -92,11 +92,13 @@ const PISTON_POLY_PRICE = {'15':62,'20':75,'25':88,'32':120,'40':144,'50':233,'6
 let currentQuote = null;
 let isEditingExistingQuote = false;
 let pendingQuotePayload = null;
+let weightReference = [];
 
 function customerStatusLabel(value) {
   const status = String(value || 'pending_approval').toLowerCase().replaceAll('-', '_');
   const labels = {
     pending_approval: 'Pending Approval',
+    hold: 'Hold',
     approved: 'Approved',
     denied: 'Denied',
     canceled: 'Canceled'
@@ -230,7 +232,15 @@ function renderQuotePreview(quote) {
   putInput('pv_dim_a', rodDim ? `${Math.round((rodDim[0] + Number(inputs.extra_thread || 0)) * 1000) / 1000}" Male/Female` : '—');
   putInput('pv_dim_wf', rodDim ? `${Math.round((rodDim[1] + Number(inputs.rod_extension || 0)) * 1000) / 1000}"` : '—');
 
-  const weightRule = H_WEIGHT[`${bore}|${rod}`];
+  const engineeringSeries = series === 'LH' ? 'A' : series;
+  const extractedWeightRule = weightReference.find(rule =>
+    rule.families.includes(engineeringSeries) &&
+    Number(rule.bore) === bore &&
+    Number(rule.rod) === rod
+  );
+  const weightRule = extractedWeightRule
+    ? [extractedWeightRule.weight_base, extractedWeightRule.weight_per_stroke]
+    : (['H', 'HM'].includes(series) ? H_WEIGHT[`${bore}|${rod}`] : null);
   putInput('pv_weight', weightRule ? `${Math.round((weightRule[0] + weightRule[1] * stroke) * 10) / 10}` : 'N/A');
   const rodSuffix = ROD_SUFFIX[rod], boreSuffix = BORE_SUFFIX[bore], discountFactor = 1 - Number(quote.discount || 0);
   const sealCode = String(inputs.seal_code || '').toUpperCase();
@@ -378,6 +388,51 @@ async function saveQuote() {
   }
 }
 
+async function saveQuoteOnHold() {
+  if (!currentQuote || !pendingQuotePayload) return;
+
+  const button = $('saveDraftButton');
+  if (!button) return;
+  const errorEl = $('previewErrorMessage');
+  errorEl.textContent = '';
+  button.disabled = true;
+  button.textContent = 'Saving...';
+
+  try {
+    const savePayload = buildSavePayload();
+    const existingQuoteId = currentQuote.id;
+    const saveResponse = await fetch(existingQuoteId ? `/api/quotes/${existingQuoteId}` : '/api/quotes', {
+      method: existingQuoteId ? 'PATCH' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(savePayload)
+    });
+    const saveBody = await saveResponse.json();
+    if (!saveResponse.ok || !saveBody.ok) throw new Error(saveBody.error || 'Database save failed');
+
+    const holdResponse = await fetch(`/api/quotes/${saveBody.quote.id}/hold`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
+    });
+    const holdBody = await holdResponse.json();
+    if (!holdResponse.ok || !holdBody.ok) throw new Error(holdBody.error || 'Hold failed');
+
+    currentQuote = holdBody.quote;
+    isEditingExistingQuote = true;
+    const url = new URL(window.location.href);
+    url.searchParams.set('quote_id', String(currentQuote.id));
+    url.searchParams.delete('draft');
+    window.history.replaceState({}, '', url);
+    renderQuotePreview(currentQuote);
+    errorEl.textContent = `Quote ${currentQuote.quote_number} saved on hold.`;
+  } catch (e) {
+    errorEl.textContent = e.message || 'Database save failed';
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Save';
+  }
+}
+
 async function cancelOrder() {
   const quoteId = currentQuote && currentQuote.id;
   if (!quoteId || !window.confirm('Cancel this order?')) return;
@@ -502,6 +557,8 @@ function wireQuoteFormEvents() {
       window.location.assign(`/${PORTAL_MODE}/quote-entry`);
     });
   }
+  const saveDraftButton = $('saveDraftButton');
+  if (saveDraftButton) saveDraftButton.addEventListener('click', saveQuoteOnHold);
   $('saveQuoteButton').addEventListener('click', saveQuote);
   const cancelOrderButton = $('cancelOrderButton');
   if (cancelOrderButton) cancelOrderButton.addEventListener('click', cancelOrder);
@@ -601,6 +658,11 @@ async function loadDraftQuote() {
 async function init() {
   wireQuoteFormEvents();
   try {
+    const weightResponse = await fetch('/static/sheet_h_engineering.json');
+    if (weightResponse.ok) {
+      const weightPayload = await weightResponse.json();
+      weightReference = Array.isArray(weightPayload.weight_rules) ? weightPayload.weight_rules : [];
+    }
     const params = new URLSearchParams(window.location.search);
     const quoteId = params.get('quote_id');
     const quoteNumber = params.get('quote_number');

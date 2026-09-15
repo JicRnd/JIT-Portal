@@ -88,6 +88,8 @@ function employeeStatusLabel(value) {
   const status = String(value || 'new').toLowerCase().replaceAll('-', '_');
   const labels = {
     new: 'New',
+    accepted: 'Pending Approval',
+    pending: 'Pending Approval',
     pending_approval: 'Pending Approval',
     approved: 'Approved',
     denied: 'Denied',
@@ -133,6 +135,7 @@ const PISTON_POLY_PRICE = {'15':62,'20':75,'25':88,'32':120,'40':144,'50':233,'6
 let currentQuote = null;
 let isEditingExistingQuote = false;
 let pendingQuotePayload = null;
+let weightReference = [];
 
 const INCLUDES_NUMBER_OPTIONS = [
   ['rod_extension', 'Rod Extension'],
@@ -182,7 +185,9 @@ function renderQuotePreview(quote) {
   $('pv_status').textContent = quote.status === 'Unsaved'
     ? 'Unsaved'
     : employeeStatusLabel(quote.status);
-  $('saveQuoteButton').textContent = isEditingExistingQuote ? 'Update Now' : 'Order Now';
+  const existingQuoteId = new URLSearchParams(window.location.search).get('quote_id') || quote.id;
+  $('saveQuoteButton').textContent = 'Update Now';
+  $('saveQuoteButton').disabled = !existingQuoteId;
   const createdByHeader = $('pv_created_by');
   if (createdByHeader) createdByHeader.textContent = quote.created_by || CURRENT_USER_NAME || '—';
   const createdByFooter = $('pv_created_by_footer');
@@ -225,7 +230,7 @@ function renderQuotePreview(quote) {
   $('pv_cushion').textContent = labelFor(CUSHION_LABELS, inputs.cushion);
   $('pv_port_code').textContent = inputs.port_code || '—';
   $('pv_seal_code').textContent = labelFor(SEAL_LABELS, inputs.seal_code);
-  $('pv_discount').textContent = (Number(quote.discount || 0) * 100).toFixed(1) + '%';
+  $('pv_discount').value = (Number(quote.discount || 0) * 100).toFixed(1);
   $('pv_quantity').value = Math.max(1, Math.floor(Number(quote.quantity || 1)));
 
   const manualDescriptions = (quote.manual_line_items || []).map(x => x.description).filter(Boolean);
@@ -252,7 +257,15 @@ function renderQuotePreview(quote) {
   putInput('pv_dim_wf', rodDim ? `${Math.round((rodDim[1] + Number(inputs.rod_extension || 0)) * 1000) / 1000}"` : '—');
   putInput('pv_dim_extra_1', '0'); putInput('pv_dim_extra_2', '0');
 
-  const weightRule = H_WEIGHT[`${bore}|${rod}`];
+  const engineeringSeries = series === 'LH' ? 'A' : series;
+  const extractedWeightRule = weightReference.find(rule =>
+    rule.families.includes(engineeringSeries) &&
+    Number(rule.bore) === bore &&
+    Number(rule.rod) === rod
+  );
+  const weightRule = extractedWeightRule
+    ? [extractedWeightRule.weight_base, extractedWeightRule.weight_per_stroke]
+    : (['H', 'HM'].includes(series) ? H_WEIGHT[`${bore}|${rod}`] : null);
   putInput('pv_weight', weightRule ? `${Math.round((weightRule[0] + weightRule[1] * stroke) * 10) / 10}` : 'N/A');
   const rodSuffix = ROD_SUFFIX[rod], boreSuffix = BORE_SUFFIX[bore], discountFactor = 1 - Number(quote.discount || 0);
   const sealCode = String(inputs.seal_code || '').toUpperCase();
@@ -278,29 +291,34 @@ function renderQuotePreview(quote) {
   putInput('pv_repair_assembly', assemblyPrice === null ? 'N/A' : fmtRoundedMoney(assemblyPrice));
 
   const bd = quote.price_breakdown_snapshot || {};
-  const standardNet = Number(bd.quote_net_each || 0);
+  const listPriceEach = Number(bd.quote_list_price || 0);
   const days = Number($('pv_days').value || 30);
   function updateCylinderQuantityPrices() {
     const quantityInput = $('pv_quantity');
     let quantity = Math.floor(Number(quantityInput.value));
     if (!Number.isFinite(quantity) || quantity < 1) quantity = 1;
-    $('pv_quote_list_price').textContent = fmtRoundedMoney(Number(bd.quote_list_price || 0) * quantity);
-    $('pv_quote_net_each').textContent = fmtRoundedMoney(standardNet);
-    $('pv_expedited_price').textContent = fmtRoundedMoney(standardNet * 1.35 * quantity);
-    $('pv_emergency_price').textContent = fmtRoundedMoney(standardNet * 1.95 * quantity);
-    $('pv_cares_price').textContent = fmtRoundedMoney(standardNet * 1.05 * quantity);
+    let discountPercent = Number($('pv_discount').value);
+    if (!Number.isFinite(discountPercent)) discountPercent = 0;
+    discountPercent = Math.min(100, Math.max(0, discountPercent));
+    const netEach = listPriceEach * (1 - discountPercent / 100);
+    $('pv_quote_list_price').textContent = fmtRoundedMoney(listPriceEach * quantity);
+    $('pv_quote_net_each').textContent = fmtRoundedMoney(netEach);
+    $('pv_expedited_price').textContent = fmtRoundedMoney(netEach * 1.35 * quantity);
+    $('pv_emergency_price').textContent = fmtRoundedMoney(netEach * 1.95 * quantity);
+    $('pv_cares_price').textContent = fmtRoundedMoney(netEach * 1.05 * quantity);
   }
   $('pv_quantity').oninput = updateCylinderQuantityPrices;
   $('pv_quantity').onchange = updateCylinderQuantityPrices;
+  $('pv_discount').oninput = updateCylinderQuantityPrices;
+  $('pv_discount').onchange = updateCylinderQuantityPrices;
   updateCylinderQuantityPrices();
   $('pv_net_days').textContent = days || 30;
   $('pv_expedited_days').textContent = Math.max(1, Math.round((days || 30) / 2));
   $('pv_cares_days').textContent = days || 30;
   renderManualItems(quote.manual_line_items || []);
+  applyQuoteFormEdits((quote.order_form_snapshot || {}).quote_form_edits);
   $('previewErrorMessage').textContent = '';
   applyQuoteZoomAfterLayout();
-  ['pv_repair_assembly', 'pv_repair_rod_kit', 'pv_repair_piston_kit', 'pv_repair_gland_kit', 'pv_weight']
-    .forEach(id => { const field = $(id); if (field) field.readOnly = true; });
 }
 
 function renderManualItems(items) {
@@ -318,7 +336,7 @@ function addManualItemRow(item) {
   const desc = document.createElement('input'); desc.type = 'text'; desc.value = item.description || ''; desc.placeholder = 'Description'; desc.className = 'manual-desc';
   const qty = document.createElement('input'); qty.type = 'number'; qty.min = '0'; qty.step = '1'; qty.value = item.quantity || 0; qty.className = 'manual-qty';
   const unit = document.createElement('input'); unit.type = 'number'; unit.min = '0'; unit.step = '0.01'; unit.value = item.unit_price || 0; unit.className = 'manual-unit';
-  const ext = document.createElement('input'); ext.type = 'text'; ext.readOnly = true; ext.value = fmtMoney((Number(item.quantity || 0) * Number(item.unit_price || 0))); ext.className = 'manual-ext';
+  const ext = document.createElement('input'); ext.type = 'text'; ext.value = fmtMoney((Number(item.quantity || 0) * Number(item.unit_price || 0))); ext.className = 'manual-ext';
   const rm = document.createElement('button'); rm.type = 'button'; rm.textContent = '×'; rm.className = 'manual-remove'; rm.title = 'Remove line';
   function updateExt() { const q = Number(qty.value || 0), u = Number(unit.value || 0); ext.value = fmtMoney(q * u); }
   qty.addEventListener('input', updateExt); unit.addEventListener('input', updateExt);
@@ -341,7 +359,64 @@ function manualItemsFromPreview() {
   return out;
 }
 
+function nodePath(root, node) {
+  const path = [];
+  let current = node;
+  while (current && current !== root) {
+    const parent = current.parentNode;
+    if (!parent) return null;
+    path.unshift(Array.prototype.indexOf.call(parent.childNodes, current));
+    current = parent;
+  }
+  return current === root ? path : null;
+}
+
+function nodeAtPath(root, path) {
+  return path.reduce((current, index) => current && current.childNodes[index], root);
+}
+
+function captureQuoteFormEdits() {
+  const root = $('employeeQuoteSheet');
+  if (!root) return { text_nodes: [], inputs: {} };
+
+  const textNodes = [];
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    if (node.nodeValue.trim()) {
+      const path = nodePath(root, node);
+      if (path) textNodes.push({ path, value: node.nodeValue });
+    }
+  }
+
+  const inputs = {};
+  root.querySelectorAll('input[id], textarea[id]').forEach(field => {
+    inputs[field.id] = field.value;
+  });
+  return { text_nodes: textNodes, inputs };
+}
+
+function applyQuoteFormEdits(edits) {
+  const root = $('employeeQuoteSheet');
+  if (!root || !edits) return;
+
+  (edits.text_nodes || []).forEach(item => {
+    if (!Array.isArray(item.path) || typeof item.value !== 'string') return;
+    const node = nodeAtPath(root, item.path);
+    if (node && node.nodeType === Node.TEXT_NODE) node.nodeValue = item.value;
+  });
+
+  Object.entries(edits.inputs || {}).forEach(([id, value]) => {
+    const field = $(id);
+    if (field && typeof value === 'string') field.value = value;
+  });
+}
+
 function buildSavePayload() {
+  const discountInput = $('pv_discount');
+  let discountPercent = Number(discountInput && discountInput.value);
+  if (!Number.isFinite(discountPercent)) discountPercent = 0;
+  pendingQuotePayload.discount = Math.min(100, Math.max(0, discountPercent)) / 100;
   return {
     ...pendingQuotePayload,
     customer_name: $('pv_customer_name').value,
@@ -352,6 +427,7 @@ function buildSavePayload() {
     comments: $('pv_comments').value,
     special_instructions: $('pv_special_instructions').value,
     quantity: Math.max(1, Math.floor(Number($('pv_quantity').value || 1))),
+    quote_form_edits: captureQuoteFormEdits(),
     manual_line_items: manualItemsFromPreview()
   };
 }
@@ -368,8 +444,11 @@ function renderIncludes(inputs, manualItems) {
   container.hidden = items.length === 0;
 }
 
-async function saveQuote() {
+async function saveQuote(forceNew = false, submitOrder = false) {
   if (!currentQuote || !pendingQuotePayload) return;
+
+  const existingQuoteId = forceNew ? null : (new URLSearchParams(window.location.search).get('quote_id') || (currentQuote && currentQuote.id));
+  if (!forceNew && !existingQuoteId) return;
 
   $('previewErrorMessage').textContent = '';
   $('saveQuoteButton').disabled = true;
@@ -377,7 +456,6 @@ async function saveQuote() {
 
   try {
     const savePayload = buildSavePayload();
-    const existingQuoteId = new URLSearchParams(window.location.search).get('quote_id') || (currentQuote && currentQuote.id);
     const res = await fetch(existingQuoteId ? `/api/quotes/${existingQuoteId}` : '/api/quotes', {
       method: existingQuoteId ? 'PATCH' : 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -394,6 +472,18 @@ async function saveQuote() {
     }
 
     if (PORTAL_MODE === 'employee') {
+      if (submitOrder) {
+        const orderResponse = await fetch(`/api/quotes/${body.quote.id}/order`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})
+        });
+        const orderBody = await orderResponse.json();
+        if (!orderResponse.ok || !orderBody.ok) throw new Error(orderBody.error || 'Order approval request failed');
+        currentQuote = orderBody.quote;
+        window.location.assign(orderBody.approval_url);
+        return;
+      }
       currentQuote = body.quote;
       window.location.assign('/employee/dashboard');
       return;
@@ -415,7 +505,22 @@ async function saveQuote() {
     $('previewErrorMessage').textContent = e.message || 'Database save failed';
   } finally {
     $('saveQuoteButton').disabled = false;
-    $('saveQuoteButton').textContent = isEditingExistingQuote ? 'Update Now' : 'Order Now';
+    $('saveQuoteButton').textContent = 'Update Now';
+    $('saveQuoteButton').disabled = !new URLSearchParams(window.location.search).get('quote_id') && !(currentQuote && currentQuote.id);
+  }
+}
+
+async function createNewOrder() {
+  const button = $('newOrderButton');
+  if (!button || !currentQuote || !pendingQuotePayload) return;
+
+  button.disabled = true;
+  button.textContent = 'Submitting...';
+  try {
+    await saveQuote(true, true);
+  } finally {
+    button.disabled = false;
+    button.textContent = 'New Order';
   }
 }
 
@@ -595,6 +700,7 @@ function changeQuoteZoom(direction) {
 
 function wireQuoteFormEvents() {
   $('saveQuoteButton').addEventListener('click', saveQuote);
+  $('newOrderButton').addEventListener('click', createNewOrder);
   const holdQuoteButton = $('holdQuoteButton');
   if (holdQuoteButton) {
     holdQuoteButton.addEventListener('click', async () => {
@@ -616,7 +722,10 @@ function wireQuoteFormEvents() {
   const cancelEmailAttachmentButton = $('cancelEmailAttachmentButton');
   if (cancelEmailAttachmentButton) cancelEmailAttachmentButton.addEventListener('click', () => $('emailAttachmentDialog').close());
   $('addManualItemButton').addEventListener('click', () => addManualItemRow());
-  $('backToOrderEntryButton').addEventListener('click', () => { window.location.assign(`/${PORTAL_MODE}/quote-entry`); });
+  const backToOrderEntryButton = $('backToOrderEntryButton');
+  if (backToOrderEntryButton) {
+    backToOrderEntryButton.addEventListener('click', () => { window.location.assign(`/${PORTAL_MODE}/quote-entry`); });
+  }
   $('newQuoteButton').addEventListener('click', () => { window.location.assign(`/${PORTAL_MODE}/quote-entry`); });
   const employeeDashboardButton = $('employeeDashboardButton');
   if (employeeDashboardButton) {
@@ -720,6 +829,11 @@ async function loadDraftQuote() {
 async function init() {
   wireQuoteFormEvents();
   try {
+    const weightResponse = await fetch('/static/sheet_h_engineering.json');
+    if (weightResponse.ok) {
+      const weightPayload = await weightResponse.json();
+      weightReference = Array.isArray(weightPayload.weight_rules) ? weightPayload.weight_rules : [];
+    }
     const params = new URLSearchParams(window.location.search);
     const quoteId = params.get('quote_id');
     if (quoteId) {

@@ -92,3 +92,13 @@ Example POST body:
 ```
 
 The pricing engine remains server-side. Browser JavaScript does not contain authoritative price tables or business arithmetic.
+
+## Sheet H extraction
+Sheet H engineering data can be extracted offline with `scripts/extract_sheet_h.py`.
+The script uses `openpyxl` to preserve workbook formulas and Pandas to organize the
+non-empty H cells into a JSON table. Existing workbook upload paths continue to use
+`openpyxl` unchanged, and the Flask application does not load the workbook at runtime.
+
+```powershell
+py scripts/extract_sheet_h.py
+```

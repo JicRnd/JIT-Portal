@@ -1,0 +1,115 @@
+Employee Dashboard Working Notes
+================================
+
+Page files
+----------
+- employee_dashboard.html is the standard employee dashboard template.
+- Admin_dashboard/Admin_dashboard.html is the administrator version of the same
+	dashboard queue. Both pending-approval tables post to the same backend route.
+- Employees_dashboard.css controls the employee dashboard layout and pending-row
+	sizing. The admin page currently uses its own admin stylesheet.
+
+Pending approval flow
+---------------------
+- The Reference column in Pending Approvals displays the quote number for quick
+	identification and access.
+- New or unassigned quotes appear in New Accept Request.
+- Accept calls POST /employee/quotes/<quote_id>/accept. The backend claims the
+	quote with a race-safe update by setting assigned_employee_user_id and status
+	accepted.
+- Claimed quotes appear in Pending Approvals. The Open link loads the employee
+	quote form; that form leads to the Order Form approval page.
+- The Delete button posts to POST /employee/quotes/<quote_id>/delete.
+- Delete is a soft delete: the quote remains in the quotes database with status
+	canceled, deleted_at, and deleted_by_user_id. It is not physically removed,
+	which preserves the record for audit purposes. Because canceled quotes are not
+	selected by the pending queue query, the row disappears after redirecting back
+	to /employee/dashboard.
+
+Order history ownership
+-----------------------
+- Quote History is also user-scoped. It includes quotes the signed-in user
+	created, claimed, edited, or approved; it does not show another employee's
+	unrelated quotes.
+- The standalone employee-order-history page is used by employees and administrators. It includes orders
+	the signed-in user created, claimed, edited, or approved.
+- Approved orders are visible to the quote creator, assigned employee, and the
+	employee or admin who approved the order. The approving user is recorded in
+	Quote.approved_by_user_id and included by the history query.
+- On 2026-09-15, quote numbers K0911261653 and B0911261630 were verified as
+	already approved operationally. Their Quote rows and matching Order.db rows
+	were updated from pending/accepted states to approved, with approval recorded
+	to assigned employee user 2. They should no longer appear in pending approval
+	queues and should be available in that employee's My Order History.
+- The rendered history identifies a submitted order by its Order ID from the
+	order_form_snapshot, not by the customer-facing quote number.
+
+Persistence and migrations
+--------------------------
+- Quote data is stored in Databases/Quote.db; order-form snapshots are stored in
+	Databases/Order.db by the Order model.
+- app/db.py adds missing quote columns during init_db(), so existing databases
+	receive deleted_at and deleted_by_user_id without manual recreation.
+
+Regression coverage
+-------------------
+- tests/test_pending_approval_queue.py verifies soft deletion, redirect behavior,
+	audit fields, and removal from the dashboard queue.
+- tests/test_quote_history.py verifies approved Order.db persistence and approver
+	visibility in order history.
+
+Dashboard action bar and header stats
+-------------------------------------
+- Employee_dashboard.html and Admin_dashboard.html use the same action-bar labels:
+	New Quote, Quote History, Order History, Customers, Manage Users, Parts Catalog,
+	and Pending. The AI Usage Dashboard action is currently intentionally hidden.
+- Employees_dashboard.css and admin_dashboard.css keep action labels on one line,
+	allow the action bar to wrap as a group on narrow screens, and stretch buttons to
+	the same row height as Customers.
+- portal.py calculates the current-month Quoted and Approved header values from the
+	same signed-in-user ownership rules used by Quote History and Order History. Quoted
+	counts non-canceled history quotes created this month; Approved counts approved
+	quotes approved this month.
+
+Dashboard search and customer lookup
+------------------------------------
+- The dashboard search form uses the named `search_box` wrapper in both dashboard
+	templates. Its `X` button clears the dashboard search input and hides live-search
+	suggestions without submitting the form.
+- The Customer Lookup dialog remains a separate search workflow. Its result table is
+	inside a vertically scrollable viewport so more than four customer rows can be
+	viewed without expanding the popup beyond the available screen height.
+- Employee order history and quote history use the same `search_box` pattern. Each
+	page has its own `X` button that clears its search input, hides suggestions, and
+	returns focus to the input without submitting the form.
+- Customer Accounts now includes all customer accounts, including inactive and
+	denied accounts, with a Status selector defaulting to Active. The allowed values
+	are Active, Not Active, and Denied.
+- Customer Lookup rows display Company Name, POC, Address, City, State, Zip, Phone,
+	Email, Membership, and a Notes action in that order. Company Name and POC are
+	populated from a signed-up customer account when available.
+- Notes are saved on the customer directory record through the existing local
+	customer API. The Edit Customer dialog uses Company Name above POC for signed-up
+	customers and keeps City, State, Zip separate from street Address.
+
+Employee order-history page reference
+-------------------------------------
+- Both the employee and administrator dashboard Order History links point to the
+	`employee_order_history.employee_order_history_page` blueprint endpoint. The
+	page is rendered from `app/employee_order_history/employee_order_history.html`.
+- The legacy portal history template has been removed; dashboard links point to
+	the standalone employee-order-history blueprint.
+- The page searches `Databases/Order.db`, supports the `/employee/order-history-search`
+	JSON suggestions endpoint, and opens a saved order through `/order-form?order_id=...`.
+- `employee_order_history_button` on the order-history page is a page-local CSS
+	class used for buttons and button-like links. The base style is the red primary
+	button; `employee_order_history_button secondary` is the light secondary variant.
+	It is defined in `app/employee_order_history/employee_order_history.css`.
+- The order-history template and blueprint do not use `portal.*` endpoint lookups.
+	The existing application URL paths are used directly for employee login,
+	dashboard, new quote, and metric navigation. The portal blueprint remains a
+	separately registered application blueprint for other pages.
+- The order-history blueprint now owns its CSS and JavaScript asset routes. Those
+	routes are no longer defined in `app/web.py`.
+- The template currently includes its stylesheet twice; this is documented for
+	awareness and has not been changed here.

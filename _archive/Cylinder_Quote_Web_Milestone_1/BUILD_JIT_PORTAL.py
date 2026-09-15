@@ -473,7 +473,6 @@ def employee_dashboard():
     )
 
 
-@portal_bp.get("/employee/history")
 @require_role("employee")
 def employee_history():
     user = signed_in_user()

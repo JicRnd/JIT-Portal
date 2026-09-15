@@ -57,6 +57,9 @@
                             <th>Company</th>
                             <th>Email / Username</th>
                             <th>Phone</th>
+                            {% if directory_type == 'customer' %}
+                            <th>Status</th>
+                            {% endif %}
                             {% if directory_type == 'employee' %}
                             <th>Role</th>
                             <th>Access Level</th>
@@ -92,6 +95,19 @@
                                 </form>
                             </td>
                             {% endif %}
+                            {% if directory_type == 'customer' %}
+                            <td style="min-width: 180px;">
+                                <form method="POST" action="{{ url_for('portal.update_customer_account_status', user_id=u.id) }}" class="d-flex gap-2 align-items-center">
+                                    <input type="hidden" name="return_to" value="customer_accounts">
+                                    <select name="account_status" class="form-select form-select-sm" aria-label="Status for {{ u.display_name }}">
+                                        <option value="active" {% if (u.approval_status or 'approved') == 'approved' and u.is_active %}selected{% endif %}>Active</option>
+                                        <option value="not_active" {% if not u.is_active and u.approval_status != 'denied' %}selected{% endif %}>Not Active</option>
+                                        <option value="denied" {% if u.approval_status == 'denied' %}selected{% endif %}>Denied</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+                                </form>
+                            </td>
+                            {% endif %}
                             <td style="min-width: 260px;">
                                 <form method="POST" action="{{ url_for('portal.update_user_password', user_id=u.id) }}" class="d-flex gap-2 align-items-center">
                                     <input type="hidden" name="return_to" value="{{ directory_type }}_accounts">
@@ -110,7 +126,7 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="{{ 8 if directory_type == 'employee' else 6 }}" class="text-center text-muted py-4">No approved users found.</td>
+                            <td colspan="{{ 8 if directory_type == 'employee' else 7 }}" class="text-center text-muted py-4">No approved users found.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

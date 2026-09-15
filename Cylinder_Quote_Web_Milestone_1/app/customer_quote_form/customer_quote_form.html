@@ -21,6 +21,7 @@
         <button type="button" id="quoteZoomInButton" class="preview-btn zoom-icon-btn" aria-label="Zoom Quote Form in"><span aria-hidden="true">&#128269;</span><span aria-hidden="true">+</span></button>
       </span>
       <button type="button" id="verifyQuoteButton" class="preview-btn">Verify</button>
+      <button type="button" id="saveDraftButton" class="preview-btn">Save</button>
       <button type="button" id="saveQuoteButton" class="preview-btn primary">{{ 'Update Order' if is_existing_quote else 'Order Now' }}</button>
       {% if is_existing_quote %}
       <button type="button" id="cancelOrderButton" class="preview-btn">Cancel</button>

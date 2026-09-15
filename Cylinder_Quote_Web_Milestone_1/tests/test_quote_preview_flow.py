@@ -171,6 +171,37 @@ def test_order_now_creates_order_and_opens_order_form_by_order_id(temp_db):
     assert 'data-quote-id="' + str(quote_id) + '"' in form_resp.get_data(as_text=True)
 
 
+def test_employee_order_now_assigns_quote_and_opens_order_form(temp_db):
+    client = temp_db.test_client()
+    employee_name = "employee-order"
+
+    create_resp = client.post(
+        "/api/quotes", json=sample_payload(), headers=_headers(employee_name)
+    )
+    quote_id = create_resp.get_json()["quote"]["id"]
+
+    order_resp = client.post(
+        f"/api/quotes/{quote_id}/order", json={}, headers=_headers(employee_name)
+    )
+
+    assert order_resp.status_code == 200
+    order_body = order_resp.get_json()
+    with get_session() as session:
+        employee = session.execute(
+            select(User).where(User.display_name == employee_name)
+        ).scalar_one()
+        quote = session.get(Quote, quote_id)
+        assert quote.status == "pending_approval"
+        assert quote.assigned_employee_user_id == employee.id
+
+    form_resp = client.get(
+        f"/order-form?order_id={order_body['order_id']}",
+        headers=_headers(employee_name),
+    )
+    assert form_resp.status_code == 200
+    assert 'data-quote-id="' + str(quote_id) + '"' in form_resp.get_data(as_text=True)
+
+
 def test_customer_can_cancel_quote_and_order_status_is_updated(temp_db):
     client = temp_db.test_client()
     create_resp = client.post(

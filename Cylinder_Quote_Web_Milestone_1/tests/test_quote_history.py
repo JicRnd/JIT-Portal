@@ -7,7 +7,7 @@ import pytest
 
 from app import create_app
 from app.db import get_session, init_db
-from app.models_db import Quote
+from app.models_db import Order, Quote, User
 
 
 def sample_payload():
@@ -32,6 +32,8 @@ def temp_db(tmp_path, monkeypatch):
     db_path = tmp_path / "test_quote_history.db"
     monkeypatch.setenv("DATABASE_PATH", str(db_path))
     monkeypatch.setenv("ACCOUNTS_DATABASE_PATH", str(tmp_path / "test_quote_history_accounts.db"))
+    monkeypatch.setenv("QUOTES_DATABASE_PATH", str(tmp_path / "test_quote_history_quotes.db"))
+    monkeypatch.setenv("ORDERS_DATABASE_PATH", str(tmp_path / "test_quote_history_orders.db"))
 
     import app.db as db_mod
 
@@ -68,6 +70,12 @@ def _set_quote_meta(quote_id, *, status=None, created_at=None):
         if created_at is not None:
             quote.created_at = created_at
         session.commit()
+
+
+def _login_client(client, user: User):
+    with client.session_transaction() as session:
+        session["user_id"] = user.id
+        session["role"] = user.role
 
 
 def _seed_quotes(client):
@@ -119,6 +127,158 @@ def test_list_quotes_no_filters_is_paginated(temp_db):
     assert "cylinder_inputs_snapshot" not in row
     assert "price_breakdown_snapshot" not in row
     assert "manual_line_items" not in row
+
+
+def test_approved_order_is_saved_and_visible_to_approver_history(temp_db):
+    client = temp_db.test_client()
+    approver = User(
+        display_name="Approving Employee",
+        role="employee",
+        access_level="admin",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(approver)
+        session.commit()
+        session.refresh(approver)
+
+    quote = _create_quote(client, "creator", "Approved Customer")
+    _set_quote_meta(quote["id"], status="pending_approval")
+    _login_client(client, approver)
+    response = client.post(
+        f"/api/quotes/{quote['id']}/order/approve",
+        json={"order_form": {"order_number": "JTEST-001"}},
+    )
+
+    assert response.status_code == 200
+    with get_session() as session:
+        saved_quote = session.get(Quote, quote["id"])
+        saved_order = session.query(Order).filter_by(quote_id=quote["id"]).one()
+        assert saved_quote.status == "approved"
+        assert saved_quote.approved_by_user_id == approver.id
+        assert saved_order is not None
+        assert saved_order.status == "approved"
+        assert saved_order.order_form_snapshot["order_number"] == "JTEST-001"
+
+    history = client.get("/employee_order_history/employee_order_history.html")
+    assert history.status_code == 200
+    assert "JTEST-001" in history.get_data(as_text=True)
+
+
+def test_employee_order_history_search_scans_all_orders(temp_db):
+    client = temp_db.test_client()
+    approver = User(
+        display_name="Approving Employee",
+        role="employee",
+        access_level="admin",
+        is_active=True,
+    )
+    searcher = User(
+        display_name="Searching Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add_all([approver, searcher])
+        session.commit()
+        session.refresh(approver)
+        session.refresh(searcher)
+
+    quote = _create_quote(client, "creator", "Searchable Customer")
+    _set_quote_meta(quote["id"], status="pending_approval")
+    _login_client(client, approver)
+    approved = client.post(
+        f"/api/quotes/{quote['id']}/order/approve",
+        json={"order_form": {"order_number": "JSEARCH-001"}},
+    )
+    assert approved.status_code == 200
+
+    _login_client(client, searcher)
+    history = client.get("/employee_order_history/employee_order_history.html?q=JSEARCH")
+
+    assert history.status_code == 200
+    assert "JSEARCH-001" in history.get_data(as_text=True)
+
+
+def test_employee_order_history_suggests_from_any_snapshot_value(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="Searching Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.commit()
+        session.refresh(employee)
+
+    quote = _create_quote(client, "creator", "Snapshot Customer")
+    _set_quote_meta(quote["id"], status="pending_approval")
+    _login_client(client, employee)
+    approved = client.post(
+        f"/api/quotes/{quote['id']}/order/approve",
+        json={
+            "order_form": {
+                "order_number": "JFULL-001",
+                "parts": [{"description": "ZX-UNIQUE-PART"}],
+            }
+        },
+    )
+    assert approved.status_code == 200
+
+    too_short = client.get("/employee/order-history-search?q=Z")
+    assert too_short.status_code == 200
+    assert too_short.get_json()["results"] == []
+
+    suggestions = client.get("/employee/order-history-search?q=ZX")
+    assert suggestions.status_code == 200
+    assert suggestions.get_json()["results"] == [{
+        "order_number": "JFULL-001",
+        "customer": "",
+        "model_code": "",
+    }]
+
+
+def test_employee_order_history_ignores_assigned_and_quoted_by_values(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="Searching Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.add(Order(
+            quote_id=9001,
+            quote_number="JIGNORE-001",
+            status="approved",
+            order_form_snapshot={
+                "order_number": "JIGNORE-001",
+                "assigned_to": "ONLY-ASSIGNED-VALUE",
+                "quoted_by": "ONLY-QUOTED-VALUE",
+                "ordered_by": "ONLY-ORDERED-BY-VALUE",
+                "quote_form_edits": {
+                    "text_nodes": [{"value": "ONLY-QUOTE-FORM-VALUE"}],
+                    "inputs": {"pv_customer_name": "VISIBLE-CUSTOMER-DATA"},
+                },
+                "description": "VISIBLE-ORDER-DATA",
+            },
+        ))
+        session.commit()
+        session.refresh(employee)
+
+    _login_client(client, employee)
+
+    ignored = client.get("/employee/order-history-search?q=ONLY")
+    assert ignored.status_code == 200
+    assert ignored.get_json()["results"] == []
+
+    visible = client.get("/employee/order-history-search?q=VISIBLE")
+    assert visible.status_code == 200
+    assert visible.get_json()["results"][0]["order_number"] == "JIGNORE-001"
 
 
 def test_filter_by_quote_number_partial(temp_db):

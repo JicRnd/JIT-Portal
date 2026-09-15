@@ -9,7 +9,7 @@
   <title>JIT {{ user.display_name }}'s Dashboard</title>
   <link
     rel="stylesheet"
-    href="{{ url_for('static', filename='portal_common.css', v='2') }}"
+    href="{{ url_for('admin_dashboard_css', v='2') }}"
   >
   <link
     rel="stylesheet"
@@ -46,16 +46,16 @@
 
       <a
         class="portal-button secondary"
-        href="{{ url_for('portal.employee_quote_history') }}"
+          href="{{ url_for('employee_quote_history.employee_quote_history_page') }}"
       >
         Quote History
       </a>
 
       <a
         class="portal-button secondary"
-        href="{{ url_for('portal.employee_history') }}"
+        href="{{ url_for('employee_order_history.employee_order_history_page') }}"
       >
-        My Order History
+        Order History
       </a>
 
       <button
@@ -77,7 +77,7 @@
       </button>
 
       <a class="portal-button secondary" href="{{ url_for('portal.parts_catalog') }}">Parts Catalog</a>
-      <a class="portal-button secondary" href="#pending-approvals">My Pending</a>
+      
     </div>
 
     <section id="new-accept-requests" class="pending-queue-section" style="margin-bottom:1.5rem;">
@@ -90,7 +90,7 @@
               <tr>
                 <th>Type</th>
                 <th>Reference</th>
-                <th>Customer Name</th>
+                <th>Name</th>
                 <th>Model Code</th>
                 <th>Status</th>
                 <th>Submitted</th>
@@ -101,8 +101,8 @@
               {% for item in new_accept_queue %}
                   <tr class="pending-quote-row" data-pending-id="{{ item.id }}">
                   <td>NEW - Quote</td>
-                  <td>{{ item.quote_id }}</td>
-                  <td>{{ item.customer_name or '—' }}</td>
+                  <td></td>
+                  <td>{{ item.customer_name|title if item.customer_name else '—' }}</td>
                   <td>{{ item.model_code or '—' }}</td>
                   <td>New</td>
                   <td>{{ item.created_at.strftime('%b %d, %Y') if item.created_at else '—' }}</td>
@@ -119,15 +119,39 @@
               {% for pending_user in new_accept_users %}
                 <tr>
                   <td>NEW - {{ pending_user.role|capitalize }} Request</td>
-                  <td>{{ pending_user.display_name }}</td>
-                  <td>{{ pending_user.company_name or '—' }}</td>
+                  <td></td>
+                  <td>{{ pending_user.display_name|title if pending_user.display_name else '—' }}</td>
                   <td>{{ pending_user.email or pending_user.username or '—' }}</td>
                   <td>New</td>
                   <td>{{ pending_user.created_at.strftime('%b %d, %Y') if pending_user.created_at else '—' }}</td>
                   <td>
-                    <form method="post" action="{{ url_for('portal.approve_user', user_id=pending_user.id, decision='approve') }}">
-                      <button class="small-button" type="submit">Accept</button>
-                    </form>
+                    <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">
+                      <button
+                        class="small-button details-pending-user-button"
+                        type="button"
+                        data-user-role="{{ pending_user.role }}"
+                        data-user-name="{{ pending_user.display_name }}"
+                        data-user-email="{{ pending_user.email or pending_user.username or '' }}"
+                        data-user-company="{{ pending_user.company_name or '' }}"
+                        data-user-phone="{{ pending_user.phone or '' }}"
+                        data-user-phone-extension="{{ pending_user.phone_extension or '' }}"
+                        data-user-username="{{ pending_user.username or '' }}"
+                        data-user-created-at="{{ pending_user.created_at.strftime('%b %d, %Y %I:%M %p') if pending_user.created_at else '' }}"
+                        data-user-shipping-address="{{ pending_user.shipping_address or '' }}"
+                        data-user-billing-address="{{ pending_user.billing_address or '' }}"
+                      >
+                        Details
+                      </button>
+                      <form method="post" action="{{ url_for('portal.approve_user', user_id=pending_user.id, decision='approve') }}">
+                        <button class="small-button" type="submit">Accept</button>
+                      </form>
+                      <form method="post" action="{{ url_for('portal.approve_user', user_id=pending_user.id, decision='hold') }}">
+                        <button class="small-button" type="submit">Hold</button>
+                      </form>
+                      <form method="post" action="{{ url_for('portal.approve_user', user_id=pending_user.id, decision='deny') }}">
+                        <button class="small-button" type="submit">Deny</button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               {% endfor %}
@@ -148,9 +172,10 @@
             <thead>
               <tr>
                 <th>Type</th>
-                <th>Quote ID</th>
+                <th>Reference</th>
+                <th>Name</th>
                 <th>Model Code</th>
-                <th>Customer</th>
+                <th>Status</th>
                 <th>Submitted</th>
                 <th></th>
               </tr>
@@ -159,10 +184,11 @@
             <tbody>
               {% for item in pending_queue %}
                 <tr data-pending-id="{{ item.id }}">
-                  <td>{{ 'Accepted' if item.status == 'accepted' else 'Pending Approval' }}</td>
-                  <td>{{ item.quote_id }}</td>
+                  <td>Quote</td>
+                  <td>{{ item.quote_id or '—' }}</td>
+                  <td>{{ item.customer_name|title if item.customer_name else '—' }}</td>
                   <td>{{ item.model_code or '—' }}</td>
-                  <td>{{ item.customer_name or '—' }}</td>
+                  <td>{{ item.status_label }}</td>
 
                   <td>
                     {{
@@ -238,7 +264,7 @@
         Search customers, orders, addresses or model codes
       </label>
 
-      <div>
+      <div id="search_box">
         <input
           id="globalSearch"
           name="q"
@@ -246,6 +272,15 @@
           autocomplete="off"
           placeholder="Start typing to search..."
         >
+
+        <button
+          id="clearDashboardSearchButton"
+          class="portal-button secondary"
+          type="button"
+          aria-label="Clear search"
+        >
+          X
+        </button>
 
         <button class="portal-button" type="submit">
           Search
@@ -365,6 +400,27 @@
     {% endif %}
   </main>
 
+  <dialog id="pendingUserDetailsDialog" style="min-width:min(560px,90vw);max-width:min(560px,90vw);border:1px solid #d0d7de;border-radius:14px;padding:0;box-shadow:0 18px 38px rgba(16,24,40,0.18);">
+    <form method="dialog" style="padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.9rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem; border-bottom:1px solid #e5e7eb; padding-bottom:0.6rem; margin-bottom:0.15rem;">
+        <h3 style="margin:0; font-size:1.15rem; color:#1f2937;">Account Details</h3>
+        <button class="small-button" type="submit">Close</button>
+      </div>
+      <div style="display:grid; gap:0.7rem; font-size:0.95rem; color:#262b30;">
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;"><strong>Role:</strong><span id="pendingUserRole">—</span></div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;"><strong>Name:</strong><span id="pendingUserName">—</span></div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;"><strong>Company:</strong><span id="pendingUserCompany">—</span></div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;"><strong>Email:</strong><span id="pendingUserEmail">—</span></div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;"><strong>Username:</strong><span id="pendingUserUsername">—</span></div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;"><strong>Phone:</strong><span id="pendingUserPhone">—</span></div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;"><strong>Extension:</strong><span id="pendingUserPhoneExtension">—</span></div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;"><strong>Submitted:</strong><span id="pendingUserCreatedAt">—</span></div>
+        <div style="padding:0.55rem 0.6rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;"><strong>Shipping Address:</strong><div id="pendingUserShippingAddress" style="margin-top:0.35rem; white-space:pre-wrap; color:#374151;">—</div></div>
+        <div style="padding:0.55rem 0.6rem;background:#fff;border:1px solid #edf2f7;border-radius:8px;"><strong>Billing Address:</strong><div id="pendingUserBillingAddress" style="margin-top:0.35rem; white-space:pre-wrap; color:#374151;">—</div></div>
+      </div>
+    </form>
+  </dialog>
+
   <div class="quote-modal" hidden>
     <div>
       <h2>Select Measurement Type</h2>
@@ -451,16 +507,18 @@
         </button>
       </div>
 
-      <div class="table-wrap">
+      <div class="table-wrap" style="max-height: min(45vh, 420px); overflow-y: auto;">
         <table>
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Company Name</th>
+              <th>POC</th>
               <th>Address</th>
               <th>City, State, Zip</th>
               <th>Phone</th>
               <th>Email</th>
               <th>Membership</th>
+              <th>Notes</th>
               <th></th>
               <th></th>
               <th></th>
@@ -494,7 +552,12 @@
       <input type="hidden" id="customerEditId">
 
       <label style="font-size:0.95rem;">
-        Name<br>
+        Company Name<br>
+        <input id="customerEditCompany" style="padding:0.4rem; width:100%; margin-top:0.25rem;">
+      </label>
+
+      <label style="font-size:0.95rem;">
+        POC<br>
         <input
           id="customerEditName"
           required
@@ -556,6 +619,18 @@
         id="customerEditMessage"
         style="font-size:0.9rem; min-height:1.2rem; color:#c00;"
       ></div>
+    </form>
+  </dialog>
+
+  <dialog id="customerNotesDialog" style="border:1px solid #7d858c; border-radius:8px; padding:1.25rem; min-width:320px; max-width:90vw;">
+    <form method="dialog" style="display:flex; flex-direction:column; gap:0.75rem;">
+      <h2 style="margin:0; font-size:1.2rem;">Customer Notes</h2>
+      <textarea id="customerNotesText" rows="8" style="padding:0.4rem; width:100%;"></textarea>
+      <div style="display:flex; gap:0.5rem;">
+        <button id="customerNotesSaveButton" class="portal-button" type="button">Save</button>
+        <button class="portal-button secondary" value="cancel">Cancel</button>
+      </div>
+      <div id="customerNotesMessage" style="font-size:0.9rem; min-height:1.2rem; color:#c00;"></div>
     </form>
   </dialog>
 
@@ -621,17 +696,62 @@
   <script>
   (function () {
     const $ = (id) => document.getElementById(id);
+    const dashboardSearch = $("globalSearch");
+    const clearDashboardSearchButton = $("clearDashboardSearchButton");
+    const searchSuggestions = $("searchSuggestions");
+
+    if (dashboardSearch && clearDashboardSearchButton) {
+      clearDashboardSearchButton.addEventListener("click", () => {
+        dashboardSearch.value = "";
+        if (searchSuggestions) searchSuggestions.hidden = true;
+        dashboardSearch.focus();
+      });
+    }
+
+    const pendingUserDialog = $("pendingUserDetailsDialog");
+    document.querySelectorAll(".details-pending-user-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const normalize = (value) => (value && value.trim()) ? value.trim() : "—";
+        const formatRole = (value) => {
+          const text = normalize(value);
+          return text === "—" ? text : text.charAt(0).toUpperCase() + text.slice(1);
+        };
+        const setText = (id, value) => {
+          const element = $(id);
+          if (element) element.textContent = normalize(value);
+        };
+
+        setText("pendingUserRole", formatRole(button.dataset.userRole));
+        setText("pendingUserName", button.dataset.userName);
+        setText("pendingUserCompany", button.dataset.userCompany);
+        setText("pendingUserEmail", button.dataset.userEmail);
+        setText("pendingUserUsername", button.dataset.userUsername);
+        setText("pendingUserPhone", button.dataset.userPhone);
+        setText("pendingUserPhoneExtension", button.dataset.userPhoneExtension);
+        setText("pendingUserCreatedAt", button.dataset.userCreatedAt);
+        setText("pendingUserShippingAddress", button.dataset.userShippingAddress);
+        setText("pendingUserBillingAddress", button.dataset.userBillingAddress);
+
+        if (pendingUserDialog && pendingUserDialog.showModal) pendingUserDialog.showModal();
+      });
+    });
+
     const dialog = $("customerLookupDialog");
     const input = $("customerLookupInput");
     const tbody = $("customerLookupResults");
     const editDialog = $("customerEditDialog");
     const editId = $("customerEditId");
+    const editCompany = $("customerEditCompany");
     const editName = $("customerEditName");
     const editAddress = $("customerEditAddress");
     const editCityStateZip = $("customerEditCityStateZip");
     const editPhone = $("customerEditPhone");
     const editEmail = $("customerEditEmail");
     const editMessage = $("customerEditMessage");
+    const notesDialog = $("customerNotesDialog");
+    const notesText = $("customerNotesText");
+    const notesMessage = $("customerNotesMessage");
+    let notesCustomer = null;
     let timer = null;
     let currentCustomers = [];
 
@@ -644,11 +764,20 @@
       }
       customers.forEach((c) => {
         const tr = document.createElement("tr");
-        [c.name, c.address || "—", c.city_state_zip || "—", c.phone || "—", c.email || "—", c.status || "—"].forEach((text) => {
+        [c.company_name || "—", c.poc || c.name || "—", c.address || "—", c.city_state_zip || "—", c.phone || "—", c.email || "—", c.status || "—"].forEach((text) => {
           const td = document.createElement("td");
           td.textContent = text;
           tr.appendChild(td);
         });
+
+        const notesTd = document.createElement("td");
+        const notesButton = document.createElement("button");
+        notesButton.type = "button";
+        notesButton.className = "portal-button secondary small-button";
+        notesButton.textContent = "Notes";
+        notesButton.addEventListener("click", () => openNotes(c));
+        notesTd.appendChild(notesButton);
+        tr.appendChild(notesTd);
 
         const editTd = document.createElement("td");
         const editButton = document.createElement("button");
@@ -669,7 +798,7 @@
         tr.appendChild(deleteTd);
 
         const signupTd = document.createElement("td");
-        if (c.status === "Visitor") {
+        if (c.status === "Customer") {
           const signupLink = document.createElement("a");
           signupLink.className = "portal-button small-button";
           signupLink.style.textDecoration = "none";
@@ -708,7 +837,8 @@
     function openEdit(c) {
       editMessage.textContent = "";
       editId.value = c.id;
-      editName.value = c.name || "";
+      editCompany.value = c.company_name || "";
+      editName.value = c.poc || c.name || "";
       editAddress.value = c.address || "";
       editCityStateZip.value = c.city_state_zip || "";
       editPhone.value = c.phone || "";
@@ -716,22 +846,31 @@
       if (editDialog.showModal) editDialog.showModal();
     }
 
+    function openNotes(c) {
+      notesCustomer = c;
+      notesText.value = c.notes || "";
+      notesMessage.textContent = "";
+      if (notesDialog.showModal) notesDialog.showModal();
+    }
+
     async function saveEdit() {
       const id = editId.value;
       const original = currentCustomers.find((c) => String(c.id) === id);
-      const name = editName.value.trim();
+      const companyName = editCompany.value.trim() || null;
+      const poc = editName.value.trim() || null;
       const address = editAddress.value.trim() || null;
       const cityStateZip = editCityStateZip.value.trim() || null;
       const phone = editPhone.value.trim() || null;
       const email = editEmail.value.trim() || null;
 
-      if (!name) {
-        editMessage.textContent = "Name cannot be blank.";
+      if (!poc) {
+        editMessage.textContent = "POC cannot be blank.";
         return;
       }
 
       const payload = {};
-      if (!original || original.name !== name) payload.name = name;
+      if (!original || original.company_name !== companyName) payload.company_name = companyName;
+      if (!original || (original.poc || original.name) !== poc) payload.poc = poc;
       if (!original || original.address !== address) payload.address = address;
       if (!original || original.city_state_zip !== cityStateZip) payload.city_state_zip = cityStateZip;
       if (!original || original.phone !== phone) payload.phone = phone;
@@ -814,6 +953,29 @@
     $("seeAllContactsButton").addEventListener("click", seeAllCustomers);
 
     $("customerEditSaveButton").addEventListener("click", saveEdit);
+
+    $("customerNotesSaveButton").addEventListener("click", async () => {
+      if (!notesCustomer) return;
+      notesMessage.textContent = "";
+      try {
+        const res = await fetch(`/api/customers/${encodeURIComponent(notesCustomer.id)}`, {
+          method: "PATCH",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({notes: notesText.value}),
+        });
+        const body = await res.json().catch(() => ({}));
+        if (res.ok && body.ok && body.customer) {
+          const index = currentCustomers.findIndex((x) => x.id === body.customer.id);
+          if (index >= 0) currentCustomers[index] = body.customer;
+          notesCustomer = body.customer;
+          notesDialog.close();
+        } else {
+          notesMessage.textContent = body.error || "Notes could not be saved.";
+        }
+      } catch (e) {
+        notesMessage.textContent = "Network error. Please try again.";
+      }
+    });
   })();
   </script>
 

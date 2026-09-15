@@ -5,6 +5,14 @@
   border-radius: 8px;
 }
 
+.page-actions .small-button,
+.page-actions .portal-button,
+table .small-button,
+table .portal-button {
+  font-size: clamp(10%, 1.25vw, 100%);
+  white-space: nowrap;
+}
+
 #customerLookupDialog .table-wrap {
   max-height: 60vh;
 }

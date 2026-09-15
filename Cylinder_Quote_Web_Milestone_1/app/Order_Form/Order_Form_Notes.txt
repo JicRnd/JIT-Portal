@@ -1,0 +1,60 @@
+Order Form Working Notes
+========================
+
+Page files
+----------
+- order_form.html defines the employee approval/order-entry sheet and its toolbar.
+- order_form.js loads the quote through GET /api/quotes/<quote_id>, renders the
+	editable order fields, and sends the complete order_form snapshot to the
+	server when an action is taken.
+- order_form.css provides the visual layout and toolbar styling.
+
+Approval controls
+-----------------
+- Approve Order posts to POST /api/quotes/<quote_id>/order/approve with the
+	collected order_form fields. The backend marks the quote approved, records the
+	approving user and timestamp, and creates or updates the matching Order row.
+- Hold posts to POST /api/quotes/<quote_id>/order/hold, keeps the order pending,
+	saves the current presentation fields, and keeps the order assigned to the
+	employee who placed it on hold.
+- Deny posts to POST /api/quotes/<quote_id>/order/deny and changes a pending order
+	to denied. Existing Order.db rows are updated when present.
+- The Dashboard button saves a hold for an active order before returning to the
+	employee dashboard.
+
+Database and history behavior
+-----------------------------
+- The order snapshot is persisted in Databases/Order.db through the Order model.
+- The quote remains in the quote database with its pricing and presentation
+	snapshots. Approval does not replace the original pricing calculation with a
+	client-only value; it saves the submitted order-form presentation snapshot.
+- Employee order history displays the saved Order ID from order_form_snapshot.
+	The approving employee/admin can find the order because Quote.approved_by_user_id
+	is included in the order-history ownership query.
+- Employee Quote History is separately scoped to quotes the signed-in user
+	created, claimed, edited, or approved; opening the Order Form does not make
+	unrelated users' quote history visible.
+
+Rendering details
+-----------------
+- Reference JSON files are loaded locally by order_form.js for Tie Rod and H/HM,
+	A/LH engineering display values. These values populate the existing Testing
+	Data rows and do not participate in pricing.
+- Manual/catalog parts are rendered into the Parts area and included in the
+	submitted order_form snapshot.
+- The barcode is drawn locally on the page from the displayed order number.
+
+Order history connection
+------------------------
+- Employee order history opens this page with `/order-form?order_id=<id>` when
+	the user selects `Open`.
+- The history page obtains the order-form snapshot from `Databases/Order.db`;
+	the Order Form then loads the related quote using the stored quote ID and
+	preserves the editable presentation snapshot during approval or hold actions.
+
+Dashboard relationship
+----------------------
+- The employee and administrator dashboard header displays current-month quote and
+	approved-order counts supplied by portal.py. These counts use the dashboard user's
+	quote-history ownership and approval-history ownership, not pricing calculations
+	or values from the editable Order Form presentation snapshot.

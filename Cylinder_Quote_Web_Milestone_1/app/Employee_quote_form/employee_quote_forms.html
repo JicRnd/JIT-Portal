@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JIT Employee Quote Form</title>
-  <link rel="stylesheet" href="{{ url_for('employee_quote_form_css', v='8') }}">
+  <link rel="stylesheet" href="{{ url_for('employee_quote_form_css', v='9') }}">
 </head>
 <body class="employee-mode"
       data-portal-mode="employee"
@@ -13,7 +13,6 @@
       data-prefill-customer-address="{{ prefill_customer_address|default('') }}">
   <main class="quote-form-page">
     <div class="qf-toolbar">
-      <button type="button" id="backToOrderEntryButton" class="preview-btn">&larr; Quote Entry</button>
       <button type="button" id="newQuoteButton" class="preview-btn primary">New Quote</button>
       <span class="quote-zoom-controls" aria-label="Quote Form zoom controls">
         <button type="button" id="quoteZoomOutButton" class="preview-btn zoom-icon-btn" aria-label="Zoom Quote Form out"><span aria-hidden="true">&#128269;</span><span aria-hidden="true">&minus;</span></button>
@@ -24,14 +23,15 @@
       <button type="button" id="employeeSaveButton" class="preview-btn">Save</button>
       <button type="button" id="emailCustomerButton" class="preview-btn">Email Customer</button>
       <button type="button" id="holdQuoteButton" class="preview-btn">Hold</button>
-      <button type="button" id="saveQuoteButton" class="preview-btn primary">Order Now</button>
+      <button type="button" id="saveQuoteButton" class="preview-btn primary">Update Now</button>
+      <button type="button" id="newOrderButton" class="preview-btn primary">Order</button>
       <span class="qf-toolbar-meta"><strong id="pv_status">&mdash;</strong></span>
       <span id="verifyMessage" class="verify-message" role="status" aria-live="polite"></span>
       <span id="previewErrorMessage" class="error" role="alert"></span>
       <a href="{{ url_for('portal.employee_dashboard') }}" id="employeeDashboardButton" class="preview-btn qf-toolbar-dashboard">Dashboard</a>
     </div>
 
-    <div class="excel-quote-sheet" aria-label="Cylinder Quote Form">
+    <div id="employeeQuoteSheet" class="excel-quote-sheet" aria-label="Cylinder Quote Form" contenteditable="true" spellcheck="false">
       <header class="xq-header">
         <div class="xq-logo-wrap">
           <img class="xq-logo" src="{{ url_for('quote_image', filename='quote_form_logo.png') }}" alt="JIT Cylinders">
@@ -72,7 +72,7 @@
         <div class="xq-value row-series" id="pv_series_desc">&mdash;</div>
         <div class="xq-qty row-series"><input id="pv_quantity" type="number" min="1" step="1" value="1" aria-label="Cylinder quantity"></div>
         <div class="xq-list row-series" id="pv_quote_list_price">&mdash;</div>
-        <div class="xq-discount row-series" id="pv_discount">&mdash;</div>
+        <div class="xq-discount row-series"><input id="pv_discount" class="pv-discount-input" type="number" min="0" max="100" step="0.1" value="0" aria-label="Discount percentage">%</div>
         <div class="xq-net row-series"><span id="pv_quote_net_each">&mdash;</span> - <span id="pv_net_days">30</span> Days</div>
 
         <div class="xq-label row-model">Model Code</div>
@@ -89,11 +89,11 @@
         <div class="xq-value row-mount" id="pv_mount">&mdash;</div>
         <div class="xq-repair row-repair">
           <div class="xq-repair-title">Recommended Cylinder Components</div>
-          <label>Piston &amp; Rod Assembly<input id="pv_repair_assembly" value="N/A" readonly></label>
-          <label><span id="pv_repair_rod_label">Hyd Rod Seal Kit</span><input id="pv_repair_rod_kit" value="N/A" readonly></label>
-          <label><span id="pv_repair_piston_label">Hyd Piston Seal Kit</span><input id="pv_repair_piston_kit" value="N/A" readonly></label>
-          <label><span id="pv_repair_gland_label">Hyd Gland Seal Kit</span><input id="pv_repair_gland_kit" value="N/A" readonly></label>
-          <label>Cylinder Weight<input id="pv_weight" placeholder="&mdash;" readonly></label>
+          <label>Piston &amp; Rod Assembly<input id="pv_repair_assembly" value="N/A"></label>
+          <label><span id="pv_repair_rod_label">Hyd Rod Seal Kit</span><input id="pv_repair_rod_kit" value="N/A"></label>
+          <label><span id="pv_repair_piston_label">Hyd Piston Seal Kit</span><input id="pv_repair_piston_kit" value="N/A"></label>
+          <label><span id="pv_repair_gland_label">Hyd Gland Seal Kit</span><input id="pv_repair_gland_kit" value="N/A"></label>
+          <label>Cylinder Weight<input id="pv_weight" placeholder="&mdash;"></label>
           <label><span>Push @ <span id="pv_pressure_push">0</span> PSI</span><span id="pv_push_lbs">0 lbs</span></label>
           <label><span>Pull @ <span id="pv_pressure_pull">0</span> PSI</span><span id="pv_pull_lbs">0 lbs</span></label>
         </div>
@@ -111,14 +111,14 @@
           <div class="xq-dimensions">
             <div class="xq-dim-left-wrap">
               <div class="xq-dim-left">
-                <label>E = <input id="pv_dim_e" readonly placeholder="&mdash;"></label>
-                <label>G = <input id="pv_dim_g" readonly placeholder="&mdash;"></label>
-                <label>J = <input id="pv_dim_j" readonly placeholder="&mdash;"></label>
-                <label>LB = <input id="pv_dim_lb" readonly placeholder="&mdash;"></label>
-                <label>TF = <input id="pv_dim_tf" readonly placeholder="&mdash;"></label>
-                <label>R = <input id="pv_dim_r" readonly placeholder="&mdash;"></label>
-                <label>FB = <input id="pv_dim_fb" readonly placeholder="&mdash;"></label>
-                <label>F = <input id="pv_dim_f" readonly placeholder="&mdash;"></label>
+                <label>E = <input id="pv_dim_e" placeholder="&mdash;"></label>
+                <label>G = <input id="pv_dim_g" placeholder="&mdash;"></label>
+                <label>J = <input id="pv_dim_j" placeholder="&mdash;"></label>
+                <label>LB = <input id="pv_dim_lb" placeholder="&mdash;"></label>
+                <label>TF = <input id="pv_dim_tf" placeholder="&mdash;"></label>
+                <label>R = <input id="pv_dim_r" placeholder="&mdash;"></label>
+                <label>FB = <input id="pv_dim_fb" placeholder="&mdash;"></label>
+                <label>F = <input id="pv_dim_f" placeholder="&mdash;"></label>
               </div>
             </div>
             <div class="xq-dim-right-group">
@@ -180,6 +180,6 @@
     </form>
   </dialog>
 
-  <script src="{{ url_for('employee_quote_form_js', v='7') }}"></script>
+  <script src="{{ url_for('employee_quote_form_js', v='9') }}"></script>
 </body>
 </html>

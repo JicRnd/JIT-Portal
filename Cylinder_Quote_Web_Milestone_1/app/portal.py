@@ -16,13 +16,13 @@ from flask import (
     session,
     url_for,
 )
-from sqlalchemy import case, func, or_, select, update
+from sqlalchemy import String, case, cast, func, or_, select, update
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from . import ai_usage_service
 from .db import get_session
-from .models_db import Customer, Quote, User
+from .models_db import Customer, Order, Quote, QuoteLineItem, User, utc_now
 from .part_family_service import (
     FamilyError,
     assign_parts,
@@ -148,6 +148,8 @@ def status_label(value):
     value = (value or "pending_approval").lower().replace("-", "_")
 
     labels = {
+        "accepted": "Pending Approval",
+        "pending": "Pending Approval",
         "pending_approval": "Pending Approval",
         "approved": "Approved",
         "denied": "Denied",
@@ -573,22 +575,29 @@ def employee_dashboard():
             .limit(25)
         ).scalars().all()
 
+        history_ownership = or_(
+            Quote.created_by_user_id == user.id,
+            Quote.assigned_employee_user_id == user.id,
+            Quote.edited_by_user_id == user.id,
+            Quote.approved_by_user_id == user.id,
+        )
+
         quotes_this_month = db.execute(
             select(func.count(Quote.id)).where(
-                Quote.created_by_user_id == user.id,
+                history_ownership,
+                Quote.status != "canceled",
                 Quote.created_at >= month_start,
             )
         ).scalar() or 0
 
-        approved_quotes_this_month = db.execute(
-            select(Quote).where(
-                Quote.created_by_user_id == user.id,
+        approved_orders_count_this_month = db.execute(
+            select(func.count(Quote.id)).where(
+                history_ownership,
                 Quote.status == "approved",
                 Quote.approved_at.is_not(None),
                 Quote.approved_at >= month_start,
             )
-        ).scalars().all()
-        approved_orders_count_this_month = len(approved_quotes_this_month)
+        ).scalar() or 0
 
         # New accept requests - quotes that are pending approval but not yet assigned to any employee
         new_accept_quotes = db.execute(
@@ -631,6 +640,7 @@ def employee_dashboard():
                 "customer_name": quote.customer_name,
                 "created_at": quote.created_at,
                 "status": quote.status,
+                "status_label": status_label(quote.status),
             }
             for quote in pending_quotes
         ]
@@ -760,7 +770,7 @@ def accept_pending_quote(quote_id: int):
 @portal_bp.post("/employee/quotes/<int:quote_id>/delete")
 @require_role("employee")
 def delete_pending_quote(quote_id: int):
-    """Delete a pending-approval quote that the current employee has claimed."""
+    """Soft-delete a claimed pending quote and preserve it for audit history."""
     user = signed_in_user()
 
     with get_session() as db:
@@ -775,134 +785,15 @@ def delete_pending_quote(quote_id: int):
                 "error": "Quote not found or not claimed by you",
             }), 404
 
-        db.delete(quote)
+        quote.status = "canceled"
+        quote.deleted_by_user_id = user.id
+        quote.deleted_at = utc_now()
+        quote.edited_by_user_id = user.id
+        quote.edited_at = utc_now()
+        db.add(quote)
         db.commit()
 
-    return jsonify({"ok": True, "quote_id": quote_id}), 200
-
-
-@portal_bp.get("/employee/history")
-@require_role("employee")
-def employee_history():
-    user = signed_in_user()
-    query = (request.args.get("q") or "").strip()
-
-    with get_session() as db:
-        stmt = (
-            select(Quote)
-            .where(
-                or_(
-                    Quote.created_by_user_id == user.id,
-                    Quote.assigned_employee_user_id == user.id,
-                )
-            )
-            .where(Quote.status.notin_(["accepted", "pending_approval", "canceled"]))
-        )
-        if query:
-            like = f"%{query}%"
-            # Users live in a separate database file, so resolve matching
-            # employee/customer ids first instead of a cross-database SQL join.
-            matching_user_ids = db.execute(
-                select(User.id).where(User.display_name.ilike(like))
-            ).scalars().all()
-            stmt = stmt.where(
-                or_(
-                    Quote.quote_number.ilike(like),
-                    Quote.model_code.ilike(like),
-                    Quote.customer_name.ilike(like),
-                    Quote.customer_address.ilike(like),
-                    Quote.status.ilike(like),
-                    Quote.created_by_user_id.in_(matching_user_ids),
-                    Quote.assigned_employee_user_id.in_(matching_user_ids),
-                    func.json_extract(Quote.order_form_snapshot, "$.order_number").ilike(like),
-                )
-            )
-
-        order_number = func.json_extract(Quote.order_form_snapshot, "$.order_number")
-        order_submission_priority = case(
-            (func.coalesce(order_number, "") == "", 0),
-            else_=1,
-        )
-        quotes = db.execute(
-            stmt.order_by(
-                case((Quote.status == "denied", 1), else_=0),
-                order_submission_priority,
-                Quote.created_at.desc(),
-            ).limit(25)
-        ).scalars().all()
-
-        rows = [
-            (
-                quote,
-                total_for(quote),
-                status_label(quote.status),
-            )
-            for quote in quotes
-        ]
-
-    return render_template(
-        "employee_history.html",
-        user=user,
-        rows=rows,
-        query=query,
-    )
-
-
-@portal_bp.get("/employee/quote-history")
-@require_role("employee")
-def employee_quote_history():
-    user = signed_in_user()
-    query = (request.args.get("q") or "").strip()
-
-    with get_session() as db:
-        stmt = select(Quote).where(Quote.status != "canceled")
-        if query:
-            like = f"%{query}%"
-            # Users live in a separate database file, so resolve matching
-            # employee/customer ids first instead of a cross-database SQL join.
-            matching_user_ids = db.execute(
-                select(User.id).where(User.display_name.ilike(like))
-            ).scalars().all()
-            stmt = stmt.where(
-                or_(
-                    Quote.quote_number.ilike(like),
-                    Quote.model_code.ilike(like),
-                    Quote.customer_name.ilike(like),
-                    Quote.customer_address.ilike(like),
-                    Quote.status.ilike(like),
-                    Quote.created_by_user_id.in_(matching_user_ids),
-                    func.json_extract(Quote.order_form_snapshot, "$.order_number").ilike(like),
-                )
-            )
-        quote_action_priority = case(
-            (
-                or_(
-                    Quote.status != "pending_approval",
-                    Quote.assigned_employee_user_id == user.id,
-                ),
-                0,
-            ),
-            else_=1,
-        )
-        quotes = db.execute(
-            stmt.order_by(
-                case((Quote.status == "denied", 1), else_=0),
-                quote_action_priority,
-                Quote.created_at.desc(),
-            ).limit(25)
-        ).scalars().all()
-
-        rows = [
-            (quote, total_for(quote), status_label(quote.status))
-            for quote in quotes
-        ]
-
-    return render_template(
-        "employee_quote_history.html",
-        user=user,
-        rows=rows,
-        query=query,
-    )
+    return redirect(url_for("portal.employee_dashboard"))
 
 
 @portal_bp.get("/customer/quote-entry")
@@ -1135,7 +1026,7 @@ def customer_accounts():
     with get_session() as db:
         customer_users = db.scalars(
             select(User)
-            .where(User.is_active == True, User.role == "customer")
+            .where(User.role == "customer")
             .order_by(User.display_name.asc())
         ).all()
 
@@ -1145,6 +1036,35 @@ def customer_accounts():
         users=customer_users,
         directory_type="customer",
     )
+
+
+@portal_bp.post("/customer-accounts/<int:user_id>/status")
+@require_role("employee")
+def update_customer_account_status(user_id: int):
+    account_status = (request.form.get("account_status") or "active").strip().lower()
+    allowed_statuses = {"active", "not_active", "denied"}
+
+    if account_status not in allowed_statuses:
+        flash("Choose a valid customer status.", "error")
+        return redirect(url_for("portal.customer_accounts"))
+
+    with get_session() as db:
+        target_user = db.get(User, user_id)
+        if target_user and target_user.role == "customer":
+            if account_status == "active":
+                target_user.is_active = True
+                target_user.approval_status = "approved"
+            elif account_status == "denied":
+                target_user.is_active = False
+                target_user.approval_status = "denied"
+            else:
+                target_user.is_active = False
+                target_user.approval_status = "hold"
+            target_user.approval_decided_at = datetime.now()
+            db.commit()
+            flash(f"Status updated for '{target_user.display_name}'.", "success")
+
+    return redirect(url_for("portal.customer_accounts"))
 
 
 @portal_bp.get("/parts-catalog")

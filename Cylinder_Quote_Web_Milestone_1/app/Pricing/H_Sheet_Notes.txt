@@ -1,0 +1,200 @@
+H SHEET REVERSE-ENGINEERING NOTES
+=================================
+
+Purpose
+-------
+This file records verified findings while converting the Excel workbook's H
+sheet into runtime data for the Order Form testing-data section. It is a
+working technical record, not a replacement for the source workbook.
+
+Scope boundary
+--------------
+- This work applies only to the Order Form testing rows: Rod, Tie Rod, and
+	Barrel.
+- Do not change the customer calculator, employee calculator, pricing engine,
+	quote pricing/API behavior, or existing pricing tables.
+- The workbook is read-only source material. Excel is not a runtime dependency.
+- Existing openpyxl workbook workflows remain unchanged.
+
+Current conversion architecture
+--------------------------------
+1. openpyxl reads the XLSM offline with keep_vba=True and data_only=False so
+	 formulas and constants can be inspected.
+2. Pandas organizes extracted Sheet H cells into tabular data during the
+	 offline extraction step.
+3. A normalized JSON/Python table will hold semantic engineering rules for the
+	 Order Form runtime.
+4. order_form.js will use those normalized rules only to populate testing
+	 display values. It must not use them for cylinder pricing.
+
+Implemented so far
+------------------
+- scripts/extract_sheet_h.py extracts all non-empty cells from Sheet H.
+- The extractor preserves cell coordinate, row, column, value, and formula
+	status in JSON.
+- The extractor currently finds approximately 3,367 non-empty H cells and
+	approximately 1,124 formula cells in the current workbook.
+- app/static/tierod_reference.json is a separate normalized TieRod artifact.
+	It contains standard TieRod rules and MT4 rules and is already loaded by the
+	Order Form testing section.
+- Sheet H has not yet been converted into a complete semantic engineering
+	table. The current H engineering constants in order_form.js are provisional
+	and cover only a small H/HM subset.
+- data/sheet_h_cells.json is now generated from the current workbook. It
+	contains the raw formula-preserving cell table plus 76 candidate selector
+	rows with named fields such as bore, rod, thread constants, base values, and
+	source formulas.
+- The selector_rows section is an intermediate analysis artifact. It does not
+	evaluate Excel formulas and must not be used directly as final runtime
+	engineering rules until the family/cushion/style/mount dependencies are
+	resolved and validated.
+
+Workbook relationships
+----------------------
+- Sheet H is a multi-family selector/calculation matrix, not an H-series-only
+	table.
+- Sheet Data supplies the active selector inputs used by H formulas. Important
+	inputs observed include:
+	- Data!B3 = series
+	- Data!B4 = bore
+	- Data!B6 = rod diameter
+- H formulas use IF/OR selector gates against Data values. A row is active only
+	when its series, bore, rod, mount/cushion/style, or other conditions match.
+- The visible Order Form testing cells are downstream display outputs. The
+	application should preserve the meaning of these outputs, not depend on
+	Excel cell addresses at runtime.
+
+Output dependency map
+---------------------
+- Order Form E47 reads H!AD7 for Rod length.
+- Order Form E48 reads H!AE7 for Tie Rod length.
+- Order Form E49 reads H!AC7 for Barrel length.
+- Order Form G48 formats the torque helper AN1 as `Torque= ... Ft/Lbs`.
+- Order Form G49 reads Data!D27 for Barrel Stop Tube/ET.
+- H!AC7 is SUM(AJ7:AJ18), the barrel-addition aggregate.
+- H!AD7 is AS64+BB50+Data!B11+Data!B27, the rod-length aggregate.
+- H!AE7 is TieRod!B2+Data!B25, the TieRod-length aggregate.
+- Data!D27 is =S49.
+
+Rod-addition matrix structure
+----------------------------
+- H/HM uses helper columns AV:BA with total BB.
+- A/LH/SA uses helper columns AM:AR with total AS.
+- The six helper columns select by cushion and rod style:
+	- first pair: BE/CE, style 4;
+	- second pair: RE/NC, style 4;
+	- third pair: BE/CE, style 3;
+	- fourth pair: RE/NC, style 3;
+	- fifth pair: BE/CE, styles 1/2/6;
+	- sixth pair: RE/NC, styles 1/2/6.
+- The helper cells point to additional H rows, so extraction must resolve the
+	referenced helper values and preserve the selector conditions together.
+- The compact runtime artifact app/static/sheet_h_engineering.json now contains
+	468 resolved rod-addition rules. For bore 5 / rod 2:
+	- A/LH/SA AQ93 = 8.48 for BE/CE and styles 1/2/6;
+	- A/LH/SA AR93 = 7.48 for RE/NC and styles 1/2/6;
+	- H/HM AZ71 = 10 for BE/CE and styles 1/2/6;
+	- H/HM BA71 = 8.73 for RE/NC and styles 1/2/6.
+- The Order Form now loads the compact artifact and selects the rod addition by
+	family, bore, rod, cushion, and rod style. The old H constants remain only
+	as an H/HM fallback when an extracted rule is unavailable.
+
+Barrel and weight findings
+--------------------------
+- H helper columns AG:AJ include bore-specific barrel additions. For bore 5,
+	the known H/HM addition is 2.688 and the alternative family value in the
+	inspected helper row is 1.625.
+- H/HM and A/LH use separate weight tables on the Data sheet. The H/HM
+	weight chart is in Data!S31:X56, while the A/LH chart is in Data!Y31:AD48.
+- The A/LH chart was extracted with pandas into
+	app/static/sheet_h_engineering.json as nine rules. Its columns are Y=bore,
+	Z=rod, AA=zero-stroke/base weight, and AB=weight added per inch of stroke.
+	The weight rule is AA + AB * stroke. Data!AD contains the selector and
+	calculation formulas.
+- The known H/HM weight example is base 82 plus 3.4 per stroke, producing
+	122.8 at stroke 12.
+- The A/LH examples use the separate chart. Bore 1.5 / rod 0.625 is base 6
+	plus 0.35 per inch of stroke; bore 8 / rod 1.375 is base 100 plus 4 per
+	inch of stroke.
+- The workbook trace confirms the current barrel path:
+	- H!AG7:AG18 are bore keys;
+	- H!AH7:AH18 are non-H-family additions;
+	- H!AI7:AI18 are H/HM additions;
+	- H!AJ7:AJ18 selects AH or AI by series;
+	- H!AC7 sums AJ7:AJ18 and the Order Form uses H!AC7 for Barrel length.
+- For bore 5, the extracted additions are AH12 = 1.625 for A/LH/SA and
+	AI12 = 2.688 for H/HM. These additions represent the workbook's fixed
+	barrel/cap/gland geometry for the selected bore; the stroke is added by the
+	Order Form display calculation.
+
+- The workbook's H-series weight table is on Data!S31:X56. Data!S31:S48
+	contains selector formulas using Data!B3 (series), Data!B4 (bore), and
+	Data!B6 (rod), with the result calculated as the row's Data!V base weight
+	plus Data!W weight per inch times Data!B8 stroke. The larger-bore rows use
+	Data!X49:X55 with the same V + W * stroke rule. Verified source rows are:
+	10/4.5 = 650 + 15 per inch, 10/5.5 = 660 + 17, 10/7 = 704 + 21,
+	12/5.5 = 1060 + 22, 12/8 = 1155 + 29, 14/7 = 1525 + 28, and
+	14/10 = 1685 + 39. The Order Form lookup now includes these rows; it
+	continues to display the calculated result as `Weight <value>` in the
+	Barrel testing row. Excel cached formula values are blank in this workbook,
+	so the application reproduces the verified V/W rule rather than depending
+	on Excel recalculation.
+
+Torque lookup
+-------------
+- Torque is not stored in H. The Order Form contains the lookup:
+	- AK2:AK11 = bore keys;
+	- AL2:AL11 = A/LH torque values;
+	- AM2:AM11 = H/HM torque values;
+	- AN2:AO11 select the active family row;
+	- AN1 sums AN2:AO11;
+	- Order Form G48 formats the result as `Torque= ... Ft/Lbs`.
+- For bore 5, AL7 = 80 and AM7 = 300.
+- The compact engineering artifact now contains 12 barrel rules and 10 torque
+	rules. The Order Form loads those values and retains the old H maps only as
+	a temporary asset-load fallback.
+
+Verified H-family example
+-------------------------
+For the previously validated H / bore 5 / rod 2 scenario, the workbook-derived
+testing values were:
+- Rod length: 20.73 for stroke 12 (rod addition 8.73)
+- Tie Rod length: 20 for stroke 12 (tie-rod addition 8)
+- Barrel length: 14.688 for stroke 12 (barrel addition 2.688)
+- Tie Rod torque: 300 Ft/Lbs
+- Barrel weight: 122.8 for stroke 12 (base 82 plus 3.4 per stroke)
+
+Verified A/LH/SA branch finding
+-------------------------------
+- H also contains rows gated for A, LH, and SA, including the previously
+	inspected bore 5 / rod 2 selector row around H!AM33:AR33.
+- That branch must not inherit H/HM barrel, torque, or weight rules.
+- The comparison case showed the non-H branch producing:
+	- Rod length: 22
+	- Tie Rod length: 17.625
+	- Barrel length: 12 (no barrel addition)
+	- Tie Rod torque: blank/dash
+	- Barrel weight: blank/dash
+- The exact A/LH/SA rod rule still needs to be normalized from its selector
+	inputs rather than hardcoded from the screenshot.
+
+Important implementation warnings
+----------------------------------
+- Do not apply H_ROD_ADDITIONS to non-H families.
+- Do not infer the engineering family from bore and rod alone; series is a
+	required selector.
+- order_form.js currently merges order_form_snapshot over freshly generated
+	defaults. A stale testing snapshot can hide corrected engineering values.
+	Snapshot precedence must be handled carefully when the normalized table is
+	connected.
+- openpyxl does not calculate formulas. Formula text, selector constants,
+	cached values when available, and independent known-scenario calculations
+	must be checked separately.
+
+Next extraction tasks
+---------------------
+1. Extract semantic H selector rows by family and relevant input dimensions.
+2. Trace the A/LH/SA rod-length addition and its mount/cushion/style inputs.
+3. Normalize H/HM and A/LH/SA rules into a separate engineering JSON artifact.
+4. Add focused tests for the two known scenarios before changing display code.
+5. Connect only the Order Form testing rows to the normalized artifact.

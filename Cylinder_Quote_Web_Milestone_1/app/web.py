@@ -73,7 +73,8 @@ def create_app() -> Flask:
         FileSystemLoader(Path(__file__).resolve().parent / "Admin_Dashboard"),
         FileSystemLoader(Path(__file__).resolve().parent / "Employee_quote_form"),
         FileSystemLoader(Path(__file__).resolve().parent / "Order_Form"),
-        FileSystemLoader(Path(__file__).resolve().parent / "Employee_"),
+        FileSystemLoader(Path(__file__).resolve().parent / "employee_order_history"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Employee_Quote_History"),
         FileSystemLoader(Path(__file__).resolve().parent / "Quote_Form"),
         FileSystemLoader(Path(__file__).resolve().parent / "Parts_catalog_page"),
         FileSystemLoader(Path(__file__).resolve().parent / "Landing_page"),
@@ -91,9 +92,15 @@ def create_app() -> Flask:
     engine = make_engine(root)
     catalog = build_catalog(engine.data)
 
-    # JIT portal pages are kept separate from the pricing engine routes.
+    # Register portal and employee-history blueprints independently.
     from .portal import portal_bp
     app.register_blueprint(portal_bp)
+
+    from .employee_order_history.Employee_order_history_search import employee_order_history_bp
+    app.register_blueprint(employee_order_history_bp)
+
+    from .Employee_Quote_History.Employee_quote_history_search import employee_quote_history_bp
+    app.register_blueprint(employee_quote_history_bp)
 
     @app.get("/quote-entry")
     def index():
@@ -224,9 +231,9 @@ def create_app() -> Flask:
         return jsonify({"ok": True, "parts": results})
 
     def _customer_status(session, customer: Customer) -> str:
-        """Return 'Member' if a customer-role user shares this customer's email."""
+        """Return 'Member' for registered customers and 'Customer' otherwise."""
         if not customer.email or not customer.email.strip():
-            return "Visitor"
+            return "Customer"
         user = session.execute(
             select(User).where(
                 User.role == "customer",
@@ -234,7 +241,35 @@ def create_app() -> Flask:
                 func.lower(User.email) == customer.email.lower(),
             )
         ).scalar_one_or_none()
-        return "Member" if user is not None else "Visitor"
+        return "Member" if user is not None else "Customer"
+
+    def _customer_member(session, customer: Customer):
+        if not customer.email or not customer.email.strip():
+            return None
+        return session.execute(
+            select(User).where(
+                User.role == "customer",
+                User.email.is_not(None),
+                func.lower(User.email) == customer.email.lower(),
+            )
+        ).scalar_one_or_none()
+
+    def _customer_payload(session, customer: Customer) -> dict:
+        member = _customer_member(session, customer)
+        company_name = customer.company_name or (member.company_name if member else None) or ""
+        poc = customer.poc or (member.display_name if member and company_name else None) or customer.name
+        return {
+            "id": customer.id,
+            "company_name": company_name,
+            "poc": poc,
+            "name": customer.name,
+            "address": customer.address or "",
+            "city_state_zip": customer.city_state_zip or "",
+            "phone": customer.phone or "",
+            "email": customer.email or "",
+            "notes": customer.notes or "",
+            "status": _customer_status(session, customer),
+        }
 
     @app.get("/api/customers/search")
     def search_customers():
@@ -246,11 +281,14 @@ def create_app() -> Flask:
                 select(Customer)
                 .where(
                     or_(
+                        Customer.company_name.ilike(f"%{query}%"),
+                        Customer.poc.ilike(f"%{query}%"),
                         Customer.name.ilike(f"%{query}%"),
                         Customer.address.ilike(f"%{query}%"),
                         Customer.city_state_zip.ilike(f"%{query}%"),
                         Customer.phone.ilike(f"%{query}%"),
                         Customer.email.ilike(f"%{query}%"),
+                        Customer.notes.ilike(f"%{query}%"),
                     )
                 )
                 .order_by(Customer.name)
@@ -258,18 +296,7 @@ def create_app() -> Flask:
             ).scalars().all()
             return jsonify({
                 "ok": True,
-                "customers": [
-                    {
-                        "id": c.id,
-                        "name": c.name,
-                        "address": c.address or "",
-                        "city_state_zip": c.city_state_zip or "",
-                        "phone": c.phone or "",
-                        "email": c.email or "",
-                        "status": _customer_status(session, c),
-                    }
-                    for c in matches
-                ],
+                "customers": [_customer_payload(session, c) for c in matches],
             })
 
     @app.get("/api/customers/all")
@@ -280,18 +307,7 @@ def create_app() -> Flask:
             ).scalars().all()
             return jsonify({
                 "ok": True,
-                "customers": [
-                    {
-                        "id": c.id,
-                        "name": c.name,
-                        "address": c.address or "",
-                        "city_state_zip": c.city_state_zip or "",
-                        "phone": c.phone or "",
-                        "email": c.email or "",
-                        "status": _customer_status(session, c),
-                    }
-                    for c in customers
-                ],
+                "customers": [_customer_payload(session, c) for c in customers],
             })
 
     @app.patch("/api/customers/<int:customer_id>")
@@ -311,7 +327,7 @@ def create_app() -> Flask:
 
             if "name" in payload:
                 customer.name = str(payload["name"]).strip()
-            for field in ("address", "city_state_zip", "phone", "email"):
+            for field in ("company_name", "poc", "address", "city_state_zip", "phone", "email", "notes"):
                 if field in payload:
                     value = payload[field]
                     setattr(
@@ -320,18 +336,17 @@ def create_app() -> Flask:
                         None if value is None or str(value).strip() == "" else str(value).strip(),
                     )
 
+            member = _customer_member(session, customer)
+            if member:
+                if "company_name" in payload:
+                    member.company_name = customer.company_name
+                if "poc" in payload:
+                    member.display_name = customer.poc or member.display_name
+
             session.commit()
             return jsonify({
                 "ok": True,
-                "customer": {
-                    "id": customer.id,
-                    "name": customer.name,
-                    "address": customer.address or "",
-                    "city_state_zip": customer.city_state_zip or "",
-                    "phone": customer.phone or "",
-                    "email": customer.email or "",
-                    "status": _customer_status(session, customer),
-                },
+                "customer": _customer_payload(session, customer),
             })
 
     @app.delete("/api/customers/<int:customer_id>")
@@ -679,7 +694,28 @@ def create_app() -> Flask:
             session.commit()
             result = quote_to_json(quote)
 
-        return jsonify({"ok": True, "quote": result})
+            return jsonify({"ok": True, "quote": result})
+
+    @app.post("/api/quotes/<int:quote_id>/hold")
+    def hold_quote(quote_id: int):
+        current_user = get_or_create_current_user(request)
+
+        with get_session() as session:
+            quote = get_quote(session, quote_id)
+            if quote is None:
+                return jsonify({"ok": False, "error": "Quote not found"}), 404
+            if (
+                getattr(current_user, "role", "employee") == "customer"
+                and quote.created_by_user_id != current_user.id
+            ):
+                return jsonify({"ok": False, "error": "Quote not found"}), 404
+
+            quote.status = "hold"
+            quote.edited_by_user_id = current_user.id
+            quote.edited_at = utc_now()
+            session.add(quote)
+            session.commit()
+            return jsonify({"ok": True, "quote": quote_to_json(quote)})
 
     def _regenerate_quote_pdf(session, quote, current_user):
         try:
@@ -830,6 +866,9 @@ def create_app() -> Flask:
                 if getattr(current_user, "role", "employee") == "customer"
                 else "pending_approval"
             )
+            if getattr(current_user, "role", "employee") != "customer":
+                quote.assigned_employee_user_id = current_user.id
+                quote.assigned_at = quote.assigned_at or utc_now()
             quote.edited_by_user_id = current_user.id
             quote.edited_at = utc_now()
             session.add(quote)

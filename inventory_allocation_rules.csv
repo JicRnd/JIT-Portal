@@ -1,0 +1,848 @@
+﻿row,part_number,description,unit_price,on_hand,allocation_formula,category,referenced_sheets,data_inputs
+2,TR062,Tie Rod,0.12375000000000001,5534.208000000063,"=IF(AND(Data!B$3=""H"",Data!B$16="""",OR(Data!B$4=3.25,Data!B$4=4)),Data!B$2*(Data!B$8+H!AE7)*4,IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$16="""",OR(Data!B$4=7,Data!B$4=8)),Data!B$2*(Data!B$8+H!AE7)*4,0))",length_based,Data|H,B16|B2|B3|B4|B8
+3,R200,Rod,1.7480833333333334,1025.4935000000048,"=IF(AND(Data!B$17="""",Data!B$6=2),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+4,H40B,Barrel,2.9562500000000003,829.1749999999994,"=IF(AND(Data!B$4=4,Data!B$3=""H""),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+5,TRN062,Tie Rod Nuts,0.45,3088,"=IF(AND(Data!B$3=""H"",OR(Data!B$4=3.25,Data!B$4=4),Data!B$16=""""),Data!B$2*8,IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=7,Data!B$4=8),Data!B$16=""""),Data!B$2*8,0))",quantity_or_option_based,Data,B16|B2|B3|B4
+6,H40BB,H Nitrile Barrel Seal,1,244,"=IF(AND(Data!B$4=4,Data!B$10<>""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+7,GTOB200,Teflon Gland Oring Backup Seal,3,305,"=IF(AND(Data!B$6=2,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+8,200RWP,Polyurethane Rod Wiper,1.6,4957,"=IF(Data!B$6=2,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+9,200GP,Polyurethane Rod Seal,5,458,"=IF(AND(Data!B$6=2,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+10,PIB200,Nitrile Piston ID Oring Seal,1,399,"=IF(Data!B$6=2,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+11,GBO200,Nitrile Gland Oring Seal,1,8,"=IF(AND(Data!B$6=2,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+12,H40CEH,Hyd BEH Head,76,-9,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+13,H40P200,H Piston,43,30,"=IF(AND(Data!B$4=4,Data!B$6=2,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+14,G200,Gland,59,220,"=IF(AND(Data!B$6=2,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+15,H40REH200,Hyd REH Head,81,7,"=IF(AND(Data!B$4=4,Data!B$6=2,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+16,H40MT4,H MT4,160,3,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+17,H40PL,H Low Friction Piston Seal,12,14,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$10=""L""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+18,TR050,Tie Rod,0.07241666666666668,14430.431999999997,"=IF(AND(Data!B$3=""H"",OR(Data!B$4=2,Data!B$4=2.5),Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=5,Data!B$4=6),Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,0))",length_based,Data|H,B16|B2|B3|B4|B8
+19,R100,Rod,0.5325833333333333,8641.475000000013,"=IF(AND(Data!B$17="""",Data!B$6=1),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+20,H25B,Barrel,1.5610833333333334,-7.9159999999999595,"=IF(AND(Data!B$4=2.5,Data!B$3=""H""),Data!B$2*(Data!B$8+H!AC$7),0)",length_based,Data|H,B2|B3|B4|B8
+21,TRN050,Tie Rod Nuts,0.21,1392,"=IF(AND(Data!B$3=""H"",OR(Data!B$4=2,Data!B$4=2.5),Data!B$16=""""),Data!B$2*8,IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=5,Data!B$4=6),Data!B$16=""""),Data!B$2*8,0))",quantity_or_option_based,Data,B16|B2|B3|B4
+22,CSHN,Cushion Screw Nut,2,3752,"=IF(OR(AND(Data!B$3=""H"",Data!B$4<3.6),AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=3.25,Data!B$4=4))),IF(OR(Data!B$7=""re"",Data!B$7=""ce""),1,IF(Data!B$7=""be"",2,0)),0)*Data!B$2",quantity_or_option_based,Data,B2|B3|B4|B7
+23,CSHL,Cushion Screw Long (Hyd),3,3968,"=IF(OR(AND(Data!B$3=""H"",Data!B$4>=2.1,Data!B$4<3.7),AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=3.25,Data!B$4=4))),IF(OR(Data!B$7=""re"",Data!B$7=""ce""),1,IF(Data!B$7=""be"",2,0)),0)*Data!B$2",quantity_or_option_based,Data,B2|B3|B4|B7
+24,H25BB,H Nitrile Barrel Seal,1,406,"=IF(AND(Data!B$4=2.5,Data!B$10<>""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+25,PP075,Pivot Pin,5,446,"=IF(Acc!T6<>"""",Data!B$2+Data!G$13,IF(Data!F$26=A25,Data!G$26,IF(Data!F$27=A25,Data!G$27,IF(Data!F$28=A25,Data!G$28,IF(Data!F$29=A25,Data!G$29,IF(Data!F$30=A25,Data!G$30,IF(Data!F$31=A25,Data!G$31,0)))))))",quantity_or_option_based,Acc|Data,B2|F26|F27|F28|F29|F30|F31|G13|G26|G27|G28|G29|G30|G31
+26,100RWP,Polyurethane Rod Wiper,0.9,696,"=IF(Data!B$6=1,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+27,100GP,Polyurethane Rod Seal,4,405,"=IF(AND(Data!B$6=1,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+28,PIB100,Nitrile Piston ID Oring Seal,1,399,"=IF(Data!B$6=1,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+29,GBO100,Nitrile Gland Oring Seal,1,405,"=IF(AND(Data!B$6=1,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+30,G100,Gland,30,172,"=IF(AND(Data!B$6=1,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+31,CC100,Cushion Collar,5.5,73,"=IF(AND(Data!B$6=1,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+32,GTOB100,Teflon Gland Oring Backup Seal,2,438,"=IF(AND(Data!B$6=1,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+33,H25REH100,Hyd REH Head,76,-30,"=IF(AND(Data!B$4=2.5,Data!B$6=1,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+34,H25P100,H Piston,24,459,"=IF(AND(Data!B$4=2.5,Data!B$6=1,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+35,H25PL,H Low Friction Piston Seal,8,14,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$10=""L""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+36,H25MP1,Hyd BEH Head,72,22,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+37,TR025,Tie Rod,0.01741666666666667,853.6319999999988,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$4=1.5,Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,0)",length_based,Data|H,B16|B2|B3|B4|B8
+38,R062,Rod,0.3180833333333334,4928.905000000037,"=IF(AND(Data!B$17="""",Data!B$6=0.625),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+39,TRN025,Tie Rod Nuts,0.25,4408,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$4=1.5,Data!B$16=""""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+40,A15B,Barrel,0.9579166666666666,313.5,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+41,PP050,Pivot Pin,3,459,"=IF(Acc!T5<>"""",Data!B$2+Data!G$13,IF(Data!F$26=A41,Data!G$26,IF(Data!F$27=A41,Data!G$27,IF(Data!F$28=A41,Data!G$28,IF(Data!F$29=A41,Data!G$29,IF(Data!F$30=A41,Data!G$30,IF(Data!F$31=A41,Data!G$31,0)))))))",quantity_or_option_based,Acc|Data,B2|F26|F27|F28|F29|F30|F31|G13|G26|G27|G28|G29|G30|G31
+42,A15PB,Air Nitrile Piston Seal,2,82,"=IF(AND(Data!B$4=1.5,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+43,A15BB,Air Nitrile Barrel Seal,1,82,"=IF(AND(Data!B$4=1.5,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+44,062RWP,Polyurethane Rod Wiper,0.7,116,"=IF(Data!B$6=0.625,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+45,062GP,Polyurethane Rod Seal,2,475,"=IF(AND(Data!B$6=0.625,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+46,PIB062,Nitrile Piston ID Oring Seal,1,372,"=IF(Data!B$6=0.625,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+47,GBO062,Nitrile Gland Oring Seal,1,222,"=IF(AND(Data!B$6=0.625,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+48,G062,Gland,29,314,"=IF(AND(Data!B$6=0.625,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+49,RC044,Rod Clevis 7/16-20,8,5,"=IF(AND(Data!G$9>0.1,Acc!M5=""X""),Data!G$9,IF(Data!F$26=A49,Data!G$26,IF(Data!F$27=A49,Data!G$27,IF(Data!F$28=A49,Data!G$28,IF(Data!F$29=A49,Data!G$29,IF(Data!F$30=A49,Data!G$30,IF(Data!F$31=A49,Data!G$31,IF(Data!F$32=A49,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+50,A15REH062,Air REH Head,29,42,"=IF(AND(Data!B$4=1.5,Data!B$6=0.625,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+51,A15P062,Air Piston,21,152,"=IF(AND(Data!B$4=1.5,Data!B$6=0.625,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+52,A15MP1,Air BEH Head,41,1.5,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+53,TR031,Tie Rod,0.030250000000000003,31337.02399999994,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=2,Data!B$4=2.5),Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,0)",length_based,Data|H,B16|B2|B3|B4|B8
+54,TRN031,Tie Rod Nuts,0.3,3488,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=2,Data!B$4=2.5),Data!B$16=""""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+55,A20B,Barrel,1.1678333333333335,662.1550000000001,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+56,A20PB,Air Nitrile Piston Seal,2,180,"=IF(AND(Data!B$4=2,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+57,A20BB,Air Nitrile Barrel Seal,1,180,"=IF(AND(Data!B$4=2,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+58,A20REH062,Air REH Head,36,13,"=IF(AND(Data!B$4=2,Data!B$6=0.625,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+59,A20P062,Air Piston,22,287,"=IF(AND(Data!B$4=2,Data!B$6=0.625,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+60,A20CEH,Air BEH Head,25,16,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+61,TR038,Tie Rod,0.044000000000000004,10007.004000000063,"=IF(AND(Data!B$3=""H"",Data!B$4=1.5,Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=3.25,Data!B$4=4),Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,0))",length_based,Data|H,B16|B2|B3|B4|B8
+62,A40B,Barrel,1.8846666666666667,498.2489999999998,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+63,TRN038,Tie Rod Nuts,0.1,2696,"=IF(AND(Data!B$3=""H"",Data!B$4=1.5,Data!B$16=""""),Data!B$2*8,IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=3.25,Data!B$4=4),Data!B$16=""""),Data!B$2*8,0))",quantity_or_option_based,Data,B16|B2|B3|B4
+64,A40PB,Air Nitrile Piston Seal,4,284,"=IF(AND(Data!B$4=4,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+65,A40BB,Air Nitrile Barrel Seal,1,284,"=IF(AND(Data!B$4=4,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+66,A40REH100,Air REH Head,60,18,"=IF(AND(Data!B$4=4,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+67,A40P100,Air Piston,26,102,"=IF(AND(Data!B$4=4,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+68,A40MP1,Air BEH Head,92,11.5,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+69,H40PP,H Polyurethane Piston Seal,7,350,"=IF(AND(Data!B$4=4,Data!B$10=""P"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+70,H40ME5,Hyd REH Head,179,-9,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""ME5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+71,H25CEH,Hyd BEH Head,40,-5,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+72,H25MF5,H MF5,49,4,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+73,G100R,Gland for Retainer,22,77,"=IF(AND(Data!B$6=1,Data!M$2=""YES""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+74,TR125,Tie Rod,0.5380833333333334,1829.5,"=IF(AND(Data!B$3=""H"",Data!B$4=8,Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,0)",length_based,Data|H,B16|B2|B3|B4|B8
+75,R400,Rod,7.00425,1478.7259999999997,"=IF(AND(Data!B$17="""",Data!B$6=4),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+76,H80B,Barrel,13.748166666666668,2859.094999999994,"=IF(AND(Data!B$4=8,Data!B$3=""H""),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+77,TRN125,Tie Rod Nuts,3.75,4848,"=IF(AND(Data!B$3=""H"",Data!B$4=8,Data!B$16=""""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+78,H80PP,H Polyurethane Piston Seal,23,458,"=IF(AND(Data!B$4=8,Data!B$10=""P"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+79,H80BB,H Nitrile Barrel Seal,1.2,392,"=IF(AND(Data!B$4=8,Data!B$10<>""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+80,GTOB400,Teflon Gland Oring Backup Seal,5,84,"=IF(AND(Data!B$6=4,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+81,400RWP,Polyurethane Rod Wiper,5,48,"=IF(Data!B$6=4,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+82,400GP,Polyurethane Rod Seal,9,48,"=IF(AND(Data!B$6=4,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+83,PIB400,Nitrile Piston ID Oring Seal,1,476,"=IF(Data!B$6=4,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+84,GBO400,Nitrile Gland Oring Seal,1,4,"=IF(AND(Data!B$6=4,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+85,H80ME5,Hyd REH Head,423,6,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""ME5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+86,H80CEH,Hyd BEH Head,240,0,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+87,H80P400,H Piston,192,8,"=IF(AND(Data!B$4=8,Data!B$6=4,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+88,G400,Gland,300,18,"=IF(AND(Data!B$6=4,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+89,R350,Rod,5.317583333333333,1684.5450000000028,"=IF(AND(Data!B$17="""",Data!B$6=3.5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+90,350RWP,Polyurethane Rod Wiper,3.2,236,"=IF(Data!B$6=3.5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+91,350GP,Polyurethane Rod Seal,7,418,"=IF(AND(Data!B$6=3.5,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+92,PIB350,Nitrile Piston ID Oring Seal,1,402,"=IF(Data!B$6=3.5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+93,GBO350,Nitrile Gland Oring Seal,1,418,"=IF(AND(Data!B$6=3.5,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+94,G350,Gland,200,3,"=IF(AND(Data!B$6=3.5,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+95,A20MP1,Air BEH Head,47,45,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+96,062RWV,Viton Rod Wiper,5.25,27,"=IF(AND(Data!B$6=0.625,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+97,100RWV,Viton Rod Wiper,5.65,8,"=IF(AND(Data!B$6=1,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+98,138RWV,Viton Rod Wiper,10.5,20,"=IF(AND(Data!B$6>1.3,Data!B$6<1.4,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+99,175RWV,Viton Rod Wiper,16,13,"=IF(AND(Data!B$6=1.75,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+100,200RWV,Viton Rod Wiper,8,15,"=IF(AND(Data!B$6=2,Data!B20=""V""),Data!B$2,0)",quantity_or_option_based,Data,B2|B20|B6
+101,250RWV,Viton Rod Wiper,9,19,"=IF(AND(Data!B$6=2.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+102,300RWV,Viton Rod Wiper,15,33,"=IF(AND(Data!B$6=3.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+103,300RWV,Viton Rod Wiper,12,8,"=IF(AND(Data!B$6=3,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+104,400RWV,Viton Rod Wiper,17,10,"=IF(AND(Data!B$6=4,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+105,450RWV,Viton Rod Wiper,18,7,"=IF(AND(Data!B$6=4.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+106,500RWV,Viton Rod Wiper,18,4,"=IF(AND(Data!B$6=5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+107,550RWV,Viton Rod Wiper,19,46,"=IF(AND(Data!B$6=5.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+108,100GV,Viton Rod Seal,10,39,"=IF(AND(Data!B$6=1,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+109,138GV,Viton Rod Seal,12,44,"=IF(AND(Data!B$6>1.3,Data!B$6<1.4,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+110,175GV,Viton Rod Seal,14,37,"=IF(AND(Data!B$6=1.75,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+111,200GV,Viton Rod Seal,17,50,"=IF(AND(Data!B$6=2,Data!B30=""V""),Data!B$2,0)",quantity_or_option_based,Data,B2|B30|B6
+112,250GV,Viton Rod Seal,19,45,"=IF(AND(Data!B$6=2.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+113,300GV,Viton Rod Seal,21,8,"=IF(AND(Data!B$6=3,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+114,350GV,Viton Rod Seal,24,33,"=IF(AND(Data!B$6=3.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+115,400GV,Viton Rod Seal,28,10,"=IF(AND(Data!B$6=4,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+116,450GV,Viton Rod Seal,35,7,"=IF(AND(Data!B$6=4.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+117,500GV,Viton Rod Seal,43,10,"=IF(AND(Data!B$6=5,Data!B36=""V""),Data!B$2,0)",quantity_or_option_based,Data,B2|B36|B6
+118,550GV,Viton Rod Seal,52,10,"=IF(AND(Data!B$6=5.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+119,550RWV,Viton Rod Seal,7,2,"=IF(AND(Data!B$6=0.625,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+120,GVO062,Viton Gland Oring Seal,0.8,4992,"=IF(AND(Data!B$6=0.625,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+121,GVO100,Viton Gland Oring Seal,0.9,4946,"=IF(AND(Data!B$6=1,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+122,GVO138,Viton Gland Oring Seal,1,4970,"=IF(AND(Data!B$6>1.3,Data!B$6<1.4,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+123,GVO175,Viton Gland Oring Seal,1.1,4934,"=IF(AND(Data!B$6=1.75,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+124,GVO200,Viton Gland Oring Seal,1.5,4990,"=IF(AND(Data!B$6=2,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+125,GVO250,Viton Gland Oring Seal,2,4977,"=IF(AND(Data!B$6=2.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+126,GVO300,Viton Gland Oring Seal,3,4998,"=IF(AND(Data!B$6=3,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+127,GVO350,Viton Gland Oring Seal,3,4996,"=IF(AND(Data!B$6=3.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+128,GVO400,Viton Gland Oring Seal,4,5000,"=IF(AND(Data!B$6=4,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+129,GVO450,Viton Gland Oring Seal,5,5000,"=IF(AND(Data!B$6=4.5,Data!B$1=""V""),Data!B$2,0)",quantity_or_option_based,Data,B1|B2|B6
+130,GVO500,Viton Gland Oring Seal,5,4994,"=IF(AND(Data!B$6=5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+131,GVO550,Viton Gland Oring Seal,7,5000,"=IF(AND(Data!B$6=5.5,Data!B$10=""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+132,TRS,Tie Rod Support,84,0,=ShipVia!I107,helper_or_other,ShipVia,
+133,TRN087,Tie Rod Nuts,1.3,4688,"=IF(AND(Data!B$3=""H"",Data!B$4=5,Data!B$16=""""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+134,TRN100,Tie Rod Nuts,1.8,4712,"=IF(AND(Data!B$3=""H"",Data!B$4=6,Data!B$16=""""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+135,TRN112,Tie Rod Nuts,3,4856,"=IF(AND(Data!B$3=""H"",Data!B$4=7,Data!B$16=""""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+136,TR087,Tie Rod,0.23558333333333334,4279.504000000001,"=IF(AND(Data!B$3=""H"",Data!B$4=5,Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,0)",length_based,Data|H,B16|B2|B3|B4|B8
+137,TR100,Tie Rod,0.32358333333333333,2519.5,"=IF(AND(Data!B$3=""H"",Data!B$4=6,Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,0)",length_based,Data|H,B16|B2|B3|B4|B8
+138,TR112,Tie Rod,0.3969166666666667,2922.2799999999997,"=IF(AND(Data!B$3=""H"",Data!B$4=7,Data!B$16=""""),Data!B$2*(Data!B$8+H!AE7)*4,0)",length_based,Data|H,B16|B2|B3|B4|B8
+139,GTOB062,Teflon Gland Oring Backup Seal,2,461,"=IF(AND(Data!B$6=0.625,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+140,GTOB138,Teflon Gland Oring Backup Seal,2,211,"=IF(AND(Data!B$6>1.3,Data!B$6<1.4,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+141,GTOB175,Teflon Gland Oring Backup Seal,3,202,"=IF(AND(Data!B$6=1.75,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+142,GTOB250,Teflon Gland Oring Backup Seal,3,386,"=IF(AND(Data!B$6=2.5,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+143,GTOB300,Teflon Gland Oring Backup Seal,4,26,"=IF(AND(Data!B$6=3,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+144,GTOB350,Teflon Gland Oring Backup Seal,5,419,"=IF(AND(Data!B$6=3.5,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+145,GTOB450,Teflon Gland Oring Backup Seal,6,77,"=IF(AND(Data!B$6=4.5,Data!B3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B6
+146,GTOB500,Teflon Gland Oring Backup Seal,6,100,"=IF(AND(Data!B$6=5,Data!B9=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B9
+147,GTOB550,Teflon Gland Oring Backup Seal,8,100,"=IF(AND(Data!B$6=5.5,Data!B9=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B9
+148,Stop Tube,Stop Tube,80,18,"=IF(Data!B12>0.01,Data!B$2,0)",quantity_or_option_based,Data,B12|B2
+149,TRSS025,Stainless Steel Tie Rod,0.5,10,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$4=1.5,Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7),0)",length_based,Data|H,B16|B2|B3|B4|B8
+150,TRSS031,Stainless Steel Tie Rod,0.5,10,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=2,Data!B$4=2.5),Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7)*4,0)",length_based,Data|H,B16|B2|B3|B4|B8
+151,TRSS038,Stainless Steel Tie Rod,0.6,500,"=IF(AND(Data!B$3=""H"",Data!B$4=1.5,Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7),IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=3.25,Data!B$4=4),Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7),0))",length_based,Data|H,B16|B2|B3|B4|B8
+152,TRSS050,Stainless Steel Tie Rod,0.7,17.25,"=IF(AND(Data!B$3=""H"",OR(Data!B$4=2,Data!B$4=2.5),Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7),IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=5,Data!B$4=6),Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7),0))",length_based,Data|H,B16|B2|B3|B4|B8
+153,TRSS062,Stainless Steel Tie Rod,0.75,10,"=IF(AND(Data!B$3=""H"",Data!B$16=""Y"",OR(Data!B$4=3.25,Data!B$4=4)),Data!B$2*(Data!B$8+H!AE7),IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$16=""Y"",OR(Data!B$4=7,Data!B$4=8)),Data!B$2*(Data!B$8+H!AE7),0))",length_based,Data|H,B16|B2|B3|B4|B8
+154,TRSS087,Stainless Steel Tie Rod,1.5,10,"=IF(AND(Data!B$3=""H"",Data!B$4=5,Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7),0)",length_based,Data|H,B16|B2|B3|B4|B8
+155,TRSS100,Stainless Steel Tie Rod,1.55,10,"=IF(AND(Data!B$3=""H"",Data!B$4=6,Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7),0)",length_based,Data|H,B16|B2|B3|B4|B8
+156,TRSS112,Stainless Steel Tie Rod,2,10,"=IF(AND(Data!B$3=""H"",Data!B$4=7,Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7),0)",length_based,Data|H,B16|B2|B3|B4|B8
+157,TRSS125,Stainless Steel Tie Rod,2.6,10,"=IF(AND(Data!B$3=""H"",Data!B$4=8,Data!B$16=""Y""),Data!B$2*(Data!B$8+H!AE7),0)",length_based,Data|H,B16|B2|B3|B4|B8
+158,RSS062,Stainless Steel Rod,0.7480000000000001,117.83,"=IF(AND(Data!B$17=""Y"",Data!B$6=0.625),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+159,RSS100,Stainless Steel Rod,1.5510000000000004,232.75,"=IF(AND(Data!B$17=""Y"",Data!B$6=1),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+160,RSS138,Stainless Steel Rod,2.7866666666666666,281.39,"=IF(AND(Data!B$17=""Y"",Data!B$6=1.375),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+161,RSS175,Stainless Steel Rod,4.104833333333334,500,"=IF(AND(Data!B$17=""Y"",Data!B$6=1.75),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+162,RSS200,Stainless Steel Rod,5.689750000000001,295.77,"=IF(AND(Data!B$17=""Y"",Data!B$6=2),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+163,RSS250,Stainless Steel Rod,8.398500000000002,25,"=IF(AND(Data!B$17=""Y"",Data!B$6=2.5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+164,RSS300,Stainless Steel Rod,11.658166666666668,500,"=IF(AND(Data!B$17=""Y"",Data!B$6=3),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+165,RSS350,Stainless Steel Rod,15.866583333333335,500,"=IF(AND(Data!B$17=""Y"",Data!B$6=3.5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+166,RSS400,Stainless Steel Rod,26.0865,10,"=IF(AND(Data!B$17=""Y"",Data!B$6=4),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+167,RSS450,Stainless Steel Rod,40,10,"=IF(AND(Data!B$17=""Y"",Data!B$6=4.5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+168,RSS500,Stainless Steel Rod,80,10,"=IF(AND(Data!B$17=""Y"",Data!B$6=5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+169,RSS550,Stainless Steel Rod,100,10,"=IF(AND(Data!B$17=""Y"",Data!B$6=5.5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+170,TRNSS025,Stainless Steel Nuts,2,38,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$4=1.5,Data!B$16=""Y""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+171,TRNSS031,Stainless Steel Nuts,3,10,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=2,Data!B$4=2.5),Data!B$16=""Y""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+172,TRNSS038,Stainless Steel Nuts,3,2,"=IF(AND(Data!B$3=""H"",Data!B$4=1.5,Data!B$16=""Y""),Data!B$2*8,IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=3.25,Data!B$4=4),Data!B$16=""Y""),Data!B$2*8,0))",quantity_or_option_based,Data,B16|B2|B3|B4
+173,TRNSS050,Stainless Steel Nuts,6,25,"=IF(AND(Data!B$3=""H"",OR(Data!B$4=2,Data!B$4=2.5),Data!B$16=""Y""),Data!B$2*8,IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=5,Data!B$4=6),Data!B$16=""Y""),Data!B$2*8,0))",quantity_or_option_based,Data,B16|B2|B3|B4
+174,TRNSS062,Stainless Steel Nuts,9,10,"=IF(AND(Data!B$3=""H"",OR(Data!B$4=3.25,Data!B$4=4),Data!B$16=""Y""),Data!B$2*8,IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4=7,Data!B$4=8),Data!B$16=""Y""),Data!B$2*8,0))",quantity_or_option_based,Data,B16|B2|B3|B4
+175,TRNSS087,Stainless Steel Nuts,13,10,"=IF(AND(Data!B$3=""H"",Data!B$4=5,Data!B$16=""Y""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+176,TRNSS100,Stainless Steel Nuts,14,10,"=IF(AND(Data!B$3=""H"",Data!B$4=6,Data!B$16=""Y""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+177,TRNSS112,Stainless Steel Nuts,23,10,"=IF(AND(Data!B$3=""H"",Data!B$4=7,Data!B$16=""Y""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+178,TRNSS125,Stainless Steel Nuts,34,25,"=IF(AND(Data!B$3=""H"",Data!B$4=8,Data!B$16=""Y""),Data!B$2*8,0)",quantity_or_option_based,Data,B16|B2|B3|B4
+179,SC062,Safety Coupler,41,10,"=IF(AND(Data!G$19>0.1,Acc!M36=""X""),Data!G$19,IF(Data!F$26=A179,Data!G$26,IF(Data!F$27=A179,Data!G$27,IF(Data!F$28=A179,Data!G$28,IF(Data!F$29=A179,Data!G$29,IF(Data!F$30=A179,Data!G$30,IF(Data!F$31=A179,Data!G$31,IF(Data!F$32=A179,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+180,SC100,Safety Coupler,54,10,"=IF(AND(Data!G$19>0.1,Acc!M37=""X""),Data!G$19,IF(Data!F$26=A180,Data!G$26,IF(Data!F$27=A180,Data!G$27,IF(Data!F$28=A180,Data!G$28,IF(Data!F$29=A180,Data!G$29,IF(Data!F$30=A180,Data!G$30,IF(Data!F$31=A180,Data!G$31,IF(Data!F$32=A180,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+181,SC138,Safety Coupler,64,10,"=IF(AND(Data!G$19>0.1,Acc!M38=""X""),Data!G$19,IF(Data!F$26=A181,Data!G$26,IF(Data!F$27=A181,Data!G$27,IF(Data!F$28=A181,Data!G$28,IF(Data!F$29=A181,Data!G$29,IF(Data!F$30=A181,Data!G$30,IF(Data!F$31=A181,Data!G$31,IF(Data!F$32=A181,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+182,SC175,Safety Coupler,87,10,"=IF(AND(Data!G$19>0.1,Acc!M39=""X""),Data!G$19,IF(Data!F$26=A182,Data!G$26,IF(Data!F$27=A182,Data!G$27,IF(Data!F$28=A182,Data!G$28,IF(Data!F$29=A182,Data!G$29,IF(Data!F$30=A182,Data!G$30,IF(Data!F$31=A182,Data!G$31,IF(Data!F$32=A182,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+183,SC200,Safety Coupler,120,10,"=IF(AND(Data!G$19>0.1,Acc!M40=""X""),Data!G$19,IF(Data!F$26=A183,Data!G$26,IF(Data!F$27=A183,Data!G$27,IF(Data!F$28=A183,Data!G$28,IF(Data!F$29=A183,Data!G$29,IF(Data!F$30=A183,Data!G$30,IF(Data!F$31=A183,Data!G$31,IF(Data!F$32=A183,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+184,SC250,Safety Coupler,176,10,"=IF(AND(Data!G$19>0.1,Acc!M41=""X""),Data!G$19,IF(Data!F$26=A184,Data!G$26,IF(Data!F$27=A184,Data!G$27,IF(Data!F$28=A184,Data!G$28,IF(Data!F$29=A184,Data!G$29,IF(Data!F$30=A184,Data!G$30,IF(Data!F$31=A184,Data!G$31,IF(Data!F$32=A184,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+185,SC300,Safety Coupler,233,10,"=IF(AND(Data!G$19>0.1,Acc!M42=""X""),Data!G$19,IF(Data!F$26=A185,Data!G$26,IF(Data!F$27=A185,Data!G$27,IF(Data!F$28=A185,Data!G$28,IF(Data!F$29=A185,Data!G$29,IF(Data!F$30=A185,Data!G$30,IF(Data!F$31=A185,Data!G$31,IF(Data!F$32=A185,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+186,SC350,Safety Coupler,293,10,"=IF(AND(Data!G$19>0.1,Acc!M43=""X""),Data!G$19,IF(Data!F$26=A186,Data!G$26,IF(Data!F$27=A186,Data!G$27,IF(Data!F$28=A186,Data!G$28,IF(Data!F$29=A186,Data!G$29,IF(Data!F$30=A186,Data!G$30,IF(Data!F$31=A186,Data!G$31,IF(Data!F$32=A186,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+187,SC400,Safety Coupler,361,10,"=IF(AND(Data!G$19>0.1,Acc!M44=""X""),Data!G$19,IF(Data!F$26=A187,Data!G$26,IF(Data!F$27=A187,Data!G$27,IF(Data!F$28=A187,Data!G$28,IF(Data!F$29=A187,Data!G$29,IF(Data!F$30=A187,Data!G$30,IF(Data!F$31=A187,Data!G$31,IF(Data!F$32=A187,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+188,SC450,Safety Coupler,395,10,"=IF(AND(Data!G$19>0.1,Acc!M45=""X""),Data!G$19,IF(Data!F$26=A188,Data!G$26,IF(Data!F$27=A188,Data!G$27,IF(Data!F$28=A188,Data!G$28,IF(Data!F$29=A188,Data!G$29,IF(Data!F$30=A188,Data!G$30,IF(Data!F$31=A188,Data!G$31,IF(Data!F$32=A188,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G19|G26|G27|G28|G29|G30|G31|G32
+189,SAE044,SA Male Eye 7/16-20,39,9,"=IF(AND(Data!G$14>0.1,Acc!M22=""X""),Data!G$14,IF(Data!F$26=A189,Data!G$26,IF(Data!F$27=A189,Data!G$27,IF(Data!F$28=A189,Data!G$28,IF(Data!F$29=A189,Data!G$29,IF(Data!F$30=A189,Data!G$30,IF(Data!F$31=A189,Data!G$31,IF(Data!F$32=A189,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G14|G26|G27|G28|G29|G30|G31|G32
+190,SAE075,SA Male Eye 3/4-16,43,4,"=IF(AND(Data!G$14>0.1,Acc!M24=""X""),Data!G$14,IF(Data!F$26=A190,Data!G$26,IF(Data!F$27=A190,Data!G$27,IF(Data!F$28=A190,Data!G$28,IF(Data!F$29=A190,Data!G$29,IF(Data!F$30=A190,Data!G$30,IF(Data!F$31=A190,Data!G$31,IF(Data!F$32=A190,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G14|G26|G27|G28|G29|G30|G31|G32
+191,SAE100,SA Male Eye 1-14,52,4,"=IF(AND(Data!G$14>0.1,Acc!M26=""X""),Data!G$14,IF(Data!F$26=A191,Data!G$26,IF(Data!F$27=A191,Data!G$27,IF(Data!F$28=A191,Data!G$28,IF(Data!F$29=A191,Data!G$29,IF(Data!F$30=A191,Data!G$30,IF(Data!F$31=A191,Data!G$31,IF(Data!F$32=A191,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G14|G26|G27|G28|G29|G30|G31|G32
+192,SAE187,SA Male Eye 1 7/8-12,214,2,"=IF(AND(Data!G$14>0.1,Acc!M30=""X""),Data!G$14,IF(Data!F$26=A192,Data!G$26,IF(Data!F$27=A192,Data!G$27,IF(Data!F$28=A192,Data!G$28,IF(Data!F$29=A192,Data!G$29,IF(Data!F$30=A192,Data!G$30,IF(Data!F$31=A192,Data!G$31,IF(Data!F$32=A192,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G14|G26|G27|G28|G29|G30|G31|G32
+193,SAE125,SA Male Eye 1 1/4-12,82,6,"=IF(AND(Data!G$14>0.1,Acc!M27=""X""),Data!G$14,IF(Data!F$26=A193,Data!G$26,IF(Data!F$27=A193,Data!G$27,IF(Data!F$28=A193,Data!G$28,IF(Data!F$29=A193,Data!G$29,IF(Data!F$30=A193,Data!G$30,IF(Data!F$31=A193,Data!G$31,IF(Data!F$32=A193,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G14|G26|G27|G28|G29|G30|G31|G32
+194,SAE150,SA Male Eye 1 1/2-12,145,4,"=IF(AND(Data!G$14>0.1,Acc!M28=""X""),Data!G$14,IF(Data!F$26=A194,Data!G$26,IF(Data!F$27=A194,Data!G$27,IF(Data!F$28=A194,Data!G$28,IF(Data!F$29=A194,Data!G$29,IF(Data!F$30=A194,Data!G$30,IF(Data!F$31=A194,Data!G$31,IF(Data!F$32=A194,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G14|G26|G27|G28|G29|G30|G31|G32
+195,SCB050,SA Clevis Bracket,52,10,"=IF(AND(Data!G$15>0.1,Acc!M22=""X""),Data!G$15,IF(Data!F$26=A195,Data!G$26,IF(Data!F$27=A195,Data!G$27,IF(Data!F$28=A195,Data!G$28,IF(Data!F$29=A195,Data!G$29,IF(Data!F$30=A195,Data!G$30,IF(Data!F$31=A195,Data!G$31,IF(Data!F$32=A195,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G15|G26|G27|G28|G29|G30|G31|G32
+196,SCB075,SA Clevis Bracket,83,10,"=IF(AND(Data!G$15>0.1,Acc!M24=""X""),Data!G$15,IF(Data!F$26=A196,Data!G$26,IF(Data!F$27=A196,Data!G$27,IF(Data!F$28=A196,Data!G$28,IF(Data!F$29=A196,Data!G$29,IF(Data!F$30=A196,Data!G$30,IF(Data!F$31=A196,Data!G$31,IF(Data!F$32=A196,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G15|G26|G27|G28|G29|G30|G31|G32
+197,SCB100,SA Clevis Bracket,104,10,"=IF(AND(Data!G$15>0.1,Acc!M26=""X""),Data!G$15,IF(Data!F$26=A197,Data!G$26,IF(Data!F$27=A197,Data!G$27,IF(Data!F$28=A197,Data!G$28,IF(Data!F$29=A197,Data!G$29,IF(Data!F$30=A197,Data!G$30,IF(Data!F$31=A197,Data!G$31,IF(Data!F$32=A197,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G15|G26|G27|G28|G29|G30|G31|G32
+198,SCB138,SA Clevis Bracket,156,10,"=IF(AND(Data!G$15>0.1,Acc!M27=""X""),Data!G$15,IF(Data!F$26=A198,Data!G$26,IF(Data!F$27=A198,Data!G$27,IF(Data!F$28=A198,Data!G$28,IF(Data!F$29=A198,Data!G$29,IF(Data!F$30=A198,Data!G$30,IF(Data!F$31=A198,Data!G$31,IF(Data!F$32=A198,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G15|G26|G27|G28|G29|G30|G31|G32
+199,SCB175,SA Clevis Bracket,283,10,"=IF(AND(Data!G$15>0.1,Acc!M28=""X""),Data!G$15,IF(Data!F$26=A199,Data!G$26,IF(Data!F$27=A199,Data!G$27,IF(Data!F$28=A199,Data!G$28,IF(Data!F$29=A199,Data!G$29,IF(Data!F$30=A199,Data!G$30,IF(Data!F$31=A199,Data!G$31,IF(Data!F$32=A199,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G15|G26|G27|G28|G29|G30|G31|G32
+200,SCB187,SA Clevis Bracket,444,10,"=IF(AND(Data!G$15>0.1,Acc!M30=""X""),Data!G$15,IF(Data!F$26=A200,Data!G$26,IF(Data!F$27=A200,Data!G$27,IF(Data!F$28=A200,Data!G$28,IF(Data!F$29=A200,Data!G$29,IF(Data!F$30=A200,Data!G$30,IF(Data!F$31=A200,Data!G$31,IF(Data!F$32=A200,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G15|G26|G27|G28|G29|G30|G31|G32
+201,RS087,Rod Stud 7/8-14,17,10,"=IF(AND(Data!G$20>0.1,Acc!Q39=""X""),Data!G$20,IF(Data!F$26=A201,Data!G$26,IF(Data!F$27=A201,Data!G$27,IF(Data!F$28=A201,Data!G$28,IF(Data!F$29=A201,Data!G$29,IF(Data!F$30=A201,Data!G$30,IF(Data!F$31=A201,Data!G$31,IF(Data!F$32=A201,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+202,RS044,Rod Stud 7/16-20,13,12,"=IF(AND(Data!G$20>0.1,Acc!Q36=""X""),Data!G$20,IF(Data!F$26=A202,Data!G$26,IF(Data!F$27=A202,Data!G$27,IF(Data!F$28=A202,Data!G$28,IF(Data!F$29=A202,Data!G$29,IF(Data!F$30=A202,Data!G$30,IF(Data!F$31=A202,Data!G$31,IF(Data!F$32=A202,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+203,RS075,Rod Stud 3/4-16,16,23,"=IF(AND(Data!G$20>0.1,Acc!Q38=""X""),Data!G$20,IF(Data!F$26=A203,Data!G$26,IF(Data!F$27=A203,Data!G$27,IF(Data!F$28=A203,Data!G$28,IF(Data!F$29=A203,Data!G$29,IF(Data!F$30=A203,Data!G$30,IF(Data!F$31=A203,Data!G$31,IF(Data!F$32=A203,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+204,RS250,Rod Stud 2 1/2-12,43,10,"=IF(AND(Data!G$20>0.1,Acc!Q45=""X""),Data!G$20,IF(Data!F$26=A204,Data!G$26,IF(Data!F$27=A204,Data!G$27,IF(Data!F$28=A204,Data!G$28,IF(Data!F$29=A204,Data!G$29,IF(Data!F$30=A204,Data!G$30,IF(Data!F$31=A204,Data!G$31,IF(Data!F$32=A204,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+205,RS100,Rod Stud 1-14,19,24,"=IF(AND(Data!G$20>0.1,Acc!Q40=""X""),Data!G$20,IF(Data!F$26=A205,Data!G$26,IF(Data!F$27=A205,Data!G$27,IF(Data!F$28=A205,Data!G$28,IF(Data!F$29=A205,Data!G$29,IF(Data!F$30=A205,Data!G$30,IF(Data!F$31=A205,Data!G$31,IF(Data!F$32=A205,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+206,RS050,Rod Stud 1/2-20,15,10,"=IF(AND(Data!G$20>0.1,Acc!Q37=""X""),Data!G$20,IF(Data!F$26=A206,Data!G$26,IF(Data!F$27=A206,Data!G$27,IF(Data!F$28=A206,Data!G$28,IF(Data!F$29=A206,Data!G$29,IF(Data!F$30=A206,Data!G$30,IF(Data!F$31=A206,Data!G$31,IF(Data!F$32=A206,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+207,RS187,Rod Stud 1 7/8-12,36,9,"=IF(AND(Data!G$20>0.1,Acc!Q44=""X""),Data!G$20,IF(Data!F$26=A207,Data!G$26,IF(Data!F$27=A207,Data!G$27,IF(Data!F$28=A207,Data!G$28,IF(Data!F$29=A207,Data!G$29,IF(Data!F$30=A207,Data!G$30,IF(Data!F$31=A207,Data!G$31,IF(Data!F$32=A207,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+208,RS175,Rod Stud 1 3/4-12,29,10,"=IF(AND(Data!G$20>0.1,Acc!Q43=""X""),Data!G$20,IF(Data!F$26=A208,Data!G$26,IF(Data!F$27=A208,Data!G$27,IF(Data!F$28=A208,Data!G$28,IF(Data!F$29=A208,Data!G$29,IF(Data!F$30=A208,Data!G$30,IF(Data!F$31=A208,Data!G$31,IF(Data!F$32=A208,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+209,RS125,Rod Stud 1 1/4-12,20,6,"=IF(AND(Data!G$20>0.1,Acc!Q41=""X""),Data!G$20,IF(Data!F$26=A209,Data!G$26,IF(Data!F$27=A209,Data!G$27,IF(Data!F$28=A209,Data!G$28,IF(Data!F$29=A209,Data!G$29,IF(Data!F$30=A209,Data!G$30,IF(Data!F$31=A209,Data!G$31,IF(Data!F$32=A209,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+210,RS150,Rod Stud 1 1/2-12,22,8,"=IF(AND(Data!G$20>0.1,Acc!Q42=""X""),Data!G$20,IF(Data!F$26=A210,Data!G$26,IF(Data!F$27=A210,Data!G$27,IF(Data!F$28=A210,Data!G$28,IF(Data!F$29=A210,Data!G$29,IF(Data!F$30=A210,Data!G$30,IF(Data!F$31=A210,Data!G$31,IF(Data!F$32=A210,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G20|G26|G27|G28|G29|G30|G31|G32
+211,RC087,Rod Clevis 7/8-14,19,25,"=IF(AND(Data!G$9>0.1,Acc!M8=""X""),Data!G$9,IF(Data!F$26=A211,Data!G$26,IF(Data!F$27=A211,Data!G$27,IF(Data!F$28=A211,Data!G$28,IF(Data!F$29=A211,Data!G$29,IF(Data!F$30=A211,Data!G$30,IF(Data!F$31=A211,Data!G$31,IF(Data!F$32=A211,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+212,RC400,Rod Clevis 4-12,625,10,"=IF(AND(Data!G$9>0.1,Acc!M19=""X""),Data!G$9,IF(Data!F$26=A212,Data!G$26,IF(Data!F$27=A212,Data!G$27,IF(Data!F$28=A212,Data!G$28,IF(Data!F$29=A212,Data!G$29,IF(Data!F$30=A212,Data!G$30,IF(Data!F$31=A212,Data!G$31,IF(Data!F$32=A212,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+213,RC075,Rod Clevis 3/4-16,17,23,"=IF(AND(Data!G$9>0.1,Acc!M6=""X""),Data!G$9,IF(Data!F$26=A213,Data!G$26,IF(Data!F$27=A213,Data!G$27,IF(Data!F$28=A213,Data!G$28,IF(Data!F$29=A213,Data!G$29,IF(Data!F$30=A213,Data!G$30,IF(Data!F$31=A213,Data!G$31,IF(Data!F$32=A213,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+214,RC325,Rod Clevis 3 1/4-12,423,9,"=IF(AND(Data!G$9>0.1,Acc!M17=""X""),Data!G$9,IF(Data!F$26=A214,Data!G$26,IF(Data!F$27=A214,Data!G$27,IF(Data!F$28=A214,Data!G$28,IF(Data!F$29=A214,Data!G$29,IF(Data!F$30=A214,Data!G$30,IF(Data!F$31=A214,Data!G$31,IF(Data!F$32=A214,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+215,RC350,Rod Clevis 3 1/2-12,493,10,"=IF(AND(Data!G$9>0.1,Acc!M18=""X""),Data!G$9,IF(Data!F$26=A215,Data!G$26,IF(Data!F$27=A215,Data!G$27,IF(Data!F$28=A215,Data!G$28,IF(Data!F$29=A215,Data!G$29,IF(Data!F$30=A215,Data!G$30,IF(Data!F$31=A215,Data!G$31,IF(Data!F$32=A215,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+216,RC275,Rod Clevis 2 3/4-12,352,10,"=IF(AND(Data!G$9>0.1,Acc!M16=""X""),Data!G$9,IF(Data!F$26=A216,Data!G$26,IF(Data!F$27=A216,Data!G$27,IF(Data!F$28=A216,Data!G$28,IF(Data!F$29=A216,Data!G$29,IF(Data!F$30=A216,Data!G$30,IF(Data!F$31=A216,Data!G$31,IF(Data!F$32=A216,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+217,RC225,Rod Clevis 2 1/4-12,155,5,"=IF(AND(Data!G$9>0.1,Acc!M14=""X""),Data!G$9,IF(Data!F$26=A217,Data!G$26,IF(Data!F$27=A217,Data!G$27,IF(Data!F$28=A217,Data!G$28,IF(Data!F$29=A217,Data!G$29,IF(Data!F$30=A217,Data!G$30,IF(Data!F$31=A217,Data!G$31,IF(Data!F$32=A217,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+218,RC250,Rod Clevis 2 1/2-12,268,4,"=IF(AND(Data!G$9>0.1,Acc!M15=""X""),Data!G$9,IF(Data!F$26=A218,Data!G$26,IF(Data!F$27=A218,Data!G$27,IF(Data!F$28=A218,Data!G$28,IF(Data!F$29=A218,Data!G$29,IF(Data!F$30=A218,Data!G$30,IF(Data!F$31=A218,Data!G$31,IF(Data!F$32=A218,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+219,RC100,Rod Clevis 1-14,25,17,"=IF(AND(Data!G$9>0.1,Acc!M9=""X""),Data!G$9,IF(Data!F$26=A219,Data!G$26,IF(Data!F$27=A219,Data!G$27,IF(Data!F$28=A219,Data!G$28,IF(Data!F$29=A219,Data!G$29,IF(Data!F$30=A219,Data!G$30,IF(Data!F$31=A219,Data!G$31,IF(Data!F$32=A219,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+220,RC050,Rod Clevis 1/2-20,17,8,"=IF(AND(Data!G$9>0.1,Acc!M6=""X""),Data!G$9,IF(Data!F$26=A220,Data!G$26,IF(Data!F$27=A220,Data!G$27,IF(Data!F$28=A220,Data!G$28,IF(Data!F$29=A220,Data!G$29,IF(Data!F$30=A220,Data!G$30,IF(Data!F$31=A220,Data!G$31,IF(Data!F$32=A220,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+221,RC187,Rod Clevis 1 7/8-12,99,20,"=IF(AND(Data!G$9>0.1,Acc!M13=""X""),Data!G$9,IF(Data!F$26=A221,Data!G$26,IF(Data!F$27=A221,Data!G$27,IF(Data!F$28=A221,Data!G$28,IF(Data!F$29=A221,Data!G$29,IF(Data!F$30=A221,Data!G$30,IF(Data!F$31=A221,Data!G$31,IF(Data!F$32=A221,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+222,RC175,Rod Clevis 1 3/4-12,113,18,"=IF(AND(Data!G$9>0.1,Acc!M12=""X""),Data!G$9,IF(Data!F$26=A222,Data!G$26,IF(Data!F$27=A222,Data!G$27,IF(Data!F$28=A222,Data!G$28,IF(Data!F$29=A222,Data!G$29,IF(Data!F$30=A222,Data!G$30,IF(Data!F$31=A222,Data!G$31,IF(Data!F$32=A222,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+223,RC125,Rod Clevis 1 1/4-12,40,11,"=IF(AND(Data!G$9>0.1,Acc!M10=""X""),Data!G$9,IF(Data!F$26=A223,Data!G$26,IF(Data!F$27=A223,Data!G$27,IF(Data!F$28=A223,Data!G$28,IF(Data!F$29=A223,Data!G$29,IF(Data!F$30=A223,Data!G$30,IF(Data!F$31=A223,Data!G$31,IF(Data!F$32=A223,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+224,RC150,Rod Clevis 1 1/2-12,58,17,"=IF(AND(Data!G$9>0.1,Acc!M11=""X""),Data!G$9,IF(Data!F$26=A224,Data!G$26,IF(Data!F$27=A224,Data!G$27,IF(Data!F$28=A224,Data!G$28,IF(Data!F$29=A224,Data!G$29,IF(Data!F$30=A224,Data!G$30,IF(Data!F$31=A224,Data!G$31,IF(Data!F$32=A224,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G26|G27|G28|G29|G30|G31|G32|G9
+225,R138,Rod,0.8525000000000001,9329.58000000001,"=IF(AND(Data!B$17="""",Data!B$6=1.375),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+226,R175,Rod,1.4006666666666667,8974.420000000007,"=IF(AND(Data!B$17="""",Data!B$6=1.75),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+227,R250,Rod,2.64275,2794.475,"=IF(AND(Data!B$17="""",Data!B$6=2.5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+228,R300,Rod,3.823416666666667,2493.9520000000016,"=IF(AND(Data!B$17="""",Data!B$6=3),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+229,R450,Rod,10.218083333333334,200,"=IF(AND(Data!B$17="""",Data!B$6=4.5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+230,R500,Rod,12.745333333333333,145.2499999999999,"=IF(AND(Data!B$17="""",Data!B$6=5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+231,R550,Rod,15.837250000000003,100.06999999999996,"=IF(AND(Data!B$17="""",Data!B$6=5.5),Data!B$2*(Data!B$8+H!AD$7),0)",length_based,Data|H,B17|B2|B6|B8
+232,138RWP,Polyurethane Rod Wiper,1,208,"=IF(AND(Data!B$6>1.3,Data!B$6<1.4),Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+233,175RWP,Polyurethane Rod Wiper,1.2,450,"=IF(Data!B$6=1.75,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+234,250RWP,Polyurethane Rod Wiper,2.5,398,"=IF(Data!B$6=2.5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+235,300RWP,Polyurethane Rod Wiper,3,47,"=IF(Data!B$6=3,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+236,450RWP,Polyurethane Rod Wiper,6,98,"=IF(Data!B$6=4.5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+237,500RWP,Polyurethane Rod Wiper,7,82,"=IF(Data!B$6=5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+238,550RWP,Polyurethane Rod Wiper,9,14,"=IF(Data!B$6=5.5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+239,138GP,Polyurethane Rod Seal,4,474,"=IF(AND(Data!B$6>1.3,Data!B$6<1.4,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+240,175GP,Polyurethane Rod Seal,3,471,"=IF(AND(Data!B$6=1.75,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+241,250GP,Polyurethane Rod Seal,5,425,"=IF(AND(Data!B$6=2.5,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+242,300GP,Polyurethane Rod Seal,6,50,"=IF(AND(Data!B$6=3,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+243,450GP,Polyurethane Rod Seal,9,102,"=IF(AND(Data!B$6=4.5,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+244,500GP,Polyurethane Rod Seal,10,89,"=IF(AND(Data!B$6=5,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+245,550GP,Polyurethane Rod Seal,10,97,"=IF(AND(Data!B$6=5.5,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+246,PP100,Pivot Pin,6,21,"=IF(Acc!T7<>"""",Data!B$2+Data!G$13,IF(Data!F$26=A246,Data!G$26,IF(Data!F$27=A246,Data!G$27,IF(Data!F$28=A246,Data!G$28,IF(Data!F$29=A246,Data!G$29,IF(Data!F$30=A246,Data!G$30,IF(Data!F$31=A246,Data!G$31,0)))))))",quantity_or_option_based,Acc|Data,B2|F26|F27|F28|F29|F30|F31|G13|G26|G27|G28|G29|G30|G31
+247,PP138,Pivot Pin,10,103,"=IF(Acc!T8<>"""",Data!B$2+Data!G$13,IF(Data!F$26=A247,Data!G$26,IF(Data!F$27=A247,Data!G$27,IF(Data!F$28=A247,Data!G$28,IF(Data!F$29=A247,Data!G$29,IF(Data!F$30=A247,Data!G$30,IF(Data!F$31=A247,Data!G$31,0)))))))",quantity_or_option_based,Acc|Data,B2|F26|F27|F28|F29|F30|F31|G13|G26|G27|G28|G29|G30|G31
+248,PP175,Pivot Pin,14,24,"=IF(Acc!T9<>"""",Data!B$2+Data!G$13,IF(Data!F$26=A248,Data!G$26,IF(Data!F$27=A248,Data!G$27,IF(Data!F$28=A248,Data!G$28,IF(Data!F$29=A248,Data!G$29,IF(Data!F$30=A248,Data!G$30,IF(Data!F$31=A248,Data!G$31,0)))))))",quantity_or_option_based,Acc|Data,B2|F26|F27|F28|F29|F30|F31|G13|G26|G27|G28|G29|G30|G31
+249,PP200,Pivot Pin,18,10,"=IF(Acc!T10<>"""",Data!B$2+Data!G$13,IF(Data!F$26=A249,Data!G$26,IF(Data!F$27=A249,Data!G$27,IF(Data!F$28=A249,Data!G$28,IF(Data!F$29=A249,Data!G$29,IF(Data!F$30=A249,Data!G$30,IF(Data!F$31=A249,Data!G$31,0)))))))",quantity_or_option_based,Acc|Data,B2|F26|F27|F28|F29|F30|F31|G13|G26|G27|G28|G29|G30|G31
+250,PP250,Pivot Pin,40,11,"=IF(Acc!T11<>"""",Data!B$2+Data!G$13,IF(Data!F$26=A250,Data!G$26,IF(Data!F$27=A250,Data!G$27,IF(Data!F$28=A250,Data!G$28,IF(Data!F$29=A250,Data!G$29,IF(Data!F$30=A250,Data!G$30,IF(Data!F$31=A250,Data!G$31,0)))))))",quantity_or_option_based,Acc|Data,B2|F26|F27|F28|F29|F30|F31|G13|G26|G27|G28|G29|G30|G31
+251,PP300,Pivot Pin,54,2,"=IF(Acc!T12<>"""",Data!B$2+Data!G$13,IF(Data!F$26=A251,Data!G$26,IF(Data!F$27=A251,Data!G$27,IF(Data!F$28=A251,Data!G$28,IF(Data!F$29=A251,Data!G$29,IF(Data!F$30=A251,Data!G$30,IF(Data!F$31=A251,Data!G$31,0)))))))",quantity_or_option_based,Acc|Data,B2|F26|F27|F28|F29|F30|F31|G13|G26|G27|G28|G29|G30|G31
+252,PIB138,Nitrile Piston ID Oring Seal,1,208,"=IF(AND(Data!B$6>1.3,Data!B$6<1.4),Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+253,PIB175,Nitrile Piston ID Oring Seal,1,450,"=IF(Data!B$6=1.75,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+254,PIB250,Nitrile Piston ID Oring Seal,1,306,"=IF(Data!B$6=2.5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+255,PIB300,Nitrile Piston ID Oring Seal,1,460,"=IF(Data!B$6=3,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+256,PIB450,Nitrile Piston ID Oring Seal,1,71,"=IF(Data!B$6=4.5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+257,PIB500,Nitrile Piston ID Oring Seal,1,57,"=IF(Data!B$6=5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+258,PIB550,Nitrile Piston ID Oring Seal,1,64,"=IF(Data!B$6=5.5,Data!B$2,0)",quantity_or_option_based,Data,B2|B6
+259,GBO138,Nitrile Gland Oring Seal,1,434,"=IF(AND(Data!B$6>1.3,Data!B$6<1.4,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+260,GBO175,Nitrile Gland Oring Seal,1,65,"=IF(AND(Data!B$6=1.75,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+261,GBO250,Nitrile Gland Oring Seal,1,425,"=IF(AND(Data!B$6=2.5,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+262,GBO300,Nitrile Gland Oring Seal,1,25,"=IF(AND(Data!B$6=3,Data!B$10<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B6
+263,GBO450,Nitrile Gland Oring Seal,1,71,"=IF(AND(Data!B$6=4.5,Data!B$1<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B1|B2|B6
+264,GBO500,Nitrile Gland Oring Seal,1,57,"=IF(AND(Data!B$6=5,Data!B$1<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B1|B2|B6
+265,GBO550,Nitrile Gland Oring Seal,1,64,"=IF(AND(Data!B$6=5.5,Data!B$1<>""V""),Data!B$2,0)",quantity_or_option_based,Data,B1|B2|B6
+266,JN087,Jam Nut 7/8-14,5,10,"=IF(AND(Data!G$22>0.1,Acc!Q39=""X""),Data!G$22,IF(Data!F$26=A266,Data!G$26,IF(Data!F$27=A266,Data!G$27,IF(Data!F$28=A266,Data!G$28,IF(Data!F$29=A266,Data!G$29,IF(Data!F$30=A266,Data!G$30,IF(Data!F$31=A266,Data!G$31,IF(Data!F$32=A266,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G22|G26|G27|G28|G29|G30|G31|G32
+267,JN044,Jam Nut 7/16-20,3,10,"=IF(AND(Data!G$22>0.1,Acc!Q36=""X""),Data!G$22,IF(Data!F$26=A267,Data!G$26,IF(Data!F$27=A267,Data!G$27,IF(Data!F$28=A267,Data!G$28,IF(Data!F$29=A267,Data!G$29,IF(Data!F$30=A267,Data!G$30,IF(Data!F$31=A267,Data!G$31,IF(Data!F$32=A267,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G22|G26|G27|G28|G29|G30|G31|G32
+268,JN075,Jam Nut 3/4-16,3,10,"=IF(AND(Data!G$22>0.1,Acc!Q38=""X""),Data!G$22,IF(Data!F$26=A268,Data!G$26,IF(Data!F$27=A268,Data!G$27,IF(Data!F$28=A268,Data!G$28,IF(Data!F$29=A268,Data!G$29,IF(Data!F$30=A268,Data!G$30,IF(Data!F$31=A268,Data!G$31,IF(Data!F$32=A268,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G22|G26|G27|G28|G29|G30|G31|G32
+269,JN100,Jam Nut 1-14,5,9,"=IF(AND(Data!G$22>0.1,Acc!Q40=""X""),Data!G$22,IF(Data!F$26=A269,Data!G$26,IF(Data!F$27=A269,Data!G$27,IF(Data!F$28=A269,Data!G$28,IF(Data!F$29=A269,Data!G$29,IF(Data!F$30=A269,Data!G$30,IF(Data!F$31=A269,Data!G$31,IF(Data!F$32=A269,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G22|G26|G27|G28|G29|G30|G31|G32
+270,JN050,Jam Nut 1/2-20,3,10,"=IF(AND(Data!G$22>0.1,Acc!Q37=""X""),Data!G$22,IF(Data!F$26=A270,Data!G$26,IF(Data!F$27=A270,Data!G$27,IF(Data!F$28=A270,Data!G$28,IF(Data!F$29=A270,Data!G$29,IF(Data!F$30=A270,Data!G$30,IF(Data!F$31=A270,Data!G$31,IF(Data!F$32=A270,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G22|G26|G27|G28|G29|G30|G31|G32
+271,JN125,Jam Nut 1 1/4-12,6,23,"=IF(AND(Data!G$22>0.1,Acc!Q41=""X""),Data!G$22,IF(Data!F$26=A271,Data!G$26,IF(Data!F$27=A271,Data!G$27,IF(Data!F$28=A271,Data!G$28,IF(Data!F$29=A271,Data!G$29,IF(Data!F$30=A271,Data!G$30,IF(Data!F$31=A271,Data!G$31,IF(Data!F$32=A271,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G22|G26|G27|G28|G29|G30|G31|G32
+272,JN150,Jam Nut 1 1/2-12,6,24,"=IF(AND(Data!G$22>0.1,Acc!Q42=""X""),Data!G$22,IF(Data!F$26=A272,Data!G$26,IF(Data!F$27=A272,Data!G$27,IF(Data!F$28=A272,Data!G$28,IF(Data!F$29=A272,Data!G$29,IF(Data!F$30=A272,Data!G$30,IF(Data!F$31=A272,Data!G$31,IF(Data!F$32=A272,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G22|G26|G27|G28|G29|G30|G31|G32
+273,GHR150,Hydraulic Retainer,5,45,"=IF(AND(Data!B$3=""H"",Data!B$4=1.5,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+274,GHR200,Hydraulic Retainer,6,13,"=IF(AND(Data!B$3=""H"",Data!B$4=2,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+275,GHR250,Hydraulic Retainer,8,10,"=IF(AND(Data!B$3=""H"",Data!B$4=2.5,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+276,GHR325,Hydraulic Retainer,10,9,"=IF(AND(Data!B$3=""H"",Data!B$4=3.25,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+277,GHR400,Hydraulic Retainer,57,10,"=IF(AND(Data!B$3=""H"",Data!B$4=4,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+278,GHR500,Hydraulic Retainer,71,10,"=IF(AND(Data!B$3=""H"",Data!B$4=5,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+279,GHR600,Hydraulic Retainer,43,10,"=IF(AND(Data!B$3=""H"",Data!B$4=6,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+280,GHR700,Hydraulic Retainer,106,10,"=IF(AND(Data!B$3=""H"",Data!B$4=7,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+281,GHR800,Hydraulic Retainer,141,10,"=IF(AND(Data!B$3=""H"",Data!B$4=8,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+282,H15ME5,Hyd REH Head,=C285*1.4,10,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""ME5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+283,H15MS2REH,Hyd REH Head,=C285*1.4,40,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+284,H15MT1,Hyd REH Head,96,8,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+285,H15REH062,Hyd REH Head,48,14,"=IF(AND(Data!B$4=1.5,Data!B$6=0.625,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+286,H15REH100,Hyd REH Head,48,15,"=IF(AND(Data!B$4=1.5,Data!B$6=1,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+287,H20ME5,Hyd REH Head,=C290*1.4,19,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""ME5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+288,H20MS2REH,Hyd REH Head,=C290*1.4,8,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+289,H20MT1,Hyd REH Head,109,8,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+290,H20REH100,Hyd REH Head,50,27,"=IF(AND(Data!B$4=2,Data!B$6=1,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+291,H20REH137,Hyd REH Head,50,31,"=IF(AND(Data!B$4=2,Data!B$6=1.375,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+292,H25ME5,Hyd REH Head,=C295*1.4,65,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""ME5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+293,H25MS2REH,Hyd REH Head,106,-1,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+294,H25MT1,Hyd REH Head,120,8,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+295,H25REH137,Hyd REH Head,76,-1,"=IF(AND(Data!B$4=2.5,Data!B$6=1.375,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+296,H25REH175,Hyd REH Head,76,39,"=IF(AND(Data!B$4=2.5,Data!B$6=1.75,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+297,H32ME5,Hyd REH Head,92,8,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""ME5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+298,H32MS2REH,Hyd REH Head,113,5,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+299,H32MT1,Hyd REH Head,148,6,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+300,H32REH137,Hyd REH Head,80,16,"=IF(AND(Data!B$4=3.25,Data!B$6=1.375,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+301,H32REH175,Hyd REH Head,80,27,"=IF(AND(Data!B$4=3.25,Data!B$6=1.75,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+302,H32REH200,Hyd REH Head,80,31,"=IF(AND(Data!B$4=3.25,Data!B$6=2,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+303,H40MS2REH,Hyd REH Head,120,12,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+304,H40MT1,Hyd REH Head,155,-4,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+305,H40REH175,Hyd REH Head,81,21,"=IF(AND(Data!B$4=4,Data!B$6=1.75,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+306,H40REH250,Hyd REH Head,81,1,"=IF(AND(Data!B$4=4,Data!B$6=2.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+307,H50ME5,Hyd REH Head,191,34,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""ME5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+308,H50MS2REH,Hyd REH Head,165,7,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+309,H50MT1,Hyd REH Head,190,-1,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+310,H50REH200,Hyd REH Head,111,-1,"=IF(AND(Data!B$4=5,Data!B$6=2,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+311,H50REH250,Hyd REH Head,125,9,"=IF(AND(Data!B$4=5,Data!B$6=2.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+312,H50REH300,Hyd REH Head,125,7,"=IF(AND(Data!B$4=5,Data!B$6=3,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+313,H50REH350,Hyd REH Head,130,12,"=IF(AND(Data!B$4=5,Data!B$6=3.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+314,H60ME5,Hyd REH Head,212,16,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""ME5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+315,H60MS2REH,Hyd REH Head,298,8,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+316,H60MT1,Hyd REH Head,325,10,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+317,H60REH250,Hyd REH Head,225,1,"=IF(AND(Data!B$4=6,Data!B$6=2.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+318,H60REH300,Hyd REH Head,240,10,"=IF(AND(Data!B$4=6,Data!B$6=3,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+319,H60REH350,Hyd REH Head,240,3,"=IF(AND(Data!B$4=6,Data!B$6=3.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+320,H60REH400,Hyd REH Head,240,7,"=IF(AND(Data!B$4=6,Data!B$6=4,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+321,H70ME3,Hyd REH Head,282,10,"=IF(AND(Data!B$4=7,Data!B$5=""ME3"",Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+322,H70ME5,Hyd REH Head,317,1,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""ME5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+323,H70MS2REH,Hyd REH Head,350,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+324,H70MT1,Hyd REH Head,423,0,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+325,H70REH300,Hyd REH Head,282,16,"=IF(AND(Data!B$4=7,Data!B$6=3,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+326,H70REH350,Hyd REH Head,282,10,"=IF(AND(Data!B$4=7,Data!B$6=3.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+327,H70REH400,Hyd REH Head,282,9,"=IF(AND(Data!B$4=7,Data!B$6=4,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+328,H70REH450,Hyd REH Head,282,10,"=IF(AND(Data!B$4=7,Data!B$6=4.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+329,H70REH500,Hyd REH Head,282,4,"=IF(AND(Data!B$4=7,Data!B$6=5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+330,H80ME3,Hyd REH Head,500,10,"=IF(AND(Data!B$4=8,Data!B$5=""ME3"",Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+331,H80MS2REH,Hyd REH Head,458,9,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+332,H80MT1,Hyd REH Head,423,8,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+333,H80REH350,Hyd REH Head,317,2,"=IF(AND(Data!B$4=8,Data!B$6=3.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+334,H80REH400,Hyd REH Head,317,10,"=IF(AND(Data!B$4=8,Data!B$6=4,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+335,H80REH450,Hyd REH Head,317,10,"=IF(AND(Data!B$4=8,Data!B$6=4.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+336,H80REH500,Hyd REH Head,317,10,"=IF(AND(Data!B$4=8,Data!B$6=5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+337,H80REH550,Hyd REH Head,317,10,"=IF(AND(Data!B$4=8,Data!B$6=5.5,Data!B$3=""H"",Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+338,H15CEH,Hyd BEH Head,27,60,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+339,H15CEHTT,Hyd BEH Head,24,10,0,no_formula,,
+340,H15ME6,Hyd BEH Head,48,6,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""ME6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+341,H15MP1,Hyd BEH Head,50,12.5,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+342,H15MP2,Hyd BEH Head,57,10,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+343,H15MP3,Hyd BEH Head,50,9,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+344,H15MPU3,Hyd BEH Head,78,10,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+345,H15MS2CEH,Hyd BEH Head,50,4,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+346,H15MT2,Hyd BEH Head,78,7,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+347,H20CEH,Hyd BEH Head,30,39,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+348,H20CEHTT,Hyd BEH Head,32,18,0,no_formula,,
+349,H20ME6,Hyd BEH Head,64,10,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""ME6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+350,H20MP1,Hyd BEH Head,57,4,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+351,H20MP2,Hyd BEH Head,67,10,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+352,H20MP3,Hyd BEH Head,64,5,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+353,H20MPU3,Hyd BEH Head,78,43,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+354,H20MS2CEH,Hyd BEH Head,64,38,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+355,H20MT2,Hyd BEH Head,85,10,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+356,H25CEHTT,Hyd BEH Head,56,28,0,no_formula,,
+357,H25ME6,Hyd BEH Head,64,10,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""ME6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+358,H25MP2,Hyd BEH Head,71,10,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+359,H25MP3,Hyd BEH Head,72,10,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+360,H25MPU3,Hyd BEH Head,88,6,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+361,H25MS2CEH,Hyd BEH Head,72,-1,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+362,H25MT2,Hyd BEH Head,99,8,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+363,H32CEH,Hyd BEH Head,55,40,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+364,H32CEHTT,Hyd BEH Head,59,78,0,no_formula,,
+365,H32ME6,Hyd BEH Head,86,10,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""ME6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+366,H32MP1,Hyd BEH Head,78,38,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+367,H32MP2,Hyd BEH Head,75,10,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+368,H32MP3,Hyd BEH Head,78,9,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+369,H32MPU3,Hyd BEH Head,92,8,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+370,H32MS2CEH,Hyd BEH Head,78,5,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+371,H32MT2,Hyd BEH Head,120,10,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+372,H40CEHTT,Hyd BEH Head,80,21,0,no_formula,,
+373,H40ME6,Hyd BEH Head,179,8,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""ME6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+374,H40MP1,Hyd BEH Head,92,-3,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+375,H40MP2,Hyd BEH Head,90,10,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+376,H40MP3,Hyd BEH Head,92,7,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+377,H40MPU3,Hyd BEH Head,154,6,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+378,H40MS2CEH,Hyd BEH Head,162,5,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+379,H40MT2,Hyd BEH Head,176,8,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+380,H50CEH,Hyd BEH Head,95,41,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+381,H50CEHTT,Hyd BEH Head,99,10,0,no_formula,,
+382,H50ME6,Hyd BEH Head,135,10,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""ME6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+383,H50MP1,Hyd BEH Head,158,7,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+384,H50MP2,Hyd BEH Head,125,10,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+385,H50MP3,Hyd BEH Head,158,9,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+386,H50MS2CEH,Hyd BEH Head,176,7,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+387,H50MT2,Hyd BEH Head,176,10,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+388,H60CEH,Hyd BEH Head,184,30,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+389,H60CEHTT,Hyd BEH Head,191,13,0,no_formula,,
+390,H60ME6,Hyd BEH Head,205,8,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""ME6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+391,H60MP1,Hyd BEH Head,225,0.5,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+392,H60MP2,Hyd BEH Head,245,10,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+393,H60MP3,Hyd BEH Head,235,8,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+394,H60MS2CEH,Hyd BEH Head,235,8,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+395,H60MT2,Hyd BEH Head,240,30,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+396,H70CEH,Hyd BEH Head,225,3.5,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+397,H70CEHTT,Hyd BEH Head,226,23,0,no_formula,,
+398,H70ME4,Hyd BEH Head,296,10,"=IF(AND(Data!B$4=7,Data!B$5=""ME4"",Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+399,H70ME6,Hyd BEH Head,310,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""ME6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+400,H70MP1,Hyd BEH Head,355,8,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+401,H70MP2,Hyd BEH Head,176,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+402,H70MP3,Hyd BEH Head,355,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+403,H70MS2CEH,Hyd BEH Head,237,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+404,H70MT2,Hyd BEH Head,237,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+405,H80CEHTT,Hyd BEH Head,275,10,0,no_formula,,
+406,H80ME4,Hyd BEH Head,296,10,"=IF(AND(Data!B$4=8,Data!B$5=""ME4"",Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+407,H80ME6,Hyd BEH Head,352,10,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""ME6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+408,H80MP1,Hyd BEH Head,355,3,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+409,H80MP2,Hyd BEH Head,375,10,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+410,H80MP3,Hyd BEH Head,355,10,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+411,H80MS2CEH,Hyd BEH Head,352,9,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+412,H80MT2,Hyd BEH Head,402,10,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+413,CSH4,H400LONG,8,23,"=IF(OR(AND(Data!B$3=""H"",Data!B$4>3.3),AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4>4.1))),IF(OR(Data!B$7=""re"",Data!B$7=""ce""),1,IF(Data!B$7=""be"",2,0)),0)*Data!B$2",quantity_or_option_based,Data,B2|B3|B4|B7
+414,CSH,H150SCREW,8,18.5,"=IF(OR(AND(Data!B$3=""H"",Data!B$4<2.1)),IF(OR(Data!B$7=""re"",Data!B$7=""ce""),1,IF(Data!B$7=""be"",2,0)),0)*Data!B$2",quantity_or_option_based,Data,B2|B3|B4|B7
+415,H15PV,H Viton Piston Seal,13,32,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+416,H20PV,H Viton Piston Seal,15,34,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+417,H25PV,H Viton Piston Seal,19,48,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+418,H32PV,H Viton Piston Seal,22,48,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+419,H40PV,H Viton Piston Seal,34,2,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+420,H50PV,H Viton Piston Seal,43,6,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+421,H60PV,H Viton Piston Seal,60,48,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+422,H70PV,H Viton Piston Seal,78,2,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+423,H80PV,H Viton Piston Seal,85,6,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+424,H15BV,H Viton Barrel Seal,1,32,"=IF(AND(Data!B$4=1.5,Data!B$10=""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+425,H20BV,H Viton Barrel Seal,1,34,"=IF(AND(Data!B$4=2,Data!B$10=""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+426,H25BV,H Viton Barrel Seal,2,48,"=IF(AND(Data!B$4=2.5,Data!B$10=""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+427,H32BV,H Viton Barrel Seal,2,48,"=IF(AND(Data!B$4=3.25,Data!B$10=""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+428,H40BV,H Viton Barrel Seal,3,2,"=IF(AND(Data!B$4=4,Data!B$10=""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+429,H50BV,H Viton Barrel Seal,3,46,"=IF(AND(Data!B$4=5,Data!B$10=""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+430,H60BV,H Viton Barrel Seal,7,48,"=IF(AND(Data!B$4=6,Data!B$10=""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+431,H70BV,H Viton Barrel Seal,7,41,"=IF(AND(Data!B$4=7,Data!B$10=""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+432,H80BV,H Viton Barrel Seal,8,6,"=IF(AND(Data!B$4=8,Data!B$10=""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+433,H15PP,H Polyurethane Piston Seal,3,426,"=IF(AND(Data!B$4=1.5,Data!B$10=""P"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+434,H20PP,H Polyurethane Piston Seal,3,366,"=IF(AND(Data!B$4=2,Data!B$10=""P"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+435,H25PP,H Polyurethane Piston Seal,3,-70,"=IF(AND(Data!B$4=2.5,Data!B$10=""P"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+436,H32PP,H Polyurethane Piston Seal,3,632,"=IF(AND(Data!B$4=3.25,Data!B$10=""P"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+437,H50PP,H Polyurethane Piston Seal,8,424,"=IF(AND(Data!B$4=5,Data!B$10=""P"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+438,H60PP,H Polyurethane Piston Seal,17,432,"=IF(AND(Data!B$4=6,Data!B$10=""P"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+439,H70PP,H Polyurethane Piston Seal,20,3,"=IF(AND(Data!B$4=7,Data!B$10=""P"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+440,H15P062,H Piston,21,323,"=IF(AND(Data!B$4=1.5,Data!B$6=0.625,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+441,H15P100,H Piston,21,494,"=IF(AND(Data!B$4=1.5,Data!B$6=1,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+442,H20P100,H Piston,23,139,"=IF(AND(Data!B$4=2,Data!B$6=1,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+443,H20P137,H Piston,23,153,"=IF(AND(Data!B$4=2,Data!B$6=1.375,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+444,H25P137,H Piston,24,496,"=IF(AND(Data!B$4=2.5,Data!B$6=1.375,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+445,H25P175,H Piston,24,67,"=IF(AND(Data!B$4=2.5,Data!B$6=1.75,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+446,H32P137,H Piston,31,498,"=IF(AND(Data!B$4=3.25,Data!B$6=1.375,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+447,H32P175,H Piston,31,41,"=IF(AND(Data!B$4=3.25,Data!B$6=1.75,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+448,H32P200,H Piston,31,25,"=IF(AND(Data!B$4=3.25,Data!B$6=2,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+449,H40P175,H Piston,43,489,"=IF(AND(Data!B$4=4,Data!B$6=1.75,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+450,H40P250,H Piston,43,20,"=IF(AND(Data!B$4=4,Data!B$6=2.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+451,H50P200,H Piston,70,47,"=IF(AND(Data!B$4=5,Data!B$6=2,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+452,H50P250,H Piston,70,25,"=IF(AND(Data!B$4=5,Data!B$6=2.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+453,H50P300,H Piston,70,5,"=IF(AND(Data!B$4=5,Data!B$6=3,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+454,H50P350,H Piston,70,4,"=IF(AND(Data!B$4=5,Data!B$6=3.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+455,H60P250,H Piston,95,48,"=IF(AND(Data!B$4=6,Data!B$6=2.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+456,H60P300,H Piston,95,10,"=IF(AND(Data!B$4=6,Data!B$6=3,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+457,H60P350,H Piston,95,3,"=IF(AND(Data!B$4=6,Data!B$6=3.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+458,H60P400,H Piston,95,5,"=IF(AND(Data!B$4=6,Data!B$6=4,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+459,H70P300,H Piston,160,5,"=IF(AND(Data!B$4=7,Data!B$6=3,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+460,H70P350,H Piston,160,8,"=IF(AND(Data!B$4=7,Data!B$6=3.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+461,H70P400,H Piston,160,9,"=IF(AND(Data!B$4=7,Data!B$6=4,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+462,H70P450,H Piston,160,10,"=IF(AND(Data!B$4=7,Data!B$6=4.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+463,H70P500,H Piston,160,4,"=IF(AND(Data!B$4=7,Data!B$6=5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+464,H80P350,H Piston,192,48,"=IF(AND(Data!B$4=8,Data!B$6=3.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+465,H80P450,H Piston,192,10,"=IF(AND(Data!B$4=8,Data!B$6=4.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+466,H80P500,H Piston,192,44,"=IF(AND(Data!B$4=8,Data!B$6=5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+467,H80P550,H Piston,192,9,"=IF(AND(Data!B$4=8,Data!B$6=5.5,Data!B$3=""H""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+468,H15PB,H Nitrile/Buna Piston Seal,2,100,"=IF(AND(Data!B$4=1.5,Data!B$10=""B"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+469,H20PB,H Nitrile/Buna Piston Seal,3,98,"=IF(AND(Data!B$4=2,Data!B$10=""B"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+470,H25PB,H Nitrile/Buna Piston Seal,3,94,"=IF(AND(Data!B$4=2.5,Data!B$10=""B"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+471,H32PB,H Nitrile/Buna Piston Seal,3,92,"=IF(AND(Data!B$4=3.25,Data!B$10=""B"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+472,H40PB,H Nitrile/Buna Piston Seal,4,78,"=IF(AND(Data!B$4=4,Data!B$10=""B"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+473,H50PB,H Nitrile/Buna Piston Seal,8,100,"=IF(AND(Data!B$4=5,Data!B$10=""B"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+474,H60PB,H Nitrile/Buna Piston Seal,10,100,"=IF(AND(Data!B$4=6,Data!B$10=""B"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+475,H70PB,H Nitrile/Buna Piston Seal,17,100,"=IF(AND(Data!B$4=7,Data!B$10=""B"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+476,H80PB,H Nitrile/Buna Piston Seal,18,100,"=IF(AND(Data!B$4=8,Data!B$10=""B"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+477,H15BB,H Nitrile Barrel Seal,1,488,"=IF(AND(Data!B$4=1.5,Data!B$10<>""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+478,H20BB,H Nitrile Barrel Seal,1,470,"=IF(AND(Data!B$4=2,Data!B$10<>""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+479,H32BB,H Nitrile Barrel Seal,1,456,"=IF(AND(Data!B$4=3.25,Data!B$10<>""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+480,H50BB,H Nitrile Barrel Seal,1,270,"=IF(AND(Data!B$4=5,Data!B$10<>""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+481,H60BB,H Nitrile Barrel Seal,1,90,"=IF(AND(Data!B$4=6,Data!B$10<>""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+482,H70BB,H Nitrile Barrel Seal,1,3,"=IF(AND(Data!B$4=7,Data!B$10<>""V"",Data!B$3=""H""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+483,H15MT4,H MT4,46,10,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+484,H20MT4,H MT4,110,7,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+485,H25MT4,H MT4,115,13,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+486,H32MT4,H MT4,125,6,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+487,H50MT4,H MT4,367,78,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+488,H60MT4,H MT4,402,9,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+489,H70MT4,H MT4,455,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+490,H80MT4,H MT4,493,10,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+491,H15MF6,H MF6,25,10,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+492,H20MF6,H MF6,30,10,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+493,H25MF6,H MF6,36,14,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+494,H32MF6,H MF6,43,10,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+495,H40MF6,H MF6,52,10,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+496,H50MF6,H MF6,62,10,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+497,H60MF6,H MF6,74,10,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+498,H70MF6,H MF6,89,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+499,H80MF6,H MF6,107,10,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+500,H15MF5,H MF5,34,8,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+501,H20MF5,H MF5,41,10,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+502,H32MF5,H MF5,58,5,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+503,H40MF5,H MF5,70,12,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+504,H50MF5,H MF5,84,10,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+505,H60MF5,H MF5,118,9,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+506,H70MF5,H MF5,130,4,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+507,H80MF5,H MF5,144,8,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+508,H15MF2,H MF2,19,10,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+509,H20MF2,H MF2,22,6,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+510,H25MF2,H MF2,27,8,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+511,H32MF2,H MF2,32,6,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+512,H40MF2,H MF2,38,10,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+513,H50MF2,H MF2,46,10,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+514,H60MF2,H MF2,55,10,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+515,H70MF2,H MF2,66,9,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+516,H80MF2,H MF2,79,10,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+517,H15MF1,H MF1,23.75,18,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+518,H20MF1,H MF1,27.5,9,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+519,H25MF1,H MF1,33.75,23,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+520,H32MF1,H MF1,40,8,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+521,H40MF1,H MF1,47.5,14,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+522,H50MF1,H MF1,57.5,18,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+523,H60MF1,H MF1,68.75,10,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+524,H70MF1,H MF1,82.5,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+525,H80MF1,H MF1,98.75,10,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+526,H15PL,H Low Friction Piston Seal,4,11,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$10=""L""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+527,H20PL,H Low Friction Piston Seal,6,13,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$10=""L""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+528,H32PL,H Low Friction Piston Seal,10,44,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$10=""L""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+529,H50PL,H Low Friction Piston Seal,14,20,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$10=""L""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+530,H60PL,H Low Friction Piston Seal,16,40,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$10=""L""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+531,H70PL,H Low Friction Piston Seal,6,8,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$10=""L""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+532,H80PL,H Low Friction Piston Seal,18,32,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$10=""L""),Data!B$2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+533,H15PC,H Cast Iron Piston Seal,4,10,"=IF(AND(Data!B$4=1.5,Data!B$3=""H"",Data!B$10=""C""),Data!B$2*4,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+534,H20PC,H Cast Iron Piston Seal,6,10,"=IF(AND(Data!B$4=2,Data!B$3=""H"",Data!B$10=""C""),Data!B$2*4,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+535,H25PC,H Cast Iron Piston Seal,8,10,"=IF(AND(Data!B$4=2.5,Data!B$3=""H"",Data!B$10=""C""),Data!B$2*4,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+536,H32PC,H Cast Iron Piston Seal,10,6,"=IF(AND(Data!B$4=3.25,Data!B$3=""H"",Data!B$10=""C""),Data!B$2*4,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+537,H40PC,H Cast Iron Piston Seal,12,10,"=IF(AND(Data!B$4=4,Data!B$3=""H"",Data!B$10=""C""),Data!B$2*4,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+538,H50PC,H Cast Iron Piston Seal,14,10,"=IF(AND(Data!B$4=5,Data!B$3=""H"",Data!B$10=""C""),Data!B$2*4,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+539,H60PC,H Cast Iron Piston Seal,16,10,"=IF(AND(Data!B$4=6,Data!B$3=""H"",Data!B$10=""C""),Data!B$2*4,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+540,H70PC,H Cast Iron Piston Seal,6,10,"=IF(AND(Data!B$4=7,Data!B$3=""H"",Data!B$10=""C""),Data!B$2*4,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+541,H80PC,H Cast Iron Piston Seal,18,10,"=IF(AND(Data!B$4=8,Data!B$3=""H"",Data!B$10=""C""),Data!B$2*4,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+542,G062R,Gland for Retainer,15,95,"=IF(AND(Data!B$6=0.625,Data!M$2=""YES""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+543,G138R,Gland for Retainer,27,97,"=IF(AND(Data!B$6=1.375,Data!M$2=""YES""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+544,G175R,Gland for Retainer,24,47,"=IF(AND(Data!B$6=1.75,Data!M$2=""YES""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+545,G200R,Gland for Retainer,40,85,"=IF(AND(Data!B$6=2,Data!M$2=""YES""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+546,G250R,Gland for Retainer,42,20,"=IF(AND(Data!B$6=2.5,Data!M$2=""YES""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+547,G138,Gland,37,224,"=IF(AND(Data!B$6=1.375,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+548,G175,Gland,38,109,"=IF(AND(Data!B$6=1.75,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+549,G250,Gland,75,95,"=IF(AND(Data!B$6=2.5,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+550,G300,Gland,150,25,"=IF(AND(Data!B$6=3,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+551,G450,Gland,350,44,"=IF(AND(Data!B$6=4.5,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+552,G500,Gland,400,2,"=IF(AND(Data!B$6=5,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+553,G550,Gland,500,6,"=IF(AND(Data!B$6=5.5,Data!M$2=""NO""),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|M2
+554,FE087,Female Rod Eye 7/8-14,19,3,"=IF(AND(Data!G$11>0.1,Acc!M8=""X""),Data!G$11,IF(Data!F$26=A554,Data!G$26,IF(Data!F$27=A554,Data!G$27,IF(Data!F$28=A554,Data!G$28,IF(Data!F$29=A554,Data!G$29,IF(Data!F$30=A554,Data!G$30,IF(Data!F$31=A554,Data!G$31,IF(Data!F$32=A554,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+555,FE044,Female Rod Eye 7/16-20,5,10,"=IF(AND(Data!G$11>0.1,Acc!M5=""X""),Data!G$11,IF(Data!F$26=A555,Data!G$26,IF(Data!F$27=A555,Data!G$27,IF(Data!F$28=A555,Data!G$28,IF(Data!F$29=A555,Data!G$29,IF(Data!F$30=A555,Data!G$30,IF(Data!F$31=A555,Data!G$31,IF(Data!F$32=A555,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+556,FE400,Female Rod Eye 4-12,503,10,"=IF(AND(Data!G$11>0.1,Acc!M19=""X""),Data!G$11,IF(Data!F$26=A556,Data!G$26,IF(Data!F$27=A556,Data!G$27,IF(Data!F$28=A556,Data!G$28,IF(Data!F$29=A556,Data!G$29,IF(Data!F$30=A556,Data!G$30,IF(Data!F$31=A556,Data!G$31,IF(Data!F$32=A556,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+557,FE075,Female Rod Eye 3/4-16,9,-24,"=IF(AND(Data!G$11>0.1,Acc!M7=""X""),Data!G$11*Data!B2,IF(Data!F$26=A557,Data!G$26,IF(Data!F$27=A557,Data!G$27,IF(Data!F$28=A557,Data!G$28,IF(Data!F$29=A557,Data!G$29,IF(Data!F$30=A557,Data!G$30,IF(Data!F$31=A557,Data!G$31,IF(Data!F$32=A557,Data!G$32,0))))))))",quantity_or_option_based,Acc|Data,B2|F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+558,FE325,Female Rod Eye 3 1/4-12,334,10,"=IF(AND(Data!G$11>0.1,Acc!M17=""X""),Data!G$11,IF(Data!F$26=A558,Data!G$26,IF(Data!F$27=A558,Data!G$27,IF(Data!F$28=A558,Data!G$28,IF(Data!F$29=A558,Data!G$29,IF(Data!F$30=A558,Data!G$30,IF(Data!F$31=A558,Data!G$31,IF(Data!F$32=A558,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+559,FE350,Female Rod Eye 3 1/2-12,330,10,"=IF(AND(Data!G$11>0.1,Acc!M18=""X""),Data!G$11,IF(Data!F$26=A559,Data!G$26,IF(Data!F$27=A559,Data!G$27,IF(Data!F$28=A559,Data!G$28,IF(Data!F$29=A559,Data!G$29,IF(Data!F$30=A559,Data!G$30,IF(Data!F$31=A559,Data!G$31,IF(Data!F$32=A559,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+560,FE275,Female Rod Eye 2 3/4-12,338,10,"=IF(AND(Data!G$11>0.1,Acc!M16=""X""),Data!G$11,IF(Data!F$26=A560,Data!G$26,IF(Data!F$27=A560,Data!G$27,IF(Data!F$28=A560,Data!G$28,IF(Data!F$29=A560,Data!G$29,IF(Data!F$30=A560,Data!G$30,IF(Data!F$31=A560,Data!G$31,IF(Data!F$32=A560,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+561,FE225,Female Rod Eye 2 1/4-12,131,10,"=IF(AND(Data!G$11>0.1,Acc!M14=""X""),Data!G$11,IF(Data!F$26=A561,Data!G$26,IF(Data!F$27=A561,Data!G$27,IF(Data!F$28=A561,Data!G$28,IF(Data!F$29=A561,Data!G$29,IF(Data!F$30=A561,Data!G$30,IF(Data!F$31=A561,Data!G$31,IF(Data!F$32=A561,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+562,FE250,Female Rod Eye 2 1/2-12,224,10,"=IF(AND(Data!G$11>0.1,Acc!M15=""X""),Data!G$11,IF(Data!F$26=A562,Data!G$26,IF(Data!F$27=A562,Data!G$27,IF(Data!F$28=A562,Data!G$28,IF(Data!F$29=A562,Data!G$29,IF(Data!F$30=A562,Data!G$30,IF(Data!F$31=A562,Data!G$31,IF(Data!F$32=A562,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+563,FE100,Female Rod Eye 1-14,18,3,"=IF(AND(Data!G$11>0.1,Acc!M9=""X""),Data!G$11,IF(Data!F$26=A563,Data!G$26,IF(Data!F$27=A563,Data!G$27,IF(Data!F$28=A563,Data!G$28,IF(Data!F$29=A563,Data!G$29,IF(Data!F$30=A563,Data!G$30,IF(Data!F$31=A563,Data!G$31,IF(Data!F$32=A563,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+564,FE050,Female Rod Eye 1/2-20,5,10,"=IF(AND(Data!G$11>0.1,Acc!M6=""X""),Data!G$11,IF(Data!F$26=A564,Data!G$26,IF(Data!F$27=A564,Data!G$27,IF(Data!F$28=A564,Data!G$28,IF(Data!F$29=A564,Data!G$29,IF(Data!F$30=A564,Data!G$30,IF(Data!F$31=A564,Data!G$31,IF(Data!F$32=A564,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+565,FE187,Female Rod Eye 1 7/8-12,85,9,"=IF(AND(Data!G$11>0.1,Acc!M13=""X""),Data!G$11,IF(Data!F$26=A565,Data!G$26,IF(Data!F$27=A565,Data!G$27,IF(Data!F$28=A565,Data!G$28,IF(Data!F$29=A565,Data!G$29,IF(Data!F$30=A565,Data!G$30,IF(Data!F$31=A565,Data!G$31,IF(Data!F$32=A565,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+566,FE175,Female Rod Eye 1 3/4-12,53,10,"=IF(AND(Data!G$11>0.1,Acc!M12=""X""),Data!G$11,IF(Data!F$26=A566,Data!G$26,IF(Data!F$27=A566,Data!G$27,IF(Data!F$28=A566,Data!G$28,IF(Data!F$29=A566,Data!G$29,IF(Data!F$30=A566,Data!G$30,IF(Data!F$31=A566,Data!G$31,IF(Data!F$32=A566,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+567,FE125,Female Rod Eye 1 1/4-12,40,7,"=IF(AND(Data!G$11>0.1,Acc!M10=""X""),Data!G$11,IF(Data!F$26=A567,Data!G$26,IF(Data!F$27=A567,Data!G$27,IF(Data!F$28=A567,Data!G$28,IF(Data!F$29=A567,Data!G$29,IF(Data!F$30=A567,Data!G$30,IF(Data!F$31=A567,Data!G$31,IF(Data!F$32=A567,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+568,FE150,Female Rod Eye 1 1/2-12,58,8,"=IF(AND(Data!G$11>0.1,Acc!M11=""X""),Data!G$11,IF(Data!F$26=A568,Data!G$26,IF(Data!F$27=A568,Data!G$27,IF(Data!F$28=A568,Data!G$28,IF(Data!F$29=A568,Data!G$29,IF(Data!F$30=A568,Data!G$30,IF(Data!F$31=A568,Data!G$31,IF(Data!F$32=A568,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G11|G26|G27|G28|G29|G30|G31|G32
+569,EB050,Eye Bracket,10,17,"=IF(AND(Data!G$10>0.1,Acc!P5<>""""),Data!G$10,IF(Data!F$26=A569,Data!G$26,IF(Data!F$27=A569,Data!G$27,IF(Data!F$28=A569,Data!G$28,IF(Data!F$29=A569,Data!G$29,IF(Data!F$30=A569,Data!G$30,IF(Data!F$31=A569,Data!G$31,IF(Data!F$32=A569,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G10|G26|G27|G28|G29|G30|G31|G32
+570,EB075,Eye Bracket,23,23.5,"=IF(AND(Data!G$10>0.1,Acc!P6<>""""),Data!G$10,IF(Data!F$26=A570,Data!G$26,IF(Data!F$27=A570,Data!G$27,IF(Data!F$28=A570,Data!G$28,IF(Data!F$29=A570,Data!G$29,IF(Data!F$30=A570,Data!G$30,IF(Data!F$31=A570,Data!G$31,IF(Data!F$32=A570,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G10|G26|G27|G28|G29|G30|G31|G32
+571,EB100,Eye Bracket,30,4,"=IF(AND(Data!G$10>0.1,Acc!P7<>""""),Data!G$10,IF(Data!F$26=A571,Data!G$26,IF(Data!F$27=A571,Data!G$27,IF(Data!F$28=A571,Data!G$28,IF(Data!F$29=A571,Data!G$29,IF(Data!F$30=A571,Data!G$30,IF(Data!F$31=A571,Data!G$31,IF(Data!F$32=A571,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G10|G26|G27|G28|G29|G30|G31|G32
+572,EB138,Eye Bracket,49,16,"=IF(AND(Data!G$10>0.1,Acc!P8<>""""),Data!G$10,IF(Data!F$26=A572,Data!G$26,IF(Data!F$27=A572,Data!G$27,IF(Data!F$28=A572,Data!G$28,IF(Data!F$29=A572,Data!G$29,IF(Data!F$30=A572,Data!G$30,IF(Data!F$31=A572,Data!G$31,IF(Data!F$32=A572,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G10|G26|G27|G28|G29|G30|G31|G32
+573,EB175,Eye Bracket,120,6,"=IF(AND(Data!G$10>0.1,Acc!P9<>""""),Data!G$10,IF(Data!F$26=A573,Data!G$26,IF(Data!F$27=A573,Data!G$27,IF(Data!F$28=A573,Data!G$28,IF(Data!F$29=A573,Data!G$29,IF(Data!F$30=A573,Data!G$30,IF(Data!F$31=A573,Data!G$31,IF(Data!F$32=A573,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G10|G26|G27|G28|G29|G30|G31|G32
+574,EB200,Eye Bracket,76,9,"=IF(AND(Data!G$10>0.1,Acc!P10<>""""),Data!G$10,IF(Data!F$26=A574,Data!G$26,IF(Data!F$27=A574,Data!G$27,IF(Data!F$28=A574,Data!G$28,IF(Data!F$29=A574,Data!G$29,IF(Data!F$30=A574,Data!G$30,IF(Data!F$31=A574,Data!G$31,IF(Data!F$32=A574,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G10|G26|G27|G28|G29|G30|G31|G32
+575,EB250,Eye Bracket,205,10,"=IF(AND(Data!G$10>0.1,Acc!P11<>""""),Data!G$10,IF(Data!F$26=A575,Data!G$26,IF(Data!F$27=A575,Data!G$27,IF(Data!F$28=A575,Data!G$28,IF(Data!F$29=A575,Data!G$29,IF(Data!F$30=A575,Data!G$30,IF(Data!F$31=A575,Data!G$31,IF(Data!F$32=A575,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G10|G26|G27|G28|G29|G30|G31|G32
+576,EB300,Eye Bracket,342,10,"=IF(AND(Data!G$10>0.1,Acc!P12<>""""),Data!G$10,IF(Data!F$26=A576,Data!G$26,IF(Data!F$27=A576,Data!G$27,IF(Data!F$28=A576,Data!G$28,IF(Data!F$29=A576,Data!G$29,IF(Data!F$30=A576,Data!G$30,IF(Data!F$31=A576,Data!G$31,IF(Data!F$32=A576,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G10|G26|G27|G28|G29|G30|G31|G32
+577,CSHN4,Cushion Screw Nut Large,2,23,"=IF(OR(AND(Data!B$3=""H"",Data!B$4>3.3),AND(OR(Data!B$3=""A"",Data!B$3=""LH""),OR(Data!B$4>4.1))),IF(OR(Data!B$7=""re"",Data!B$7=""ce""),1,IF(Data!B$7=""be"",2,0)),0)*Data!B$2",quantity_or_option_based,Data,B2|B3|B4|B7
+578,CC062,Cushion Collar,5,401,"=IF(AND(Data!B$6=0.625,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+579,CC138,Cushion Collar,6.5,87,"=IF(AND(Data!B$6=1.375,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+580,CC175,Cushion Collar,8,81,"=IF(AND(Data!B$6=1.75,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+581,CC200,Cushion Collar,11,99,"=IF(AND(Data!B$6=2,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+582,CC250,Cushion Collar,15,486,"=IF(AND(Data!B$6=2.5,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+583,CC300,Cushion Collar,22,43,"=IF(AND(Data!B$6=3,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+584,CC400,Cushion Collar,22,7,"=IF(AND(Data!B$6=4,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+585,CC450,Cushion Collar,36,9,"=IF(AND(Data!B$6=4.5,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+586,CC500,Cushion Collar,71,10,"=IF(AND(Data!B$6=5,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+587,CC550,Cushion Collar,71,10,"=IF(AND(Data!B$6=5.5,OR(Data!B$7=""BE"",Data!B$7=""RE"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B6|B7
+588,CB075,Clevis Bracket 3/4,31,10,"=IF(AND(Data!G$12>0.1,Acc!T6=1),Data!G$12,IF(Data!F$26=A588,Data!G$26,IF(Data!F$27=A588,Data!G$27,IF(Data!F$28=A588,Data!G$28,IF(Data!F$29=A588,Data!G$29,IF(Data!F$30=A588,Data!G$30,IF(Data!F$31=A588,Data!G$31,IF(Data!F$32=A588,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G12|G26|G27|G28|G29|G30|G31|G32
+589,CB300,Clevis Bracket 3,3104,10,"=IF(AND(Data!G$12>0.1,Acc!T12=1),Data!G$12,IF(Data!F$26=A589,Data!G$26,IF(Data!F$27=A589,Data!G$27,IF(Data!F$28=A589,Data!G$28,IF(Data!F$29=A589,Data!G$29,IF(Data!F$30=A589,Data!G$30,IF(Data!F$31=A589,Data!G$31,IF(Data!F$32=A589,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G12|G26|G27|G28|G29|G30|G31|G32
+590,CB250,Clevis Bracket 2 1/2,2217,1,"=IF(AND(Data!G$12>0.1,Acc!T11=1),Data!G$12,IF(Data!F$26=A590,Data!G$26,IF(Data!F$27=A590,Data!G$27,IF(Data!F$28=A590,Data!G$28,IF(Data!F$29=A590,Data!G$29,IF(Data!F$30=A590,Data!G$30,IF(Data!F$31=A590,Data!G$31,IF(Data!F$32=A590,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G12|G26|G27|G28|G29|G30|G31|G32
+591,CB200,Clevis Bracket 2,228,10,"=IF(AND(Data!G$12>0.1,Acc!T10=1),Data!G$12,IF(Data!F$26=A591,Data!G$26,IF(Data!F$27=A591,Data!G$27,IF(Data!F$28=A591,Data!G$28,IF(Data!F$29=A591,Data!G$29,IF(Data!F$30=A591,Data!G$30,IF(Data!F$31=A591,Data!G$31,IF(Data!F$32=A591,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G12|G26|G27|G28|G29|G30|G31|G32
+592,CB050,Clevis Bracket 1/2,21,11,"=IF(AND(Data!G$12>0.1,Acc!T5=1),Data!G$12,IF(Data!F$26=A592,Data!G$26,IF(Data!F$27=A592,Data!G$27,IF(Data!F$28=A592,Data!G$28,IF(Data!F$29=A592,Data!G$29,IF(Data!F$30=A592,Data!G$30,IF(Data!F$31=A592,Data!G$31,IF(Data!F$32=A592,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G12|G26|G27|G28|G29|G30|G31|G32
+593,CB138,Clevis Bracket 1 3/8,76,21,"=IF(AND(Data!G$12>0.1,Acc!T8=1),Data!G$12,IF(Data!F$26=A593,Data!G$26,IF(Data!F$27=A593,Data!G$27,IF(Data!F$28=A593,Data!G$28,IF(Data!F$29=A593,Data!G$29,IF(Data!F$30=A593,Data!G$30,IF(Data!F$31=A593,Data!G$31,IF(Data!F$32=A593,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G12|G26|G27|G28|G29|G30|G31|G32
+594,CB175,Clevis Bracket 1 3/4,157,10,"=IF(AND(Data!G$12>0.1,Acc!T9=1),Data!G$12,IF(Data!F$26=A594,Data!G$26,IF(Data!F$27=A594,Data!G$27,IF(Data!F$28=A594,Data!G$28,IF(Data!F$29=A594,Data!G$29,IF(Data!F$30=A594,Data!G$30,IF(Data!F$31=A594,Data!G$31,IF(Data!F$32=A594,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G12|G26|G27|G28|G29|G30|G31|G32
+595,CB100,Clevis Bracket 1,52,9,"=IF(AND(Data!G$12>0.1,Acc!T7=1),Data!G$12,IF(Data!F$26=A595,Data!G$26,IF(Data!F$27=A595,Data!G$27,IF(Data!F$28=A595,Data!G$28,IF(Data!F$29=A595,Data!G$29,IF(Data!F$30=A595,Data!G$30,IF(Data!F$31=A595,Data!G$31,IF(Data!F$32=A595,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G12|G26|G27|G28|G29|G30|G31|G32
+596,A25B,Barrel,1.3282500000000002,216.625,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+597,A32B,Barrel,1.4849999999999999,684.5259999999998,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+598,A50B,Barrel,2.3265,3039.9699999999993,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+599,A60B,Barrel,3.8912500000000003,3293.3149999999996,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+600,A70B,Barrel,4.228583333333334,170.875,"=IF(AND(Data!B$4=7,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+601,A80B,Barrel,5.15625,4119.25,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+602,H15B,Barrel,1.0413333333333334,395.62200000000007,"=IF(AND(Data!B$4=1.5,Data!B$3=""H""),Data!B$2*(Data!B$8+H!AC$7),0)",length_based,Data|H,B2|B3|B4|B8
+603,H20B,Barrel,0.9753333333333335,3786.0249999999946,"=IF(AND(Data!B$4=2,Data!B$3=""H""),Data!B$2*(Data!B$8+H!AC$7),0)",length_based,Data|H,B2|B3|B4|B8
+604,H32B,Barrel,2.4658333333333338,3098.3189999999922,"=IF(AND(Data!B$4=3.25,Data!B$3=""H""),Data!B$2*(Data!B$8+H!AC$7),0)",length_based,Data|H,B2|B3|B4|B8
+605,H50B,Barrel,7.0198333333333345,1632.2559999999894,"=IF(AND(Data!B$4=5,Data!B$3=""H""),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+606,H60B,Barrel,7.888833333333334,402.68500000000006,"=IF(AND(Data!B$4=6,Data!B$3=""H""),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+607,H70B,Barrel,9.187750000000001,150.99200000000016,"=IF(AND(Data!B$4=7,Data!B$3=""H""),Data!B$2*(Data!B$8+H!AC7),0)",length_based,Data|H,B2|B3|B4|B8
+608,AC087,Alignment Coupler 7/8-14,31,10,"=IF(AND(Data!G$17>0.1,Acc!M25=""X""),Data!G$17,IF(Data!F$26=A608,Data!G$26,IF(Data!F$27=A608,Data!G$27,IF(Data!F$28=A608,Data!G$28,IF(Data!F$29=A608,Data!G$29,IF(Data!F$30=A608,Data!G$30,IF(Data!F$31=A608,Data!G$31,IF(Data!F$32=A608,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G17|G26|G27|G28|G29|G30|G31|G32
+609,AC044,Alignment Coupler 7/16-20,23,10,"=IF(AND(Data!G$17>0.1,Acc!M22=""X""),Data!G$17,IF(Data!F$26=A609,Data!G$26,IF(Data!F$27=A609,Data!G$27,IF(Data!F$28=A609,Data!G$28,IF(Data!F$29=A609,Data!G$29,IF(Data!F$30=A609,Data!G$30,IF(Data!F$31=A609,Data!G$31,IF(Data!F$32=A609,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G17|G26|G27|G28|G29|G30|G31|G32
+610,AC075,Alignment Coupler 3/4-16,31,10,"=IF(AND(Data!G$17>0.1,Acc!M24=""X""),Data!G$17,IF(Data!F$26=A610,Data!G$26,IF(Data!F$27=A610,Data!G$27,IF(Data!F$28=A610,Data!G$28,IF(Data!F$29=A610,Data!G$29,IF(Data!F$30=A610,Data!G$30,IF(Data!F$31=A610,Data!G$31,IF(Data!F$32=A610,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G17|G26|G27|G28|G29|G30|G31|G32
+611,AC100,Alignment Coupler 1-14,75,8,"=IF(AND(Data!G$17>0.1,Acc!M26=""X""),Data!G$17,IF(Data!F$26=A611,Data!G$26,IF(Data!F$27=A611,Data!G$27,IF(Data!F$28=A611,Data!G$28,IF(Data!F$29=A611,Data!G$29,IF(Data!F$30=A611,Data!G$30,IF(Data!F$31=A611,Data!G$31,IF(Data!F$32=A611,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G17|G26|G27|G28|G29|G30|G31|G32
+612,AC050,Alignment Coupler 1/2-20,23,10,"=IF(AND(Data!G$17>0.1,Acc!M23=""X""),Data!G$17,IF(Data!F$26=A612,Data!G$26,IF(Data!F$27=A612,Data!G$27,IF(Data!F$28=A612,Data!G$28,IF(Data!F$29=A612,Data!G$29,IF(Data!F$30=A612,Data!G$30,IF(Data!F$31=A612,Data!G$31,IF(Data!F$32=A612,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G17|G26|G27|G28|G29|G30|G31|G32
+613,AC187,Alignment Coupler 1 7/8-12,200,1,"=IF(AND(Data!G$17>0.1,Acc!M30=""X""),Data!G$17,IF(Data!F$26=A613,Data!G$26,IF(Data!F$27=A613,Data!G$27,IF(Data!F$28=A613,Data!G$28,IF(Data!F$29=A613,Data!G$29,IF(Data!F$30=A613,Data!G$30,IF(Data!F$31=A613,Data!G$31,IF(Data!F$32=A613,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G17|G26|G27|G28|G29|G30|G31|G32
+614,AC175,Alignment Coupler 1 3/4-12,136,10,"=IF(AND(Data!G$17>0.1,Acc!M29=""X""),Data!G$17,IF(Data!F$26=A614,Data!G$26,IF(Data!F$27=A614,Data!G$27,IF(Data!F$28=A614,Data!G$28,IF(Data!F$29=A614,Data!G$29,IF(Data!F$30=A614,Data!G$30,IF(Data!F$31=A614,Data!G$31,IF(Data!F$32=A614,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G17|G26|G27|G28|G29|G30|G31|G32
+615,AC125,Alignment Coupler 1 1/4-12,82,10,"=IF(AND(Data!G$17>0.1,Acc!M27=""X""),Data!G$17,IF(Data!F$26=A615,Data!G$26,IF(Data!F$27=A615,Data!G$27,IF(Data!F$28=A615,Data!G$28,IF(Data!F$29=A615,Data!G$29,IF(Data!F$30=A615,Data!G$30,IF(Data!F$31=A615,Data!G$31,IF(Data!F$32=A615,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G17|G26|G27|G28|G29|G30|G31|G32
+616,AC150,Alignment Coupler 1 1/2-12,136,9,"=IF(AND(Data!G$17>0.1,Acc!M28=""X""),Data!G$17,IF(Data!F$26=A616,Data!G$26,IF(Data!F$27=A616,Data!G$27,IF(Data!F$28=A616,Data!G$28,IF(Data!F$29=A616,Data!G$29,IF(Data!F$30=A616,Data!G$30,IF(Data!F$31=A616,Data!G$31,IF(Data!F$32=A616,Data!G$32,0))))))))",helper_or_other,Acc|Data,F26|F27|F28|F29|F30|F31|F32|G17|G26|G27|G28|G29|G30|G31|G32
+617,A15PV,Air Viton Piston Seal,9,8,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+618,A20PV,Air Viton Piston Seal,10,66,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+619,A25PV,Air Viton Piston Seal,13,82,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+620,A32PV,Air Viton Piston Seal,15,32,"=IF(AND(Data!B$4>3.19,Data!B$4<3.31,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+621,A40PV,Air Viton Piston Seal,16,18,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+622,A50PV,Air Viton Piston Seal,29,8,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+623,A60PV,Air Viton Piston Seal,37,48,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+624,A70PV,Air Viton Piston Seal,50,10,"=IF(AND(Data!B$4=7,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B14=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B14|B2|B3|B4
+625,A80PV,Air Viton Piston Seal,62,6,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B10=""V""),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+626,A15BV,Air Viton Barrel Seal,0.5,8,"=IF(AND(Data!B$4=1.5,Data!B$10=""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+627,A20BV,Air Viton Barrel Seal,0.6,66,"=IF(AND(Data!B$4=2,Data!B$10=""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+628,A25BV,Air Viton Barrel Seal,0.7,82,"=IF(AND(Data!B$4=2.5,Data!B$10=""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+629,A32BV,Air Viton Barrel Seal,0.8,32,"=IF(AND(Data!B$4=3.25,Data!B$10=""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+630,A40BV,Air Viton Barrel Seal,1,18,"=IF(AND(Data!B$4=4,Data!B$10=""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+631,A50BV,Air Viton Barrel Seal,2,8,"=IF(AND(Data!B$4=5,Data!B$10=""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+632,A60BV,Air Viton Barrel Seal,4,48,"=IF(AND(Data!B$4=6,Data!B$10=""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+633,A70BV,Air Viton Barrel Seal,5,20,"=IF(AND(Data!B$4=7,Data!B$10=""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+634,A80BV,Air Viton Barrel Seal,6,6,"=IF(AND(Data!B$4=8,Data!B$10=""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+635,GAR150,Air Retainer,36,35,"=IF(AND(Data!B$3<>""H"",Data!B$4=1.5,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+636,GAR200,Air Retainer,40,27,"=IF(AND(Data!B$3<>""H"",Data!B$4=2,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+637,GAR250,Air Retainer,44,88,"=IF(AND(Data!B$3<>""H"",Data!B$4=2.5,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+638,GAR325,Air Retainer,36,10,"=IF(AND(Data!B$3<>""H"",Data!B$4=3.25,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+639,GAR400,Air Retainer,40,30,"=IF(AND(Data!B$3<>""H"",Data!B$4=4,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+640,GAR500,Air Retainer,44,10,"=IF(AND(Data!B$3<>""H"",Data!B$4=5,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+641,GAR600,Air Retainer,50,10,"=IF(AND(Data!B$3<>""H"",Data!B$4=6,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+642,GAR800,Air Retainer,60,10,"=IF(AND(Data!B$3<>""H"",Data!B$4=8,Data!M$2=""YES"",Data!B$5<>""MF1"",Data!B$5<>""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|M2
+643,A15MS2REH,Air REH Head,57,2,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+644,A15MT1,Air REH Head,57,6,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+645,A15REH100,Air REH Head,35,12,"=IF(AND(Data!B$4=1.5,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+646,A20MS2REH,Air REH Head,60,7,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+647,A20MT1,Air REH Head,60,8,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+648,A20REH100,Air REH Head,40,96,"=IF(AND(Data!B$4=2,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+649,A20REH137,Air REH Head,43,31,"=IF(AND(Data!B$4=2,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+650,A25MS2REH,Air REH Head,69,11,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+651,A25MT1,Air REH Head,85,8,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+652,A25REH062,Air REH Head,47,16,"=IF(AND(Data!B$4=2.5,Data!B$6=0.625,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+653,A25REH100,Air REH Head,50,13,"=IF(AND(Data!B$4=2.5,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+654,A25REH137,Air REH Head,52,8,"=IF(AND(Data!B$4=2.5,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+655,A25REH175,Air REH Head,54,10,"=IF(AND(Data!B$4=2.5,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+656,A32MS2REH,Air REH Head,79,23,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+657,A32MT1,Air REH Head,99,9,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+658,A32REH100,Air REH Head,50,94,"=IF(AND(Data!B$4=3.25,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+659,A32REH137,Air REH Head,50,20,"=IF(AND(Data!B$4=3.25,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+660,A32REH175,Air REH Head,50,5,"=IF(AND(Data!B$4=3.25,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+661,A32REH200,Air REH Head,50,8,"=IF(AND(Data!B$4=3.25,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+662,A40MS2REH,Air REH Head,89,1,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+663,A40MT1,Air REH Head,113,3,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+664,A40REH137,Air REH Head,60,12,"=IF(AND(Data!B$4=4,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+665,A40REH175,Air REH Head,65,57,"=IF(AND(Data!B$4=4,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+666,A40REH200,Air REH Head,74,8,"=IF(AND(Data!B$4=4,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+667,A50MS2REH,Air REH Head,99,4,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+668,A50MT1,Air REH Head,127,5,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+669,A50REH100,Air REH Head,106,34,"=IF(AND(Data!B$4=5,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+670,A50REH137,Air REH Head,110,23,"=IF(AND(Data!B$4=5,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+671,A50REH175,Air REH Head,113,1,"=IF(AND(Data!B$4=5,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+672,A50REH200,Air REH Head,120,2,"=IF(AND(Data!B$4=5,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+673,A60MS2REH,Air REH Head,138,5,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+674,A60MT1,Air REH Head,141,18.5,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+675,A60REH137,Air REH Head,147,21,"=IF(AND(Data!B$4=6,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+676,A60REH175,Air REH Head,153,2,"=IF(AND(Data!B$4=6,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+677,A60REH200,Air REH Head,184,4,"=IF(AND(Data!B$4=6,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+678,A60REH250,Air REH Head,205,18,"=IF(AND(Data!B$4=6,Data!B$6=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+679,A70ME3,Air REH Head,212,10,"=IF(AND(Data!B$4=7,Data!B$5=""ME3""),IF(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$2,0),0)",quantity_or_option_based,Data,B2|B3|B4|B5
+680,A70REH137,Air REH Head,212,10,"=IF(AND(Data!B$4=7,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+681,A70REH175,Air REH Head,212,10,"=IF(AND(Data!B$4=7,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+682,A70REH200,Air REH Head,212,10,"=IF(AND(Data!B$4=7,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+683,A70REH250,Air REH Head,212,10,"=IF(AND(Data!B$4=7,Data!B$6=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+684,A80ME3,Air REH Head,240,10,"=IF(AND(Data!B$4=8,Data!B$5=""ME3""),IF(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$2,0),0)",quantity_or_option_based,Data,B2|B3|B4|B5
+685,A80MS2REH,Air REH Head,237,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+686,A80MT1,Air REH Head,237,7,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+687,A80REH137,Air REH Head,200,7,"=IF(AND(Data!B$4=8,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+688,A80REH175,Air REH Head,235,4,"=IF(AND(Data!B$4=8,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+689,A80REH200,Air REH Head,235,-2,"=IF(AND(Data!B$4=8,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+690,A80REH250,Air REH Head,235,10,"=IF(AND(Data!B$4=8,Data!B$6=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MS2"",Data!B$5<>""MT1"",Data!B$5<>""ME3"",Data!B$5<>""ME5"",Data!B$5<>""IH3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5|B6
+691,A15P100,Air Piston,25,461,"=IF(AND(Data!B$4=1.5,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+692,A20P100,Air Piston,26,71,"=IF(AND(Data!B$4=2,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+693,A20P137,Air Piston,28,14,"=IF(AND(Data!B$4=2,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+694,A25P062,Air Piston,23,167,"=IF(AND(Data!B$4=2.5,Data!B$6=0.625,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+695,A25P100,Air Piston,25,488,"=IF(AND(Data!B$4=2.5,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+696,A25P137,Air Piston,26,6,"=IF(AND(Data!B$4=2.5,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+697,A25P175,Air Piston,27,25,"=IF(AND(Data!B$4=2.5,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+698,A32P100,Air Piston,27,14,"=IF(AND(Data!B$4=3.25,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+699,A32P137,Air Piston,27,112,"=IF(AND(Data!B$4=3.25,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+700,A32P175,Air Piston,27,5,"=IF(AND(Data!B$4=3.25,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+701,A32P200,Air Piston,28,6,"=IF(AND(Data!B$4=3.25,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+702,A40P137,Air Piston,27,125,"=IF(AND(Data!B$4=4,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+703,A40P175,Air Piston,28,21,"=IF(AND(Data!B$4=4,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+704,A40P200,Air Piston,28,46,"=IF(AND(Data!B$4=4,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+705,A50P100,Air Piston,43,60,"=IF(AND(Data!B$4=5,Data!B$6=1,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+706,A50P137,Air Piston,46,169,"=IF(AND(Data!B$4=5,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+707,A50P175,Air Piston,48,47,"=IF(AND(Data!B$4=5,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+708,A50P200,Air Piston,50,2,"=IF(AND(Data!B$4=5,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+709,A60P137,Air Piston,55,-4,"=IF(AND(Data!B$4=6,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+710,A60P175,Air Piston,56,5.5,"=IF(AND(Data!B$4=6,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+711,A60P200,Air Piston,58,27,"=IF(AND(Data!B$4=6,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+712,A60P250,Air Piston,60,14,"=IF(AND(Data!B$4=6,Data!B$6=2.5,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+713,A70P137,Air Piston,58,9,"=IF(AND(Data!B$4=7,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+714,A70P175,Air Piston,60,10,"=IF(AND(Data!B$4=7,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+715,A70P200,Air Piston,62,10,"=IF(AND(Data!B$4=7,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+716,A70P250,Air Piston,64,10,"=IF(AND(Data!B$4=7,Data!B$6=2.5,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+717,A80P137,Air Piston,58,1,"=IF(AND(Data!B$4=8,Data!B$6=1.375,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+718,A80P175,Air Piston,60,1,"=IF(AND(Data!B$4=8,Data!B$6=1.75,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+719,A80P200,Air Piston,62,-2,"=IF(AND(Data!B$4=8,Data!B$6=2,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+720,A80P250,Air Piston,64,10,"=IF(AND(Data!B$4=8,Data!B$6=2.5,OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B6
+721,A25PB,Air Nitrile Piston Seal,3,4794,"=IF(AND(Data!B$4=2.5,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+722,A32PB,Air Nitrile Piston Seal,3,476,"=IF(AND(Data!B$4=3.25,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+723,A50PB,Air Nitrile Piston Seal,5,218,"=IF(AND(Data!B$4=5,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+724,A60PB,Air Nitrile Piston Seal,8,186,"=IF(AND(Data!B$4=6,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+725,A70PB,Air Nitrile Piston Seal,14,64,"=IF(AND(Data!B$4=7,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+726,A80PB,Air Nitrile Piston Seal,16,232,"=IF(AND(Data!B$4=8,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+727,A25BB,Air Nitrile Barrel Seal,1,216,"=IF(AND(Data!B$4=2.5,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+728,A32BB,Air Nitrile Barrel Seal,1,226,"=IF(AND(Data!B$4=3.25,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+729,A50BB,Air Nitrile Barrel Seal,1,134,"=IF(AND(Data!B$4=5,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+730,A60BB,Air Nitrile Barrel Seal,1,86,"=IF(AND(Data!B$4=6,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+731,A70BB,Air Nitrile Barrel Seal,1,64,"=IF(AND(Data!B$4=7,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+732,A80BB,Air Nitrile Barrel Seal,2,232,"=IF(AND(Data!B$4=8,Data!B$10<>""V"",OR(Data!B$3=""A"",Data!B$3=""LH"")),Data!B$2*2,0)",quantity_or_option_based,Data,B10|B2|B3|B4
+733,A15MT4,Air MT4,90,10,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+734,A20MT4,Air MT4,95,10,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+735,A25MT4,Air MT4,60,22,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+736,A32MT4,Air MT4,110,7,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+737,A40MT4,Air MT4,135,16,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+738,A50MT4,Air MT4,220,4,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+739,A60MT4,Air MT4,282,6,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+740,A70MT4,Air MT4,350,10,"=IF(AND(Data!B$4=7,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+741,A80MT4,Air MT4,400,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+742,A15MF6,Air MF6,30,10,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+743,A20MF6,Air MF6,89,8,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+744,A25MF6,Air MF6,104,10,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+745,A32MF6,Air MF6,119,10,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+746,A40MF6,Air MF6,134,10,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+747,A50MF6,Air MF6,148,10,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+748,A60MF6,Air MF6,207,10,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+749,A70MF6,Air MF6,207,10,"=IF(AND(Data!B$4=7,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+750,A80MF6,Air MF6,355,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF6""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+751,A15MF5,Air MF5,45,13,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+752,A20MF5,Air MF5,134,10,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+753,A25MF5,Air MF5,156,10,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+754,A32MF5,Air MF5,178,9,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+755,A40MF5,Air MF5,200,10,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+756,A50MF5,Air MF5,225,10,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+757,A60MF5,Air MF5,250,10,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+758,A70MF5,Air MF5,300,10,"=IF(AND(Data!B$4=7,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+759,A80MF5,Air MF5,400,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF5""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+760,A15MF2,Air MF2,15,3,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+761,A20MF2,Air MF2,18,10,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+762,A25MF2,Air MF2,22,7,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+763,A32MF2,Air MF2,26,8,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+764,A40MF2,Air MF2,31,5.5,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+765,A50MF2,Air MF2,37,8,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+766,A60MF2,Air MF2,45,5,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+767,A70MF2,Air MF2,54,10,"=IF(AND(Data!B$4=7,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+768,A80MF2,Air MF2,71,9,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+769,A15MF1,Air MF1,20,18,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+770,A20MF1,Air MF1,25,14,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+771,A25MF1,Air MF1,30,12,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+772,A32MF1,Air MF1,40,6,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+773,A40MF1,Air MF1,50,11,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+774,A50MF1,Air MF1,60,7,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+775,A60MF1,Air MF1,80,20,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+776,A70MF1,Air MF1,90,20,"=IF(AND(Data!B$4=7,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+777,A80MF1,Air MF1,100,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MF1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+778,A15PL,Air Low Friction Piston Seal,4,10,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B22=""L""),Data!B$2*2,0)",quantity_or_option_based,Data,B2|B22|B3|B4
+779,A20PL,Air Low Friction Piston Seal,6,10,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B22=""L""),Data!B$2*2,0)",quantity_or_option_based,Data,B2|B22|B3|B4
+780,A25PL,Air Low Friction Piston Seal,8,10,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B22=""L""),Data!B$2*2,0)",quantity_or_option_based,Data,B2|B22|B3|B4
+781,A32PL,Air Low Friction Piston Seal,12,10,"=IF(AND(Data!B$4>3.19,Data!B$4<3.31,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B22=""L""),Data!B$2*2,0)",quantity_or_option_based,Data,B2|B22|B3|B4
+782,A40PL,Air Low Friction Piston Seal,12,10,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B22=""L""),Data!B$2*2,0)",quantity_or_option_based,Data,B2|B22|B3|B4
+783,A50PL,Air Low Friction Piston Seal,13,10,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B22=""L""),Data!B$2*2,0)",quantity_or_option_based,Data,B2|B22|B3|B4
+784,A60PL,Air Low Friction Piston Seal,14,10,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B22=""L""),Data!B$2*2,0)",quantity_or_option_based,Data,B2|B22|B3|B4
+785,A70PL,Air Low Friction Piston Seal,12,10,"=IF(AND(Data!B$4=7,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B26=""L""),Data!B$2*2,0)",quantity_or_option_based,Data,B2|B26|B3|B4
+786,A80PL,Air Low Friction Piston Seal,16,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B22=""L""),Data!B$2*2,0)",quantity_or_option_based,Data,B2|B22|B3|B4
+787,AB,Air Bleed,95,8,"=IF(Data!B23>0.1,Data!B$2,0)",quantity_or_option_based,Data,B2|B23
+788,A15CEH,Air BEH Head,25,38,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+789,A15CEHTT,Air BEH Head,26,56,0,no_formula,,
+790,A15MP2,Air BEH Head,33,9,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+791,A15MP3,Air BEH Head,41,10,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+792,A15MPU3,Air BEH Head,44,10,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+793,A15MS2CEH,Air BEH Head,43,2,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+794,A15MT2,Air BEH Head,71,10,"=IF(AND(Data!B$4=1.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+795,A20CEHTT,Air BEH Head,28,18,0,no_formula,,
+796,A20MP2,Air BEH Head,39,6,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+797,A20MP3,Air BEH Head,47,10,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+798,A20MPU3,Air BEH Head,50,9,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+799,A20MS2CEH,Air BEH Head,48,7,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+800,A20MT2,Air BEH Head,71,2,"=IF(AND(Data!B$4=2,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+801,A25CEH,Air BEH Head,38,10,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+802,A25CEHTT,Air BEH Head,40,71,0,no_formula,,
+803,A25MP1,Air BEH Head,55,22,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+804,A25MP2,Air BEH Head,44,5,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+805,A25MP3,Air BEH Head,55,9,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+806,A25MPU3,Air BEH Head,58,10,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+807,A25MS2CEH,Air BEH Head,57,12,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+808,A25MT2,Air BEH Head,99,10,"=IF(AND(Data!B$4=2.5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+809,A32CEH,Air BEH Head,61,45,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+810,A32CEHTT,Air BEH Head,68,12,0,no_formula,,
+811,A32MP1,Air BEH Head,75,16,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+812,A32MP2,Air BEH Head,53,2,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+813,A32MP3,Air BEH Head,80,10,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+814,A32MPU3,Air BEH Head,95,1,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+815,A32MS2CEH,Air BEH Head,90,23,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+816,A32MT2,Air BEH Head,106,8,"=IF(AND(Data!B$4=3.25,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+817,A40CEH,Air BEH Head,60,33,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+818,A40MP2,Air BEH Head,75,6,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+819,A40MP3,Air BEH Head,92,1,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+820,A40MPU3,Air BEH Head,98,6,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+821,A40MS2CEH,Air BEH Head,95,1,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+822,A40MT2,Air BEH Head,120,10,"=IF(AND(Data!B$4=4,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+823,A50CEH,Air BEH Head,80,40,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+824,A50MP1,Air BEH Head,131,33,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+825,A50MP2,Air BEH Head,106,10,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+826,A50MP3,Air BEH Head,131,10,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+827,A50MPU3,Air BEH Head,140,8,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+828,A50MS2CEH,Air BEH Head,136,4,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+829,A50MT2,Air BEH Head,157,10,"=IF(AND(Data!B$4=5,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+830,A60CEH,Air BEH Head,90,16.5,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+831,A60MP1,Air BEH Head,116,23,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+832,A60MP2,Air BEH Head,151,9,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+833,A60MP3,Air BEH Head,186,11,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+834,A60MPU3,Air BEH Head,199,9,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+835,A60MS2CEH,Air BEH Head,192,5,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+836,A60MT2,Air BEH Head,223,9,"=IF(AND(Data!B$4=6,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+837,A70CEH,Air BEH Head,106,9,"=IF(AND(Data!B$4=7,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+838,A70ME4,Air BEH Head,127,10,"=IF(AND(Data!B$4=7,Data!B$5=""ME4""),IF(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$2,0),0)",quantity_or_option_based,Data,B2|B3|B4|B5
+839,A80CEH,Air BEH Head,125,5,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5<>""MP1"",Data!B$5<>""MP3"",Data!B$5<>""MS2"",Data!B$5<>""MT2"",Data!B$5<>""ME4"",Data!B$5<>""MPU3"",Data!B$5<>""ME6"",Data!B$5<>""IH4""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+840,A80ME4,Air BEH Head,148,10,"=IF(AND(Data!B$4=8,Data!B$5=""ME4""),IF(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$2,0),0)",quantity_or_option_based,Data,B2|B3|B4|B5
+841,A80MP1,Air BEH Head,219,11,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP1""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+842,A80MP2,Air BEH Head,176,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+843,A80MP3,Air BEH Head,219,9,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MP3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+844,A80MPU3,Air BEH Head,233,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MPU3""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+845,A80MS2CEH,Air BEH Head,226,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MS2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+846,A80MT2,Air BEH Head,261,10,"=IF(AND(Data!B$4=8,OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$5=""MT2""),Data!B$2,0)",quantity_or_option_based,Data,B2|B3|B4|B5
+847,CSA,150ADJSHORT,8,24,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$4<2.1),IF(AND(Data!B$4=1.5,Data!B$6=1),IF(OR(Data!B$7=""re"",Data!B$7=""Be""),1,0),IF(AND(Data!B$4=2,Data!B$6=1.375),IF(OR(Data!B$7=""re"",Data!B$7=""Be""),1,0))),0)*Data!B$2",quantity_or_option_based,Data,B2|B3|B4|B6|B7
+848,CSAL,150ADJLONG,8,-15,"=IF(AND(OR(Data!B$3=""A"",Data!B$3=""LH""),Data!B$4<2.6),IF(OR(AND(Data!B$4=2,Data!B$6=1.375),AND(Data!B$4=1.5,Data!B$6=1)),IF(OR(Data!B$7=""Be"",Data!B$7=""ce""),1,0),IF(OR(Data!B$7=""re"",Data!B$7=""ce""),1,IF(Data!B$7=""be"",2,0))),0)*Data!B$2",quantity_or_option_based,Data,B2|B3|B4|B6|B7

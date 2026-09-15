@@ -115,6 +115,17 @@ This document is the working map for the active Flask application. Keep the path
   - Review and accept pending customer quotes.
   - Review and approve pending customer accounts.
   - Navigate to quote history and order history.
+- Pending approval queue display:
+  - `Cylinder_Quote_Web_Milestone_1/app/Employee_dashboard/employee_dashboard.html`
+    renders quote rows with Type `Quote`, the quote number in the Reference
+    column, and the employee status label.
+  - `Cylinder_Quote_Web_Milestone_1/app/Admin_Dashboard/Admin_dashboard.html`
+    uses the same Type, quote-number Reference, and status display for
+    administrator pending rows.
+  - `Cylinder_Quote_Web_Milestone_1/app/portal.py` function
+    `employee_dashboard()` prepares the row data; internal `accepted` and
+    `pending` states display as `Pending Approval`.
+  - Regression coverage: `Cylinder_Quote_Web_Milestone_1/tests/test_pending_approval_queue.py`.
 - Connected files:
   - `Cylinder_Quote_Web_Milestone_1/app/portal.py`
   - `Cylinder_Quote_Web_Milestone_1/app/web.py`
@@ -123,13 +134,66 @@ This document is the working map for the active Flask application. Keep the path
 
 ### 2.8 Employee Quote and Order History
 
-- Quote history HTML: `Cylinder_Quote_Web_Milestone_1/app/Employee_/employee_quote_history.html`
+- Quote history HTML: `Cylinder_Quote_Web_Milestone_1/app/Employee_Quote_History/employee_quote_history.html`
 - Quote history URL: `http://127.0.0.1:5055/employee/quote-history`
-- Quote history route: `app/portal.py` function `employee_quote_history()`.
-- Order history HTML: `Cylinder_Quote_Web_Milestone_1/app/Employee_/employee_history.html`
-- Order history URL: `http://127.0.0.1:5055/employee/history`
-- Order history route: `app/portal.py` function `employee_history()`.
-- Shared CSS: `Cylinder_Quote_Web_Milestone_1/app/static/portal_history.css`.
+- Quote history route: `app/Employee_Quote_History/Employee_quote_history_search.py` function `employee_quote_history_page()`.
+- Order history HTML: `Cylinder_Quote_Web_Milestone_1/app/employee_order_history/employee_order_history.html`
+- Order history blueprint: `app/employee_order_history/Employee_order_history_search.py`, blueprint `employee_order_history`.
+- Order history page URL: `http://127.0.0.1:5055/employee_order_history/employee_order_history.html`
+- Order history page URL: `http://127.0.0.1:5055/employee_order_history/employee_order_history.html`.
+- Order history search URL: `http://127.0.0.1:5055/employee/order-history-search?q=<text>`.
+- Order history CSS and JavaScript routes are owned by the
+  `employee_order_history` blueprint in
+  `app/employee_order_history/Employee_order_history_search.py`, not by
+  `app/web.py`.
+- Order history reads matching records from `Databases/Order.db` and displays the
+  saved Order ID, model code, customer, date, total, and status. The `Open` link
+  returns to `/order-form?order_id=<id>`.
+- Shared history CSS used by the dashboard pages: `Cylinder_Quote_Web_Milestone_1/app/static/portal_history.css`.
+- The legacy portal-based `app/Employee_/employee_history.html` template has been
+  removed. The standalone employee-order-history template and blueprint are the
+  only implementation.
+- `employee_order_history_button` is a page-local CSS class, not a custom HTML
+  element or Flask component. On the order-history page its rules are in
+  `Cylinder_Quote_Web_Milestone_1/app/employee_order_history/employee_order_history.css`:
+  inline-block layout, red gradient background, border, shadow, white bold text,
+  padding, and pointer cursor. `employee_order_history_button secondary` overrides
+  the appearance with a light background, dark text, and gray border/shadow. The
+  class is used on
+  the New Quote, search, clear-search, and measurement-choice buttons.
+- The employee order-history module does not use `portal.*` endpoint lookups.
+  Its login redirect and navigation links use the existing literal URL paths.
+
+### 2.8.1 Employee and Admin Dashboard Action Bar and Stats
+
+- Employee dashboard HTML: `Cylinder_Quote_Web_Milestone_1/app/Employee_dashboard/employee_dashboard.html`.
+- Employee dashboard CSS: `Cylinder_Quote_Web_Milestone_1/app/Employee_dashboard/Employees_dashboard.css`.
+- Administrator dashboard HTML: `Cylinder_Quote_Web_Milestone_1/app/Admin_Dashboard/Admin_dashboard.html`.
+- Administrator dashboard CSS: `Cylinder_Quote_Web_Milestone_1/app/Admin_Dashboard/admin_dashboard.css`.
+- Dashboard route and header-stat calculation: `Cylinder_Quote_Web_Milestone_1/app/portal.py`, function `employee_dashboard()`.
+- Current action labels omit `My`; the AI Usage Dashboard action is intentionally hidden for now.
+- Action labels remain on one line, and the action bar can wrap while keeping buttons at the
+  same row height as Customers.
+- The current-month Quoted count uses non-canceled quotes in the signed-in user's Quote
+  History ownership scope. The current-month Approved count uses approved quotes in that
+  same scope with `approved_at` in the current month, matching Order History visibility.
+- The dashboard search form has a `search_box` wrapper and an `X` button that clears
+  the dashboard search input and hides live suggestions without submitting.
+- The Customer Lookup dialog result table is vertically scrollable, allowing more
+  than four customer results to be viewed within the popup.
+- Employee order history and quote history also use a `search_box` wrapper with a
+  page-specific `X` clear button that hides suggestions and returns focus to the input.
+- Customer Accounts uses the existing `manage_users.html` template and now lists
+  active, inactive, and denied customer accounts with an Active/Not Active/Denied
+  status selector. Employee account status behavior is unchanged.
+- Employee and admin Customer Lookup rows use the customer API fields in this order:
+  Company Name, POC, Address, City, State, Zip, Phone, Email, Membership, Notes.
+  Notes persist on the Customer directory record, and signed-up company/POC values
+  are sourced from the matching customer User account.
+- Customer directory schema additions are limited to `company_name`, `poc`, and
+  `notes`, with lightweight SQLite migration in `app/db.py`.
+- Working notes: `Cylinder_Quote_Web_Milestone_1/app/Employee_dashboard/Employee_dashboard_notes.txt`
+  and `Cylinder_Quote_Web_Milestone_1/app/Order_Form/Order_Form_Notes.txt`.
 
 ### 2.9 Customer and Employee Signup
 
@@ -142,6 +206,13 @@ This document is the working map for the active Flask application. Keep the path
 - Employee quote form HTML: `Cylinder_Quote_Web_Milestone_1/app/Employee_quote_form/employee_quote_forms.html`
 - Employee quote form script: `Cylinder_Quote_Web_Milestone_1/app/Employee_quote_form/employee_quote_form.js`
   - Served at `/employee/quote-form.js`.
+  - Existing employee quotes allow the discount percentage to be edited; Net Each and dependent delivery prices update immediately, and Save/Update submits the normalized discount for server-side recalculation.
+- Employee quote form stylesheet: `Cylinder_Quote_Web_Milestone_1/app/Employee_quote_form/employee_quote_form.css`
+  - Served at `/employee/quote-form.css`.
+  - `Update Now` updates the currently loaded saved quote.
+  - `New Order` always creates a separate quote using the existing new-order save behavior.
+  - The rendered employee quote sheet is editable, including displayed labels, descriptions, names, prices, dimensions, and other visible quote text; this does not expose application source code.
+  - These edits are captured as plain-text and field-value data under the quote's existing `order_form_snapshot`, restored when the quote is reopened, and carried into the order snapshot.
 - Order form HTML: `Cylinder_Quote_Web_Milestone_1/app/Order_Form/order_form.html`
   - Served by `/order-form` and `/order-approval`.
 - Order form CSS: `Cylinder_Quote_Web_Milestone_1/app/Order_Form/order_form.css`
@@ -149,6 +220,26 @@ This document is the working map for the active Flask application. Keep the path
 - Order form JavaScript: `Cylinder_Quote_Web_Milestone_1/app/Order_Form/order_form.js`
   - Served at `/order-form.js`.
 - Connected backend: `Cylinder_Quote_Web_Milestone_1/app/web.py`.
+  - `POST /api/quotes/<quote id>/order` assigns employee-submitted pending quotes to the submitting employee so the returned order form can be opened immediately.
+- Approval and delete findings:
+  - The employee and admin pending-approval Delete forms post to
+    `app/portal.py` route `delete_pending_quote`.
+  - The route soft-deletes the claimed quote by setting status `canceled`,
+    `deleted_at`, and `deleted_by_user_id`, then redirects to `/employee/dashboard`.
+    The canceled record remains in `Databases/Quote.db` but no longer matches the
+    pending queue query.
+  - `POST /api/quotes/<quote id>/order/approve` creates or updates the matching
+    `orders` row in `Databases/Order.db` with the order-form snapshot.
+  - The standalone employee-order-history page includes orders created, assigned, edited, or approved by
+    the signed-in employee/admin through the corresponding Quote user fields.
+  - `/employee/quote-history` is user-scoped to quotes created, assigned, edited,
+    or approved by the signed-in employee/admin.
+  - On 2026-09-15, quote numbers `K0911261653` and `B0911261630` were verified
+    and moved from accepted/pending operational states to `approved` in both
+    `Quote.db` and their matching `Order.db` rows for assigned employee user 2.
+- Working notes:
+  - `Cylinder_Quote_Web_Milestone_1/app/Employee_dashboard/Employee_dashboard_notes.txt`
+  - `Cylinder_Quote_Web_Milestone_1/app/Order_Form/Order_Form_Notes.txt`
 
 ### 2.12 Shared PNG Assets
 
@@ -186,6 +277,29 @@ This document is the working map for the active Flask application. Keep the path
   - URL: `/customer/signup`.
   - Route: `app/portal.py` function `customer_signup()`.
 
+### 2.15 Order Form TieRod Reference
+
+- Source workbook: `Cylinder_Quote_Web_Milestone_1/2026 JIT Order Entry V3.xlsm`.
+- Source sheet: `TieRod` (worksheet table; it contains no embedded Excel chart objects).
+- Browser data snapshot: `Cylinder_Quote_Web_Milestone_1/app/static/tierod_reference.json`.
+  - Normalizes 160 TieRod selector rules and 66 separate MT4 calculation-rule records.
+  - Generated from the workbook for local browser use; the workbook is not loaded at runtime.
+- Consumer: `Cylinder_Quote_Web_Milestone_1/app/Order_Form/order_form.js`.
+  - Matches the quote's Series, Bore, Rod, and Mount values against normalized TieRod rules, including the separate MT4 mount rule set.
+  - Populates only the existing bottom Testing Data `Tie Rod` row's `Bore / Diameter`, `Length`, and `Thread` fields.
+  - Keeps the quote's existing Stop Tube value for the MT4 `Stop Tube/ET` field until the MT4 runtime input/output contract is implemented.
+
+The normalized TieRod artifact is intentionally limited to the Order Form testing section. It does not participate in pricing, quote calculation, approval, persistence, or any other page.
+
+### 2.16 Order Form Testing Weight Source
+
+- Order Form testing renderer: `Cylinder_Quote_Web_Milestone_1/app/Order_Form/order_form.js` function `engineeringOutputs()`.
+- Workbook sources: `Cylinder_Quote_Web_Milestone_1/2026 JIT Order Entry V3.xlsm`, `Data!S31:X56` for H/HM and `Data!Y31:AD48` for A/LH.
+- Offline extraction: `Cylinder_Quote_Web_Milestone_1/scripts/extract_sheet_h.py` uses pandas to normalize the A/LH `Y:AD` chart into `Cylinder_Quote_Web_Milestone_1/app/static/sheet_h_engineering.json` as `weight_rules`.
+- Rule: the matching family-specific bore/rod row displays base weight plus weight-per-inch times stroke; the result is shown in the Barrel testing row as `Weight <value>`.
+- Family selection: A and LH use the `Y:AD` chart; H and HM use the `S:X` chart/fallback table.
+- Source notes: `Cylinder_Quote_Web_Milestone_1/app/Pricing/H_Sheet_Notes.txt`.
+
 ## 3. Shared Backend and Data Connections
 
 ### 3.1 Flask Route and Application Layer
@@ -198,6 +312,7 @@ This document is the working map for the active Flask application. Keep the path
   - Registers portal pages, authentication, dashboard pages, account approval, quote approval, and administration routes.
 - `Cylinder_Quote_Web_Milestone_1/app/quote_service.py`
   - Builds quote snapshots, saves quote edits, duplicates quotes, and converts quote records to JSON.
+  - Persists employee quote-form edits inside the existing quote/order snapshot without changing the pricing snapshot.
 - `Cylinder_Quote_Web_Milestone_1/app/service.py`
   - Builds quote drafts and performs server-side calculation.
 
@@ -272,7 +387,7 @@ This document is the working map for the active Flask application. Keep the path
   was claimed by an employee, not the exact time its form was opened.
 5. Pending approval quotes remain in employee quote history at
   `/employee/quote-history` but are excluded from employee order history at
-  `/employee/history` until the order is approved.
+  the standalone employee-order-history page until the order is approved.
 6. Identifier contract: customer quote pages and the customer dashboard display
   `Quote.quote_number`; employee order/approval pages may display the separate
   `order_form_snapshot.order_number`. The latter must never replace the customer

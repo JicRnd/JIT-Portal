@@ -1,0 +1,57 @@
+JIT SEAL KIT VBA / NAMED RANGE TRACE
+====================================================================================================
+
+=== DEFINED NAMES ===
+
+=== XLSM XML HITS ===
+[Content_Types].xml | matched: KAG
+_rels/.rels | matched: KAG
+xl/workbook.xml | matched: Seal Kit
+xl/_rels/workbook.xml.rels | matched: KAG
+xl/worksheets/sheet2.xml | matched: G90, G91, G92, H90, H91, H92, Seal Kit, KAR, KAP, KAG
+xl/worksheets/sheet3.xml | matched: G90, G91, G92
+xl/worksheets/sheet4.xml | matched: G90, G91, G92, H90, H91, H92
+xl/worksheets/sheet10.xml | matched: H90, H91, H92
+xl/worksheets/sheet23.xml | matched: G90, G91, G92, H90, H91, H92, Seal Kit, KAR, KAP, KAG
+xl/theme/theme1.xml | matched: KAR
+xl/drawings/_rels/vmlDrawing1.vml.rels | matched: KAG
+xl/sharedStrings.xml | matched: Seal Kit, KAR, KAP, KAG, KHR, KHP, KHG, KARL, KAPL, KHGL, KHRL, KHPL, KARV, KAPV, KAGV, KHRV, KHPV, KHGV
+xl/drawings/_rels/drawing2.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet1.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet2.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet3.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet4.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet5.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet6.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet7.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet8.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet9.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet10.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet11.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet12.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet13.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet14.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet15.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet16.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet17.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet18.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet19.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet20.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet21.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet22.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet23.xml.rels | matched: KAG
+xl/worksheets/_rels/sheet24.xml.rels | matched: KAG
+xl/drawings/_rels/drawing1.xml.rels | matched: KAG
+docProps/core.xml | matched: KAG
+xl/activeX/_rels/activeX1.xml.rels | matched: KAG
+customXml/_rels/item1.xml.rels | matched: KAG
+docProps/app.xml | matched: Seal Kit
+
+=== VBA PROJECT ===
+Found VBA project: xl/vbaProject.bin
+Extracted to: C:\Users\Kane\Downloads\vbaProject.bin
+
+=== VBA SOURCE SEARCH ===
+
+Modules scanned: 35
+Modules with relevant hits: 0

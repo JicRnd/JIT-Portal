@@ -9,6 +9,9 @@
   const holdButton = document.getElementById('holdOrderButton');
   const dashboardButton = document.getElementById('employeeDashboardButton');
   const emailCustomerButton = document.getElementById('emailCustomerButton');
+  const emailAttachmentDialog = document.getElementById('emailAttachmentDialog');
+  const continueEmailButton = document.getElementById('continueEmailButton');
+  const cancelEmailAttachmentButton = document.getElementById('cancelEmailAttachmentButton');
   const partsHost = document.getElementById('orderPartsRows');
   const testingHost = document.getElementById('testingRows');
   const addPartButton = document.getElementById('addPartButton');
@@ -17,6 +20,12 @@
   const addPartResults = document.getElementById('addPartResults');
   const closeAddPartModal = document.getElementById('closeAddPartModal');
   let loadedQuote = null;
+  let tieRodReference = [];
+  let mt4Reference = [];
+  let hEngineeringReference = [];
+  let barrelReference = [];
+  let torqueReference = [];
+  let weightReference = [];
 
   const money = n => Number(n || 0).toFixed(2);
   const localDate = iso => {
@@ -49,6 +58,15 @@
     '25':['M20x1.5',''], '28':['M20x1.5',''], '36':['M27x2',''], '45':['M33x2',''],
     '56':['M42x2',''], '70':['M48x2',''], '90':['M64x3',''], '110':['M80x3',''], '140':['M100x3','']
   };
+  const H_BARREL_ADDITIONS = {'1.5':1.563,'2':1.563,'2.5':1.688,'3.25':1.938,'4':2.188,'5':2.688,'6':3.063,'7':3.188,'8':3.688,'10':5.75,'12':7.125,'14':7.625};
+  const H_TORQUE = {'1.5':30,'2':80,'2.5':80,'3.25':125,'4':125,'5':300,'6':550,'7':800,'8':1100,'10':1100};
+  const H_WEIGHT = {'1.5|0.625':[9,.5],'1.5|1':[9.3,.6],'2|1':[13.2,.8],'2|1.375':[17.1,1],'2.5|1':[19.5,1.1],'2.5|1.375':[19.5,1.1],'2.5|1.75':[25.5,1.5],'3.25|1.375':[41,1.8],'3.25|1.75':[41,1.8],'3.25|2':[46,2.2],'4|1.75':[53,2.5],'4|2':[53,2.5],'4|2.5':[58,3.2],'5|2':[82,3.4],'5|2.5':[82,3.4],'5|3':[86,5.2],'5|3.5':[86,5.2],'6|2.5':[133,5.2],'6|3':[133,5.2],'6|3.5':[140,7.3],'6|4':[140,7.3],'7|3':[242,6.7],'7|3.5':[242,6.7],'7|4':[253,10.3],'7|4.5':[253,10.3],'7|5':[253,10.3],'8|3.5':[276,9],'8|4':[276,9],'8|4.5':[309,13],'8|5':[309,13],'8|5.5':[309,13]};
+  const H_ROD_ADDITIONS = {
+    '5|2|1|NC':8.73,'5|2|1|RE':8.73,'5|2|1|BE':10,'5|2|1|CE':10,
+    '5|2|2|NC':8.73,'5|2|2|RE':8.73,'5|2|2|BE':10,'5|2|2|CE':10,
+    '5|2|3|NC':6.48,'5|2|3|RE':6.48,'5|2|3|BE':7.75,'5|2|3|CE':7.75,
+    '5|2|4|NC':8.23,'5|2|4|RE':8.23,'5|2|4|BE':9.5,'5|2|4|CE':9.5
+  };
   const describedCode = (map, raw) => map[String(raw || '').toUpperCase()] || String(raw || '');
   function describedMount(raw) {
     const code = String(raw || '').toUpperCase();
@@ -62,6 +80,147 @@
     const thread = pair && pair[styleNumber === 2 ? 1 : 0];
     if (!thread) return String(style || '');
     return `${styleNumber === 3 ? 'Female' : 'Male'} - ${thread}`;
+  }
+  function normalizeDimension(raw) {
+    const number = Number(raw);
+    return Number.isFinite(number) ? String(number) : String(raw || '').trim();
+  }
+  function sumDimensions(...values) {
+    const numbers = values.map(Number);
+    return numbers.every(Number.isFinite) ? numbers.reduce((sum, number) => sum + number, 0) : '';
+  }
+  function displayNumber(raw, decimals = 3) {
+    const number = Number(raw);
+    if (!Number.isFinite(number)) return String(raw || '').trim();
+    return number.toFixed(decimals).replace(/\.0+$|(?<=\.[0-9]*?)0+$/, '').replace(/\.$/, '');
+  }
+  function engineeringOutputs(inputs, tieRod) {
+    const series = String(inputs.series || '').toUpperCase();
+    const engineeringSeries = series === 'LH' ? 'A' : series;
+    const boreKey = normalizeDimension(inputs.bore);
+    const rodKey = normalizeDimension(inputs.rod_diameter);
+    const stroke = Number(inputs.stroke);
+    const cushion = String(inputs.cushion || '').toUpperCase();
+    const style = String(inputs.rod_style || '1');
+    const isHFamily = ['H', 'HM'].includes(series);
+    const extractedRodRule = hEngineeringReference.find(rule =>
+      rule.families.includes(engineeringSeries) &&
+      normalizeDimension(rule.bore) === boreKey &&
+      normalizeDimension(rule.rod) === rodKey &&
+      rule.cushions.includes(cushion) &&
+      rule.rod_styles.includes(Number(style))
+    );
+    const rodAddition = extractedRodRule
+      ? extractedRodRule.rod_length_addition
+      : (isHFamily ? H_ROD_ADDITIONS[`${boreKey}|${rodKey}|${style}|${cushion}`] : undefined);
+    const barrelRule = barrelReference.find(rule => normalizeDimension(rule.bore) === boreKey);
+    const barrelAddition = barrelRule
+      ? barrelRule.families[engineeringSeries]
+      : (isHFamily ? H_BARREL_ADDITIONS[boreKey] : undefined);
+    const tieRodAddition = tieRod && Number(tieRod.assembly_length);
+    const length = addition => Number.isFinite(stroke) && Number.isFinite(Number(addition)) ? stroke + Number(addition) : '';
+    const extractedWeightRule = weightReference.find(rule =>
+      rule.families.includes(engineeringSeries) &&
+      normalizeDimension(rule.bore) === boreKey &&
+      normalizeDimension(rule.rod) === rodKey
+    );
+    const weightRule = extractedWeightRule
+      ? [extractedWeightRule.weight_base, extractedWeightRule.weight_per_stroke]
+      : (isHFamily ? H_WEIGHT[`${boreKey}|${rodKey}`] : null);
+    const torqueRule = torqueReference.find(rule => normalizeDimension(rule.bore) === boreKey);
+    const torque = torqueRule
+      ? torqueRule.families[series] || ''
+      : (isHFamily ? H_TORQUE[boreKey] || '' : '');
+    return {
+      rodLength: length(rodAddition),
+      tieRodLength: length(tieRodAddition),
+      barrelLength: length(barrelAddition),
+      torque,
+      weight: weightRule && Number.isFinite(stroke) ? weightRule[0] + weightRule[1] * stroke : ''
+    };
+  }
+  function parseTieRodReference(payload) {
+    mt4Reference = Array.isArray(payload && payload.mt4_rules) ? payload.mt4_rules : [];
+    if (Array.isArray(payload && payload.tie_rod_rules)) {
+      return payload.tie_rod_rules;
+    }
+    const rows = Array.isArray(payload && payload.rows) ? payload.rows : [];
+    return rows.flatMap(entry => {
+      const cells = Object.fromEntries((entry.cells || []).map(cell => [cell.column, cell]));
+      const formula = String(cells[15] && cells[15].formula || '');
+      const boreMatch = formula.match(/Data!\$?B\$?4=([0-9.]+)/i);
+      const rodMatch = formula.match(/Data!\$?B\$?6=([0-9.]+)/i);
+      if (!boreMatch || !rodMatch) return [];
+      const series = [...formula.matchAll(/Data!\$?B\$?3="([A-Z0-9]+)"/gi)].map(match => match[1].toUpperCase());
+      return [{
+        series,
+        bore: normalizeDimension(boreMatch[1]),
+        rod: normalizeDimension(rodMatch[1]),
+        diameter: cells[7] && cells[7].value,
+        rod_thread_length: cells[8] && cells[8].value,
+        cap_thread_length: cells[9] && cells[9].value,
+        through_rod: cells[12] && cells[12].value,
+        through_cap: cells[13] && cells[13].value,
+        assembly_length: cells[14] && cells[14].value,
+        assembly_components: [4, 6, 10, 11, 12, 13].map(column => cells[column] && cells[column].value)
+      }];
+    });
+  }
+  async function loadTieRodReference() {
+    try {
+      const response = await fetch('/static/tierod_reference.json');
+      if (!response.ok) return;
+      tieRodReference = parseTieRodReference(await response.json());
+    } catch (error) {
+      tieRodReference = [];
+    }
+  }
+  async function loadHEngineeringReference() {
+    try {
+      const response = await fetch('/static/sheet_h_engineering.json');
+      if (!response.ok) return;
+      const payload = await response.json();
+      hEngineeringReference = Array.isArray(payload && payload.rod_addition_rules)
+        ? payload.rod_addition_rules
+        : [];
+      barrelReference = Array.isArray(payload && payload.barrel_rules)
+        ? payload.barrel_rules
+        : [];
+      torqueReference = Array.isArray(payload && payload.torque_rules)
+        ? payload.torque_rules
+        : [];
+      weightReference = Array.isArray(payload && payload.weight_rules)
+        ? payload.weight_rules
+        : [];
+    } catch (error) {
+      hEngineeringReference = [];
+      barrelReference = [];
+      torqueReference = [];
+      weightReference = [];
+    }
+  }
+  function findTieRodReference(series, bore, rod, mount) {
+    const normalizedSeries = String(series || '').toUpperCase();
+    const normalizedBore = normalizeDimension(bore);
+    const normalizedRod = normalizeDimension(rod);
+    const normalizedMount = String(mount || '').toUpperCase();
+    const reference = normalizedMount === 'MT4' ? mt4Reference : tieRodReference;
+    const candidates = reference.filter(item =>
+      normalizeDimension(item.bore) === normalizedBore &&
+      (!item.series.length || item.series.includes(normalizedSeries)) &&
+      (!item.rod || normalizeDimension(item.rod) === normalizedRod) &&
+      (!item.mounts || item.mounts.includes(normalizedMount))
+    );
+    return candidates.find(item => item.rod && normalizeDimension(item.rod) === normalizedRod) || candidates[0];
+  }
+  function tieRodOutputs(reference) {
+    if (!reference) return null;
+    return {
+      bore_diameter: reference.tie_rod_diameter,
+      rod_end_thread_length: reference.rod_end_thread_length,
+      cap_end_thread_length: reference.cap_end_thread_length,
+      assembly_length: reference.assembly_length
+    };
   }
   const setMessage = (text, isError = false) => {
     messageEl.textContent = text || '';
@@ -124,7 +283,9 @@
   function addTestingRow(item = {}) {
     const row = document.createElement('div');
     row.className = 'test-row';
-    ['part','bore_diameter','length','thread','stop_tube_et'].forEach(key => {
+    row.id = `Row${testingHost.children.length + 1}`;
+    const lastField = item.part === 'Barrel' ? 'weight' : 'stop_tube_et';
+    ['part','bore_diameter','length','thread',lastField].forEach(key => {
       const input = document.createElement('input');
       input.dataset.testField = key;
       input.value = value(item, key, '');
@@ -200,6 +361,10 @@
     window.location.href = `mailto:${encodeURIComponent(email)}`;
   }
 
+  function openEmailAttachmentDialog() {
+    if (emailAttachmentDialog) emailAttachmentDialog.showModal();
+  }
+
   let addPartSearchTimer = null;
 
   function renderAddPartResults(parts) {
@@ -265,6 +430,19 @@
     }));
     const includes = [...specialParts.map(x => x.part_number), ...manualParts.map(x => x.description)].filter(Boolean).join(', ');
     const description = inputs.series ? `${inputs.series} Series Cylinder` : 'Cylinder';
+    const mount = String(value(inputs, 'mount') || '').toUpperCase();
+    const tieRod = findTieRodReference(inputs.series, inputs.bore, inputs.rod_diameter, mount);
+    const tieRodOutputsData = tieRodOutputs(tieRod);
+    const engineering = engineeringOutputs(inputs, tieRod);
+    const tieRodThread = tieRodOutputsData && (tieRodOutputsData.rod_end_thread_length || tieRodOutputsData.cap_end_thread_length)
+      ? `${displayNumber(tieRodOutputsData.rod_end_thread_length)} - ${displayNumber(tieRodOutputsData.cap_end_thread_length)}`
+      : '';
+    const boreRod = inputs.bore && inputs.rod_diameter
+      ? `${displayNumber(inputs.bore, 2)} - ${displayNumber(inputs.rod_diameter)}`
+      : '';
+    const rodStopTube = [value(inputs, 'stop_tube'), value(inputs, 'extra_thread')]
+      .filter(item => item != null && String(item).trim() !== '' && Number(item) !== 0)
+      .join(' + ');
     return {
       quote_number: quote.quote_number || '', ordered_by: quote.created_by || '', order_number: '', order_date: localDate(quote.created_at), terms: 'NET 30',
       ship_to_1: address[0], ship_to_2: address[1], ship_to_3: address[2], ship_to_4: address[3],
@@ -277,18 +455,20 @@
       rod_diameter: value(inputs, 'rod_diameter'), cushion: describedCode(CUSHION_LABELS, value(inputs, 'cushion')), ports: describedCode(PORT_LABELS, value(inputs, 'port_code')),
       stroke: value(inputs, 'stroke'), rod_thread: describedRodThread(value(inputs, 'rod_diameter'), value(inputs, 'rod_style')), seals: describedCode(SEAL_LABELS, value(inputs, 'seal_code')),
       includes, rod_clevis: String(value(inputs, 'rod_clevis', 0)), pivot_pin: String(value(inputs, 'pivot_pin', 0)),
-      assembled_by: '', date_passed_test: '', parts_total: '0.00',
+      parts_total: '0.00',
       parts: [...generatedParts, ...manualParts, ...specialParts],
       testing: [
-        {part:'Rod',bore_diameter:value(inputs,'rod_diameter'),length:value(inputs,'stroke'),thread:value(inputs,'rod_style'),stop_tube_et:value(inputs,'stop_tube')},
-        {part:'Tie Rod',bore_diameter:'',length:value(inputs,'tie_rod_length'),thread:'',stop_tube_et:''},
-        {part:'Barrel',bore_diameter:value(inputs,'bore'),length:value(inputs,'stroke'),thread:'',stop_tube_et:''}
+        {part:'Rod',bore_diameter:boreRod,length:engineering.rodLength || value(inputs,'stroke'),thread:describedRodThread(value(inputs,'rod_diameter'), value(inputs,'rod_style')),stop_tube_et:rodStopTube || '-'},
+        {part:'Tie Rod',bore_diameter:tieRodOutputsData ? displayNumber(tieRodOutputsData.bore_diameter) : '',length:engineering.tieRodLength || value(inputs,'tie_rod_length'),thread:tieRodThread,stop_tube_et:engineering.torque ? `Torque= ${engineering.torque} Ft/Lbs` : (mount === 'MT4' ? value(inputs,'stop_tube') : '-')},
+        {part:'Barrel',bore_diameter:inputs.bore ? displayNumber(inputs.bore, 2) : '',length:engineering.barrelLength || value(inputs,'stroke'),thread:'Weight',weight:engineering.weight ? displayNumber(engineering.weight, 1) : '-'}
       ]
     };
   }
 
   function render(quote) {
-    const data = {...buildDefaults(quote), ...(quote.order_form_snapshot || {})};
+    const generated = buildDefaults(quote);
+    const data = {...generated, ...(quote.order_form_snapshot || {})};
+    data.testing = generated.testing;
     data.quote_number = quote.quote_number || '';
     form.querySelectorAll('[data-field]').forEach(input => { input.value = value(data, input.dataset.field, ''); });
     const metaSection = document.getElementById('orderMetaSection');
@@ -313,7 +493,14 @@
     if (event.target.matches('[data-field="quantity"],[data-field="net_each"],[data-part-field="cost"]')) recalculate();
   });
 
-  emailCustomerButton.addEventListener('click', openCustomerEmail);
+  emailCustomerButton.addEventListener('click', openEmailAttachmentDialog);
+  continueEmailButton.addEventListener('click', () => {
+    if (emailAttachmentDialog) emailAttachmentDialog.close();
+    openCustomerEmail();
+  });
+  cancelEmailAttachmentButton.addEventListener('click', () => {
+    if (emailAttachmentDialog) emailAttachmentDialog.close();
+  });
 
   async function saveHold() {
     const response = await fetch(`/api/quotes/${quoteId}/order/hold`, {
@@ -413,6 +600,8 @@
       const body = await response.json();
       if (!response.ok || !body.ok) throw new Error(body.error || 'Order not found');
       loadedQuote = body.quote;
+      await loadTieRodReference();
+      await loadHEngineeringReference();
       render(body.quote);
     } catch (error) {
       setMessage(error.message || 'Order could not be loaded.', true);

@@ -43,7 +43,7 @@ def _headers(user: str = "test-employee"):
     return {"X-User-Name": user}
 
 
-def test_search_returns_member_and_visitor_status(temp_db):
+def test_search_returns_member_and_customer_status(temp_db):
     client = temp_db.test_client()
     with get_session() as session:
         member_customer = Customer(name="Member Co", email="member@example.com")
@@ -65,8 +65,8 @@ def test_search_returns_member_and_visitor_status(temp_db):
     customers = {c["name"]: c for c in data["customers"]}
     assert customers["Member Co"]["status"] == "Member"
     assert customers["Member Co"]["email"] == "member@example.com"
-    assert customers["Visitor Co"]["status"] == "Visitor"
-    assert customers["Blank Email Co"]["status"] == "Visitor"
+    assert customers["Visitor Co"]["status"] == "Customer"
+    assert customers["Blank Email Co"]["status"] == "Customer"
 
 
 def test_patch_updates_customer_and_rejects_blank_name(temp_db):
@@ -88,7 +88,7 @@ def test_patch_updates_customer_and_rejects_blank_name(temp_db):
     assert data["customer"]["name"] == "New Name"
     assert data["customer"]["phone"] == "555-1234"
     assert data["customer"]["email"] == "old@example.com"
-    assert data["customer"]["status"] == "Visitor"
+    assert data["customer"]["status"] == "Customer"
 
     resp_blank = client.patch(
         f"/api/customers/{customer_id}",
@@ -131,6 +131,38 @@ def test_list_all_customers_ordered_by_name(temp_db):
     names = [c["name"] for c in data["customers"]]
     assert names == ["Alpha Co", "Mike Co", "Zulu Co"]
     by_name = {c["name"]: c for c in data["customers"]}
-    assert by_name["Alpha Co"]["status"] == "Visitor"
+    assert by_name["Alpha Co"]["status"] == "Customer"
     assert by_name["Mike Co"]["status"] == "Member"
-    assert by_name["Zulu Co"]["status"] == "Visitor"
+    assert by_name["Zulu Co"]["status"] == "Customer"
+
+
+def test_customer_lookup_returns_company_poc_address_city_and_notes(temp_db):
+    client = temp_db.test_client()
+    with get_session() as session:
+        customer = Customer(
+            company_name="Acme Industries",
+            poc="Pat Customer",
+            name="Legacy Customer Name",
+            address="100 Main Street",
+            city_state_zip="Nashville, TN 37201",
+            email="pat@example.com",
+            notes="Call before quoting.",
+        )
+        session.add(customer)
+        session.commit()
+
+    response = client.get("/api/customers/search?q=Acme", headers=_headers())
+    row = response.get_json()["customers"][0]
+    assert row["company_name"] == "Acme Industries"
+    assert row["poc"] == "Pat Customer"
+    assert row["address"] == "100 Main Street"
+    assert row["city_state_zip"] == "Nashville, TN 37201"
+    assert row["notes"] == "Call before quoting."
+
+    updated = client.patch(
+        f"/api/customers/{row['id']}",
+        json={"notes": "Updated customer note."},
+        headers=_headers(),
+    )
+    assert updated.status_code == 200
+    assert updated.get_json()["customer"]["notes"] == "Updated customer note."

@@ -5,6 +5,23 @@ This repository is the active JIT Cylinder Quote web application. Maintain and e
 
 Current user instructions override older historical scope statements when they conflict. Existing implemented features are considered valid project scope unless the user explicitly asks to remove them.
 
+Repository preservation rule: treat all content in GitHub and this repository
+as user-owned. Never revert, reset, checkout, restore, overwrite, normalize,
+or re-baseline repository content unless the user explicitly requests that
+exact operation. Preserve tracked and untracked changes, including unrelated
+changes.
+
+Unrelated-change rule: do not modify unrelated work in any capacity. This
+includes indirect cleanup, formatting, refactoring, renaming, imports, CSS,
+templates, tests, documentation, configuration, generated files, or neighboring
+pages. A file may change only when explicitly in the current request's scope or
+when a direct dependency is proven necessary and reported before editing.
+
+No unsolicited improvement rule: do not optimize, modernize, polish, simplify,
+redesign, generalize, harden, or enhance anything unless the user directly asks
+for that specific improvement. Implement the smallest exact requested change
+and stop.
+
 ## Workspace root
 Expected Windows project root:
 
@@ -177,6 +194,25 @@ If a business rule is genuinely unknown, isolate it behind a clearly named confi
 Keep Flask unless a real blocker is discovered.
 
 Do not rewrite working code merely for stylistic preference.
+
+### Mandatory scope lock for every change
+Treat each user request as a closed change scope. Before editing, write down the
+exact files and symbols the request permits. Edit only those files and symbols.
+Do not make “helpful” responsive, formatting, cleanup, naming, CSS, template,
+or duplicate-removal changes unless the user explicitly includes them.
+
+Before the first edit, capture the current status/diff and state the allowed
+file list. After every edit, inspect the diff/status again. If any file outside
+the allowed list changed, stop immediately and report it; do not continue with
+the requested work until the scope is resolved.
+
+For a request naming one page or one behavior, default to one file unless a
+direct route, test, or style dependency is proven necessary. A visual issue on
+one component does not authorize changes to shared styles or neighboring pages.
+
+Never replace or regenerate a whole file to make a local change. Preserve
+unrelated existing changes, and ask before reverting, normalizing, or
+re-baselining any file.
 
 ## Windows run experience
 This application is developed on Windows with Python approximately 3.11.
