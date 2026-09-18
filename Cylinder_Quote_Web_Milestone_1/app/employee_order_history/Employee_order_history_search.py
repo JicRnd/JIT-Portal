@@ -18,7 +18,7 @@ from flask import (
 from sqlalchemy import select
 
 from ..db import get_session
-from ..models_db import Order, User
+from ..models_db import Order, Quote, User, utc_now
 
 
 employee_order_history_bp = Blueprint("employee_order_history", __name__)
@@ -95,12 +95,25 @@ def _order_search_text(order: Order) -> str:
 	)
 
 
-def search_orders(db, query: str, limit: int | None = None) -> list[Order]:
+def search_orders(
+	db,
+	query: str,
+	limit: int | None = None,
+	include_deleted: bool = False,
+) -> list[Order]:
 	"""Search every stored value in every order from Order.db."""
 	query = (query or "").strip().casefold()
+	quote_ids = set(db.execute(
+		select(Quote.id).where(
+			Quote.deleted_at.is_not(None) if include_deleted else Quote.deleted_at.is_(None)
+		)
+	).scalars())
 	orders = db.execute(
-		select(Order).order_by(Order.created_at.desc())
+		select(Order).where(
+			Order.deleted_at.is_not(None) if include_deleted else Order.deleted_at.is_(None)
+		).order_by(Order.created_at.desc())
 	).scalars().all()
+	orders = [order for order in orders if order.quote_id in quote_ids]
 
 	if query:
 		orders = [
@@ -139,9 +152,10 @@ def employee_order_history_page():
 	user = signed_in_employee()
 	query = (request.args.get("q") or "").strip()
 	show_all = request.args.get("all") == "1"
+	trash = request.args.get("trash") == "1"
 
 	with get_session() as db:
-		rows = search_orders(db, query)
+		rows = search_orders(db, query, include_deleted=trash)
 
 	response = make_response(render_template(
 		"employee_order_history.html",
@@ -149,6 +163,7 @@ def employee_order_history_page():
 		rows=rows,
 		query=query,
 		show_all=show_all,
+		trash=trash,
 	))
 	response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
 	response.headers["Pragma"] = "no-cache"
@@ -161,6 +176,58 @@ def employee_order_history_search():
 	query = (request.args.get("q") or "").strip()
 	with get_session() as db:
 		return jsonify({"ok": True, "results": order_search_results(db, query)})
+
+
+@employee_order_history_bp.post("/employee/order-history/<int:order_id>/delete")
+@require_employee
+def delete_employee_order(order_id: int):
+	user = signed_in_employee()
+
+	with get_session() as db:
+		order = db.get(Order, order_id)
+		if order is None:
+			return jsonify({"ok": False, "error": "Order not found"}), 404
+
+		order.deleted_status = order.status
+		order.status = "canceled"
+		order.deleted_by_user_id = user.id
+		order.deleted_at = utc_now()
+		quote = db.get(Quote, order.quote_id)
+		if quote is not None:
+			quote.deleted_status = quote.status
+			quote.status = "canceled"
+			quote.deleted_by_user_id = user.id
+			quote.deleted_at = order.deleted_at
+			db.add(quote)
+		db.add(order)
+		db.commit()
+
+	return redirect("/employee_order_history/employee_order_history.html")
+
+
+@employee_order_history_bp.post("/employee/order-history/<int:order_id>/restore")
+@require_employee
+def restore_employee_order(order_id: int):
+	with get_session() as db:
+		order = db.get(Order, order_id)
+		if order is None or order.deleted_at is None:
+			return jsonify({"ok": False, "error": "Deleted order not found"}), 404
+
+		order.status = order.deleted_status or "pending_approval"
+		order.deleted_status = None
+		order.deleted_by_user_id = None
+		order.deleted_at = None
+		quote = db.get(Quote, order.quote_id)
+		if quote is not None:
+			quote.status = order.status
+			quote.deleted_status = None
+			quote.deleted_by_user_id = None
+			quote.deleted_at = None
+			db.add(quote)
+		db.add(order)
+		db.commit()
+
+	return redirect("/employee_order_history/employee_order_history.html")
 
 
 @employee_order_history_bp.get("/employee/order-history.css")

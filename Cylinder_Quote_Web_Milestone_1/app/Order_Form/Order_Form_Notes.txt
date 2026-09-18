@@ -58,3 +58,122 @@ Dashboard relationship
 	approved-order counts supplied by portal.py. These counts use the dashboard user's
 	quote-history ownership and approval-history ownership, not pricing calculations
 	or values from the editable Order Form presentation snapshot.
+
+Parts placement investigation - 9/18/2026
+------------------------------------------
+- The requested Excel comparison order for generated parts is: Tie Rod, Rod, Barrel,
+	Tie Rod Nuts, Piston Seal, Barrel Seal, Gland Oring Backup Seal, Rod Wiper, Rod
+	Seal, Piston ID Oring Seal, Gland Oring Seal, Gland, REH Head, BEH Head, Piston,
+	and Mount.
+- `app/component_bom.py` now creates and preserves that sequence in the Order Form
+	payload. Special and manual parts remain after generated parts in their existing
+	order. The change is placement-only; pricing and allocation calculations were not
+	changed.
+- The Tie Rod Cost/Allocated values and Rod Price/Allocated display still require
+	workbook parity investigation. The exact workbook formulas and reference rows must
+	be identified before changing those values. The remembered candidate formula using
+	stroke, barrel/nut/gland dimensions, thread allowance, four tie rods, and unit cost
+	is recorded as an investigation lead only, not an implemented rule.
+
+Customer calculator autocomplete - 9/18/2026
+----------------------------------------------
+- The shared calculator customer input uses `app/static/app.js` function
+	`wireCustomerAutocomplete()` and the `#customerNameList` datalist.
+- Predictions begin only after the second character and retain the existing 250 ms
+	debounce.
+- The authoritative API query is `app/web.py` function `search_customers()` at
+	`GET /api/customers/search`. It uses case-insensitive substring matching across
+	only Company Name, POC, and legacy Customer Name, and returns all matching
+	contacts in name order. Address, phone, email, and notes are excluded from
+	matching.
+- Regression coverage is in `tests/test_customer_lookup.py`; do not narrow the query
+	beyond company/POC/name or move the filtering into the browser. These two owning
+	locations and the regression test are the permanent guard against this behavior
+	reverting again.
+
+
+9/16/26 had to fix removing quotes in pending approval quotes when the quote has been approved, and change its satatus
+the status is what navigates the quote from file to file 
+
+Approval routing incident - 9/16/2026
+-------------------------------------
+- Quote B0911261248 remained displayed as Pending Approval after repeated
+	approval attempts. Its stored status was `accepted`, with no approved_by,
+	approved_at, or matching approved Order row.
+- Root cause: the Pending Approvals Open link on both the employee and admin
+	dashboards routed to `/employee/quote-entry?quote_id=<quote id>`. That page is
+	the employee Quote Form and provides Order and Hold actions, but it does not
+	provide the Order Form's Approve Order action.
+- Fix: the Pending Approvals Open link in both dashboard templates now routes to
+	`/order-form?quote_id=<quote id>`. This opens the employee Order Form, where
+	the Approve Order button posts to
+	`/api/quotes/<quote id>/order/approve`.
+- Approval status behavior: the backend changes both the quote and matching
+	order status to `approved`, records the approving employee and timestamp,
+	commits the changes, and the approved quote no longer matches the employee
+	or admin Pending Approvals query. The quote remains available in Employee
+	Quote History and Employee Order History.
+- The existing employee Quote Form route remains available for quote editing
+	and order submission. Only the Pending Approvals Open destinations were
+	changed.
+- Regression checks passed for both employee and admin pending-row links and
+	for persistence of the approved quote and order status.
+
+Duplicate quote/order investigation - 9/16/2026
+------------------------------------------------
+- The employee Quote History page and Employee Order History page read
+	different records. Quote History reads `Quote` rows from the quote database;
+	Order History reads `Order` rows from `Databases/Order.db`. They are linked
+	by `Order.quote_id`, so one customer workflow is expected to appear once in
+	each history page, not as two quote rows in Quote History.
+- The dashboard Accept action posts to
+	`/employee/quotes/<quote_id>/accept`. This updates the existing quote from
+	`new` or `pending_approval` to `accepted`, assigns the employee, and calls
+	`sync_order_status`; it does not call quote creation or allocate a new quote
+	number.
+- The customer/employee Order action posts to
+	`/api/quotes/<quote_id>/order`. That route updates the existing quote,
+	creates an `Order` row only when no row exists for that `quote_id`, and
+	returns `/order-form?order_id=<order row id>`.
+- The Order Form Approve Order action posts to
+	`/api/quotes/<quote_id>/order/approve`. It updates the same quote to
+	`approved` and updates the existing `Order` selected by `quote_id`; it only
+	creates an Order row when the lookup finds none. Approval itself does not
+	create a second quote number.
+- The acceptance redirect currently goes to
+	`/employee/quote-entry?quote_id=<quote_id>&accepted=1`. The `accepted=1`
+	flag changes employee quote-form edit handling and is then removed from the
+	URL. The actual approval button is on the separate Order Form, so this
+	raversal crosses two pages before approval.
+- A new quote number is allocated only when the quote form submits a create
+	request (`POST /api/quotes`) or explicitly uses the duplicate/new-quote
+	path (`POST /api/quotes/<quote_id>/duplicate`). The acceptance endpoint does
+	not use either path. A screenshot showing B0916261229 pending and
+	B0916261230 approved therefore indicates that a create/duplicate request
+	occurred before or during the user navigation, not that the approve endpoint
+	changed the number.
+- The screenshot showing one populated approved order and one empty accepted
+	order with the same displayed Order ID is consistent with the two histories
+	being joined/displayed through different snapshots, but it still needs a
+	database-row check by `Order.id`, `Order.quote_id`, and
+	`order_form_snapshot.order_number` before any deletion or code fix. No data
+	was changed during this investigation.
+
+Definitive database finding - 9/16/2026
+----------------------------------------
+- Quote id 3 is B0916261229, status `accepted`, for Bob's Bobs's and model
+	H-MF5-5x12x2-1-NC-N-P-S. Its order snapshot is only the minimal acceptance
+	data and contains order number J0916261229.
+- Quote id 4 is B0916261230, status `approved`, for the same customer and
+	model. It was created about 24 seconds later and contains the full
+	cylinder/order snapshot.
+- Order id 3 is linked to quote_id 3 and remains `accepted`. Order id 4 is
+	linked to quote_id 4 and is `approved`. Both store order number J0916261229.
+- This proves there are two physical Quote rows and two physical Order rows.
+- Root cause: the employee Quote Form's `createNewOrder()` calls
+	`saveQuote(true, true)`. The first `true` is `forceNew`, so `saveQuote()`
+	sends `POST /api/quotes` without the existing quote ID, deliberately creating
+	a new quote number before submitting the new quote to
+	`POST /api/quotes/<new quote id>/order`.
+- Approval is not the source of the duplicate. It correctly updates Quote id 4
+	and Order id 4, while Quote id 3 and Order id 3 remain as accepted records.

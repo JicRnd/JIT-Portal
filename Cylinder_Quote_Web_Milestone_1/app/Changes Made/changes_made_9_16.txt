@@ -1,0 +1,292 @@
+JIT Cylinder Quote Web Application
+Daily Change Log - September 16, 2026
+============================================================
+
+Purpose
+-------
+This file records the application, database, UI, testing, and documentation
+changes completed during the work session on September 16, 2026.
+
+1. Parts Catalog and Inventory Workflow
+----------------------------------------
+
+- Added a dedicated inventory workflow backed by Inventory.db.
+- Added InventoryPart support for:
+	- part number;
+	- product description;
+	- whole-number inventory quantity;
+	- allocated quantity;
+	- starting 2025 quantity;
+	- on-order quantity;
+	- source workbook/file name;
+	- employee who made the update;
+	- update timestamp.
+- Kept Pricing.db authoritative for catalog part identity, description,
+	family assignment, and pricing information.
+- Kept Inventory.db authoritative for current inventory quantities.
+- Added synchronization so catalog parts receive inventory records and the
+	Parts Catalog and Inventory Manager use the same inventory quantity source.
+- Preserved catalog part-number changes by renaming the matching inventory
+	record when a catalog part is edited.
+- Added inventory source display and employee/update metadata to the
+	Inventory Manager.
+- Expanded inventory search/list responses so the manager can display all
+	inventory rows rather than only a small initial page.
+- Preserved source workbook names when inventory uploads are applied.
+- Continued to preserve existing inventory rows that are absent from a new
+	upload; uploads update or create mapped rows and do not delete rows.
+- Inventory quantities are normalized with Decimal arithmetic and rounded
+	upward to whole quantities using ROUND_CEILING.
+
+2. Inventory Workbook Translator
+--------------------------------
+
+- Inspected the real workbook:
+	2026 JIT Order Entry V3.xlsm
+- Confirmed that the workbook contains an Inventory worksheet with the
+	columns Part Number, Product Description, Unit Price, On Hand, Allocated,
+	Start 2025, On Order, and Inventory.
+- Added workbook reading through openpyxl for XLSX/XLSM files.
+- XLSM files are opened with keep_vba=True so the VBA project is preserved.
+- Workbook formulas are not edited or overwritten.
+- The translator reads cached/displayed formula results with data_only=True.
+	This allows formula-driven values such as Allocated and Inventory to be
+	imported without loading Excel at application runtime.
+- Unit Price is read for compatibility with the workbook format but is not
+	persisted as inventory data.
+- Inventory is taken from the workbook Inventory value when available.
+- When Inventory is blank, the translator derives it from On Hand minus
+	Allocated.
+- Added support for the standalone workbook upload flow using only the
+	Inventory sheet.
+- Existing CSV/XLSX/XLSM upload validation and Inventory-sheet error handling
+	remain in place.
+- Verified the actual workbook translated 847 rows successfully.
+- Verified the first workbook row translated from 5534.208 inventory to the
+	whole-number value 5535 using upward rounding.
+
+3. Inventory Upload Routes
+--------------------------
+
+- Preserved the existing preview-before-apply workflow.
+- Preview returns normalized rows and the original upload filename.
+- Apply uses the signed-in employee name as updated_by.
+- Apply stores the uploaded filename as source_name.
+- Inventory persistence continues through parameterized SQLAlchemy sessions
+	and a transaction.
+- Missing catalog parts encountered during import are represented in the
+	catalog without storing workbook prices as catalog pricing authority.
+
+4. Database and Migration Work
+------------------------------
+
+- Added/restored Inventory.db schema support for inventory source tracking.
+- Updated schema migration logic to handle legacy inventory databases.
+- Made migration column comparisons set-based so SQLite column ordering does
+	not cause false migration failures when a column was appended.
+- Kept database initialization idempotent.
+- Confirmed init_db() can run twice successfully after the migration changes.
+- Existing data was preserved while the inventory records were backfilled.
+- Verified the resulting database state included 1,215 inventory rows and
+	1,201 catalog rows, with no catalog parts missing inventory records.
+
+5. Parts Catalog Presentation
+-----------------------------
+
+- Kept Price Location as the pricing source-location column.
+- Kept Inventory Source as the inventory source column.
+- Removed the redundant Price Source column from the Parts Catalog table.
+- Removed the redundant Inventory Location column from the Parts Catalog
+	table.
+- Updated the catalog grouping colspan values for the resulting nine-column
+	table.
+- Centered catalog headers and cell contents.
+- Changed the catalog table to use the full available width with fixed,
+	evenly distributed column sizing.
+- Centered editable price controls as well as ordinary table values.
+- Kept the Inventory focus view aligned with the revised column positions.
+- Updated the direct catalog rendering regression test for the new headers.
+
+6. Employee Quote History
+-------------------------
+
+- Added broad quote-history search across stored quote fields and line-item
+	values.
+- Search includes quote number, customer information, model code, status,
+	pricing snapshots, quote metadata, and line-item values.
+- Search skips attribution-only metadata fields such as quoted-by fields.
+- Added employee quote-history search endpoint behavior.
+- Added links from history rows to open the corresponding quote.
+- Added quote deletion to a trash/canceled state with deleted-by and deleted
+	timestamp tracking.
+- Added quote restore behavior that restores the prior quote status and
+	synchronizes the related order status.
+- Added quote-history empty states, search suggestions, clear-search behavior,
+	trash navigation, and related visual styling.
+- Added dashboard/order-history/quote-history navigation links where needed.
+- Added audit note files for the employee quote-history surfaces.
+
+7. Quote, Customer, and Dashboard Workflow
+-------------------------------------------
+
+- Added or updated Open Quote navigation from quote and order history views.
+- Added customer dashboard links to customer records.
+- Added customer editing state and API handling in the customer lookup flow.
+- Preserved navigation between employee dashboard, quote entry, quote history,
+	order history, and customer dashboard pages.
+- Updated quote form behavior so accepted quote flows return to quote entry
+	with the appropriate quote identifier.
+- Updated customer and employee signup/page styling and supporting page links.
+- Added or updated dashboard action presentation and supporting styles.
+- Preserved existing quote pricing and order workflow behavior while adding
+	the navigation/history features.
+
+8. Services and Application Structure
+-------------------------------------
+
+- Updated portal route wiring for catalog, inventory, quote history, customer,
+	and dashboard actions.
+- Updated quote service behavior where quote status and related order status
+	must remain synchronized.
+- Updated shared application and portal JavaScript only where required for
+	the revised navigation and interaction behavior.
+- Updated the architecture map and project table of contents to reflect the
+	current application surfaces.
+- Added order-form notes documenting the relevant workflow changes.
+
+9. Tests and Verification
+--------------------------
+
+- Focused inventory/catalog regression suite passed:
+	13 passed.
+- The focused suite covered inventory management, catalog editing/upload, and
+	catalog bulk behavior.
+- Verified app/portal.py and app/pricing_catalog_service.py compile cleanly.
+- Verified the inventory service compiles cleanly.
+- Verified database initialization passes twice in succession.
+- Verified the real XLSM translator reads 847 rows without modifying the
+	workbook.
+- Verified the final Parts Catalog headers contain exactly one Price Location
+	and one Inventory Source header, with no Price Source or Inventory Location
+	header.
+- Ran git diff --check successfully for the scoped catalog changes.
+
+10. Workbook and Pricing Preservation
+--------------------------------------
+
+- The source XLSM workbook remains read-only from the application's point of
+	view.
+- Existing workbook formulas are preserved for future use.
+- Formula results are translated into normalized runtime/database values but
+	formulas are not replaced with static values in the source workbook.
+- Inventory imports do not make Unit Price authoritative in Pricing.db.
+- Pricing Engine behavior and existing pricing regression coverage were not
+	rewritten as part of the inventory translator work.
+
+11. Known Repository State
+--------------------------
+
+- The repository contained other pre-existing worktree changes across
+	dashboards, quote forms, customer pages, services, tests, and docs. Those
+	changes were preserved and were not reverted.
+- This log documents the combined change state visible in the September 16
+	worktree; it does not represent a commit or a clean baseline.
+
+12. Additional Work Found in Other September 16 Chats
+------------------------------------------------------
+
+The following items were completed in other Copilot sessions on the same
+workspace and date. They were added here after reviewing the local session
+history so this file represents the full day rather than only this chat.
+
+Application navigation and documentation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Used the project table of contents to locate the owning files and routes
+	during the day's investigations.
+- Added or repaired Dashboard links across employee quote history, employee
+	order history, customer lookup results, and customer records.
+- Added customer Dashboard actions to lookup tables so an employee can open a
+	customer's dashboard directly from the row being reviewed.
+- Repaired dashboard-button routing that was returning to the wrong dashboard
+	or using an incorrect quote/order identifier.
+- Preserved the existing employee quote-history link while correcting the
+	related action links around it.
+
+Quote and order lifecycle rules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Added explicit delete/trash controls beside quote and order history rows.
+- Changed the lifecycle rule so canceling a quote or order does not
+	automatically move it to Trash.
+- Trash is now an explicit manual delete action.
+- Added restore behavior for manually trashed quotes and orders.
+- Preserved the original status when an item is deleted so restoration can
+	return it to the previous state.
+- Added deleted-by and deleted-at tracking for manual removal.
+- Added system-wide quote/order status synchronization so status changes stay
+	consistent between Quote.db, Order.db, quote history, order history, and
+	pending approval views.
+- Corrected the approval flow so approving an order updates the associated
+	quote/order records and removes the item from the pending approval state.
+- Added and verified a Cancel action in the employee Order Form toolbar.
+- Updated history ordering to use recorded quote/application identifiers and
+	approval timestamps consistently with the requested ascending behavior.
+
+Clean testing state
+~~~~~~~~~~~~~~~~~~~
+
+- Performed a deliberate clean-start reset for testing by clearing the test
+	rows from Order.db and Quote.db while preserving database structure and
+	tables.
+- Confirmed the reset was an intentional test-data operation and not a schema
+	deletion or application-file removal.
+
+Employee pricing calculator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Repaired access to the employee pricing calculator from the Standard button.
+- Preserved the calculator's live customer search suggestion behavior.
+- Added substring customer lookup behavior for company/customer matching.
+- Restored automatic customer address and city/state autofill after a lookup
+	selection.
+- Added customer selection support to the calculator's quote-entry flow.
+- Investigated and corrected duplicate quote/order number allocation behavior
+	in the employee calculator's create-new-order flow.
+- Preserved the required asynchronous cleanup/finally behavior while removing
+	the duplicate-producing allocation path.
+
+Customer accounts and contacts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Updated customer lookup/account behavior so New Account is distinct from
+	adding a contact.
+- Renamed the relevant action button to New Account.
+- Added the requested customer account persistence behavior so submitted
+	customer account fields create the appropriate customer record and related
+	login/account record where required by the existing application structure.
+- Kept the existing database structures and tables while clearing or reducing
+	test contact data as requested during the session.
+- Removed the POC requirement from the employee pricing calculator customer
+	lookup flow; the customer/account name remains the required identity value.
+- Kept only the requested test employee contact data during the cleanup work.
+
+Quote form fields and opening behavior
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Added matching Tag and PO Number fields to the customer and employee quote
+	forms.
+- Preserved those fields through the relevant quote form presentation flow.
+- Corrected Open Quote actions so quote history, pending approvals, and admin
+	search results use the employee quote form route and the quote identifier,
+	rather than an order-form route or an order identifier.
+- Investigated the duplicate "new quote number is allocated" behavior and
+	documented the existing create-new-order allocation path.
+
+Cross-chat verification notes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- The session history shows focused production/test checks for the calculator,
+	customer account, quote lifecycle, history, and navigation changes.
+- These additions are recorded here as cross-chat work because they were made
+	in separate September 16 sessions but against the same JIT Portal workspace.

@@ -3,13 +3,13 @@ html,body{min-height:100%;margin:0;background:#d7dadd;color:#111;font-family:Ari
 body{overflow:auto;padding:14px}
 .order-page{width:min(1180px,100%);margin:0 auto}
 .order-toolbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;min-height:54px;padding:9px 12px;background:#eef1f3;border:1px solid #8b9298;border-radius:8px 8px 0 0;box-shadow:0 3px 8px #0002}
-.toolbar-button,.approve-button{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:7px 14px;border:1px solid #69747d;border-radius:7px;background:linear-gradient(#fff,#e4e9ed);box-shadow:0 3px 0 #69747d,0 4px 6px #0002;color:#111;font-weight:700;text-decoration:none;cursor:pointer}
+.toolbar-button,.approve-button{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:7px 14px;border:1px solid #69747d;border-radius:7px;background:linear-gradient(#fff,#e4e9ed);box-shadow:0 3px 0 #69747d,0 4px 6px #0002;color:#111;font-weight:700;text-decoration:none;cursor:pointer;white-space:nowrap;flex:0 0 auto}
 .toolbar-button:active,.approve-button:active{transform:translateY(3px);box-shadow:0 0 0 #69747d,0 1px 2px #0002}
 .approve-button{margin-left:auto;background:linear-gradient(#f3fff3,#cceaca);border-color:#4f7d51;color:#14551a;box-shadow:0 3px 0 #4f7d51,0 4px 6px #0002}
 .approve-button:disabled{cursor:not-allowed;opacity:.55;transform:none;box-shadow:none}
-.status-pill{padding:6px 11px;border-radius:999px;background:#fff3c4;border:1px solid #b49931;font-size:13px;font-weight:700;text-transform:capitalize}
-.status-pill.approved{background:#daf0da;border-color:#548457;color:#195821}
-.toolbar-message{font-size:13px;color:#333}
+.status-pill{font-size:13px;font-weight:700;text-transform:capitalize;white-space:nowrap;flex:0 0 auto}
+.status-pill.approved{color:inherit}
+.toolbar-message{font-size:13px;color:#333;white-space:nowrap;flex:0 1 auto}
 .toolbar-message.error{color:#a51515;font-weight:700}
 .order-sheet{width:100%;min-height:1350px;margin:0 auto 30px;padding:12px;background:#fff;border:1px solid #333;box-shadow:0 6px 20px #0003;font-size:14px}
 .order-sheet input,.order-sheet textarea{width:100%;min-width:0;border:0;border-bottom:1px solid #111;background:#fff;padding:2px 5px;font:inherit;outline:0}

@@ -24,6 +24,7 @@ def _admin_client(tmp_path, monkeypatch):
     monkeypatch.setenv("QUOTES_DATABASE_PATH", str(tmp_path / "quotes.db"))
     monkeypatch.setenv("ORDERS_DATABASE_PATH", str(tmp_path / "orders.db"))
     monkeypatch.setenv("PRICING_DATABASE_PATH", str(tmp_path / "Pricing.db"))
+    monkeypatch.setenv("INVENTORY_DATABASE_PATH", str(tmp_path / "Inventory.db"))
     _reset_engines()
 
     app = create_app()

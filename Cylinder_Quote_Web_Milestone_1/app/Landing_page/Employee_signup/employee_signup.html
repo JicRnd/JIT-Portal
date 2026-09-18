@@ -24,7 +24,12 @@
 
       <label>
         Full Name
-        <input name="display_name" value="{{ prefill_name or '' }}" required>
+        <input name="display_name" value="{{ prefill_name or '' }}">
+      </label>
+
+      <label>
+        Company
+        <input name="company_name" value="">
       </label>
 
       <label>
@@ -55,6 +60,26 @@
         </span>
       </label>
       <input type="hidden" name="phone_extension" id="hiddenExtension" value="">
+
+      <label>
+        Billing Street Address
+        <input name="billing_street_address">
+      </label>
+
+      <label>
+        City State, Zip
+        <input name="billing_city_state_zip">
+      </label>
+
+      <label>
+        Shipping Street Address
+        <input name="shipping_street_address">
+      </label>
+
+      <label>
+        Shipping City, State, Zip
+        <input name="shipping_city_state_zip">
+      </label>
 
       <button class="portal-button full" type="submit">
         Submit

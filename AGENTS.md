@@ -11,6 +11,23 @@ or re-baseline repository content unless the user explicitly requests that
 exact operation. Preserve tracked and untracked changes, including unrelated
 changes.
 
+## Mandatory permission gate for destructive changes
+
+No agent, tool, task, extension, hook, formatter, or automated workflow may
+revert, reset, checkout, restore, clean, delete, overwrite, normalize,
+re-baseline, or otherwise replace repository or workspace content without the
+user's explicit permission in the current conversation. This includes files
+outside the requested change scope and changes made by other tools.
+
+Before any such operation, stop and ask for permission identifying the exact
+command or files affected. Do not infer permission from a general request to
+fix, test, refactor, restart, or continue. If an external process changes
+files unexpectedly, stop immediately, preserve the resulting state, report
+the affected paths, and wait for instructions. Never use `git reset --hard`,
+`git checkout --`, `git restore`, `git clean`, mass file regeneration, or
+equivalent commands unless the user explicitly names and authorizes that exact
+operation.
+
 Unrelated-change rule: do not modify unrelated work in any capacity. This
 includes indirect cleanup, formatting, refactoring, renaming, imports, CSS,
 templates, tests, documentation, configuration, generated files, or neighboring

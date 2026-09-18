@@ -47,6 +47,10 @@ def test_customer_signup_submit_creates_pending_account(portal_app):
             "email": "ada@example.com",
             "password": "test-password",
             "phone": "555-0100",
+            "billing_street_address": "10 Billing Street",
+            "billing_city_state_zip": "Nashville, TN 37201",
+            "shipping_street_address": "20 Shipping Street",
+            "shipping_city_state_zip": "Franklin, TN 37064",
         },
         follow_redirects=False,
     )
@@ -62,6 +66,79 @@ def test_customer_signup_submit_creates_pending_account(portal_app):
     assert user.approval_status == "pending"
     assert user.company_name == "Ada Cylinders"
     assert user.phone == "555-0100"
+
+    with get_session() as db:
+        customer = db.query(Customer).filter_by(email="ada@example.com").one()
+
+    assert customer.name == "Ada Customer"
+    assert customer.company_name == "Ada Cylinders"
+    assert customer.poc == "Ada Customer"
+    assert customer.phone == "555-0100"
+    assert customer.address == "10 Billing Street"
+    assert customer.city_state_zip == "Nashville, TN 37201"
+    assert customer.shipping_address == "20 Shipping Street, Franklin, TN 37064"
+
+
+def test_company_only_signup_requires_no_full_name_and_creates_customer(portal_app):
+    response = portal_app.test_client().post(
+        "/customer/signup",
+        data={
+            "company_name": "Company Only Account",
+            "email": "company-only@example.com",
+            "password": "test-password",
+        },
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    with get_session() as db:
+        customer = db.query(Customer).filter_by(email="company-only@example.com").one()
+
+    assert customer.name == "Company Only Account"
+    assert customer.company_name == "Company Only Account"
+    assert customer.poc is None
+
+
+def test_employee_created_customer_account_syncs_contact_directory(portal_app):
+    client = portal_app.test_client()
+    with get_session() as db:
+        employee = User(
+            display_name="Employee One",
+            username="employee@example.com",
+            email="employee@example.com",
+            password_hash=generate_password_hash("pw"),
+            role="employee",
+            is_active=True,
+        )
+        db.add(employee)
+        db.commit()
+        employee_id = employee.id
+
+    with client.session_transaction() as session:
+        session["user_id"] = employee_id
+        session["role"] = "employee"
+
+    response = client.post(
+        "/customer/signup",
+        data={
+            "display_name": "New Customer Contact",
+            "company_name": "New Customer Company",
+            "email": "new-contact@example.com",
+            "password": "test-password",
+            "billing_street_address": "10 Main Street",
+            "billing_city_state_zip": "Nashville, TN 37201",
+            "phone": "555-0142",
+        },
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    with get_session() as db:
+        customer = db.query(Customer).filter_by(email="new-contact@example.com").one()
+    assert customer.company_name == "New Customer Company"
+    assert customer.poc == "New Customer Contact"
+    assert customer.address == "10 Main Street"
+    assert customer.city_state_zip == "Nashville, TN 37201"
 
 
 def test_login_form_keeps_browser_autofill_fields(portal_app):
@@ -459,3 +536,4 @@ def test_employee_dashboard_customer_lookup_has_email_and_attachment_controls(po
     assert "Email Customer" in text
     assert "Attach Quote Form" in text
     assert "Attach Report Images" in text
+    assert 'if (term.length < 2)' in text

@@ -48,9 +48,18 @@ from .pricing_catalog_service import (
     restore_price_change,
     update_catalog_part,
     update_catalog_inventory_bulk,
+    update_pricing_text,
     update_pricing_amount,
 )
-from .quote_service import quote_to_json
+from .inventory_service import (
+    InventoryImportError,
+    inventory_rows_json,
+    parse_inventory_source,
+    search_inventory,
+    update_inventory_quantity,
+    upsert_inventory_rows,
+)
+from .quote_service import quote_to_json, sync_order_status
 
 
 portal_bp = Blueprint("portal", __name__)
@@ -322,6 +331,9 @@ def signup(role):
         name = (
             request.form.get("display_name") or ""
         ).strip()
+        company_name = (
+            request.form.get("company_name") or ""
+        ).strip()
 
         email = (
             request.form.get("email") or ""
@@ -329,8 +341,24 @@ def signup(role):
 
         password = request.form.get("password") or ""
         address = (
-            request.form.get("shipping_address") or ""
+            request.form.get("billing_street_address")
+            or request.form.get("shipping_street_address")
+            or ""
         ).strip()
+        city_state_zip = (
+            request.form.get("billing_city_state_zip")
+            or request.form.get("shipping_city_state_zip")
+            or ""
+        ).strip()
+        shipping_street_address = (
+            request.form.get("shipping_street_address") or ""
+        ).strip()
+        shipping_city_state_zip = (
+            request.form.get("shipping_city_state_zip") or ""
+        ).strip()
+        shipping_address = ", ".join(
+            value for value in (shipping_street_address, shipping_city_state_zip) if value
+        ) or address or city_state_zip or ""
 
         shipping_same_as_billing = None
         same_flag = request.form.get("shipping_same_as_billing")
@@ -343,9 +371,24 @@ def signup(role):
             val = request.form.get(key, "").strip()
             return val if val else None
 
-        if not name or not email or not password:
+        def sync_customer_directory(db, account):
+            customer = db.execute(
+                select(Customer).where(func.lower(Customer.email) == account.email.lower())
+            ).scalar_one_or_none()
+            if customer is None:
+                customer = Customer(email=account.email)
+                db.add(customer)
+            customer.name = account.display_name
+            customer.company_name = account.company_name
+            customer.poc = name or None
+            customer.address = address or None
+            customer.city_state_zip = city_state_zip or None
+            customer.phone = account.phone
+            customer.shipping_address = shipping_address or None
+
+        if not (name or company_name) or not email or not password:
             error = (
-                "Name, email and password are required."
+                "Full Name or Company, email and password are required."
             )
         else:
             with get_session() as db:
@@ -364,14 +407,18 @@ def signup(role):
 
                 if duplicate:
                     if duplicate.role == role and not duplicate.is_active:
-                        duplicate.display_name = duplicate.display_name or name
+                        duplicate.display_name = duplicate.display_name or name or company_name
                         duplicate.username = email
                         duplicate.email = email or None
                         duplicate.password_hash = generate_password_hash(password)
-                        duplicate.company_name = get_form_field("company_name")
+                        duplicate.company_name = company_name or None
                         duplicate.phone = get_form_field("phone")
                         duplicate.phone_extension = get_form_field("phone_extension")
+                        duplicate.billing_address = address or None
+                        duplicate.shipping_address = shipping_address or None
+                        duplicate.shipping_same_as_billing = shipping_same_as_billing
                         duplicate.approval_status = "pending"
+                        sync_customer_directory(db, duplicate)
                         db.commit()
 
                         if return_to:
@@ -380,12 +427,12 @@ def signup(role):
                         return redirect(url_for(f"portal.{role}_login"))
                     error = "That username or email is already in use."
                 else:
-                    display_name = name
+                    display_name = name or company_name
 
                     # Check for existing display name collisions
                     existing_name = db.execute(
                         select(User).where(
-                            func.lower(User.display_name) == name.lower()
+                            func.lower(User.display_name) == display_name.lower()
                         )
                     ).scalar_one_or_none()
 
@@ -401,14 +448,18 @@ def signup(role):
                         password_hash=generate_password_hash(password),
                         role=role,
                         access_level="standard",
-                        company_name=get_form_field("company_name"),
+                        company_name=company_name or None,
                         phone=get_form_field("phone"),
                         phone_extension=get_form_field("phone_extension"),
+                        billing_address=address or None,
+                        shipping_address=shipping_address or None,
+                        shipping_same_as_billing=shipping_same_as_billing,
                         approval_status="approved" if account_active else "pending",
                         is_active=account_active,
                     )
 
                     db.add(user)
+                    sync_customer_directory(db, user)
 
                     try:
                         db.commit()
@@ -520,6 +571,48 @@ def customer_dashboard_css():
     return send_from_directory(
         Path(__file__).resolve().parent / "customer dashboard",
         "customer_dashboard.css",
+    )
+
+
+@portal_bp.get("/employee/customer-dashboard/<int:customer_id>")
+@require_role("employee")
+def employee_customer_dashboard(customer_id):
+    employee = signed_in_user()
+
+    with get_session() as db:
+        customer = db.get(Customer, customer_id)
+        if customer is None:
+            return redirect(url_for("portal.employee_dashboard"))
+
+        customer_names = {
+            value.strip().lower()
+            for value in (customer.company_name, customer.poc, customer.name)
+            if value and value.strip()
+        }
+        quotes = db.execute(
+            select(Quote)
+            .where(func.lower(Quote.customer_name).in_(customer_names))
+            .order_by(
+                case((Quote.status == "canceled", 1), else_=0),
+                Quote.created_at.desc(),
+            )
+        ).scalars().all()
+
+        rows = [
+            (
+                quote,
+                total_for(quote),
+                customer_status_label(quote.status),
+            )
+            for quote in quotes
+        ]
+
+    return render_template(
+        "customer_dashboard.html",
+        user=employee,
+        rows=rows,
+        employee_view=True,
+        dashboard_customer_name=customer.company_name or customer.poc or customer.name,
     )
 
 
@@ -756,6 +849,7 @@ def accept_pending_quote(quote_id: int):
                 assigned_at=datetime.utcnow(),
             )
         )
+        sync_order_status(db, quote_id, "accepted")
         db.commit()
 
     if result.rowcount == 0:
@@ -785,11 +879,22 @@ def delete_pending_quote(quote_id: int):
                 "error": "Quote not found or not claimed by you",
             }), 404
 
+        quote.deleted_status = quote.status
         quote.status = "canceled"
         quote.deleted_by_user_id = user.id
         quote.deleted_at = utc_now()
         quote.edited_by_user_id = user.id
         quote.edited_at = utc_now()
+        sync_order_status(db, quote.id, "canceled")
+        order = db.execute(
+            select(Order).where(Order.quote_id == quote.id)
+        ).scalar_one_or_none()
+        if order is not None:
+            order.deleted_status = order.status
+            order.status = "canceled"
+            order.deleted_by_user_id = user.id
+            order.deleted_at = quote.deleted_at
+            db.add(order)
         db.add(quote)
         db.commit()
 
@@ -833,7 +938,7 @@ def legacy_customer_quote_form():
 
 @portal_bp.get("/employee/quote-entry")
 @require_role("employee")
-def employee_quote_entry():
+def employee_quote_forms():
     user = signed_in_user()
     # A quote_id (opening a saved quote) or draft flag (from the "Quote" button)
     # goes straight to the dedicated Quote Form page instead of the calculator.
@@ -1249,6 +1354,23 @@ def update_parts_catalog_part(row_id: int):
     return jsonify({"ok": True, **result})
 
 
+@portal_bp.post("/parts-catalog/pricing-text")
+@require_admin
+def update_parts_catalog_pricing_text():
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = update_pricing_text(
+            payload.get("table"),
+            payload.get("id"),
+            payload.get("field"),
+            payload.get("value"),
+            actor=signed_in_user(),
+        )
+    except PriceUpdateError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
 @portal_bp.post("/parts-catalog/inventory/bulk")
 @require_admin
 def update_parts_catalog_inventory_bulk():
@@ -1262,6 +1384,69 @@ def update_parts_catalog_inventory_bulk():
     except PriceUpdateError as exc:
         return jsonify({"ok": False, "error": str(exc)}), exc.status_code
     return jsonify({"ok": True, **result})
+
+
+@portal_bp.post("/parts-catalog/inventory/preview")
+@require_admin
+def preview_parts_catalog_inventory():
+    upload = request.files.get("inventory_file")
+    if upload is None or not upload.filename:
+        return jsonify({"ok": False, "error": "Choose an inventory CSV or workbook."}), 400
+    try:
+        rows = parse_inventory_source(upload.stream, upload.filename)
+    except InventoryImportError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    return jsonify({
+        "ok": True,
+        "count": len(rows),
+        "rows": inventory_rows_json(rows),
+        "source_name": upload.filename,
+    })
+
+
+@portal_bp.post("/parts-catalog/inventory/apply")
+@require_admin
+def apply_parts_catalog_inventory():
+    upload = request.files.get("inventory_file")
+    if upload is None or not upload.filename:
+        return jsonify({"ok": False, "error": "Choose an inventory CSV or workbook."}), 400
+    try:
+        rows = parse_inventory_source(upload.stream, upload.filename)
+        result = upsert_inventory_rows(
+            rows,
+            source_name=upload.filename,
+            updated_by=signed_in_user().display_name,
+        )
+    except InventoryImportError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    return jsonify({"ok": True, **result})
+
+
+@portal_bp.get("/parts-catalog/inventory/search")
+@require_admin
+def search_parts_catalog_inventory():
+    return jsonify({
+        "ok": True,
+        "rows": search_inventory(
+            request.args.get("q", ""),
+            limit=request.args.get("limit", type=int) or 1000,
+        ),
+    })
+
+
+@portal_bp.post("/parts-catalog/inventory/part")
+@require_admin
+def update_parts_catalog_inventory_part():
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = update_inventory_quantity(
+            payload.get("part_number"),
+            payload.get("inventory"),
+            updated_by=signed_in_user().display_name,
+        )
+    except InventoryImportError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    return jsonify({"ok": True, "row": result})
 
 
 @portal_bp.get("/parts-catalog/families")

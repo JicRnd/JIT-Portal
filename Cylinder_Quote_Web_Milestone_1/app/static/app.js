@@ -101,12 +101,20 @@ function wireWholeNumberInputs() {
 }
 let customerSuggestions = [];
 let customerSearchTimer = null;
+function customerNameOptions(customer) {
+  return [customer.company_name, customer.poc, customer.name]
+    .map(value => (value || '').trim())
+    .filter((value, index, values) => value && values.indexOf(value) === index);
+}
 function applyMatchedCustomerContact() {
   const typed = ($('customer_name').value || '').trim().toLowerCase();
-  const match = customerSuggestions.find(c => c.name.toLowerCase() === typed);
-  window.JIT_SELECTED_CUSTOMER_CONTACT = match ? (match.phone || '') : '';
-  if (match && match.address && !$('customer_address').value) {
-    $('customer_address').value = match.address;
+  const match = customerSuggestions.find(c => customerNameOptions(c).some(name => name.toLowerCase() === typed));
+  window.JIT_SELECTED_CUSTOMER_CONTACT = match
+    ? [match.phone, match.email].filter(value => (value || '').trim()).join(' | ')
+    : '';
+  const address = match ? [match.address, match.city_state_zip].filter(Boolean).join(', ') : '';
+  if (address && !$('customer_address').value) {
+    $('customer_address').value = address;
   }
 }
 async function searchCustomers(term) {
@@ -117,11 +125,11 @@ async function searchCustomers(term) {
     customerSuggestions = body.customers || [];
     const dl = $('customerNameList');
     dl.innerHTML = '';
-    customerSuggestions.forEach(c => {
+    customerSuggestions.forEach(c => customerNameOptions(c).forEach(name => {
       const opt = document.createElement('option');
-      opt.value = c.name;
+      opt.value = name;
       dl.appendChild(opt);
-    });
+    }));
     applyMatchedCustomerContact();
   } catch (e) { /* ignore transient errors while the user is still typing */ }
 }
@@ -132,7 +140,7 @@ function wireCustomerAutocomplete() {
     applyMatchedCustomerContact();
     clearTimeout(customerSearchTimer);
     const term = input.value.trim();
-    if (!term) { customerSuggestions = []; window.JIT_SELECTED_CUSTOMER_CONTACT = ''; return; }
+    if (term.length < 2) { customerSuggestions = []; window.JIT_SELECTED_CUSTOMER_CONTACT = ''; return; }
     customerSearchTimer = setTimeout(() => searchCustomers(term), 250);
   });
 }
@@ -291,7 +299,7 @@ function draftPayload() {
     ...p,
     manual_items: manualItemsFromOrderEntry(),
     customer_name: p.customer_name,
-    customer_contact: '',
+    customer_contact: p.customer_contact,
     customer_reference: '',
     comments: ''
   };

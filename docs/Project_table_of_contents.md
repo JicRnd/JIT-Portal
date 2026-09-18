@@ -68,6 +68,53 @@ This document is the working map for the active Flask application. Keep the path
 - Purpose: Customer enters cylinder specifications, options, discount, and manual parts, then clicks `Quote`.
 - Quote flow: calculator -> `POST /api/quote/draft` -> customer quote form.
 
+### 2.4.1 Employee Calculator Customer Search
+
+- Employee entry URL: `http://127.0.0.1:5055/employee/quote-entry`.
+- Route: `Cylinder_Quote_Web_Milestone_1/app/portal.py` function
+  `employee_quote_entry()`.
+- Employee wrapper: `Cylinder_Quote_Web_Milestone_1/app/Employee_/employee_calculator.html`.
+- The customer input itself is in the shared template
+  `Cylinder_Quote_Web_Milestone_1/app/templates/index.html`, element
+  `#customer_name`, with the `#customerNameList` HTML datalist.
+- Search JavaScript: `Cylinder_Quote_Web_Milestone_1/app/static/app.js`.
+  `wireCustomerAutocomplete()` waits 250 ms after at least two characters are
+  typed, then `searchCustomers()` requests `GET /api/customers/search?q=<text>`
+  and fills the datalist with the returned customer names.
+- Search route: `Cylinder_Quote_Web_Milestone_1/app/web.py`, function
+  `search_customers()`. It searches only company name, legacy name, and POC for
+  case-insensitive substring matches (`%query%`) anywhere in the typed character
+  sequence, orders by customer name, and returns all matching contacts. Address,
+  city/state/zip, shipping address, phone, email, and notes are not search fields.
+- Customer data source: `Cylinder_Quote_Web_Milestone_1/Databases/Employee_Contacts.db`.
+  `Customer` is bound to this database through `app/db.py`.
+- Selection behavior: the browser displays the returned company name, POC, and
+  legacy name values in the datalist. A selected contact is recognized only
+  when the typed value exactly matches one of those returned names
+  case-insensitively; then the contact phone and email are stored together in
+  the quote's `Phone/Email` field, and the address is copied when the address
+  field is blank.
+- Quote-form handoff: the shared calculator includes the selected customer's
+  phone in `customer_contact` when it creates the server-side quote draft, so
+  both the customer and employee Quote Forms populate their `Phone/Email`
+  field without requiring manual re-entry.
+- Regression protection: `Cylinder_Quote_Web_Milestone_1/tests/test_customer_lookup.py`
+  verifies substring matches across the three name fields and rejects matches
+  found only in excluded contact fields. The JavaScript trigger
+  and server-side query are the permanent owners of this behavior; do not restore
+  one-character requests, a ten-result cap, or client-only filtering.
+- The dashboard Customer Lookup dialog is a separate search surface from the JIT
+  Crew Calculator Customer input. Its handlers are embedded in the employee and
+  admin dashboard templates. Both wait for two characters and use the same
+  three-name-field substring API, preserving the live-search behavior documented
+  in the September 16 change log.
+- Guardrail test: `tests/test_customer_lookup.py` verifies the API search fields
+  and checks that all three search surfaces retain the two-character trigger.
+- Source protection note: an application-level four-digit PIN cannot securely
+  prevent repository edits because the code containing the PIN can also be edited.
+  Protect this behavior with repository permissions, protected branches and
+  required review, or a read-only policy outside the application.
+
 ### 2.5 Customer Quote Form
 
 - File: `Cylinder_Quote_Web_Milestone_1/app/customer_quote_form/customer_quote_form.html`
@@ -103,6 +150,33 @@ This document is the working map for the active Flask application. Keep the path
 - Route: `Cylinder_Quote_Web_Milestone_1/app/portal.py` function `employee_login()`
 - Connected backend: `login("employee")` in `app/portal.py`.
 - Successful destination: `/employee/dashboard`.
+- The form posts back to the current login path with fields `identity` and
+  `password`; `identity` accepts an active employee's username or email,
+  case-insensitively.
+- A successful login clears the prior session, stores `user_id` and `role`,
+  and redirects through `safe_next()` to the employee dashboard. A failed
+  credential check stays on the login page with the message `The
+  username/email or password did not match.`.
+
+### 2.6.1 Employee Dashboard Runtime Diagnosis (2026-09-16)
+
+- The shared route is `GET /employee/dashboard` in
+  `Cylinder_Quote_Web_Milestone_1/app/portal.py`, protected by
+  `require_role("employee")`.
+- The route selects `Admin_dashboard.html` when the signed-in employee has
+  `access_level == "admin"`; standard employees receive
+  `employee_dashboard.html`. Both templates use the same dashboard data
+  prepared by `employee_dashboard()`.
+- Kane Whiteside's local database record was verified as user ID `2`, active,
+  role `employee`, and access level `admin`. Replaying
+  `GET /employee/dashboard` through the current source and local interpreter
+  returned HTTP 200 and rendered the administrator dashboard.
+- During the browser 500 incident, three separate `run.py` Python processes
+  (PIDs `34288`, `41212`, and `21544`) were simultaneously listening on port
+  `5055`. This is a runtime/process-state finding, not a confirmed bad link or
+  reproducible route/template exception. Stop the duplicate local Flask
+  processes and start one instance before treating a later 500 as an
+  application-code failure.
 
 ### 2.7 Employee Dashboard
 
@@ -135,8 +209,13 @@ This document is the working map for the active Flask application. Keep the path
 ### 2.8 Employee Quote and Order History
 
 - Quote history HTML: `Cylinder_Quote_Web_Milestone_1/app/Employee_Quote_History/employee_quote_history.html`
-- Quote history URL: `http://127.0.0.1:5055/employee/quote-history`
+- Quote history URL: `http://127.0.0.1:5055/employee_quote_history/employee_quote_history.html`
 - Quote history route: `app/Employee_Quote_History/Employee_quote_history_search.py` function `employee_quote_history_page()`.
+- Quote history ordering: pending statuses (`accepted`, `pending_approval`,
+  and `pending`) appear first, followed by approved quotes; each group remains
+  newest first and oldest last. Approved quotes use the recorded `approved_at`
+  timestamp written when the employee clicks `Approve Order`; quote ID is not
+  used as the approval timestamp.
 - Order history HTML: `Cylinder_Quote_Web_Milestone_1/app/employee_order_history/employee_order_history.html`
 - Order history blueprint: `app/employee_order_history/Employee_order_history_search.py`, blueprint `employee_order_history`.
 - Order history page URL: `http://127.0.0.1:5055/employee_order_history/employee_order_history.html`
@@ -149,7 +228,11 @@ This document is the working map for the active Flask application. Keep the path
 - Order history reads matching records from `Databases/Order.db` and displays the
   saved Order ID, model code, customer, date, total, and status. The `Open` link
   returns to `/order-form?order_id=<id>`.
-- Shared history CSS used by the dashboard pages: `Cylinder_Quote_Web_Milestone_1/app/static/portal_history.css`.
+- The active administrator and employee dashboards now keep their shared table,
+  search, empty-state, suggestion, status, modal, and responsive rules in
+  their dedicated stylesheets. The active application has no remaining
+  `portal_history.css` references. Archived build scripts and the separate
+  `.kilo` worktree still contain historical references and were left untouched.
 - The legacy portal-based `app/Employee_/employee_history.html` template has been
   removed. The standalone employee-order-history template and blueprint are the
   only implementation.
@@ -179,10 +262,21 @@ This document is the working map for the active Flask application. Keep the path
   same scope with `approved_at` in the current month, matching Order History visibility.
 - The dashboard search form has a `search_box` wrapper and an `X` button that clears
   the dashboard search input and hides live suggestions without submitting.
+- The predicted-results popup directly below the employee dashboard search box is
+  the `div#searchSuggestions` live suggestions container, styled by the
+  `.suggestions` CSS class, in
+  `Cylinder_Quote_Web_Milestone_1/app/Employee_dashboard/employee_dashboard.html`.
 - The Customer Lookup dialog result table is vertically scrollable, allowing more
   than four customer results to be viewed within the popup.
 - Employee order history and quote history also use a `search_box` wrapper with a
   page-specific `X` clear button that hides suggestions and returns focus to the input.
+- Both history search boxes use the same live search suggestions popup pattern:
+  `div#searchSuggestions` with the `.suggestions` class in
+  `Cylinder_Quote_Web_Milestone_1/app/employee_order_history/employee_order_history.html`
+  and
+  `Cylinder_Quote_Web_Milestone_1/app/Employee_Quote_History/employee_quote_history.html`.
+  Their page-specific JavaScript renders order or quote suggestion links into
+  that container, and the matching page-specific CSS positions it below the form.
 - Customer Accounts uses the existing `manage_users.html` template and now lists
   active, inactive, and denied customer accounts with an Active/Not Active/Denied
   status selector. Employee account status behavior is unchanged.
@@ -194,6 +288,36 @@ This document is the working map for the active Flask application. Keep the path
   `notes`, with lightweight SQLite migration in `app/db.py`.
 - Working notes: `Cylinder_Quote_Web_Milestone_1/app/Employee_dashboard/Employee_dashboard_notes.txt`
   and `Cylinder_Quote_Web_Milestone_1/app/Order_Form/Order_Form_Notes.txt`.
+
+### 2.8.2 Quote Acceptance, Order Approval, and Duplicate-Record Trace
+
+- Acceptance route: `Cylinder_Quote_Web_Milestone_1/app/portal.py`,
+  `accept_pending_quote()` at `POST /employee/quotes/<quote_id>/accept`.
+  It updates the existing `Quote` to `accepted`, assigns the employee, and
+  synchronizes an existing linked `Order`; it does not create a quote.
+- Acceptance redirect: the employee and administrator dashboard scripts route
+  to `/employee/quote-entry?quote_id=<quote id>&accepted=1`. This opens the
+  employee Quote Form. The `accepted=1` marker is removed after loading.
+- Order submission route: `Cylinder_Quote_Web_Milestone_1/app/web.py`,
+  `submit_order_for_approval()` at
+  `POST /api/quotes/<quote_id>/order`. It updates the quote and creates an
+  `Order` row only if no row exists for that `quote_id`.
+- Approval route: `app/web.py`, `approve_internal_order()` at
+  `POST /api/quotes/<quote_id>/order/approve`. It updates the same `Quote` to
+  `approved` and updates or creates the linked `Order`; approval does not
+  allocate a new quote number.
+- Quote-number creation paths: `POST /api/quotes` creates a new quote, and
+  `POST /api/quotes/<quote_id>/duplicate` deliberately creates a fresh quote
+  with a new number. These are separate from acceptance and approval.
+- Diagnostic distinction: Quote History reads `Quote` records while Order
+  History reads `Order` records linked by `Order.quote_id`. A pending and an
+  approved quote with different quote numbers proves a second quote record was
+  created elsewhere in the workflow. Two order-history rows must be checked by
+  `Order.id`, `Order.quote_id`, and
+  `order_form_snapshot.order_number` before deciding whether they are duplicate
+  database rows or two projections of one workflow.
+- Detailed incident trace: `Cylinder_Quote_Web_Milestone_1/app/Order_Form/Order_Form_Notes.txt`,
+  section `Duplicate quote/order investigation - 9/16/2026`.
 
 ### 2.9 Customer and Employee Signup
 
@@ -211,14 +335,32 @@ This document is the working map for the active Flask application. Keep the path
   - Served at `/employee/quote-form.css`.
   - `Update Now` updates the currently loaded saved quote.
   - `New Order` always creates a separate quote using the existing new-order save behavior.
+  - `Update Now` and `Order` are sibling `type="button"` controls with distinct
+    IDs. Their inline click handlers stop propagation so clicking one does not
+    also trigger a parent toolbar action for the other.
   - The rendered employee quote sheet is editable, including displayed labels, descriptions, names, prices, dimensions, and other visible quote text; this does not expose application source code.
   - These edits are captured as plain-text and field-value data under the quote's existing `order_form_snapshot`, restored when the quote is reopened, and carried into the order snapshot.
 - Order form HTML: `Cylinder_Quote_Web_Milestone_1/app/Order_Form/order_form.html`
   - Served by `/order-form` and `/order-approval`.
+- Order Form toolbar actions:
+  - `Cancel` confirms the user wants to discard unsaved edits, then returns to
+    `/employee/dashboard` without calling an order or quote API.
+  - `Approve Order` sends the current editable form snapshot to
+    `POST /api/quotes/<quote id>/order/approve`. The backend marks the quote and
+    matching order `approved`, records the approving employee and timestamp,
+    creates or updates the matching `Order.db` row, and the page redirects to
+    `/employee_quote_history/employee_quote_history.html` after success. The
+    employee quote-history page searches all non-deleted quotes in `Quote.db`,
+    so the newly approved quote appears there with status `Approved`.
+  - After approval, the quote no longer matches the employee or administrator
+    dashboard `Pending Approvals` query because those queues accept only
+    `accepted`/`pending_approval` records. The approved quote remains available
+    through employee quote history and order history.
 - Order form CSS: `Cylinder_Quote_Web_Milestone_1/app/Order_Form/order_form.css`
   - Served at `/order-form.css`.
 - Order form JavaScript: `Cylinder_Quote_Web_Milestone_1/app/Order_Form/order_form.js`
   - Served at `/order-form.js`.
+  - Preserves each part's unit price for Order Form calculations and displays Cost as unit price multiplied by Allocated; ordinary one-per-cylinder parts use allocated quantity `1`.
 - Connected backend: `Cylinder_Quote_Web_Milestone_1/app/web.py`.
   - `POST /api/quotes/<quote id>/order` assigns employee-submitted pending quotes to the submitting employee so the returned order form can be opened immediately.
 - Approval and delete findings:
@@ -232,8 +374,19 @@ This document is the working map for the active Flask application. Keep the path
     `orders` row in `Databases/Order.db` with the order-form snapshot.
   - The standalone employee-order-history page includes orders created, assigned, edited, or approved by
     the signed-in employee/admin through the corresponding Quote user fields.
-  - `/employee/quote-history` is user-scoped to quotes created, assigned, edited,
-    or approved by the signed-in employee/admin.
+  - The standalone quote-history page searches all quotes in `Quote.db` and is
+    independent of employee ownership metadata.
+  - Each order-history row has a confirmed `Delete` POST action at
+    `/employee/order-history/<order_id>/delete`; it removes that order snapshot
+    from the active list by moving it to recoverable Trash in
+    `Order.db` while leaving the related quote record intact. The Trash view
+    restores it through `/employee/order-history/<order_id>/restore`.
+  - Each quote-history row has a confirmed `Delete` POST action at
+    `/employee_quote_history/<quote_id>/delete`; it follows the existing audit
+    convention by moving the quote to recoverable Trash as `canceled` and
+    recording the deleting employee, timestamp, and previous status in
+    `Quote.db`. The Trash view restores it through
+    `/employee_quote_history/<quote_id>/restore`.
   - On 2026-09-15, quote numbers `K0911261653` and `B0911261630` were verified
     and moved from accepted/pending operational states to `approved` in both
     `Quote.db` and their matching `Order.db` rows for assigned employee user 2.
@@ -251,6 +404,25 @@ This document is the working map for the active Flask application. Keep the path
 - Image route: `/images/<filename>` in `Cylinder_Quote_Web_Milestone_1/app/web.py`.
 - Active quote, order, approval, and login templates use the image route for
   the shared logo and quote drawing assets.
+
+### 2.14 Dedicated Inventory Workflow
+
+- Inventory source and normalization: `Cylinder_Quote_Web_Milestone_1/app/inventory_service.py`.
+  XLSM and CSV imports use the workbook `Inventory` field when present; otherwise
+  they derive quantity from `On Hand - Allocated`. Quantities are normalized with
+  ceiling rounding to whole numbers.
+- Dedicated persistence: `Cylinder_Quote_Web_Milestone_1/app/db.py` and
+  `Cylinder_Quote_Web_Milestone_1/app/models_db.py` use `Inventory.db` and the
+  `InventoryPart` model. Dedicated inventory quantities overlay matching Parts
+  Catalog rows without writing fractional values to the legacy pricing catalog.
+- Inventory administration routes: `Cylinder_Quote_Web_Milestone_1/app/portal.py`
+  provides admin-only preview/apply import, search, and individual-edit actions.
+- Parts Catalog controls: `Cylinder_Quote_Web_Milestone_1/app/Parts_catalog_page/parts_catalog.html`
+  includes the Inventory Manager for CSV/XLSM import, preview/apply, search, and
+  individual quantity updates. Existing price and catalog controls are preserved.
+- Regression coverage: `Cylinder_Quote_Web_Milestone_1/tests/test_inventory_management.py`
+  verifies rounding, preview/apply persistence, search, individual editing,
+  unmatched imported parts, and dedicated-quantity display.
 
 ### 2.13 Additional Organized Files
 
@@ -300,6 +472,86 @@ The normalized TieRod artifact is intentionally limited to the Order Form testin
 - Family selection: A and LH use the `Y:AD` chart; H and HM use the `S:X` chart/fallback table.
 - Source notes: `Cylinder_Quote_Web_Milestone_1/app/Pricing/H_Sheet_Notes.txt`.
 
+### 2.17 Order Form Allocation and On-Hand Mapping
+
+- Workbook source: `Cylinder_Quote_Web_Milestone_1/2026 JIT Order Entry V3.xlsm`.
+- Source sheet: `Order Form`, parts table rows `13:44`.
+- Verified column mapping from `Order Form!C13:H44`:
+  - `C` = Part #.
+  - `D` = Description.
+  - `E` = Cost.
+  - `F` = On Hand.
+  - `G` = Allocated.
+  - `H` = allocation warning/selection flag.
+- `Order Form!H13:H44` uses the same row-relative formula pattern:
+  `IF(OR(Drow="Air REH Head", Drow="Air BEH Head", Drow="Hyd REH Head", Drow="Hyd BEH Head", Drow="Head", Drow="Barrel", Drow="Rod", Drow="Stainless Steel Rod", Drow="Tie Rod"), "X", IF(Grow>Frow, "X", ""))`.
+  Built-in cylinder components therefore receive `X`; other parts receive `X` when allocated quantity exceeds on-hand quantity.
+- Workbook source sheet: `Inventory`, row `1` headers and rows `2:1029` data.
+  - `A` = Part Number.
+  - `B` = Product Description.
+  - `C` = Unit Price.
+  - `D` = On Hand.
+  - `E` = Allocated.
+  - `F` = Start 2025.
+  - `G` = On Order.
+  - `H` = Inventory/available quantity.
+- `Inventory!Hrow` is calculated as `Drow-Erow`.
+- `Inventory!Erow` contains selector formulas that reference the current cylinder inputs on `Data` and helper values on `H`; the formula family varies by part. Examples verified during read-only analysis include tie rod, rod, barrel, tie-rod nuts, barrel seal, gland backup seal, rod wiper, rod seal, and piston seal rows.
+- Cached formula values are available in the workbook for the current saved input state, but formulas must be reproduced as application rules or normalized data. The Flask application must not load the XLSM at runtime.
+
+### 2.18 September 18, 2026 Scoped Findings
+
+- The administrator dashboard shell now uses the same capped responsive width as the employee quote-history shell: `min(1200px, 96vw)`.
+- The Order Form toolbar keeps Dashboard and Cancel first, then Email Customer, Add Part, Deny Order, and Hold, followed by the plain-text status and Approve Order. Toolbar controls are fixed to single-line labels so their widths do not change from text wrapping.
+- The Order Form status is text-only; the prior pill outline, radius, and status background colors are removed. The status element remains `#orderStatus` so the existing status logic is not changed.
+- Existing Order Form JavaScript already preserves part unit prices and recalculates displayed Cost as unit price multiplied by Allocated. The remaining cost-display investigation belongs to the Order Form data/API path, not the HTML/CSS presentation layer.
+- The pending-approval queue, New Accept Request filtering, save/modify timestamp ordering, quote/order button isolation, and page load-time behavior are controlled by backend and JavaScript owners outside the isolated dashboard/history/order-form HTML/CSS edit set. These must be traced before editing so the verified pricing engine and existing user changes are not overwritten.
+- The customer-search contract documented elsewhere in this table of contents remains protected: two-character minimum, case-insensitive substring matching, exact typed sequence, and only Company Name, POC, and legacy Customer Name as search fields. Contact/address fields are returned data, not search fields.
+
+#### 2.18.1 September 18 Behavior Diagnosis Before Fixes
+
+- `app/portal.py:employee_dashboard()` currently sends all unassigned `new` or `pending_approval` quotes to New Accept Request. `app/quote_service.py:create_quote_snapshot()` currently creates both customer and employee quotes with `status="new"`; this is the confirmed owner of employee quotes appearing in the new-request queue.
+- The same dashboard function limits Pending Approvals to assigned quotes and sorts by `created_at.asc()`. The requested newest-first saved/modified behavior requires `edited_at.desc()` with a created-time fallback.
+- `app/Employee_quote_form/employee_quote_form.js:createNewOrder()` calls the shared `saveQuote(false, true)` path. That function PATCHes the quote before POSTing `/api/quotes/<id>/order`, confirming the current Order/Update coupling.
+- `app/Order_Form/order_form.js:load()` waits serially for the quote, TieRod reference JSON, and engineering JSON. These independent loads are the confirmed local source of avoidable startup delay.
+- The Inventory Manager markup has no formula column. Formula guidance must be display-only in that manager and must not be connected to calculator or Order Form allocation logic.
+- Current customer search remains protected and correct: `app/web.py:search_customers()` searches only company name, legacy name, and POC by substring, while `app/static/app.js:wireCustomerAutocomplete()` waits for two characters.
+- Focused pytest was blocked by the terminal using system Python without the application import path (`ModuleNotFoundError: No module named 'app'`).
+- Implemented Order Form integration: `app/component_bom.py` enriches part rows from `Inventory.db` by matching `part_number`; `inventory_parts.inventory` populates `F` On Hand and `inventory_parts.allocated` populates `G` Allocated when present. Existing generated-part defaults remain as fallback when no Inventory.db row exists.
+- `app/quote_service.py` exposes normalized `order_form_parts` rows in the quote JSON payload, covering generated, special, and manual parts. `app/Order_Form/order_form.js` renders that payload and uses Inventory.db values for catalog parts added through its search dialog.
+- The existing `parts_catalog.html` inventory display remains an editor/source view and is not the allocation calculation engine.
+- Regression coverage: `tests/test_order_form_inventory.py` verifies Inventory.db values reach catalog search results and generated quote Order Form payloads.
+
+#### 2.17.1 Exact Excel Inventory Allocation Flow (2026-09-17)
+
+- The Excel allocation decision is made independently by each populated `Inventory!E` formula. The workbook does not first select parts by sorting a candidate list.
+- The `Shipped_Click` macro sorts `Inventory!A1:J10000` by `Inventory!E2` in descending order after the row formulas calculate allocated quantities.
+- The Order Form then reads only `Inventory` rows `2:32` after that sort. Positive allocated rows therefore become the first 31 displayed parts; rows beyond that display window are not transferred to the Order Form.
+- Displayed extended cost is allocated quantity multiplied by the Inventory unit price. This is separate from the allocation decision itself.
+- Confirmed `Data` inputs used by the Inventory allocation formulas:
+  - `B2` cylinder quantity.
+  - `B3` series.
+  - `B4` bore.
+  - `B5` mount.
+  - `B6` rod diameter.
+  - `B7` cushion configuration.
+  - `B8` stroke.
+  - `B10` seal material.
+  - `B11:B27` optional features.
+  - `G9:G22` accessory quantities.
+  - `F26:G32` custom part-number/quantity pairs.
+  - `B25` extra tie rod.
+  - `B16` is labeled `UltraOx` on the Data sheet, while the VBA control that writes it is named `TextBoxSSTieRod`.
+- Remaining implementation requirement: reproduce the Inventory column E selector formulas as application rules or normalized data, then apply the Excel sort and 31-row transfer behavior. `app/component_bom.py` still uses a fixed candidate list and does not yet provide complete formula parity.
+
+#### 2.17.2 Order Form Parts Placement Investigation (2026-09-18)
+
+- The current Order Form comparison sequence requested from the Excel `Order Form` sheet is: Tie Rod, Rod, Barrel, Tie Rod Nuts, Piston Seal, Barrel Seal, Gland Oring Backup Seal, Rod Wiper, Rod Seal, Piston ID Oring Seal, Gland Oring Seal, Gland, REH Head, BEH Head, Piston, and Mount.
+- `app/component_bom.py` now preserves this generated-part sequence in the server payload and limits the displayed window without reordering by Allocated. Special and manual rows remain after generated rows in their existing order.
+- Regression coverage is in `tests/test_order_form_inventory.py` for the sequence helper and the generated H 5-inch / 2-inch rod part list.
+- This placement change does not change pricing, allocation quantities, unit costs, or engineering lengths.
+- Open parity investigation: verify the exact workbook formulas/reference rows for Tie Rod Cost and Allocated and for Rod Price/Allocated before changing runtime calculations. The remembered relationship involving stroke, barrel/nut/gland dimensions, thread allowance, four tie rods, and unit price is only a lead and is not yet verified.
+
 ## 3. Shared Backend and Data Connections
 
 ### 3.1 Flask Route and Application Layer
@@ -324,6 +576,42 @@ The normalized TieRod artifact is intentionally limited to the Order Form testin
 - `Cylinder_Quote_Web_Milestone_1/app/catalog.py` - Catalog construction.
 - `Cylinder_Quote_Web_Milestone_1/app/pricing_catalog_service.py` - Catalog and parts catalog operations.
 - `Cylinder_Quote_Web_Milestone_1/pricing_data/` - Normalized pricing data.
+
+### 3.2.1 Inventory Baseline and Planned Integration Surface
+
+- Workbook source: `Cylinder_Quote_Web_Milestone_1/2026 JIT Order Entry V3.xlsm`.
+- Workbook sheet: `Inventory` (visible, range `A1:T1029`).
+- Verified source columns on row 1:
+  - `A` Part Number.
+  - `B` Product Description.
+  - `C` Unit Price.
+  - `D` On Hand.
+  - `E` Allocated.
+  - `F` Start 2025.
+  - `G` On Order.
+  - `H` Inventory.
+- Workbook behavior observed during read-only extraction:
+  - `H` is calculated as `D-E` for the visible inventory quantity.
+  - `E` contains selector formulas referencing the `Data` and `H` sheets to calculate allocation for the current cylinder inputs.
+  - Cached values are present when the workbook is loaded with `data_only=True`; the workbook must remain a read-only source artifact and must not be loaded by the Flask application at runtime.
+- Authoritative inventory database: `Cylinder_Quote_Web_Milestone_1/Databases/Inventory.db`.
+  - Current table: `inventory_parts`.
+  - Columns: `part_number`, `product_description`, `inventory`, `allocated`, `start_2025`, `on_order`, `updated_by`, `updated_at`, and `source_name`.
+  - All inventory, on-hand, and allocation application work must use this database. Do not introduce a second inventory store or use `Pricing.db` as the inventory authority.
+- Current catalog storage: `Cylinder_Quote_Web_Milestone_1/Databases/Pricing.db`, table `catalog_parts`, currently includes an `inventory INTEGER` column and 1,201 catalog rows.
+- Current parts catalog page: `Cylinder_Quote_Web_Milestone_1/app/Parts_catalog_page/parts_catalog.html`, served at `/parts-catalog`.
+  - The Parts Catalog table has an Inventory column that is initially populated from `catalog_parts.inventory`.
+  - The page has an Inventory visibility toggle, inline inventory editing, selected-part bulk inventory updates, and an inventory bulk-update modal.
+  - Admin users double-click catalog data cells, including Vendors and Inventory Source, to edit them directly in the table; those edits use the existing row update endpoint. Non-admin users do not enter the inline editor.
+  - Vendors, Price Location, and Inventory Source place their edit metadata on the full table cell, so admin users can double-click and enter values in empty cells.
+  - Common Modifications and PH / VA Pricing table cells are admin-only double-click editors for text and numeric values. Blank numeric values still render as available price editors so every pricing cell can be edited.
+- Current inventory editing backend:
+  - `app/pricing_catalog_service.py` function `update_catalog_part()` validates non-negative whole-number inventory values and writes them to `catalog_parts.inventory`.
+  - `app/pricing_catalog_service.py` function `update_catalog_inventory_bulk()` sets one validated inventory value for selected catalog rows.
+  - `app/portal.py` route `POST /parts-catalog/parts/<row_id>` handles individual catalog-part edits.
+  - `app/portal.py` route `POST /parts-catalog/inventory/bulk` handles selected-part bulk quantity updates.
+- Not yet implemented: workbook/CSV inventory import, inventory search/edit page, inventory transaction history, or order-time inventory decrement tied to approved/created orders. These remain implementation scope items and are not yet active behavior.
+- Scope lock for the allocation work: preserve existing code and add only the smallest directly required behavior. Do not refactor, replace, or modify unrelated pages, routes, pricing logic, or catalog behavior.
 
 ### 3.3 Database and Models
 
@@ -385,8 +673,8 @@ The normalized TieRod artifact is intentionally limited to the Order Form testin
   final approval timestamps, but it does not record a separate opened/viewed
   event or a customer-read receipt. An `assigned_at` value proves the quote
   was claimed by an employee, not the exact time its form was opened.
-5. Pending approval quotes remain in employee quote history at
-  `/employee/quote-history` but are excluded from employee order history at
+5. Pending approval quotes remain in the standalone employee quote history but
+  are excluded from employee order history at
   the standalone employee-order-history page until the order is approved.
 6. Identifier contract: customer quote pages and the customer dashboard display
   `Quote.quote_number`; employee order/approval pages may display the separate
@@ -395,7 +683,12 @@ The normalized TieRod artifact is intentionally limited to the Order Form testin
 7. The Order Form provides `Approve Order` and `Deny Order` actions. Denial
   changes both the quote and order snapshot to `denied`; denied records remain
   visible in both history pages but are sorted to the bottom.
-8. The shared dashboard route selects `Admin_dashboard.html` for admin
+8. The employee and administrator dashboard `Pending Approvals` row `Open`
+  action routes to `/order-form?quote_id=<quote id>`, where `Approve Order`
+  changes the quote and matching order status to `approved`. It must not route
+  to `/employee/quote-entry`, whose employee Quote Form has `Order` and `Hold`
+  actions but no approval action.
+9. The shared dashboard route selects `Admin_dashboard.html` for admin
   employees and `employee_dashboard.html` for standard employees. Both use
   the same `pending_queue` data from `app/portal.py`.
 
@@ -435,3 +728,12 @@ Connected files:
 - `docs/ARCHITECTURE_MAP.md` - Architecture notes.
 - `docs/business-rules.md` - Business and pricing rules.
 - `docs/Project_table_of_contents.md` - This maintained navigation map.
+
+## 8. Rod-Length Calculation Findings (2026-09-18)
+
+- Workbook source: `Cylinder_Quote_Web_Milestone_1/2026 JIT Order Entry V3.xlsm`, Sheet `H`. The `~$2026 JIT Order Entry V3.xlsm` file is an Excel temporary lock file; it is not the calculation source.
+- Sheet H rod allocation formula: `Inventory!E3` uses `Data!B2 * (Data!B8 + H!AD$7)` for the standard Rod row, where `Data!B2` is cylinder quantity and `Data!B8` is stroke.
+- Sheet H rod addition formula: `H!AD7 = H!AS64 + H!BB50 + Data!B11 + Data!B27`. The Sheet H helper selectors provide the mount, cushion, and rod-style-dependent addition.
+- The active Order Form script already loads the verified normalized Sheet H reference at `/static/sheet_h_engineering.json` for engineering output. `app/Order_Form/order_form.js` now applies `stroke + rod addition` to the existing Rod part row's Allocated value and recalculates its extended Cost using the preserved unit price.
+- `Databases/Pricing.db` now contains the isolated `rod_length_rules` table. It stores 4,020 normalized Sheet H rows with family, bore, rod diameter, cushion, rod style, rod-length addition, source cell, helper cell, workbook, and sheet provenance. The existing Pricing.db tables were not changed.
+- The runtime must continue to use normalized rule data and must not load the XLSM workbook.

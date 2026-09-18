@@ -11,34 +11,18 @@
     rel="stylesheet"
     href="{{ url_for('admin_dashboard_css', v='2') }}"
   >
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='portal_history.css') }}"
-  >
 </head>
 <body>
   <header class="portal-header">
-    <div>{{ user.display_name }} · Employee</div>
+    <div>{{ user.display_name }} · Admin</div>
     <h1>JIT {{ user.display_name }}'s Dashboard</h1>
-    <div class="header-right">
-      <div class="header-stats">
-        <div class="header-stats-month">{{ current_month_label }}</div>
-        <div class="header-stats-grid">
-          <span>Quoted</span>
-          <span>Approved</span>
-          <strong>{{ quotes_this_month }}</strong>
-          <strong>{{ approved_orders_count_this_month }}</strong>
-        </div>
-      </div>
-      <a href="{{ url_for('portal.logout') }}">Log Out</a>
-    </div>
   </header>
 
   <main class="portal-shell">
     <div class="dashboard-actions">
       <button
         class="portal-button new-quote"
-        data-standard="{{ url_for('portal.employee_quote_entry') }}"
+        data-standard="{{ url_for('employee_quote_form_page') }}"
         data-metric="{{ url_for('portal.metric_coming_soon') }}"
       >
         + New Quote
@@ -46,7 +30,7 @@
 
       <a
         class="portal-button secondary"
-          href="{{ url_for('employee_quote_history.employee_quote_history_page') }}"
+        href="{{ url_for('employee_quote_history.employee_quote_history_page') }}"
       >
         Quote History
       </a>
@@ -90,7 +74,6 @@
               <tr>
                 <th>Type</th>
                 <th>Reference</th>
-                <th>Name</th>
                 <th>Model Code</th>
                 <th>Status</th>
                 <th>Submitted</th>
@@ -168,11 +151,10 @@
 
       {% if pending_queue %}
         <div class="table-wrap">
-          <table id="pendingQueueTable">
+          <table id="pendingQueueTable" class="pending-approvals-table">
             <thead>
               <tr>
-                <th>Type</th>
-                <th>Reference</th>
+                <th>Quote #</th>
                 <th>Name</th>
                 <th>Model Code</th>
                 <th>Status</th>
@@ -184,7 +166,6 @@
             <tbody>
               {% for item in pending_queue %}
                 <tr data-pending-id="{{ item.id }}">
-                  <td>Quote</td>
                   <td>{{ item.quote_id or '—' }}</td>
                   <td>{{ item.customer_name|title if item.customer_name else '—' }}</td>
                   <td>{{ item.model_code or '—' }}</td>
@@ -192,14 +173,14 @@
 
                   <td>
                     {{
-                      item.created_at.strftime('%b %d, %Y')
+                      item.created_at.strftime('%m/%d/%y - %I:%M%p').replace(' - 0', ' - ').lower()
                       if item.created_at
                       else '—'
                     }}
                   </td>
 
                   <td>
-                    <a class="small-button" href="{{ url_for('portal.employee_quote_entry') }}?quote_id={{ item.id }}">Open</a>
+                    <a class="small-button open-quote" href="{{ url_for('employee_quote_form_page', quote_id=item.id) }}">Open Quote</a>
                     <form method="post" action="{{ url_for('portal.delete_pending_quote', quote_id=item.id) }}" style="display:inline;">
                       <button class="small-button" type="submit">Delete</button>
                     </form>
@@ -246,7 +227,7 @@
                   <td>
                     <a
                       class="small-button"
-                      href="{{ url_for('portal.employee_quote_entry') }}?quote_id={{ item.id }}"
+                      href="{{ url_for('employee_quote_form_page', quote_id=item.id) }}"
                     >
                       View
                     </a>
@@ -296,8 +277,6 @@
 
     {% if query %}
       <h2>Search Results</h2>
-      {% set entry_url=url_for('portal.employee_quote_entry') %}
-
       {% if customer_rows %}
         <h3>Matching Customers</h3>
         <div class="table-wrap">
@@ -378,12 +357,11 @@
             </td>
 
             <td>
-              {% set has_order = (status == 'Approved') or ((quote.order_form_snapshot or {}).get('order_number')) %}
               <a
-                class="small-button"
-                href="{{ '/order-form' if has_order else entry_url }}?quote_id={{ quote.id }}"
+                class="small-button open-quote"
+                href="{{ url_for('employee_quote_form_page', quote_id=quote.id) }}"
               >
-                Open
+                Open Quote
               </a>
             </td>
           </tr>
@@ -466,6 +444,13 @@
             Add Contact
           </button>
           <button
+            id="addAccountButton"
+            class="portal-button secondary"
+            type="button"
+          >
+            New Account
+          </button>
+          <button
             id="addBulkContactsButton"
             class="portal-button secondary"
             type="button"
@@ -507,8 +492,8 @@
         </button>
       </div>
 
-      <div class="table-wrap" style="max-height: min(45vh, 420px); overflow-y: auto;">
-        <table>
+      <div class="table-wrap contact-display-wrapper">
+        <table class="contact-display">
           <thead>
             <tr>
               <th>Company Name</th>
@@ -519,6 +504,7 @@
               <th>Email</th>
               <th>Membership</th>
               <th>Notes</th>
+              <th>Dashboard</th>
               <th></th>
               <th></th>
               <th></th>
@@ -557,10 +543,9 @@
       </label>
 
       <label style="font-size:0.95rem;">
-        POC<br>
+        Person Name (POC)<br>
         <input
           id="customerEditName"
-          required
           style="padding:0.4rem; width:100%; margin-top:0.25rem;"
         >
       </label>
@@ -748,6 +733,7 @@
     const editPhone = $("customerEditPhone");
     const editEmail = $("customerEditEmail");
     const editMessage = $("customerEditMessage");
+    let editingCustomerId = null;
     const notesDialog = $("customerNotesDialog");
     const notesText = $("customerNotesText");
     const notesMessage = $("customerNotesMessage");
@@ -764,7 +750,7 @@
       }
       customers.forEach((c) => {
         const tr = document.createElement("tr");
-        [c.company_name || "—", c.poc || c.name || "—", c.address || "—", c.city_state_zip || "—", c.phone || "—", c.email || "—", c.status || "—"].forEach((text) => {
+        [c.company_name || "—", c.poc || "—", c.address || "—", c.city_state_zip || "—", c.phone || "—", c.email || "—", c.status || "—"].forEach((text) => {
           const td = document.createElement("td");
           td.textContent = text;
           tr.appendChild(td);
@@ -778,6 +764,15 @@
         notesButton.addEventListener("click", () => openNotes(c));
         notesTd.appendChild(notesButton);
         tr.appendChild(notesTd);
+
+        const dashboardTd = document.createElement("td");
+        const dashboardLink = document.createElement("a");
+        dashboardLink.className = "portal-button secondary small-button";
+        dashboardLink.style.textDecoration = "none";
+        dashboardLink.textContent = "Dashboard";
+        dashboardLink.href = "{{ url_for('portal.employee_customer_dashboard', customer_id=0) }}".replace("/0", `/${encodeURIComponent(c.id)}`);
+        dashboardTd.appendChild(dashboardLink);
+        tr.appendChild(dashboardTd);
 
         const editTd = document.createElement("td");
         const editButton = document.createElement("button");
@@ -836,15 +831,31 @@
 
     function openEdit(c) {
       editMessage.textContent = "";
+      editingCustomerId = c.id;
       editId.value = c.id;
       editCompany.value = c.company_name || "";
-      editName.value = c.poc || c.name || "";
+      editName.value = c.poc || "";
       editAddress.value = c.address || "";
       editCityStateZip.value = c.city_state_zip || "";
       editPhone.value = c.phone || "";
       editEmail.value = c.email || "";
       if (editDialog.showModal) editDialog.showModal();
     }
+
+    function openNewContact() {
+      editMessage.textContent = "";
+      editingCustomerId = null;
+      editId.value = "";
+      editCompany.value = "";
+      editName.value = "";
+      editAddress.value = "";
+      editCityStateZip.value = "";
+      editPhone.value = "";
+      editEmail.value = "";
+      if (editDialog.showModal) editDialog.showModal();
+    }
+
+    $("addContactButton").addEventListener("click", openNewContact);
 
     function openNotes(c) {
       notesCustomer = c;
@@ -854,7 +865,7 @@
     }
 
     async function saveEdit() {
-      const id = editId.value;
+      const id = editingCustomerId;
       const original = currentCustomers.find((c) => String(c.id) === id);
       const companyName = editCompany.value.trim() || null;
       const poc = editName.value.trim() || null;
@@ -863,14 +874,9 @@
       const phone = editPhone.value.trim() || null;
       const email = editEmail.value.trim() || null;
 
-      if (!poc) {
-        editMessage.textContent = "POC cannot be blank.";
-        return;
-      }
-
       const payload = {};
       if (!original || original.company_name !== companyName) payload.company_name = companyName;
-      if (!original || (original.poc || original.name) !== poc) payload.poc = poc;
+      if (!original || (original.poc || "") !== poc) payload.poc = poc;
       if (!original || original.address !== address) payload.address = address;
       if (!original || original.city_state_zip !== cityStateZip) payload.city_state_zip = cityStateZip;
       if (!original || original.phone !== phone) payload.phone = phone;
@@ -882,8 +888,8 @@
       }
 
       try {
-        const res = await fetch(`/api/customers/${encodeURIComponent(id)}`, {
-          method: "PATCH",
+        const res = await fetch(id ? `/api/customers/${encodeURIComponent(id)}` : "/api/customers", {
+          method: id ? "PATCH" : "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify(payload),
         });
@@ -925,6 +931,11 @@
     input.addEventListener("input", () => {
       clearTimeout(timer);
       const term = input.value.trim();
+      if (term.length < 2) {
+        tbody.innerHTML = "";
+        currentCustomers = [];
+        return;
+      }
       timer = setTimeout(() => search(term), 250);
     });
 
@@ -1006,7 +1017,7 @@
     const status = $("bulkContactsStatus");
     let selectedFile = null;
 
-    $("addContactButton").addEventListener("click", () => {
+    $("addAccountButton").addEventListener("click", () => {
       window.location.assign("{{ url_for('portal.customer_signup') }}?return_to=" + encodeURIComponent(window.location.href));
     });
 
@@ -1075,7 +1086,7 @@
           });
 
           if (res.status === 200) {
-            window.location.replace("{{ url_for('portal.employee_quote_entry') }}?quote_id=" + encodeURIComponent(quoteId) + "&accepted=1");
+            window.location.replace("{{ url_for('employee_quote_form_page') }}?quote_id=" + encodeURIComponent(quoteId) + "&accepted=1");
             return;
           }
 

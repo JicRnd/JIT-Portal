@@ -1,0 +1,61 @@
+2026-09-17
+
+Parts Catalog empty-cell editing:
+- Moved the Vendors, Price Location, and Inventory Source edit metadata onto the full table cells in both parts-row renderers.
+- Admin double-click editing now works when those cells are empty, not only when clicking existing text.
+
+Order Form allocated cost calculation:
+- Preserved each generated part's unit price in the server-provided Order Form payload.
+- Kept ordinary one-per-cylinder parts at allocated quantity `1` and calculated each displayed Cost as unit price multiplied by Allocated.
+- Updated the Order Form page to recalculate a row's Cost when its Allocated value changes, without filling blank rows with `$0.00`.
+
+Parts Catalog admin cell editing:
+- Updated `app/Parts_catalog_page/parts_catalog.html` so catalog cell editing is admin-only and starts on double-click.
+- Applied the behavior to part catalog data cells, Common Modifications cells, and PH / VA Pricing cells while preserving the existing save endpoints and validation.
+
+Parts Catalog admin inline editing:
+- Updated `app/Parts_catalog_page/parts_catalog.html` so every Common Modifications and PH / VA pricing cell keeps the existing click-to-edit price control even when a price is blank.
+- Confirmed Vendors and Inventory Source use the page's existing click-to-edit row update path, alongside the other catalog fields.
+- No pricing engine, backend route, or unrelated file was changed.
+
+Validation:
+- `pytest tests/test_pricing_catalog_editing_and_upload.py -q` exited with code 1 without producing output in the current environment.
+
+Workbook allocation analysis:
+- Read `2026 JIT Order Entry V3.xlsm` with formulas and cached values without modifying the workbook.
+- Confirmed `Order Form!C13:H44` is the parts table: Part #, Description, Cost, On Hand, Allocated, and the allocation warning flag.
+- Confirmed `Order Form!H13:H44` marks built-in cylinder components with `X`, or marks other rows with `X` when Allocated exceeds On Hand.
+- Confirmed `Inventory!A:H` uses Part Number, Product Description, Unit Price, On Hand, Allocated, Start 2025, On Order, and Inventory; `Inventory!H` is `On Hand - Allocated`.
+- Confirmed `Inventory!E` allocation formulas reference current inputs on the `Data` sheet and helper values on the `H` sheet, with selector logic varying by part.
+- Updated `docs/Project_table_of_contents.md` with the verified workbook mapping and the remaining implementation requirement.
+- No change was made to `app/Parts_catalog_page/parts_catalog.html`, pricing logic, or runtime code during this analysis pass.
+
+Inventory authority and scope lock:
+- `Databases/Inventory.db` is the authoritative inventory database for all future on-hand and allocation work.
+- Verified its current `inventory_parts` table and fields: `part_number`, `product_description`, `inventory`, `allocated`, `start_2025`, `on_order`, `updated_by`, `updated_at`, and `source_name`.
+- Future work must add only the smallest behavior required to use this database and preserve existing code and workflows. No second inventory store, unrelated refactor, pricing rewrite, or changes outside this scope are permitted.
+
+Allocation and On Hand implementation:
+- Added additive Inventory.db enrichment in `app/component_bom.py`; matching `inventory_parts.inventory` supplies On Hand and `inventory_parts.allocated` supplies Allocated.
+- Added `order_form_parts` to the existing quote JSON payload for generated, special, and manual parts.
+- Updated the existing Order Form renderer and catalog-part search handoff to consume the server-provided inventory values instead of forcing zero On Hand values.
+- Added `tests/test_order_form_inventory.py` covering catalog search and generated quote payloads.
+- No change was made to the pricing engine or `parts_catalog.html`.
+- Focused validation passed: 9 tests passed and `node --check app/Order_Form/order_form.js` passed. Two unrelated existing quote-preview assertions remain failing when the full selected file is run: expected `draft` versus current `new`, and expected `Order Now` text missing from the current quote form.
+
+Exact Excel Inventory allocation findings:
+- Each populated `Inventory!E` formula independently decides whether a part is selected and calculates its allocated quantity; selection is not produced by sorting a fixed candidate list.
+- The Excel `Shipped_Click` macro sorts `Inventory!A1:J10000` by `Inventory!E2` descending after allocation formulas calculate.
+- The Order Form reads only `Inventory` rows 2 through 32 after sorting, so positive allocated rows become the first 31 displayed parts.
+- Displayed extended cost is allocated quantity multiplied by Inventory unit price.
+- Confirmed allocation inputs are `Data!B2` cylinder quantity, `B3` series, `B4` bore, `B5` mount, `B6` rod diameter, `B7` cushion, `B8` stroke, `B10` seal material, `B11:B27` optional features, `G9:G22` accessory quantities, `F26:G32` custom part-number/quantity pairs, and `B25` extra tie rod.
+- `Data!B16` is labeled UltraOx even though the VBA control writing it is named `TextBoxSSTieRod`.
+- Remaining parity work is to reproduce the Inventory column E selector formulas as application rules or normalized data and apply the Excel sort/window behavior. `app/component_bom.py` currently uses a fixed candidate list and is not yet complete formula parity.
+
+Order Form allocation audit:
+- Created `app/Order_Form/allocation_audit.txt` with a complete four-dimensional audit of the employee Order Form: visual and style, interactive and functional, connectivity and data, and architecture and technical purpose.
+- Documented the Order Form HTML/CSS structure, controls, startup/render flow, API calls, local asset dependencies, server-side authority boundary, Inventory.db integration, dynamic allocation rules, fixed allocation rules, and extended-cost behavior.
+- Recorded verified workbook findings: H/HM 5-inch tie rods use `TR087`/`TRN087`; standard piston and barrel seal rows inspected use quantity-based `Data!B2*2` behavior; `H40PL` and `H25PL` are low-friction piston-seal exceptions using `Data!B2`.
+- Documented known risks and remaining work, including incomplete all-category workbook parity verification and the provisional description/part-number heuristic used by `apply_fixed_allocations()`.
+- Confirmed the audit file is present, non-empty at 16,629 bytes, and contains all four required section headings.
+- No additional application, pricing, workbook, or unrelated files were changed for the audit documentation task.

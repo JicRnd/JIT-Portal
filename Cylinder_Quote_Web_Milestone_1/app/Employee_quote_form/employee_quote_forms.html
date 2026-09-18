@@ -23,8 +23,8 @@
       <button type="button" id="employeeSaveButton" class="preview-btn">Save</button>
       <button type="button" id="emailCustomerButton" class="preview-btn">Email Customer</button>
       <button type="button" id="holdQuoteButton" class="preview-btn">Hold</button>
-      <button type="button" id="saveQuoteButton" class="preview-btn primary">Update Now</button>
-      <button type="button" id="newOrderButton" class="preview-btn primary">Order</button>
+      <button type="button" id="saveQuoteButton" class="preview-btn primary" onclick="event.stopPropagation()">Update Now</button>
+      <button type="button" id="newOrderButton" class="preview-btn primary" onclick="event.stopPropagation()">Order</button>
       <span class="qf-toolbar-meta"><strong id="pv_status">&mdash;</strong></span>
       <span id="verifyMessage" class="verify-message" role="status" aria-live="polite"></span>
       <span id="previewErrorMessage" class="error" role="alert"></span>
@@ -46,6 +46,8 @@
           <label>Address:</label><input id="pv_customer_address" type="text" autocomplete="off">
           <label>Phone/Email:</label><input id="pv_customer_contact" type="text" autocomplete="off">
           <label>Attn:</label><input id="pv_customer_attn" type="text" autocomplete="off">
+          <label>Tag:</label><input id="pv_tag" type="text" autocomplete="off">
+          <label>PO Number:</label><input id="pv_po_number" type="text" autocomplete="off">
         </div>
         <div class="xq-meta-stack">
           <table class="xq-meta-table xq-quote-meta">
@@ -55,7 +57,6 @@
           </table>
           <table class="xq-meta-table xq-side-table">
             <tr><th>Days:</th><td><input id="pv_days" type="number" min="0" value="30" aria-label="Quoted delivery days"></td></tr>
-            <tr><th>Ref:</th><td><input id="pv_reference_notes" type="text" autocomplete="off"></td></tr>
             <tr><th>FOB</th><td><input id="pv_fob" value="Hartselle, AL" aria-label="FOB location"></td></tr>
           </table>
         </div>

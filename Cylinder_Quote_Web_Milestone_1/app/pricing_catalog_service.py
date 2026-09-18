@@ -16,6 +16,7 @@ from .models_db import (
     BaseAssemblyPrice,
     CatalogPart,
     CommonModificationPrice,
+    InventoryPart,
     PhVaPrice,
     PriceChangeLog,
     utc_now,
@@ -27,6 +28,7 @@ from .part_family_service import (
     family_headline,
     list_families,
 )
+from .inventory_service import sync_catalog_parts_to_inventory
 
 
 PRICING_DATA_DIRECTORY = Path(__file__).resolve().parents[1] / "pricing_data"
@@ -48,6 +50,11 @@ EDITABLE_PRICE_FIELDS = {
     ),
     "common_modification_prices": (CommonModificationPrice, {"base_price", "per_unit_price"}),
     "ph_va_prices": (PhVaPrice, {"base_price", "per_unit_price"}),
+}
+
+EDITABLE_PRICING_TEXT_FIELDS = {
+    "common_modification_prices": (CommonModificationPrice, {"series", "bore", "rod", "option_name", "unit", "source_sheet", "source_row"}),
+    "ph_va_prices": (PhVaPrice, {"pricing_group", "series", "bore", "rod", "option_name", "unit", "source_sheet", "source_row"}),
 }
 
 
@@ -419,6 +426,7 @@ def build_category_sections(parts: list, families_by_code: dict | None = None) -
 
 def catalog_page_data() -> dict[str, list]:
     """Return catalog rows for the admin page without touching pricing-engine data."""
+    sync_catalog_parts_to_inventory()
     families = list_families()
     families_by_code = {family["family_code"].upper(): family for family in families}
     with get_session() as session:
@@ -432,6 +440,18 @@ def catalog_page_data() -> dict[str, list]:
         parts = session.execute(
             select(CatalogPart).order_by(CatalogPart.part_number)
         ).scalars().all()
+        inventory_by_part_number = {
+            row.part_number.casefold(): row.inventory
+            for row in session.execute(select(InventoryPart)).scalars().all()
+        }
+        inventory_source_by_part_number = {
+            row.part_number.casefold(): row.source_name or ""
+            for row in session.execute(select(InventoryPart)).scalars().all()
+        }
+        for part in parts:
+            inventory_value = inventory_by_part_number.get(part.part_number.casefold())
+            part.inventory = inventory_value if inventory_value is not None else 0
+            part.inventory_source = inventory_source_by_part_number.get(part.part_number.casefold(), "")
         return {
             "parts": parts,
             "families": families,
@@ -494,6 +514,44 @@ def update_pricing_amount(
         "value": f"{stored_amount.quantize(MONEY_QUANT):.2f}",
         "formatted": f"{format_money(stored_amount)}{format_price_unit(unit) if field_name == 'per_unit_price' else ''}",
     }
+
+
+def update_pricing_text(table_name: str, row_id, field_name: str, value, actor=None) -> dict[str, str]:
+    table_config = EDITABLE_PRICING_TEXT_FIELDS.get((table_name or "").strip())
+    if not table_config or field_name not in table_config[1]:
+        raise PriceUpdateError("This pricing field is not editable.")
+    model = table_config[0]
+    parsed_row_id = _row_id(row_id)
+    new_text = _clean(value)
+    if field_name in {"option_name", "pricing_group"} and not new_text:
+        raise PriceUpdateError("This field is required.")
+    if field_name == "source_row":
+        try:
+            new_value = int(new_text or "")
+        except ValueError as exc:
+            raise PriceUpdateError("Source row must be a whole number.") from exc
+    else:
+        new_value = new_text
+    with get_session() as session:
+        row = session.get(model, parsed_row_id)
+        if row is None:
+            raise PriceUpdateError("Pricing row was not found.", status_code=404)
+        old_text = getattr(row, field_name)
+        if old_text == new_value:
+            return {"value": str(old_text or ""), "formatted": str(old_text or "")}
+        setattr(row, field_name, new_value)
+        _log_change(
+            session,
+            table_name=table_name,
+            row=row,
+            field_name=field_name,
+            change_type="individual",
+            actor=actor,
+            old_text=old_text,
+            new_text=str(new_value) if new_value is not None else None,
+        )
+        session.commit()
+    return {"value": str(new_value or ""), "formatted": str(new_value or "")}
 
 
 # --- Bulk price updates -------------------------------------------------
@@ -963,6 +1021,7 @@ EDITABLE_PART_TEXT_FIELDS = {
     "category": "Category",
     "vendors": "Vendors",
     "source_locations": "Workbook Location",
+    "inventory_source": "Inventory Source",
     "active": "Active",
 }
 
@@ -1057,6 +1116,9 @@ def update_catalog_part(row_id, data: dict, actor=None) -> dict:
         row = session.get(CatalogPart, _row_id(row_id))
         if row is None:
             raise PriceUpdateError("Part was not found.", status_code=404)
+        inventory_row = session.execute(
+            select(InventoryPart).where(InventoryPart.part_number == row.part_number)
+        ).scalar_one_or_none()
 
         changes: list[tuple[str, str | None, str | None]] = []
         for field, label in EDITABLE_PART_TEXT_FIELDS.items():
@@ -1066,6 +1128,20 @@ def update_catalog_part(row_id, data: dict, actor=None) -> dict:
                 new_text = "YES" if data.get("active") in (True, "true", "YES", "yes", "1", 1) else "NO"
             elif field == "vendors":
                 new_text = _normalize_vendors(data.get(field))
+            elif field == "inventory_source":
+                new_text = _clean(data.get(field))
+                if inventory_row is None:
+                    inventory_row = InventoryPart(
+                        part_number=row.part_number,
+                        product_description=row.description,
+                    )
+                    session.add(inventory_row)
+                old_text = inventory_row.source_name
+                if (old_text or None) == (new_text or None):
+                    continue
+                inventory_row.source_name = new_text
+                changes.append((field, old_text, new_text))
+                continue
             else:
                 new_text = _clean(data.get(field))
             if field in {"part_number", "description", "category"} and not new_text:
@@ -1080,6 +1156,8 @@ def update_catalog_part(row_id, data: dict, actor=None) -> dict:
                 if clash is not None and clash.id != row.id:
                     raise PriceUpdateError(f"Part number '{new_text}' already exists.")
             setattr(row, field, new_text)
+            if field == "part_number" and inventory_row is not None:
+                inventory_row.part_number = new_text
             changes.append((field, old_text, new_text))
 
         amount_changes: list[tuple[str, Decimal | None, Decimal | None]] = []
@@ -1097,13 +1175,22 @@ def update_catalog_part(row_id, data: dict, actor=None) -> dict:
 
         if "inventory" in data:
             new_inventory = _validate_inventory(data.get("inventory"))
-            old_inventory = row.inventory
+            old_inventory = inventory_row.inventory if inventory_row is not None else None
             if old_inventory != new_inventory:
-                row.inventory = new_inventory
+                if inventory_row is None:
+                    inventory_row = InventoryPart(
+                        part_number=row.part_number,
+                        product_description=row.description,
+                    )
+                    session.add(inventory_row)
+                inventory_row.inventory = new_inventory
+                if actor is not None:
+                    inventory_row.updated_by = actor.display_name
+                inventory_row.updated_at = utc_now()
                 amount_changes.append(("inventory", old_inventory, new_inventory))
 
         if not changes and not amount_changes:
-            return {"id": row.id, "changed": 0, **_part_row_display(row)}
+            return {"id": row.id, "changed": 0, **_part_row_display(row, inventory_row)}
 
         for field, old_text, new_text in changes:
             _log_change(
@@ -1135,20 +1222,21 @@ def update_catalog_part(row_id, data: dict, actor=None) -> dict:
             session.rollback()
             raise PriceUpdateError("That part number is already in use.") from exc
 
-        return {"id": row.id, "changed": len(changes) + len(amount_changes), **_part_row_display(row)}
+        return {"id": row.id, "changed": len(changes) + len(amount_changes), **_part_row_display(row, inventory_row)}
 
 
-def _part_row_display(row) -> dict:
+def _part_row_display(row, inventory_row=None) -> dict:
     return {
         "part_number": row.part_number,
         "description": row.description or "",
         "vendors": row.vendors or "",
         "source_locations": row.source_locations or "",
+        "inventory_source": inventory_row.source_name if inventory_row is not None else "",
         "unit_cost": f"{Decimal(str(row.unit_cost)).quantize(MONEY_QUANT):.2f}" if row.unit_cost is not None else "",
         "unit_cost_formatted": format_money(row.unit_cost),
         "sell_price": f"{Decimal(str(row.sell_price)).quantize(MONEY_QUANT):.2f}" if row.sell_price is not None else "",
         "sell_price_formatted": format_money(row.sell_price),
-        "inventory": row.inventory if row.inventory is not None else "",
+        "inventory": inventory_row.inventory if inventory_row is not None and inventory_row.inventory is not None else 0,
     }
 
 
@@ -1163,10 +1251,22 @@ def update_catalog_inventory_bulk(row_ids, value, actor=None) -> dict:
             raise PriceUpdateError("One or more selected parts were not found.", status_code=404)
         updated = []
         for row in rows:
-            if row.inventory == inventory:
+            inventory_row = session.execute(
+                select(InventoryPart).where(InventoryPart.part_number == row.part_number)
+            ).scalar_one_or_none()
+            old_inventory = inventory_row.inventory if inventory_row is not None else None
+            if old_inventory == inventory:
                 continue
-            old_inventory = row.inventory
-            row.inventory = inventory
+            if inventory_row is None:
+                inventory_row = InventoryPart(
+                    part_number=row.part_number,
+                    product_description=row.description,
+                )
+                session.add(inventory_row)
+            inventory_row.inventory = inventory
+            if actor is not None:
+                inventory_row.updated_by = actor.display_name
+            inventory_row.updated_at = utc_now()
             _log_change(
                 session,
                 table_name="catalog_parts",

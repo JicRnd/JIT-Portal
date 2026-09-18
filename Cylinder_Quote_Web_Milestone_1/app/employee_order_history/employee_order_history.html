@@ -9,7 +9,7 @@
   <title>Employee Order History</title>
   <link
     rel="stylesheet"
-    href="{{ url_for('employee_order_history.employee_order_history_css') }}"
+    href="{{ url_for('employee_order_history.employee_order_history_css', v='2') }}"
   >
 </head>
 <body class="employee-order-history-page">
@@ -31,12 +31,19 @@
         + New Quote
       </button>
 
+      <a
+        class="employee_order_history_button small"
+        href="{{ url_for('employee_quote_history.employee_quote_history_page') }}"
+      >
+        Quote History
+      </a>
+
       {% if show_all %}
         <a
           class="employee_order_history_button small"
           href="{{ url_for('employee_order_history.employee_order_history_page') }}"
         >
-          Employee Order History
+          Order History
         </a>
       {% else %}
         <a
@@ -46,11 +53,30 @@
           See All
         </a>
       {% endif %}
+
+      {% if trash %}
+        <a
+          class="employee_order_history_button small"
+          href="{{ url_for('employee_order_history.employee_order_history_page') }}"
+        >
+          Order History
+        </a>
+      {% else %}
+        <a
+          class="employee_order_history_button small secondary"
+          href="{{ url_for('employee_order_history.employee_order_history_page', trash='1') }}"
+        >
+          Trash
+        </a>
+      {% endif %}
     </div>
 
     <form class="search-form" method="get">
       {% if show_all %}
         <input type="hidden" name="all" value="1">
+      {% endif %}
+      {% if trash %}
+        <input type="hidden" name="trash" value="1">
       {% endif %}
       <label for="orderHistorySearch">
         Search all order information
@@ -130,12 +156,40 @@
             </td>
 
             <td>
-              <a
-                class="employee_order_history_button small"
-                href="/order-form?order_id={{ order.id }}"
-              >
-                Open
-              </a>
+              {% if trash %}
+                <form
+                  method="post"
+                  action="{{ url_for('employee_order_history.restore_employee_order', order_id=order.id) }}"
+                  style="display: inline"
+                >
+                  <button
+                    class="employee_order_history_button small"
+                    type="submit"
+                  >
+                    Restore
+                  </button>
+                </form>
+              {% else %}
+                <a
+                  class="employee_order_history_button small"
+                  href="/order-form?order_id={{ order.id }}"
+                >
+                  Open
+                </a>
+                <form
+                  method="post"
+                  action="{{ url_for('employee_order_history.delete_employee_order', order_id=order.id) }}"
+                  style="display: inline"
+                  onsubmit="return confirm('Move this order to Trash?');"
+                >
+                  <button
+                    class="employee_order_history_button small secondary"
+                    type="submit"
+                  >
+                    Delete
+                  </button>
+                </form>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}

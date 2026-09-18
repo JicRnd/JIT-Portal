@@ -2,6 +2,7 @@
 const $ = id => document.getElementById(id);
 const PORTAL_MODE = 'employee';
 const CURRENT_USER_NAME = (document.body.dataset.currentUserName || '').trim();
+let quoteActionInProgress = false;
 
 function fmtMoney(v) {
   const n = Number(v);
@@ -85,17 +86,15 @@ const SEAL_LABELS = { P: 'Polyurethane', V: 'Viton', B: 'Buna-N' };
 function labelFor(map, code) { return (code && map[code]) ? `${map[code]} (${code})` : (code || '—'); }
 
 function employeeStatusLabel(value) {
-  const status = String(value || 'new').toLowerCase().replaceAll('-', '_');
+  const status = String(value || 'pending_approval').toLowerCase().replaceAll('-', '_');
   const labels = {
-    new: 'New',
-    accepted: 'Pending Approval',
-    pending: 'Pending Approval',
     pending_approval: 'Pending Approval',
+    hold: 'Hold',
     approved: 'Approved',
     denied: 'Denied',
     canceled: 'Canceled'
   };
-  return labels[status] || status.replaceAll('_', ' ').replace(/\b\w/g, letter => letter.toUpperCase());
+  return labels[status] || 'Pending Approval';
 }
 
 const H_ASSEMBLY_PRICE = {
@@ -198,7 +197,6 @@ function renderQuotePreview(quote) {
   $('pv_person_of_contact').value = quote.person_of_contact || '';
   $('pv_customer_contact').value = quote.customer_contact || '';
   $('pv_customer_attn').value = quote.customer_attn || '';
-  $('pv_reference_notes').value = quote.reference_notes || '';
   $('pv_comments').value = quote.comments || '';
   $('pv_special_instructions').value = quote.special_instructions || '';
 
@@ -423,13 +421,23 @@ function buildSavePayload() {
     customer_address: $('pv_customer_address').value,
     person_of_contact: $('pv_person_of_contact').value,
     customer_contact: $('pv_customer_contact').value,
-    reference_notes: $('pv_reference_notes').value,
+    reference_notes: pendingQuotePayload.reference_notes || currentQuote.reference_notes || '',
     comments: $('pv_comments').value,
     special_instructions: $('pv_special_instructions').value,
     quantity: Math.max(1, Math.floor(Number($('pv_quantity').value || 1))),
     quote_form_edits: captureQuoteFormEdits(),
     manual_line_items: manualItemsFromPreview()
   };
+}
+
+async function readApiResponse(response, action) {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const body = (await response.text()).trim();
+    const destination = response.redirected ? ` Redirected to ${response.url}.` : '';
+    throw new Error(`${action} returned HTML instead of JSON (HTTP ${response.status}).${destination} Please sign in again if the session expired.`);
+  }
+  return response.json();
 }
 
 function renderIncludes(inputs, manualItems) {
@@ -444,83 +452,111 @@ function renderIncludes(inputs, manualItems) {
   container.hidden = items.length === 0;
 }
 
-async function saveQuote(forceNew = false, submitOrder = false) {
-  if (!currentQuote || !pendingQuotePayload) return;
+async function updateQuote(event) {
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  if (quoteActionInProgress || !currentQuote || !pendingQuotePayload) return;
 
-  const existingQuoteId = forceNew ? null : (new URLSearchParams(window.location.search).get('quote_id') || (currentQuote && currentQuote.id));
-  if (!forceNew && !existingQuoteId) return;
+  const button = $('saveQuoteButton');
+  const quoteId = new URLSearchParams(window.location.search).get('quote_id') || currentQuote.id;
+  if (!quoteId) return;
 
+  quoteActionInProgress = true;
+  button.disabled = true;
+  button.textContent = 'Submitting...';
   $('previewErrorMessage').textContent = '';
-  $('saveQuoteButton').disabled = true;
-  $('saveQuoteButton').textContent = 'Submitting...';
-
   try {
-    const savePayload = buildSavePayload();
-    const res = await fetch(existingQuoteId ? `/api/quotes/${existingQuoteId}` : '/api/quotes', {
-      method: existingQuoteId ? 'PATCH' : 'POST',
+    const discountInput = $('pv_discount');
+    let discountPercent = Number(discountInput && discountInput.value);
+    if (!Number.isFinite(discountPercent)) discountPercent = 0;
+    pendingQuotePayload.discount = Math.min(100, Math.max(0, discountPercent)) / 100;
+    const updatePayload = {
+      ...pendingQuotePayload,
+      customer_name: $('pv_customer_name').value,
+      customer_address: $('pv_customer_address').value,
+      person_of_contact: $('pv_person_of_contact').value,
+      customer_contact: $('pv_customer_contact').value,
+      reference_notes: pendingQuotePayload.reference_notes || currentQuote.reference_notes || '',
+      comments: $('pv_comments').value,
+      special_instructions: $('pv_special_instructions').value,
+      quantity: Math.max(1, Math.floor(Number($('pv_quantity').value || 1))),
+      quote_form_edits: captureQuoteFormEdits(),
+      manual_line_items: manualItemsFromPreview()
+    };
+    const response = await fetch(`/api/quotes/${quoteId}`, {
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(savePayload)
+      body: JSON.stringify(updatePayload)
     });
-    const body = await res.json();
-    if (!res.ok || !body.ok) throw new Error(body.error || 'Database save failed');
-
+    const body = await readApiResponse(response, 'Quote update');
+    if (!response.ok || !body.ok) throw new Error(body.error || 'Quote update failed');
     currentQuote = body.quote;
-    if (isEditingExistingQuote && PORTAL_MODE !== 'employee') {
+    if (PORTAL_MODE === 'employee') {
+      window.location.assign('/employee/dashboard');
+    } else {
       renderQuotePreview(body.quote);
       $('previewErrorMessage').textContent = `Quote ${body.quote.quote_number} updated.`;
-      return;
     }
-
-    if (PORTAL_MODE === 'employee') {
-      if (submitOrder) {
-        const orderResponse = await fetch(`/api/quotes/${body.quote.id}/order`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({})
-        });
-        const orderBody = await orderResponse.json();
-        if (!orderResponse.ok || !orderBody.ok) throw new Error(orderBody.error || 'Order approval request failed');
-        currentQuote = orderBody.quote;
-        window.location.assign(orderBody.approval_url);
-        return;
-      }
-      currentQuote = body.quote;
-      window.location.assign('/employee/dashboard');
-      return;
-    }
-
-    const orderResponse = await fetch(`/api/quotes/${body.quote.id}/order`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({})
-    });
-    const orderBody = await orderResponse.json();
-    if (!orderResponse.ok || !orderBody.ok) throw new Error(orderBody.error || 'Order approval request failed');
-    currentQuote = orderBody.quote;
-    if (PORTAL_MODE === 'customer') {
-      window.location.assign('/customer/dashboard');
-      return;
-    }
-    window.location.assign(orderBody.approval_url);
-    return;
-  } catch (e) {
-    $('previewErrorMessage').textContent = e.message || 'Database save failed';
+  } catch (error) {
+    $('previewErrorMessage').textContent = error.message || 'Quote update failed';
   } finally {
-    $('saveQuoteButton').disabled = false;
-    $('saveQuoteButton').textContent = 'Update Now';
-    $('saveQuoteButton').disabled = !new URLSearchParams(window.location.search).get('quote_id') && !(currentQuote && currentQuote.id);
+    quoteActionInProgress = false;
+    button.disabled = false;
+    button.textContent = 'Update Now';
   }
 }
 
-async function createNewOrder() {
+async function createNewOrder(event) {
+  event.preventDefault();
+  event.stopImmediatePropagation();
   const button = $('newOrderButton');
-  if (!button || !currentQuote || !pendingQuotePayload) return;
+  if (!button || !currentQuote || !pendingQuotePayload || quoteActionInProgress) return;
 
+  quoteActionInProgress = true;
   button.disabled = true;
   button.textContent = 'Submitting...';
+
   try {
-    await saveQuote(true, true);
+    const quoteId = new URLSearchParams(window.location.search).get('quote_id') || currentQuote.id;
+    const discountInput = $('pv_discount');
+    let discountPercent = Number(discountInput && discountInput.value);
+    if (!Number.isFinite(discountPercent)) discountPercent = 0;
+    pendingQuotePayload.discount = Math.min(100, Math.max(0, discountPercent)) / 100;
+    const orderPayload = {
+      ...pendingQuotePayload,
+      customer_name: $('pv_customer_name').value,
+      customer_address: $('pv_customer_address').value,
+      person_of_contact: $('pv_person_of_contact').value,
+      customer_contact: $('pv_customer_contact').value,
+      reference_notes: pendingQuotePayload.reference_notes || currentQuote.reference_notes || '',
+      comments: $('pv_comments').value,
+      special_instructions: $('pv_special_instructions').value,
+      quantity: Math.max(1, Math.floor(Number($('pv_quantity').value || 1))),
+      quote_form_edits: captureQuoteFormEdits(),
+      manual_line_items: manualItemsFromPreview()
+    };
+    const saveResponse = await fetch(quoteId ? `/api/quotes/${quoteId}` : '/api/quotes', {
+      method: quoteId ? 'PATCH' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderPayload)
+    });
+    const saveBody = await readApiResponse(saveResponse, 'Order quote save');
+    if (!saveResponse.ok || !saveBody.ok) throw new Error(saveBody.error || 'Order quote save failed');
+    const orderResponse = await fetch(`/api/quotes/${saveBody.quote.id}/order`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({})
+    });
+    const orderBody = await readApiResponse(orderResponse, 'Order submission');
+    if (!orderResponse.ok || !orderBody.ok) throw new Error(orderBody.error || 'Order submission failed');
+    currentQuote = orderBody.quote;
+    window.location.assign(orderBody.approval_url);
+  } catch (error) {
+    $('previewErrorMessage').textContent = error.message || 'Order submission failed';
   } finally {
+    quoteActionInProgress = false;
     button.disabled = false;
-    button.textContent = 'New Order';
+    button.textContent = 'Order';
   }
 }
 
@@ -699,7 +735,7 @@ function changeQuoteZoom(direction) {
 }
 
 function wireQuoteFormEvents() {
-  $('saveQuoteButton').addEventListener('click', saveQuote);
+  $('saveQuoteButton').addEventListener('click', updateQuote);
   $('newOrderButton').addEventListener('click', createNewOrder);
   const holdQuoteButton = $('holdQuoteButton');
   if (holdQuoteButton) {
@@ -829,24 +865,26 @@ async function loadDraftQuote() {
 async function init() {
   wireQuoteFormEvents();
   try {
-    const weightResponse = await fetch('/static/sheet_h_engineering.json');
-    if (weightResponse.ok) {
-      const weightPayload = await weightResponse.json();
-      weightReference = Array.isArray(weightPayload.weight_rules) ? weightPayload.weight_rules : [];
-    }
     const params = new URLSearchParams(window.location.search);
     const quoteId = params.get('quote_id');
-    if (quoteId) {
-      isEditingExistingQuote = params.get('accepted') !== '1';
-      await loadExistingQuote(quoteId);
-      if (params.get('accepted') === '1') {
-        params.delete('accepted');
-        const cleanUrl = `${window.location.pathname}?${params.toString()}${window.location.hash}`;
-        window.history.replaceState({}, '', cleanUrl);
+    const weightLoad = fetch('/static/sheet_h_engineering.json').then(async response => {
+      if (response.ok) {
+        const weightPayload = await response.json();
+        weightReference = Array.isArray(weightPayload.weight_rules) ? weightPayload.weight_rules : [];
       }
-    } else {
-      await loadDraftQuote();
-    }
+    });
+    const quoteLoad = quoteId
+      ? (async () => {
+        isEditingExistingQuote = params.get('accepted') !== '1';
+        await loadExistingQuote(quoteId);
+        if (params.get('accepted') === '1') {
+          params.delete('accepted');
+          const cleanUrl = `${window.location.pathname}?${params.toString()}${window.location.hash}`;
+          window.history.replaceState({}, '', cleanUrl);
+        }
+      })()
+      : loadDraftQuote();
+    await Promise.all([weightLoad, quoteLoad]);
   } catch (e) {
     $('previewErrorMessage').textContent = e.message || 'Failed to load quote preview';
   }

@@ -6,7 +6,7 @@ from decimal import Decimal
 from openpyxl import Workbook
 
 from app.db import get_session
-from app.models_db import CatalogPart, PriceChangeLog
+from app.models_db import CatalogPart, InventoryPart, PriceChangeLog
 from tests.test_pricing_catalog_bulk import _admin_client
 
 
@@ -26,7 +26,10 @@ def test_catalog_columns_renamed_and_vendor_column_present(tmp_path, monkeypatch
     _, client, _ = _admin_client(tmp_path, monkeypatch)
     page = client.get("/parts-catalog").get_data(as_text=True)
 
-    assert "<th>Workbook Location</th>" in page
+    assert "<th>Price Location</th>" in page
+    assert "<th>Inventory Source</th>" in page
+    assert "<th>Price Source</th>" not in page
+    assert "<th>Inventory Location</th>" not in page
     assert "<th>Vendors</th>" in page
     assert "Source Locations" not in page
     assert "Sell Price Source" not in page
@@ -95,8 +98,9 @@ def test_inventory_inline_and_bulk_updates(tmp_path, monkeypatch):
     assert bulk.get_json()["count"] == 2
 
     with get_session() as session:
-        assert session.get(CatalogPart, ids["S-100"]).inventory == 12
-        assert session.get(CatalogPart, ids["S-200"]).inventory == 12
+        assert session.get(CatalogPart, ids["S-100"]).inventory is None
+        assert session.query(InventoryPart).filter_by(part_number="S-100").one().inventory == 12
+        assert session.query(InventoryPart).filter_by(part_number="S-200").one().inventory == 12
 
 
 def test_edit_part_rejects_duplicate_part_number(tmp_path, monkeypatch):

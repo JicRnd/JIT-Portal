@@ -28,7 +28,7 @@
         </div>
         <datalist id="customerNameList"></datalist>
         <label for="customer_address">Address</label>
-        <input id="customer_address" type="text" autocomplete="off" value="{{ prefill_customer_address|default('') }}">
+        <input id="customer_address" type="text" autocomplete="{{ 'on' if portal_mode|default('employee') == 'employee' else 'off' }}" value="{{ prefill_customer_address|default('') }}">
       </section>
 
       <section class="cylinder-row" aria-label="Cylinder definition">

@@ -4,6 +4,7 @@ import csv
 import io
 import logging
 import os
+import re
 from datetime import datetime, time
 from pathlib import Path
 
@@ -29,6 +30,7 @@ from sqlalchemy.orm import selectinload
 from jinja2 import ChoiceLoader, FileSystemLoader
 
 from .catalog import build_catalog
+from .component_bom import enrich_parts_with_inventory
 from .current_user import get_or_create_current_user
 from .data1_service import (
     approval_submission_to_json,
@@ -53,9 +55,12 @@ from .quote_service import (
     create_quote_snapshot,
     duplicate_quote,
     get_quote,
+    quote_to_order_form_json,
     quote_to_json,
+    sync_order_status,
     update_quote_edits,
     upsert_customer,
+    classify_contact_name,
 )
 from .service import build_quote_draft, calculate_payload, make_engine
 
@@ -71,6 +76,7 @@ def create_app() -> Flask:
         FileSystemLoader(Path(__file__).resolve().parent / "customer_quote_form"),
         FileSystemLoader(Path(__file__).resolve().parent / "Employee_dashboard"),
         FileSystemLoader(Path(__file__).resolve().parent / "Admin_Dashboard"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Employee_"),
         FileSystemLoader(Path(__file__).resolve().parent / "Employee_quote_form"),
         FileSystemLoader(Path(__file__).resolve().parent / "Order_Form"),
         FileSystemLoader(Path(__file__).resolve().parent / "employee_order_history"),
@@ -101,6 +107,14 @@ def create_app() -> Flask:
 
     from .Employee_Quote_History.Employee_quote_history_search import employee_quote_history_bp
     app.register_blueprint(employee_quote_history_bp)
+
+    @app.get("/employee_quote_form/employee_quote_form.html")
+    def employee_quote_form_page():
+        current_user = get_or_create_current_user(request)
+        return render_template(
+            "employee_quote_forms.html",
+            current_user_name=getattr(current_user, "display_name", "") or "",
+        )
 
     @app.get("/quote-entry")
     def index():
@@ -228,7 +242,7 @@ def create_app() -> Flask:
     @app.get("/api/catalog-parts/search")
     def search_catalog_parts_endpoint():
         results = search_catalog_parts(request.args.get("q", ""), limit=25)
-        return jsonify({"ok": True, "parts": results})
+        return jsonify({"ok": True, "parts": enrich_parts_with_inventory(results)})
 
     def _customer_status(session, customer: Customer) -> str:
         """Return 'Member' for registered customers and 'Customer' otherwise."""
@@ -257,7 +271,9 @@ def create_app() -> Flask:
     def _customer_payload(session, customer: Customer) -> dict:
         member = _customer_member(session, customer)
         company_name = customer.company_name or (member.company_name if member else None) or ""
-        poc = customer.poc or (member.display_name if member and company_name else None) or customer.name
+        poc = customer.poc or (member.display_name if member and company_name else None)
+        if not company_name and not poc:
+            poc = customer.name
         return {
             "id": customer.id,
             "company_name": company_name,
@@ -276,24 +292,32 @@ def create_app() -> Flask:
         query = (request.args.get("q") or "").strip()
         if not query:
             return jsonify({"ok": True, "customers": []})
+        search_pattern = f"%{query}%"
+        word_start_pattern = re.compile(rf"(?<!\w){re.escape(query)}", re.IGNORECASE)
         with get_session() as session:
-            matches = session.execute(
+            candidates = session.execute(
                 select(Customer)
                 .where(
                     or_(
-                        Customer.company_name.ilike(f"%{query}%"),
-                        Customer.poc.ilike(f"%{query}%"),
-                        Customer.name.ilike(f"%{query}%"),
-                        Customer.address.ilike(f"%{query}%"),
-                        Customer.city_state_zip.ilike(f"%{query}%"),
-                        Customer.phone.ilike(f"%{query}%"),
-                        Customer.email.ilike(f"%{query}%"),
-                        Customer.notes.ilike(f"%{query}%"),
+                        Customer.company_name.ilike(search_pattern),
+                        Customer.name.ilike(search_pattern),
+                        Customer.poc.ilike(search_pattern),
                     )
                 )
                 .order_by(Customer.name)
-                .limit(10)
             ).scalars().all()
+            matches = [
+                customer
+                for customer in candidates
+                if any(
+                    word_start_pattern.search(value or "")
+                    for value in (
+                        customer.company_name,
+                        customer.name,
+                        customer.poc,
+                    )
+                )
+            ]
             return jsonify({
                 "ok": True,
                 "customers": [_customer_payload(session, c) for c in matches],
@@ -309,6 +333,39 @@ def create_app() -> Flask:
                 "ok": True,
                 "customers": [_customer_payload(session, c) for c in customers],
             })
+
+    @app.post("/api/customers")
+    def create_customer():
+        current_user = get_or_create_current_user(request)
+        if getattr(current_user, "role", "employee") != "employee":
+            return jsonify({"ok": False, "error": "Employees only"}), 403
+
+        payload = request.get_json(silent=True) or {}
+        company_name = str(payload.get("company_name") or "").strip() or None
+        poc = str(payload.get("poc") or "").strip() or None
+        if not company_name and not poc:
+            return jsonify({"ok": False, "error": "Company name or POC is required"}), 400
+
+        def optional_value(field):
+            value = payload.get(field)
+            return str(value).strip() or None if value is not None else None
+
+        with get_session() as session:
+            customer = Customer(
+                name=company_name or poc or "",
+                company_name=company_name,
+                poc=poc,
+                address=optional_value("address"),
+                city_state_zip=optional_value("city_state_zip"),
+                phone=optional_value("phone"),
+                email=optional_value("email"),
+            )
+            session.add(customer)
+            session.commit()
+            return jsonify({
+                "ok": True,
+                "customer": _customer_payload(session, customer),
+            }), 201
 
     @app.patch("/api/customers/<int:customer_id>")
     def update_customer(customer_id: int):
@@ -415,6 +472,7 @@ def create_app() -> Flask:
                     continue
 
                 try:
+                    company_name, poc = classify_contact_name(name)
                     upsert_customer(
                         session,
                         name=name or "",
@@ -422,6 +480,8 @@ def create_app() -> Flask:
                         phone=phone or None,
                         email=email or None,
                         city_state_zip=city_state_zip or None,
+                        company_name=company_name,
+                        poc=poc,
                     )
                     imported += 1
                 except Exception as exc:
@@ -592,7 +652,7 @@ def create_app() -> Flask:
             ):
                 quote.customer_update_pending = False
                 session.commit()
-            result = quote_to_json(quote)
+            result = quote_to_order_form_json(quote)
 
         return jsonify({"ok": True, "quote": result})
 
@@ -682,6 +742,7 @@ def create_app() -> Flask:
             quote.status = "canceled"
             quote.edited_by_user_id = current_user.id
             quote.edited_at = utc_now()
+            sync_order_status(session, quote.id, "canceled")
             session.add(quote)
 
             order = session.execute(
@@ -713,6 +774,7 @@ def create_app() -> Flask:
             quote.status = "hold"
             quote.edited_by_user_id = current_user.id
             quote.edited_at = utc_now()
+            sync_order_status(session, quote.id, "hold")
             session.add(quote)
             session.commit()
             return jsonify({"ok": True, "quote": quote_to_json(quote)})
@@ -899,7 +961,7 @@ def create_app() -> Flask:
 
             return jsonify({
                 "ok": True,
-                "quote": quote_to_json(quote),
+                "quote": quote_to_order_form_json(quote),
                 "order_id": order_row.id,
                 "order_number": saved_order_form["order_number"],
                 "approval_url": approval_url,
@@ -940,7 +1002,7 @@ def create_app() -> Flask:
                 session.add(order_row)
 
             session.commit()
-            return jsonify({"ok": True, "quote": quote_to_json(quote)})
+            return jsonify({"ok": True, "quote": quote_to_order_form_json(quote)})
 
     @app.post("/api/quotes/<int:quote_id>/order/approve")
     def approve_internal_order(quote_id: int):
@@ -974,7 +1036,7 @@ def create_app() -> Flask:
             session.add(order_row)
 
             session.commit()
-            return jsonify({"ok": True, "quote": quote_to_json(quote)})
+            return jsonify({"ok": True, "quote": quote_to_order_form_json(quote)})
 
     @app.post("/api/quotes/<int:quote_id>/order/deny")
     def deny_internal_order(quote_id: int):
@@ -992,17 +1054,11 @@ def create_app() -> Flask:
             quote.status = "denied"
             quote.edited_by_user_id = current_user.id
             quote.edited_at = utc_now()
+            sync_order_status(session, quote.id, "denied")
             session.add(quote)
 
-            order_row = session.execute(
-                select(Order).where(Order.quote_id == quote.id)
-            ).scalar_one_or_none()
-            if order_row is not None:
-                order_row.status = "denied"
-                session.add(order_row)
-
             session.commit()
-            return jsonify({"ok": True, "quote": quote_to_json(quote)})
+            return jsonify({"ok": True, "quote": quote_to_order_form_json(quote)})
 
     @app.post("/api/quotes/<int:quote_id>/approve")
     def approve_quote(quote_id: int):
@@ -1025,6 +1081,7 @@ def create_app() -> Flask:
                 quote.approved_by_user_id = current_user.id
                 quote.approved_at = utc_now()
                 quote.status = "approved"
+                sync_order_status(session, quote.id, "approved")
                 session.add(quote)
                 session.commit()
                 session.refresh(quote)

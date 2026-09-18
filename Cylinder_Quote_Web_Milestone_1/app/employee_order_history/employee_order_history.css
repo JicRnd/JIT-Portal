@@ -99,6 +99,19 @@ a {
 .employee-order-history-page #order_history_table .small-button {
 	font-size: clamp(10%, 1.25vw, 100%);
 	white-space: nowrap;
+
+.employee-order-history-page .page-actions .employee_order_history_button {
+	width: 8.4rem;
+	min-width: 8.4rem;
+	min-height: 2.64rem;
+	padding: 0.72rem 1rem;
+	font-size: 1rem;
+}
+}
+
+.employee-order-history-page #order_history_table .employee_order_history_button.small {
+	padding: 0.72rem 1rem;
+	font-size: 1rem;
 }
 
 .employee-order-history-page .employee_order_history_wrapper {

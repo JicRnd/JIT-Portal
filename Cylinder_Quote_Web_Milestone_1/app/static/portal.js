@@ -58,7 +58,7 @@ if (search && suggestions) {
           }
 
           return `
-            <a href="/employee/quote-entry?quote_id=${row.id}">
+            <a href="/employee_quote_form/employee_quote_form.html?quote_id=${row.id}">
               <strong>${row.quote_number}</strong>
               · ${row.customer || "No customer"}
               · ${row.model_code || "No model code"}

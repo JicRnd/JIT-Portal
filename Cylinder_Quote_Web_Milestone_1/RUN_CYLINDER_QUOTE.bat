@@ -6,6 +6,12 @@ if not exist ".venv\Scripts\python.exe" (
     pause
     exit /b 1
 )
-start "" http://127.0.0.1:5055
+if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" (
+    start "" "%ProgramFiles%\Google\Chrome\Application\chrome.exe" http://127.0.0.1:5055
+) else if exist "%LocalAppData%\Google\Chrome\Application\chrome.exe" (
+    start "" "%LocalAppData%\Google\Chrome\Application\chrome.exe" http://127.0.0.1:5055
+) else (
+    start "" http://127.0.0.1:5055
+)
 .venv\Scripts\python.exe run.py
 pause

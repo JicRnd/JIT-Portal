@@ -7,20 +7,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='portal_common.css') }}">
     <style>
-        .catalog-table { font-size: .85rem; }
+        .catalog-table { width: 100%; table-layout: fixed; font-size: .85rem; }
+        .catalog-table th, .catalog-table td { text-align: center; }
         .catalog-table th { white-space: nowrap; }
         .catalog-table thead th { position: sticky; top: 0; z-index: 3; }
         .catalog-table .catalog-group-row th { position: sticky; top: 2.25rem; z-index: 2; }
         .catalog-table td { vertical-align: middle; }
         .catalog-scroll { max-height: 65vh; overflow: auto; }
         .catalog-filter { max-width: 420px; }
-        .editable-price { border: 0; background: transparent; padding: 0; color: #0d6efd; font: inherit; text-align: left; }
+        .editable-price { border: 0; background: transparent; padding: 0; color: #0d6efd; font: inherit; text-align: center; }
         .editable-price:hover, .editable-price:focus { text-decoration: underline; }
         .price-edit-form { min-width: 12rem; }
         .catalog-group-row th { background: #eef2f6; color: #334155; font-size: .78rem; letter-spacing: .02em; text-transform: uppercase; }
         .select-col { width: 2.25rem; }
         #parts:not(.selection-mode) .select-col { display: none; }
         .inventory-col { min-width: 6rem; }
+        #parts.inventory-focus .catalog-table th:nth-child(4),
+        #parts.inventory-focus .catalog-table td:nth-child(4),
+        #parts.inventory-focus .catalog-table th:nth-child(5),
+        #parts.inventory-focus .catalog-table td:nth-child(5),
+        #parts.inventory-focus .catalog-table th:nth-child(7),
+        #parts.inventory-focus .catalog-table td:nth-child(7) { display: none; }
         .vendor-cell { white-space: pre-line; }
         .cell-inline-edit { cursor: pointer; }
         .cell-inline-edit:hover { background-color: #f8f9fa; }
@@ -41,17 +48,31 @@
         .contents-dots { flex: 1 1 auto; border-bottom: 1px dotted #94a3b8; transform: translateY(-.25rem); }
         .contents-count { color: #6c757d; font-size: .75rem; }
         #catalog-settings-btn { line-height: 1; }
+        .inventory-manager-dialog .modal-content { max-height: 90vh; }
+        .inventory-manager-dialog .modal-body { display: flex; flex-direction: column; overflow: hidden; }
+        .inventory-manager-controls { flex: 0 0 auto; }
+        .inventory-manager-table-scroll { min-height: 0; flex: 1 1 auto; overflow: auto; }
+        .inventory-manager-table-scroll .catalog-table { margin-bottom: 0; }
     </style>
 </head>
 <body class="bg-light">
 {% macro price_cell(table, row, field, suffix='') -%}
     {% set value = row|attr(field) %}
-    {% if value is not none %}
-        {% set conflicted = (table == 'catalog_parts' and field == 'sell_price' and row.review_needed == 'YES') %}
-        <button type="button" class="editable-price{{ ' conflicted-price' if conflicted else '' }}" data-table="{{ table }}" data-id="{{ row.id }}" data-field="{{ field }}" data-value="{{ '%.2f'|format(value) }}" data-suffix="{{ suffix }}" data-conflicted="{{ 'true' if conflicted else 'false' }}">{{ format_money(value) }}{{ suffix }}{% if conflicted %} <span class="badge text-bg-warning" title="Unresolved pricing conflict">!</span>{% endif %}</button>
-    {% else %}
-        {{ row|attr(field ~ '_raw') if row|attr(field ~ '_raw') is not none else '' }}
-    {% endif %}
+    {% set conflicted = (table == 'catalog_parts' and field == 'sell_price' and row.review_needed == 'YES') %}
+    <button type="button" class="editable-price{{ ' conflicted-price' if conflicted else '' }}" data-table="{{ table }}" data-id="{{ row.id }}" data-field="{{ field }}" data-value="{{ '%.2f'|format(value) if value is not none else '' }}" data-suffix="{{ suffix }}" data-conflicted="{{ 'true' if conflicted else 'false' }}">{{ format_money(value) if value is not none else '' }}{{ suffix }}{% if conflicted %} <span class="badge text-bg-warning" title="Unresolved pricing conflict">!</span>{% endif %}</button>
+{%- endmacro %}
+{% macro part_row(row) -%}
+<tr class="part-row" data-row-id="{{ row.id }}" data-part-number="{{ row.part_number|e }}" data-description="{{ (row.display_description or row.description or '')|e }}" data-family-code="{{ row.family_code or '' }}">
+    <td class="select-col"><input type="checkbox" class="form-check-input part-select" value="{{ row.id }}" aria-label="Select {{ row.part_number|e }}"></td>
+    <td><strong class="cell-inline-edit" data-field="part_number" data-value="{{ row.part_number|e }}">{{ row.part_number }}</strong></td>
+    <td><span class="cell-inline-edit" data-field="description" data-value="{{ (row.display_description or row.description or '')|e }}">{{ row.display_description or row.description or '' }}</span>{% if row.generated_description %} <span class="badge text-bg-light text-muted border" title="Generated from the family description template">family</span>{% endif %}{% if row.size_unresolved %} <span class="badge text-bg-warning" title="Size could not be decoded from this part number - needs admin review">size?</span>{% endif %}</td>
+    <td class="cell-inline-edit cell-currency" data-field="unit_cost" data-value="{{ '%.2f'|format(row.unit_cost) if row.unit_cost is not none else '' }}">{{ format_money(row.unit_cost) if row.unit_cost is not none else '' }}</td>
+    <td class="cell-inline-edit cell-currency" data-field="sell_price" data-value="{{ '%.2f'|format(row.sell_price) if row.sell_price is not none else '' }}" data-conflicted="{{ 'true' if row.review_needed == 'YES' else 'false' }}">{{ format_money(row.sell_price) if row.sell_price is not none else '' }}{% if row.review_needed == 'YES' %} <span class="badge text-bg-warning conflict-badge" title="Unresolved pricing conflict">!</span>{% endif %}</td>
+    <td class="cell-inline-edit inventory-col" data-field="inventory" data-value="{{ row.inventory if row.inventory is not none else '' }}">{{ row.inventory if row.inventory is not none else '' }}</td>
+    <td class="cell-vendors vendor-cell cell-inline-edit" data-field="vendors" data-value="{{ (row.vendors or '')|e }}">{{ row.vendors or '' }}</td>
+    <td class="cell-source-locations cell-inline-edit" data-field="source_locations" data-value="{{ (row.source_locations or '')|e }}">{{ row.source_locations or '' }}</td>
+    <td class="cell-inline-edit" data-field="inventory_source" data-value="{{ row.inventory_source or '' }}">{{ row.inventory_source or '' }}</td>
+</tr>
 {%- endmacro %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <div class="container-fluid px-4">
@@ -108,15 +129,16 @@
                 <button id="templates-btn" type="button" class="btn btn-sm btn-outline-primary">Templates</button>
                 <button id="inventory-btn" type="button" class="btn btn-sm btn-outline-primary">Inventory</button>
                 <button id="bulk-inventory-btn" type="button" class="btn btn-sm btn-outline-primary">Update Inventory Bulk</button>
+                <button id="inventory-manager-btn" type="button" class="btn btn-sm btn-outline-primary">Inventory Manager</button>
                 <button id="selection-mode-btn" type="button" class="btn btn-sm btn-outline-secondary">Select</button>
                 <span id="selection-count" class="text-muted small">0 selected</span>
                 <button id="history-btn" type="button" class="btn btn-sm btn-outline-secondary ms-auto">Price Change History</button>
             </div>
-{% macro part_row(row) -%}
-<tr class="part-row" data-row-id="{{ row.id }}" data-part-number="{{ row.part_number|e }}" data-description="{{ (row.display_description or row.description or '')|e }}" data-family-code="{{ row.family_code or '' }}"><td class="select-col"><input type="checkbox" class="form-check-input part-select" value="{{ row.id }}" aria-label="Select {{ row.part_number|e }}"></td><td><strong class="cell-inline-edit" data-field="part_number" data-value="{{ row.part_number|e }}">{{ row.part_number }}</strong></td><td><span class="cell-inline-edit" data-field="description" data-value="{{ (row.display_description or row.description or '')|e }}">{{ row.display_description or row.description or '' }}</span>{% if row.generated_description %} <span class="badge text-bg-light text-muted border" title="Generated from the family description template">family</span>{% endif %}{% if row.size_unresolved %} <span class="badge text-bg-warning" title="Size could not be decoded from this part number - needs admin review">size?</span>{% endif %}</td><td class="cell-inline-edit cell-currency" data-field="unit_cost" data-value="{{ '%.2f'|format(row.unit_cost) if row.unit_cost is not none else '' }}">{{ format_money(row.unit_cost) if row.unit_cost is not none else '' }}</td><td class="cell-inline-edit cell-currency" data-field="sell_price" data-value="{{ '%.2f'|format(row.sell_price) if row.sell_price is not none else '' }}" data-conflicted="{{ 'true' if row.review_needed == 'YES' else 'false' }}">{{ format_money(row.sell_price) if row.sell_price is not none else '' }}{% if row.review_needed == 'YES' %} <span class="badge text-bg-warning conflict-badge" title="Unresolved pricing conflict">!</span>{% endif %}</td><td class="cell-inline-edit inventory-col" data-field="inventory" data-value="{{ row.inventory if row.inventory is not none else '' }}">{{ row.inventory if row.inventory is not none else '' }}</td><td class="cell-vendors vendor-cell"><div class="cell-inline-edit" data-field="vendors" data-value="{{ (row.vendors or '')|e }}">{{ row.vendors or '' }}</div></td><td class="cell-source-locations"><span class="cell-inline-edit" data-field="source_locations" data-value="{{ (row.source_locations or '')|e }}">{{ row.source_locations or '' }}</span></td></tr>
+            {% macro part_row(row) -%}
+<tr class="part-row" data-row-id="{{ row.id }}" data-part-number="{{ row.part_number|e }}" data-description="{{ (row.display_description or row.description or '')|e }}" data-family-code="{{ row.family_code or '' }}"><td class="select-col"><input type="checkbox" class="form-check-input part-select" value="{{ row.id }}" aria-label="Select {{ row.part_number|e }}"></td><td><strong class="cell-inline-edit" data-field="part_number" data-value="{{ row.part_number|e }}">{{ row.part_number }}</strong></td><td><span class="cell-inline-edit" data-field="description" data-value="{{ (row.display_description or row.description or '')|e }}">{{ row.display_description or row.description or '' }}</span>{% if row.generated_description %} <span class="badge text-bg-light text-muted border" title="Generated from the family description template">family</span>{% endif %}{% if row.size_unresolved %} <span class="badge text-bg-warning" title="Size could not be decoded from this part number - needs admin review">size?</span>{% endif %}</td><td class="cell-inline-edit cell-currency" data-field="unit_cost" data-value="{{ '%.2f'|format(row.unit_cost) if row.unit_cost is not none else '' }}">{{ format_money(row.unit_cost) if row.unit_cost is not none else '' }}</td><td class="cell-inline-edit cell-currency" data-field="sell_price" data-value="{{ '%.2f'|format(row.sell_price) if row.sell_price is not none else '' }}" data-conflicted="{{ 'true' if row.review_needed == 'YES' else 'false' }}">{{ format_money(row.sell_price) if row.sell_price is not none else '' }}{% if row.review_needed == 'YES' %} <span class="badge text-bg-warning conflict-badge" title="Unresolved pricing conflict">!</span>{% endif %}</td><td class="cell-inline-edit inventory-col" data-field="inventory" data-value="{{ row.inventory if row.inventory is not none else '' }}">{{ row.inventory if row.inventory is not none else '' }}</td><td class="cell-vendors vendor-cell cell-inline-edit" data-field="vendors" data-value="{{ (row.vendors or '')|e }}">{{ row.vendors or '' }}</td><td class="cell-source-locations cell-inline-edit" data-field="source_locations" data-value="{{ (row.source_locations or '')|e }}">{{ row.source_locations or '' }}</td><td class="cell-inline-edit" data-field="inventory_source" data-value="{{ row.inventory_source or '' }}">{{ row.inventory_source or '' }}</td></tr>
 {%- endmacro %}
-            <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th class="select-col"><input type="checkbox" id="select-all-parts" class="form-check-input" aria-label="Select all filtered parts"></th><th>Part Number</th><th>Description</th><th>Unit Cost</th><th>Sell Price</th><th class="inventory-col">Inventory</th><th>Vendors</th><th>Workbook Location</th></tr></thead><tbody>
-            {% for section in category_sections %}<tr class="catalog-group-row catalog-category-row" id="cat-{{ section.slug }}"><th colspan="7">{{ section.name }} <span class="text-muted fw-normal">{{ section.count }}</span></th></tr>{% for group in section.groups %}{% if group.name %}<tr class="catalog-group-row catalog-category-row"><th colspan="7">{{ group.name }} <span class="text-muted fw-normal">{{ group.families|map(attribute='rows')|map('length')|sum + group.rows|length }}</span></th></tr>{% endif %}{% for block in group.families %}<tr class="catalog-group-row catalog-category-row catalog-family-row"><th colspan="8"><span class="d-inline-flex align-items-center gap-2">{% if block.family.image_path %}<img class="family-image" src="{{ url_for('static', filename='family_images/' ~ block.family.image_path) }}" alt="{{ block.family.display_name|e }}">{% endif %}<span>{{ block.family.display_name }} <span class="text-muted fw-normal">{{ block.rows|length }}</span>{% if block.headline %}<span class="d-block fw-normal text-muted text-capitalize-none family-headline">{{ block.headline }}</span>{% endif %}</span></span></th></tr>{% for row in block.rows %}{{ part_row(row) }}{% endfor %}{% endfor %}{% for row in group.rows %}{{ part_row(row) }}{% endfor %}{% endfor %}{% endfor %}
+            <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th class="select-col"><input type="checkbox" id="select-all-parts" class="form-check-input" aria-label="Select all filtered parts"></th><th>Part Number</th><th>Description</th><th>Unit Cost</th><th>Sell Price</th><th class="inventory-col">Inventory</th><th>Vendors</th><th>Price Location</th><th>Inventory Source</th></tr></thead><tbody>
+            {% for section in category_sections %}<tr class="catalog-group-row catalog-category-row" id="cat-{{ section.slug }}"><th colspan="9">{{ section.name }} <span class="text-muted fw-normal">{{ section.count }}</span></th></tr>{% for group in section.groups %}{% if group.name %}<tr class="catalog-group-row catalog-category-row"><th colspan="9">{{ group.name }} <span class="text-muted fw-normal">{{ group.families|map(attribute='rows')|map('length')|sum + group.rows|length }}</span></th></tr>{% endif %}{% for block in group.families %}<tr class="catalog-group-row catalog-category-row catalog-family-row"><th colspan="9"><span class="d-inline-flex align-items-center gap-2">{% if block.family.image_path %}<img class="family-image" src="{{ url_for('static', filename='family_images/' ~ block.family.image_path) }}" alt="{{ block.family.display_name|e }}">{% endif %}<span>{{ block.family.display_name }} <span class="text-muted fw-normal">{{ block.rows|length }}</span>{% if block.headline %}<span class="d-block fw-normal text-muted text-capitalize-none family-headline">{{ block.headline }}</span>{% endif %}</span></span></th></tr>{% for row in block.rows %}{{ part_row(row) }}{% endfor %}{% endfor %}{% for row in group.rows %}{{ part_row(row) }}{% endfor %}{% endfor %}{% endfor %}
             </tbody></table></div>
         </section>
         <section class="tab-pane fade" id="base">
@@ -131,12 +153,12 @@
         </section>
         <section class="tab-pane fade" id="modifications">
             <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th>Series</th><th>Bore</th><th>Rod</th><th>Option</th><th>Base Price</th><th>Per Unit</th><th>Unit</th><th>Source</th></tr></thead><tbody>
-            {% for row in modifications %}<tr><td>{{ row.series or '' }}</td><td>{{ format_measurement(row.bore, row.unit) }}</td><td>{{ format_measurement(row.rod, row.unit) }}</td><td>{{ row.option_name }}</td><td>{{ price_cell('common_modification_prices', row, 'base_price') }}</td><td>{{ price_cell('common_modification_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td>{{ row.unit or '' }}</td><td>{{ row.source_sheet }}:{{ row.source_row }}</td></tr>{% endfor %}
+            {% for row in modifications %}<tr><td class="cell-inline-edit pricing-text-cell" data-table="common_modification_prices" data-id="{{ row.id }}" data-field="series" data-value="{{ row.series or '' }}">{{ row.series or '' }}</td><td class="cell-inline-edit pricing-text-cell" data-table="common_modification_prices" data-id="{{ row.id }}" data-field="bore" data-value="{{ row.bore or '' }}">{{ format_measurement(row.bore, row.unit) }}</td><td class="cell-inline-edit pricing-text-cell" data-table="common_modification_prices" data-id="{{ row.id }}" data-field="rod" data-value="{{ row.rod or '' }}">{{ format_measurement(row.rod, row.unit) }}</td><td class="cell-inline-edit pricing-text-cell" data-table="common_modification_prices" data-id="{{ row.id }}" data-field="option_name" data-value="{{ row.option_name or '' }}">{{ row.option_name }}</td><td>{{ price_cell('common_modification_prices', row, 'base_price') }}</td><td>{{ price_cell('common_modification_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td class="cell-inline-edit pricing-text-cell" data-table="common_modification_prices" data-id="{{ row.id }}" data-field="unit" data-value="{{ row.unit or '' }}">{{ row.unit or '' }}</td><td><span class="cell-inline-edit pricing-text-cell" data-table="common_modification_prices" data-id="{{ row.id }}" data-field="source_sheet" data-value="{{ row.source_sheet or '' }}">{{ row.source_sheet }}</span>:<span class="cell-inline-edit pricing-text-cell" data-table="common_modification_prices" data-id="{{ row.id }}" data-field="source_row" data-value="{{ row.source_row }}">{{ row.source_row }}</span></td></tr>{% endfor %}
             </tbody></table></div>
         </section>
         <section class="tab-pane fade" id="ph-va">
             <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th>Pricing Group</th><th>Series</th><th>Bore</th><th>Rod</th><th>Option</th><th>Base Price</th><th>Per Unit</th><th>Unit</th><th>Source</th></tr></thead><tbody>
-            {% for row in ph_va_prices %}<tr><td>{{ row.pricing_group }}</td><td>{{ row.series or '' }}</td><td>{{ format_measurement(row.bore, row.unit) }}</td><td>{{ format_measurement(row.rod, row.unit) }}</td><td>{{ row.option_name }}</td><td>{{ price_cell('ph_va_prices', row, 'base_price') }}</td><td>{{ price_cell('ph_va_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td>{{ row.unit or '' }}</td><td>{{ row.source_sheet }}:{{ row.source_row }}</td></tr>{% endfor %}
+            {% for row in ph_va_prices %}<tr><td class="cell-inline-edit pricing-text-cell" data-table="ph_va_prices" data-id="{{ row.id }}" data-field="pricing_group" data-value="{{ row.pricing_group or '' }}">{{ row.pricing_group }}</td><td class="cell-inline-edit pricing-text-cell" data-table="ph_va_prices" data-id="{{ row.id }}" data-field="series" data-value="{{ row.series or '' }}">{{ row.series or '' }}</td><td class="cell-inline-edit pricing-text-cell" data-table="ph_va_prices" data-id="{{ row.id }}" data-field="bore" data-value="{{ row.bore or '' }}">{{ format_measurement(row.bore, row.unit) }}</td><td class="cell-inline-edit pricing-text-cell" data-table="ph_va_prices" data-id="{{ row.id }}" data-field="rod" data-value="{{ row.rod or '' }}">{{ format_measurement(row.rod, row.unit) }}</td><td class="cell-inline-edit pricing-text-cell" data-table="ph_va_prices" data-id="{{ row.id }}" data-field="option_name" data-value="{{ row.option_name or '' }}">{{ row.option_name }}</td><td>{{ price_cell('ph_va_prices', row, 'base_price') }}</td><td>{{ price_cell('ph_va_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td class="cell-inline-edit pricing-text-cell" data-table="ph_va_prices" data-id="{{ row.id }}" data-field="unit" data-value="{{ row.unit or '' }}">{{ row.unit or '' }}</td><td><span class="cell-inline-edit pricing-text-cell" data-table="ph_va_prices" data-id="{{ row.id }}" data-field="source_sheet" data-value="{{ row.source_sheet or '' }}">{{ row.source_sheet }}</span>:<span class="cell-inline-edit pricing-text-cell" data-table="ph_va_prices" data-id="{{ row.id }}" data-field="source_row" data-value="{{ row.source_row }}">{{ row.source_row }}</span></td></tr>{% endfor %}
             </tbody></table></div>
         </section>
     </div>
@@ -226,6 +248,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="inventory-manager-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable inventory-manager-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Inventory Manager</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="inventory-manager-controls">
+                <div class="row g-2 align-items-end">
+                    <div class="col-md-6">
+                        <label class="form-label small" for="inventory-file">Upload inventory CSV or workbook</label>
+                        <input id="inventory-file" class="form-control form-control-sm" type="file" accept=".csv,.xlsx,.xlsm,.xls">
+                    </div>
+                    <div class="col-md-auto d-flex gap-2">
+                        <button id="inventory-preview-btn" type="button" class="btn btn-sm btn-outline-primary">Preview</button>
+                        <button id="inventory-apply-btn" type="button" class="btn btn-sm btn-primary">Apply</button>
+                    </div>
+                </div>
+                <div id="inventory-import-status" class="small text-muted mt-2"></div>
+                <hr>
+                <label class="form-label small" for="inventory-search">Search inventory</label>
+                <input id="inventory-search" class="form-control form-control-sm" type="search" placeholder="Part number or description">
+                </div>
+                <div class="table-responsive mt-2 inventory-manager-table-scroll">
+                    <table class="table table-sm catalog-table">
+                        <thead class="table-light"><tr><th>Part Number</th><th>Description</th><th>Family</th><th>Inventory</th><th>Allocated</th><th>On Order</th><th>Start 2025</th><th>Source</th><th>Updated By</th><th>Updated At</th><th></th></tr></thead>
+                        <tbody id="inventory-results"><tr><td colspan="11" class="text-muted small">Search for a part.</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="history-modal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
     <div class="modal-content">
@@ -284,7 +341,7 @@
             <textarea id="ap-vendors" rows="3" class="form-control form-control-sm" placeholder="Parker Hannifin&#10;Motion Industries"></textarea>
           </div>
           <div class="mb-2">
-            <label class="form-label small" for="ap-workbook-location">Workbook Location</label>
+            <label class="form-label small" for="ap-workbook-location">Price Location</label>
             <input id="ap-workbook-location" class="form-control form-control-sm">
           </div>
           <div class="form-check">
@@ -458,6 +515,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const filter = document.getElementById('catalog-filter');
+    const canEditCatalog = {{ 'true' if user.access_level == 'admin' else 'false' }};
     const CATEGORY_SEARCHES = [
         { name: 'Wipers', aliases: ['wiper', 'wipers', 'rod wiper', 'rod wipers'], terms: ['wiper', 'scraper'] },
         { name: 'Pistons', aliases: ['piston', 'pistons'], terms: ['piston'] },
@@ -653,9 +711,9 @@
         form.replaceWith(button);
     }
 
-    document.addEventListener('click', (event) => {
+    document.addEventListener('dblclick', (event) => {
         const button = event.target.closest('.editable-price');
-        if (!button || document.querySelector('.price-edit-form')) return;
+        if (!canEditCatalog || !button || document.querySelector('.price-edit-form')) return;
         if (button.dataset.conflicted === 'true') {
             openConflictModal(button);
             return;
@@ -702,6 +760,7 @@
         resolveConflict: '{{ url_for('portal.resolve_parts_catalog_conflict', row_id=0) }}',
         createPart: '{{ url_for('portal.create_parts_catalog_part') }}',
         editPart: '{{ url_for('portal.get_parts_catalog_part', row_id=0) }}',
+        pricingText: '{{ url_for('portal.update_parts_catalog_pricing_text') }}',
         workbookPreview: '{{ url_for('portal.preview_parts_catalog_workbook') }}',
         workbookApply: '{{ url_for('portal.apply_parts_catalog_workbook') }}',
         families: '{{ url_for('portal.parts_catalog_families') }}',
@@ -711,8 +770,66 @@
         familyImage: '{{ url_for('portal.upload_parts_catalog_family_image', family_id=0) }}',
         assignFamily: '{{ url_for('portal.assign_parts_catalog_family') }}',
         bulkInventory: '{{ url_for('portal.update_parts_catalog_inventory_bulk') }}',
+        inventoryPreview: '{{ url_for('portal.preview_parts_catalog_inventory') }}',
+        inventoryApply: '{{ url_for('portal.apply_parts_catalog_inventory') }}',
+        inventorySearch: '{{ url_for('portal.search_parts_catalog_inventory') }}',
+        inventoryUpdate: '{{ url_for('portal.update_parts_catalog_inventory_part') }}',
         familyImageBase: '{{ url_for('static', filename='family_images/') }}'
     };
+
+    document.addEventListener('dblclick', (event) => {
+        const cell = event.target.closest('.pricing-text-cell');
+        if (!canEditCatalog || !cell || cell.querySelector('.inline-edit-input')) return;
+        const originalHtml = cell.innerHTML;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = cell.dataset.value || '';
+        input.className = 'form-control form-control-sm inline-edit-input';
+        cell.innerHTML = '';
+        cell.appendChild(input);
+        input.focus();
+        input.select();
+        let finished = false;
+        async function commit() {
+            if (finished) return;
+            finished = true;
+            input.disabled = true;
+            try {
+                const response = await fetch(URLS.pricingText, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        table: cell.dataset.table,
+                        id: cell.dataset.id,
+                        field: cell.dataset.field,
+                        value: input.value
+                    })
+                });
+                const data = await response.json();
+                if (!response.ok || !data.ok) throw new Error(data.error || 'Unable to save.');
+                cell.textContent = data.formatted;
+                cell.dataset.value = data.value;
+                cell.classList.remove('cell-error');
+                cell.title = '';
+            } catch (error) {
+                cell.innerHTML = originalHtml;
+                cell.classList.add('cell-error');
+                cell.title = error.message;
+            }
+        }
+        input.addEventListener('blur', commit, { once: true });
+        input.addEventListener('keydown', (keyEvent) => {
+            if (keyEvent.key === 'Enter') {
+                keyEvent.preventDefault();
+                input.blur();
+            } else if (keyEvent.key === 'Escape') {
+                keyEvent.preventDefault();
+                finished = true;
+                cell.innerHTML = originalHtml;
+            }
+        });
+    });
+
     const selectAll = document.getElementById('select-all-parts');
     const selectionCount = document.getElementById('selection-count');
     const bulkButton = document.getElementById('bulk-price-btn');
@@ -720,6 +837,7 @@
     const inventoryButton = document.getElementById('inventory-btn');
     const bulkInventoryButton = document.getElementById('bulk-inventory-btn');
     const bulkInventoryModal = new bootstrap.Modal(document.getElementById('bulk-inventory-modal'));
+    const inventoryManagerModal = new bootstrap.Modal(document.getElementById('inventory-manager-modal'));
     const assignFamilyButton = document.getElementById('family-assign-btn');
     const bulkModal = new bootstrap.Modal(document.getElementById('bulk-modal'));
     const historyModal = new bootstrap.Modal(document.getElementById('history-modal'));
@@ -752,9 +870,8 @@
     });
 
     inventoryButton.addEventListener('click', () => {
-        const hidden = document.getElementById('parts').classList.toggle('inventory-hidden');
-        document.querySelectorAll('#parts .inventory-col').forEach((cell) => { cell.hidden = hidden; });
-        inventoryButton.textContent = hidden ? 'Show Inventory' : 'Inventory';
+        const focused = document.getElementById('parts').classList.toggle('inventory-focus');
+        inventoryButton.textContent = focused ? 'Show All Parts' : 'Show Inventory';
     });
 
     // Bulk updates fall back to every part currently listed when nothing is checked.
@@ -1092,7 +1209,7 @@
     function inlineDisplayValue(field, data) {
         if (field === 'unit_cost') return data.unit_cost_formatted;
         if (field === 'sell_price') return data.sell_price_formatted;
-        if (field === 'inventory') return data.inventory ?? '';
+        if (field === 'inventory') return data.row ? data.row.inventory : (data.inventory ?? '');
         return data[field] || '';
     }
 
@@ -1134,10 +1251,14 @@
         const rowId = row.dataset.rowId;
         const value = input.value;
         try {
-            const response = await fetch(partUrl(rowId), {
+            const endpoint = field === 'inventory' ? URLS.inventoryUpdate : partUrl(rowId);
+            const payload = field === 'inventory'
+                ? { part_number: row.dataset.partNumber, inventory: value }
+                : { [field]: value };
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ [field]: value })
+                body: JSON.stringify(payload)
             });
             const data = await response.json();
             if (!response.ok || !data.ok) {
@@ -1149,7 +1270,7 @@
                 cell.dataset.value = data[field];
             } else {
                 cell.textContent = displayValue;
-                cell.dataset.value = value;
+                cell.dataset.value = field === 'inventory' ? data.row.inventory : value;
             }
             cell.classList.remove('cell-error');
             cell.title = '';
@@ -1161,7 +1282,8 @@
         }
     }
 
-    document.getElementById('parts').addEventListener('click', (event) => {
+    document.getElementById('parts').addEventListener('dblclick', (event) => {
+        if (!canEditCatalog) return;
         const badge = event.target.closest('.conflict-badge');
         if (badge) {
             event.stopPropagation();
@@ -1217,6 +1339,85 @@
         document.getElementById('bulk-inventory-value').value = '';
         bulkInventoryModal.show();
     });
+
+    document.getElementById('inventory-manager-btn').addEventListener('click', () => {
+        document.getElementById('inventory-import-status').textContent = '';
+        inventoryManagerModal.show();
+        loadInventoryResults('');
+    });
+
+    function formatInventoryUpdatedAt(value) {
+        const date = new Date(value || '');
+        if (Number.isNaN(date.getTime())) return value || '';
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = String(date.getFullYear()).slice(-2);
+        const hour = date.getHours() % 12 || 12;
+        const minute = String(date.getMinutes()).padStart(2, '0');
+        const period = date.getHours() >= 12 ? 'pm' : 'am';
+        return `${month}/${day}/${year} - ${hour}:${minute} ${period}`;
+    }
+
+    async function loadInventoryResults(query) {
+        const response = await fetch(`${URLS.inventorySearch}?q=${encodeURIComponent(query)}&limit=10000`);
+        const data = await response.json();
+        const body = document.getElementById('inventory-results');
+        if (!response.ok || !data.ok || !data.rows.length) {
+            body.innerHTML = '<tr><td colspan="11" class="text-muted small">No inventory rows found.</td></tr>';
+            return;
+        }
+        body.innerHTML = data.rows.map((row) => `<tr>
+            <td>${row.part_number}</td>
+            <td>${row.product_description}</td>
+            <td>${row.family_code ? `${row.family_code} - ${row.family_name}` : ''}</td>
+            <td><input class="form-control form-control-sm inventory-manager-value" data-part-number="${row.part_number}" type="number" min="0" step="1" value="${row.inventory}"></td>
+            <td>${row.allocated === '' ? '' : Number(row.allocated).toLocaleString('en-US', { maximumFractionDigits: row.allocation_category === 'length_based' ? 3 : 0 })}</td>
+            <td>${row.on_order || ''}</td>
+            <td>${row.start_2025 || ''}</td>
+            <td>${row.source_name || ''}</td>
+            <td>${row.updated_by || ''}</td>
+            <td>${formatInventoryUpdatedAt(row.updated_at)}</td>
+            <td><button type="button" class="btn btn-sm btn-outline-primary inventory-save-one" data-part-number="${row.part_number}">Save</button></td>
+        </tr>`).join('');
+    }
+
+    document.getElementById('inventory-search').addEventListener('input', (event) => {
+        loadInventoryResults(event.target.value.trim());
+    });
+
+    document.getElementById('inventory-results').addEventListener('click', async (event) => {
+        const button = event.target.closest('.inventory-save-one');
+        if (!button) return;
+        const input = document.querySelector(`.inventory-manager-value[data-part-number="${button.dataset.partNumber}"]`);
+        const response = await fetch(URLS.inventoryUpdate, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ part_number: button.dataset.partNumber, inventory: input.value })
+        });
+        const data = await response.json();
+        document.getElementById('inventory-import-status').textContent = response.ok && data.ok ? 'Inventory saved.' : (data.error || 'Unable to save inventory.');
+        if (response.ok && data.ok) location.reload();
+    });
+
+    async function sendInventoryFile(endpoint) {
+        const input = document.getElementById('inventory-file');
+        const status = document.getElementById('inventory-import-status');
+        if (!input.files.length) {
+            status.textContent = 'Choose an inventory CSV or workbook.';
+            return;
+        }
+        const form = new FormData();
+        form.append('inventory_file', input.files[0]);
+        const response = await fetch(endpoint, { method: 'POST', body: form });
+        const data = await response.json();
+        status.textContent = response.ok && data.ok
+            ? `${data.count ?? data.total} inventory row(s) processed.`
+            : (data.error || 'Unable to process inventory file.');
+        if (response.ok && data.ok && endpoint === URLS.inventoryApply) location.reload();
+    }
+
+    document.getElementById('inventory-preview-btn').addEventListener('click', () => sendInventoryFile(URLS.inventoryPreview));
+    document.getElementById('inventory-apply-btn').addEventListener('click', () => sendInventoryFile(URLS.inventoryApply));
 
     document.getElementById('bulk-inventory-apply-btn').addEventListener('click', async () => {
         const ids = selectedIds();

@@ -10,12 +10,13 @@
   <main class="order-page" data-quote-id="{{ quote_id }}">
     <div class="order-toolbar">
       <a href="/employee/dashboard" id="employeeDashboardButton" class="toolbar-button">Dashboard</a>
-      <span id="orderStatus" class="status-pill">Loading…</span>
-      <span id="orderMessage" class="toolbar-message" role="status" aria-live="polite"></span>
+      <button id="cancelOrderButton" class="toolbar-button" type="button">Cancel</button>
       <button id="emailCustomerButton" class="toolbar-button" type="button">Email Customer</button>
       <button id="addPartButton" class="toolbar-button" type="button">+ Add Part</button>
       <button id="denyOrderButton" class="toolbar-button" type="button">Deny Order</button>
       <button id="holdOrderButton" class="toolbar-button" type="button">Hold</button>
+      <span id="orderStatus" class="status-pill">Loading…</span>
+      <span id="orderMessage" class="toolbar-message" role="status" aria-live="polite"></span>
       <button id="approveOrderButton" class="approve-button" type="button">Approve Order</button>
     </div>
 

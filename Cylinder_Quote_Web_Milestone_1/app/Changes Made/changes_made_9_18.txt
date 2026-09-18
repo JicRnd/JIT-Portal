@@ -1,0 +1,156 @@
+2026-09-18
+
+Order Form parts placement:
+- Updated `app/component_bom.py` so generated Order Form parts preserve the requested Excel comparison sequence: Tie Rod, Rod, Barrel, Tie Rod Nuts, Piston Seal, Barrel Seal, Gland Oring Backup Seal, Rod Wiper, Rod Seal, Piston ID Oring Seal, Gland Oring Seal, Gland, REH Head, BEH Head, Piston, and Mount.
+- Changed the Order Form parts-window helper to preserve incoming workbook sequence and limit the displayed rows without reordering by Allocated. Special and manual rows remain after generated rows in their existing order.
+- No pricing, allocation quantity, unit-cost, tie-rod length, rod length, or barrel length calculation was changed.
+- Added focused regression coverage in `tests/test_order_form_inventory.py` for both sequence preservation and the generated H 5-inch / 2-inch rod part order.
+
+Open investigation:
+- Tie Rod Cost and Allocated, and Rod Price/Allocated display values still need exact parity investigation against the workbook's Inventory formulas and TieRod/Rod reference data.
+- The suspected tie-rod length inputs include stroke, barrel/nut/gland dimensions, thread allowance, and four tie rods, but no new formula was inferred or implemented in this change.
+
+Validation:
+- `pytest tests/test_order_form_inventory.py -q`: 14 passed; one existing openpyxl print-area warning.
+
+Customer calculator autocomplete:
+- Restored the shared calculator autocomplete to substring matching across the complete `Customer` directory record: company name, legacy name, POC, address, city/state/zip, shipping address, phone, email, and notes.
+- Removed the API's ten-row cap so matching contacts are searched across the full contacts database.
+- The browser now waits until at least two characters are typed before requesting predictions; the existing 250 ms debounce remains.
+- Added regression coverage in `tests/test_customer_lookup.py` for substring matches in address, city/state/zip, shipping address, phone, email, and notes.
+- Permanent ownership: `app/static/app.js` owns the two-character prediction trigger and `app/web.py` function `search_customers()` owns the complete-field server query. Do not restore client-only column filtering or a one-character trigger.
+
+Validation:
+- `pytest tests/test_customer_lookup.py -q`: 8 passed.
+- `node --check app/static/app.js`: passed.
+
+Customer Lookup parity:
+- Confirmed the September 16 working behavior was live substring customer search,
+	with address/city-state autofill after selection.
+- The JIT Crew Calculator Customer input and the separate Customer Lookup dialog
+	opened from employee/admin dashboards now share the same `/api/customers/search`
+	complete-field substring behavior.
+- Both dashboard dialog handlers wait for two characters before searching; the
+	employee dashboard rendering test now protects this trigger.
+- Focused validation: 9 tests passed and `node --check app/static/app.js` passed.
+
+Customer search field correction:
+- The requested match fields are only Company Name, POC, and legacy Customer Name.
+- Matching remains case-insensitive substring matching, so the exact character
+	sequence typed is searched anywhere inside those three names.
+- Address, city/state/ZIP, shipping address, phone, email, and notes are not
+	search fields; they are only returned for the selected/displayed customer.
+- Regression coverage confirms name-field matches and rejects matches found only
+	in the excluded contact fields.
+
+Permanent guardrails:
+- `tests/test_customer_lookup.py` now checks the API field contract and verifies
+	the two-character trigger remains in the calculator, employee dashboard, and
+	admin dashboard search surfaces.
+- The protected search contract is: substring matching, preserving the exact
+	typed character sequence, only across Company Name, POC, and legacy Customer
+	Name; no address/contact-field matching; search starts at two characters.
+- A four-digit PIN inside JavaScript or Python would not truly lock source code:
+	anyone who can edit the repository could remove or bypass that check. Real
+	protection must be outside the application code, such as repository access
+	permissions, protected branches/required review, or a read-only file policy.
+
+Employee Quote Form button isolation:
+- Added `event.stopPropagation()` to the `Update Now` and `Order` buttons in
+	`app/Employee_quote_form/employee_quote_forms.html` so each toolbar action
+	remains isolated from a parent toolbar click handler.
+- Existing button IDs and JavaScript hooks were preserved; no other application
+	files were changed for this fix.
+
+Workspace change protection:
+- Added a mandatory permission gate to the root `AGENTS.md`: no agent, tool,
+	task, extension, hook, formatter, or automated workflow may revert, reset,
+	restore, checkout, clean, delete, overwrite, normalize, regenerate, or
+	re-baseline repository content without explicit permission in the current
+	conversation.
+- Added the workspace `PreToolUse` hook at `.github/hooks/` to ask for
+	confirmation before potentially destructive Git or file operations.
+- Validated that ordinary `git status` is allowed and `git restore app.py`
+	requires confirmation.
+- No application, pricing, database, template, or test code was modified for
+	this protection change. Existing tracked and untracked work was preserved.
+
+Rod length allocation parity:
+- Read Sheet H from the read-only `2026 JIT Order Entry V3.xlsm` workbook. The
+	Excel Rod allocation is cylinder quantity multiplied by stroke plus the
+	Sheet H rod addition: `Data!B2 * (Data!B8 + H!AD$7)`.
+- Confirmed the Sheet H rod addition driver: `H!AD7 = H!AS64 + H!BB50 +
+	Data!B11 + Data!B27`, with helper selectors for mount, cushion, and rod
+	style.
+- Added only a new normalized `rod_length_rules` table to `Databases/Pricing.db`
+	using pandas-derived Sheet H reference data. The table contains 4,020 rows
+	with source workbook and Sheet H provenance. Existing Pricing.db tables were
+	not changed.
+- Updated `app/Order_Form/order_form.js` so the existing Rod part row receives
+	the verified stroke-plus-addition Allocated inches and its Cost is recalculated
+	from the preserved unit price. Other part rows are unchanged. The existing
+	Order Form HTML markup was not changed.
+
+Validation:
+- `node --check app/Order_Form/order_form.js`: passed.
+- Sheet H was loaded read-only with `openpyxl`; the temporary `~$` workbook
+	lock file was not used as the calculation source.
+
+September 18 scoped UI and behavior findings:
+
+- The admin dashboard shell used `width: 96%`, while the employee quote-history
+	shell used `min(1200px, 96vw)`. The admin shell was aligned to the capped
+	responsive width and `2rem` vertical margin.
+- The Order Form toolbar was reordered so Dashboard and Cancel remain first,
+	followed by Email Customer, Add Part, Deny Order, Hold, plain-text status,
+	and Approve Order. Toolbar controls now keep their labels on one line.
+- The Order Form status display no longer has the pill outline, rounded
+	background, or state background colors; its existing element and JavaScript
+	status updates were preserved.
+- Existing Order Form JavaScript already contains the unit-price preservation
+	and allocated-quantity Cost calculation. A remaining blank Cost report must
+	be traced through the loaded quote/order data path before changing the
+	calculation.
+- The New Accept Request exclusion, pending-approval save/modify ordering,
+	independent Order versus Update behavior, slow quote/order loading, and
+	customer-search reversion are controlled by backend or JavaScript owners
+	outside the isolated HTML/CSS files named for this pass. No unverified
+	business or pricing change was made to those paths.
+
+Diagnosis before further fixes:
+
+- New Accept Request is populated by `app/portal.py` in `employee_dashboard()`.
+	It currently selects every unassigned quote with status `new` or
+	`pending_approval`. `app/quote_service.py:create_quote_snapshot()` assigns
+	status `new` for both customer and employee-created quotes, so employee/admin
+	quotes can enter New Accept Request. The employee-created quote path needs a
+	role-aware status/queue rule so a quote-only employee quote is pending approval
+	and never a new acceptance request.
+- Pending Approvals in `employee_dashboard()` currently selects assigned
+	`accepted`/`pending_approval` quotes and orders them by `created_at.asc()`.
+	This is the opposite of the requested last-saved/last-modified descending
+	order. The owning timestamp is `edited_at`, with `created_at` as fallback.
+- The employee Quote Form `createNewOrder()` calls `saveQuote(false, true)` for
+	an existing quote. `saveQuote()` first PATCHes the quote and then POSTs the
+	order, which explains why Order behaves like Update. The actions need separate
+	request paths while preserving the order snapshot and pricing authority.
+- Order Form startup fetches `/api/quotes/<id>`, then awaits the tie-rod JSON,
+	then awaits the engineering JSON. These independent reference loads are
+	serialized in `app/Order_Form/order_form.js`, making the page wait for all
+	three before rendering.
+- Server-side Order Form tests currently prove that `order_form_parts` contains
+	`unit_price` and extended `cost`. The browser renderer only sets its internal
+	unit-price cache when a row has a nonblank price or identifying data; a blank
+	displayed Cost therefore needs a captured failing row/data payload before a
+	calculation change is justified.
+- The Inventory Manager in `app/Parts_catalog_page/parts_catalog.html` currently
+	renders inventory, allocated, on-order, and source columns but no allocation
+	formula display. The requested mild formula text is a new Inventory Manager
+	presentation field only; no pricing calculator or Order Form formula should
+	be changed.
+- Customer autocomplete is currently in the requested state: `app/web.py` uses
+	only company name, legacy name, and POC with `%query%` substring matching, and
+	`app/static/app.js` starts requests at two characters with a 250 ms debounce.
+	No current source evidence shows a reversion in this path.
+- Focused pytest could not start because the terminal invoked system Python and
+	failed to import `app`; no pass/fail assertion result was obtained.

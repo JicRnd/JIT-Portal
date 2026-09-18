@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "windows": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .github/hooks/guard-destructive-actions.ps1",
+        "timeout": 5
+      }
+    ]
+  }
+}

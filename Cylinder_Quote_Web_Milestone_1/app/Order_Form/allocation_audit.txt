@@ -1,0 +1,326 @@
+ALLOCATION AUDIT - EMPLOYEE ORDER FORM
+======================================
+
+Audit scope
+-----------
+This audit covers the employee Order Form allocation surface and the code that
+builds its part rows. Reviewed artifacts:
+
+- app/Order_Form/order_form.html
+- app/Order_Form/order_form.css
+- app/Order_Form/order_form.js
+- app/component_bom.py
+- app/quote_service.py
+- tests/test_order_form_inventory.py
+- 2026 JIT Order Entry V3.xlsm, Inventory sheet findings already extracted
+
+Important status note
+---------------------
+The workbook is the business-rule authority. The application currently has
+verified rules for dimensional materials and the inspected seal rows, but the
+full Inventory category audit is not yet complete. The fixed-component rule
+implemented in component_bom.py is therefore a controlled first pass, not a
+claim that every Inventory row has been proven equivalent.
+
+
+1. VISUAL AND STYLE LAYER
+=========================
+
+1.1 Layout structure
+--------------------
+- The page root is .order-page, centered with a maximum width of 1180px.
+- .order-toolbar uses Flexbox, is sticky at the top of the page, and contains
+	navigation, status, email, part, workflow, and approval controls.
+- .order-sheet is the main white, bordered worksheet surface with a minimum
+	height of 1350px.
+- .order-header uses CSS Grid with logo, centered title, and order metadata
+	columns.
+- .address-grid uses three Grid columns for Ship To, shipping fields, and
+	Bill To.
+- .order-summary uses Grid columns for description, quantity, net, discount,
+	and total.
+- .order-body uses two Grid columns: the cylinder detail panel and the parts
+	panel. The current proportions are 37% and 63%.
+- .parts-header and .part-row use five Grid columns:
+	Part Number, Description, Cost, On Hand, and Allocated.
+- .testing-panel uses a two-column Grid. Testing rows use the same five-column
+	visual pattern as the testing header.
+- The add-part dialog uses a fixed overlay with a centered Flexbox dialog and
+	a scrollable result list.
+
+1.2 Typography, colors, and spacing
+------------------------------------
+- Typography is the system Arial/Helvetica stack.
+- The page background is light gray (#d7dadd); the worksheet is white.
+- Borders are predominantly black or gray to reproduce a paper/Excel form.
+- Toolbar controls use light gray gradients, dark borders, rounded corners,
+	and a simulated lower button shadow.
+- The approve button uses a green gradient and green border.
+- Focused inputs use a pale yellow background and an inset gold outline.
+- The status pill uses yellow for a pending state and green for approved.
+- Spacing is compact: most form rows are 22-29px high, with 12px worksheet
+	padding and small 2-12px Grid/Flex gaps.
+- The add-part overlay uses a dark translucent backdrop and a white dialog.
+
+1.3 Responsive and print behavior
+----------------------------------
+- At widths below 850px, body padding is removed and the page keeps a
+	min-width of 760px. This preserves the worksheet columns but causes
+	horizontal scrolling on narrow screens rather than reflowing to one column.
+- The toolbar becomes non-sticky under the same breakpoint.
+- Print mode removes the toolbar, page background, worksheet shadow, and
+	worksheet border, and sets the worksheet minimum height to 11in.
+- No JavaScript window-resize listener exists. Responsive behavior is entirely
+	CSS-driven.
+
+1.4 Visual hierarchy and UX patterns
+-------------------------------------
+- The toolbar provides workflow status and primary actions first.
+- The worksheet header establishes identity and order metadata.
+- The summary row surfaces quantity, net, discount, and total.
+- The cylinder panel presents the engineering description.
+- The parts panel presents material cost, availability, and allocation.
+- The testing section presents the operational test information and barcode.
+- Editable worksheet inputs visually resemble cells: transparent/plain fields,
+	bottom borders, centered values, and yellow focus feedback.
+- The parts panel is intentionally dense and preserves the Excel-style spatial
+	layout rather than using cards or a modern responsive table.
+
+
+2. INTERACTIVE AND FUNCTIONAL LAYER
+====================================
+
+2.1 Interactive elements
+------------------------
+- Dashboard link: navigates to /employee/dashboard.
+- Cancel button: confirms cancellation, then returns to the dashboard.
+- Email Customer button: opens the attachment-choice dialog.
+- Add Part button: opens the catalog search overlay.
+- Deny Order button: confirms denial, calls the deny API, then returns to the
+	dashboard.
+- Hold button: serializes the form, saves a hold, and returns to the dashboard.
+- Approve Order button: serializes the form, saves approval, then navigates to
+	employee quote history.
+- Email dialog checkboxes select Quote Form and Report Image attachments.
+- Email dialog Cancel closes the dialog; Continue closes it and opens a
+	mailto link when a customer email can be extracted.
+- Catalog search input debounces requests by 250ms.
+- Catalog result buttons insert a new part row after the last entered row.
+- Every worksheet input is editable unless disabled by workflow state.
+- Parts rows contain Part Number, Description, Cost, On Hand, and Allocated
+	inputs. Testing rows contain five editable testing fields.
+
+2.2 Startup and state flow
+---------------------------
+- The quote ID is read from the .order-page data-quote-id attribute.
+- load() fetches the quote JSON. If no quote ID exists, approval is disabled
+	and an error message is shown.
+- On success, two static JSON references are loaded:
+	tierod_reference.json and sheet_h_engineering.json.
+- render() builds defaults from the quote, overlays any saved order form
+	snapshot, renders all fields, renders part rows, adds blank rows until there
+	are 29 rows, renders testing rows, sets workflow status, recalculates totals,
+	and draws the barcode.
+- loadedQuote stores the most recent server response used by dashboard and
+	email flows.
+- There is no client-side framework or central state store; state is held in
+	DOM inputs, loadedQuote, and the reference arrays.
+
+2.3 Allocation and cost logic
+-----------------------------
+- component_bom.py generates catalog-backed component candidates from series,
+	bore, rod diameter, seal code, and mount.
+- H and HM tie-rod bore groups are mapped to workbook suffixes, including
+	5-inch -> 087, producing TR087 and TRN087.
+- enrich_parts_with_inventory() overlays on-hand and stored allocation from
+	Inventory.db.
+- apply_dynamic_allocations() then replaces recognized dimensional allocations:
+	- Rod: calculated rod length multiplied by order quantity.
+	- Barrel: calculated barrel length multiplied by order quantity.
+	- Tie rod: calculated length multiplied by four rods and order quantity.
+	- Tie-rod nuts: eight nuts multiplied by order quantity.
+- apply_fixed_allocations() currently assigns order quantity to generated
+	non-dimensional parts, assigns two times order quantity to descriptions
+	containing Piston Seal or Barrel Seal, and preserves one times quantity for
+	piston-seal part numbers ending in PL.
+- apply_allocated_costs() changes the generated row cost from unit cost to
+	unit cost multiplied by allocated quantity.
+- order_form.js formats cost values as currency such as $18.85 and parses
+	currency symbols when calculating Parts Total.
+
+2.4 Client-side validation and event triggers
+----------------------------------------------
+- Native input types provide basic number, minimum, and step validation for
+	quantity, net, discount, total, and Parts Total.
+- The input event recalculates order totals when quantity, net, or cost changes.
+- Entering a part number into a blank row defaults Allocated to 1 when empty
+	or zero.
+- Clearing a part number clears every input in that row.
+- Blank rows are created with empty values rather than zero placeholders.
+- Approval and hold operations rely on server responses for final success or
+	failure and display returned messages.
+- Buttons are disabled or relabeled during approval, denial, and hold requests.
+- Status controls disable approval after approval and restrict hold/deny based
+	on returned status.
+- Hover behavior is limited to catalog result highlighting. Focus behavior is
+	provided by CSS. There is no custom keyboard navigation or resize logic.
+
+2.5 Functional risks
+---------------------
+- Cost is formatted with a dollar sign in the input. Any future code that uses
+	Number(input.value) without the existing amount() parser will receive zero
+	for values such as $18.85.
+- Changing Allocated manually in the browser does not automatically recompute
+	that row's Cost. The current extended cost is calculated server-side before
+	rendering; the input handler only recalculates the Parts Total.
+- The client allows editing On Hand and Allocated, but server-side quote/order
+	persistence must be treated as authoritative for inventory integrity.
+- The 29-row minimum is a fixed visual assumption and can create a tall form
+	for quotes with only a few parts.
+
+
+3. CONNECTIVITY AND DATA LAYER
+==============================
+
+3.1 Internal links and assets
+-----------------------------
+- /employee/dashboard is the dashboard link and return destination.
+- /employee_quote_history/employee_quote_history.html is the post-approval
+	navigation target.
+- The stylesheet is served through the Flask order_form_css endpoint.
+- The JavaScript is served through the Flask order_form_js endpoint.
+- The logo is served through the Flask quote_image endpoint for
+	quote_form_logo.png.
+- /static/tierod_reference.json is loaded by the browser.
+- /static/sheet_h_engineering.json is loaded by the browser.
+- The barcode is generated locally with the Canvas API; no barcode library is
+	used.
+
+3.2 API calls
+-------------
+- GET /api/quotes/<quote_id> loads the quote and order form data.
+- GET /api/catalog-parts/search?q=<query> searches the local catalog.
+- POST /api/quotes/<quote_id>/order/hold saves the editable order form and
+	changes the workflow to hold.
+- POST /api/quotes/<quote_id>/order/approve saves the order form and approves
+	the quote.
+- POST /api/quotes/<quote_id>/order/deny denies the quote without sending the
+	edited form payload.
+- The mailto flow launches the user's local mail client; it is not an HTTP
+	outbound email implementation.
+- No external network URLs or third-party JavaScript libraries are referenced
+	by this page.
+
+3.3 Backend and database integrations
+--------------------------------------
+- Flask/Jinja renders the page and injects the quote ID and asset URLs.
+- quote_service.py serializes Quote data and builds order_form_parts.
+- component_bom.py reads catalog records through the pricing database session
+	and overlays inventory records through Inventory.db.
+- Inventory.db InventoryPart.inventory supplies On Hand.
+- Inventory.db InventoryPart.allocated is an input/fallback but is replaced by
+	verified current-order rules for recognized generated components.
+- Pricing/catalog data supplies descriptions and unit costs.
+- Quote and line-item data supplies customer fields, manual parts, and saved
+	form snapshots.
+- Normalized JSON references supply browser-side engineering display data; the
+	workbook itself is not loaded at runtime.
+
+3.4 Dynamic versus static zones
+--------------------------------
+- Dynamic: quote fields, generated parts, inventory values, order quantity,
+	allocation values, extended costs, testing rows, status, barcode, and catalog
+	search results.
+- Static: form labels, grid structure, CSS dimensions, code maps, mount labels,
+	seal labels, rod thread labels, and the normalized reference asset paths.
+- Server-authoritative: quote identity, pricing breakdown, generated parts,
+	inventory overlay, allocation calculation, workflow transitions, and save
+	operations.
+- Browser-derived: display descriptions, testing display text, barcode image,
+	currency presentation, Parts Total, and Parts Ratio.
+
+
+4. ARCHITECTURE AND TECHNICAL PURPOSE
+======================================
+
+4.1 Core purpose
+----------------
+The page is an employee-facing editable order worksheet. It combines a
+server-validated cylinder quote with customer/order presentation fields,
+component inventory information, calculated material allocations, cost
+projections, testing information, and approval workflow actions.
+
+The intended data flow is:
+
+Order Form HTML/JS -> local Flask API -> quote_service.py -> component_bom.py
+-> Pricing.db and Inventory.db -> JSON response -> editable worksheet.
+
+The workbook is a read-only business-rule source used to extract and verify
+rules. It is not a runtime dependency.
+
+4.2 Current allocation architecture
+------------------------------------
+- Inventory enrichment happens first for generated, special, and manual rows.
+- Fixed generated allocation rules are applied to generated parts.
+- Dynamic measured allocation rules override rod, barrel, tie rod, and nuts.
+- Extended costs are computed after allocations.
+- The browser renders the resulting rows and computes display totals.
+- Tests currently cover Inventory.db overlay, H-series tie-rod selection,
+	dimensional allocation, TR087 cost calculation, fixed seal multipliers, and
+	low-friction PL behavior.
+
+4.3 Verified workbook findings
+------------------------------
+- Standard piston and barrel seal rows inspected in Inventory commonly use
+	Data!B2*2.
+- H40PL and H25PL low-friction piston seals use Data!B2.
+- Rod, barrel, tie rod, and tie-rod nut rows use measurement or fixed
+	component formulas rather than a single universal multiplier.
+- H-series and HM-series 5-inch tie rods use TR087/TRN087 after the selector
+	correction.
+
+4.4 Potential bugs, bottlenecks, and edge cases
+-----------------------------------------------
+- Workbook parity is incomplete for every Inventory category. Heads, pistons,
+	glands, mounts, all O-ring/backup variants, accessories, and modification
+	rows still require category-level formula verification.
+- apply_fixed_allocations() currently assumes every generated non-dimensional
+	component is one per cylinder unless it is a standard piston/barrel seal or
+	the PL exception. This is a useful first pass but must not be treated as
+	verified for every category until the remaining Inventory formulas are
+	audited.
+- apply_dynamic_allocations() returns early when engineering lengths are not
+	available. In that case dimensional parts may retain the fixed allocation
+	fallback rather than exposing a clear missing-rule error.
+- The tie-rod selector uses threshold grouping for H/HM bores. Any future
+	series with different selector families needs explicit workbook evidence.
+- Decimal allocation precision is preserved in the API, but the browser cost
+	display rounds to two currency decimals. This is correct for display but can
+	hide sub-cent material precision.
+- Currency strings are presentation values. They should not be used as raw
+	numeric database input without parsing.
+- Inventory enrichment performs database access for each quote serialization.
+	This is appropriate for current on-hand values but can become a latency
+	concern for large catalog payloads.
+- The page loads both reference JSON files on every page load. They are local
+	assets, but browser caching headers should be verified for production use.
+- Server-side validation remains essential because editable client fields can
+	be changed or omitted by a browser client.
+- There is no explicit transaction boundary visible in this page; quote save
+	and approval correctness depends on the Flask service/database transaction
+	implementation.
+- The deny request does not include order_form data, so edits made immediately
+	before denial are intentionally not saved.
+
+4.5 Recommended verification sequence
+---------------------------------------
+1. Extract every Inventory column E formula by category and preserve the exact
+	 selector conditions, not only the multiplier.
+2. Compare those formulas to generated_cylinder_parts() candidates.
+3. Add one regression scenario per category and one test per exception.
+4. Replace provisional fixed rules with explicit category rules only where the
+	 workbook proves them.
+5. Add a browser-level check that changing Allocated updates Cost if that
+	 editing behavior is required.
+6. Run the complete suite after the category rules are finalized.
+

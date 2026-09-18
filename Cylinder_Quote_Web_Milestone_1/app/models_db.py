@@ -98,6 +98,9 @@ class Order(Base):
     status: Mapped[str] = mapped_column(
         String(30), default="pending_approval", nullable=False
     )
+    deleted_status: Mapped[str | None] = mapped_column(String(30), nullable=True)
+    deleted_by_user_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     order_form_snapshot: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=utc_now, nullable=False
@@ -117,6 +120,7 @@ class Customer(Base):
     poc: Mapped[str | None] = mapped_column(String(255), nullable=True)
     address: Mapped[str | None] = mapped_column(Text, nullable=True)
     city_state_zip: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    shipping_address: Mapped[str | None] = mapped_column(Text, nullable=True)
     phone: Mapped[str | None] = mapped_column(String(255), nullable=True)
     email: Mapped[str | None] = mapped_column(String(255), nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
@@ -182,6 +186,106 @@ class CatalogPart(Base):
     review_needed: Mapped[str | None] = mapped_column(String(20), nullable=True)
     review_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
     active: Mapped[str | None] = mapped_column(String(20), nullable=True)
+
+
+class OrderFormInventoryRule(Base):
+    """Workbook-derived Order Form part rule, stored only in Pricing.db."""
+
+    __tablename__ = "order_form_inventory_rules"
+
+    source_row: Mapped[int] = mapped_column(Integer, primary_key=True)
+    part_number: Mapped[str] = mapped_column(String(120), index=True, nullable=False)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    unit_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    allocation_formula: Mapped[str] = mapped_column(Text, nullable=False)
+    category: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    referenced_sheets: Mapped[str | None] = mapped_column(Text, nullable=True)
+    data_inputs: Mapped[str | None] = mapped_column(Text, nullable=True)
+    source_workbook: Mapped[str] = mapped_column(String(255), nullable=False)
+    source_sheet: Mapped[str] = mapped_column(String(80), nullable=False)
+
+
+class TieRodRule(Base):
+    """Normalized TieRod-sheet lookup used to determine tie-rod cut length."""
+
+    __tablename__ = "tie_rod_rules"
+
+    source_row: Mapped[int] = mapped_column(Integer, primary_key=True)
+    series_codes: Mapped[str] = mapped_column(String(120), nullable=False)
+    bore: Mapped[Decimal] = mapped_column(Numeric(10, 4), nullable=False)
+    rod_diameter: Mapped[Decimal | None] = mapped_column(Numeric(10, 4), nullable=True)
+    mount_codes: Mapped[str] = mapped_column(String(255), nullable=False)
+    tie_rod_diameter: Mapped[Decimal | None] = mapped_column(Numeric(10, 4), nullable=True)
+    rod_end_thread_length: Mapped[Decimal | None] = mapped_column(Numeric(10, 4), nullable=True)
+    cap_end_thread_length: Mapped[Decimal | None] = mapped_column(Numeric(10, 4), nullable=True)
+    k_rod_end: Mapped[Decimal | None] = mapped_column(Numeric(10, 4), nullable=True)
+    k_cap_end: Mapped[Decimal | None] = mapped_column(Numeric(10, 4), nullable=True)
+    through_rod: Mapped[Decimal | None] = mapped_column(Numeric(10, 4), nullable=True)
+    through_cap: Mapped[Decimal | None] = mapped_column(Numeric(10, 4), nullable=True)
+    assembly_length: Mapped[Decimal | None] = mapped_column(Numeric(12, 4), nullable=True)
+    assembly_formula: Mapped[str | None] = mapped_column(Text, nullable=True)
+    source_workbook: Mapped[str] = mapped_column(String(255), nullable=False)
+    source_sheet: Mapped[str] = mapped_column(String(80), nullable=False)
+
+
+class OrderFormWorkbookCell(Base):
+    """Copied helper-sheet cell used by Order Form allocation formulas."""
+
+    __tablename__ = "order_form_workbook_cells"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    sheet_name: Mapped[str] = mapped_column(String(80), nullable=False, index=True)
+    coordinate: Mapped[str] = mapped_column(String(30), nullable=False)
+    formula: Mapped[str | None] = mapped_column(Text, nullable=True)
+    value_text: Mapped[str | None] = mapped_column(Text, nullable=True)
+    value_number: Mapped[Decimal | None] = mapped_column(Numeric(18, 8), nullable=True)
+    source_workbook: Mapped[str] = mapped_column(String(255), nullable=False)
+
+
+class OrderFormDependencyCell(Base):
+    """Audit-normalized workbook cell reached by an Order Form rule."""
+
+    __tablename__ = "order_form_dependency_cells"
+
+    cell_key: Mapped[str] = mapped_column(String(160), primary_key=True)
+    kind: Mapped[str] = mapped_column(String(30), nullable=False)
+    formula: Mapped[str | None] = mapped_column(Text, nullable=True)
+    value_text: Mapped[str | None] = mapped_column(Text, nullable=True)
+    value_number: Mapped[Decimal | None] = mapped_column(Numeric(18, 8), nullable=True)
+    cached_value: Mapped[str | None] = mapped_column(Text, nullable=True)
+    direct_precedents: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    used_by_part_formulas: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    issues: Mapped[str | None] = mapped_column(Text, nullable=True)
+    source_workbook: Mapped[str] = mapped_column(String(255), nullable=False)
+
+
+class OrderFormDependencyEdge(Base):
+    """Audit-normalized directed dependency between workbook cells."""
+
+    __tablename__ = "order_form_dependency_edges"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    from_cell: Mapped[str] = mapped_column(String(160), index=True, nullable=False)
+    to_reference: Mapped[str] = mapped_column(String(160), index=True, nullable=False)
+    reference_kind: Mapped[str | None] = mapped_column(String(30), nullable=True)
+    formula_token: Mapped[str | None] = mapped_column(String(160), nullable=True)
+    source_workbook: Mapped[str] = mapped_column(String(255), nullable=False)
+
+
+class InventoryPart(Base):
+    """Current whole-part inventory state, keyed by the part number."""
+
+    __tablename__ = "inventory_parts"
+
+    part_number: Mapped[str] = mapped_column(String(120), primary_key=True)
+    product_description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    inventory: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    allocated: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    start_2025: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    on_order: Mapped[Decimal | None] = mapped_column(Numeric(14, 4), nullable=True)
+    source_name: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    updated_by: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now, onupdate=utc_now, nullable=False)
 
 
 class BaseAssemblyPrice(Base):
@@ -340,6 +444,7 @@ class Quote(Base):
 
     deleted_by_user_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    deleted_status: Mapped[str | None] = mapped_column(String(30), nullable=True)
 
     assigned_employee_user_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     assigned_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)

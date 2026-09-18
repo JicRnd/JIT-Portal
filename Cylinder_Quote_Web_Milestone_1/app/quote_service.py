@@ -10,12 +10,58 @@ from sqlalchemy import func, select
 
 from cylinder_quote_engine import QuotePricingEngine
 
-from .component_bom import generated_cylinder_parts
-from .models_db import Customer, Quote, QuoteLineItem, utc_now
+from .component_bom import (
+    apply_allocated_costs,
+    apply_dynamic_allocations,
+    apply_fixed_allocations,
+    enrich_parts_with_inventory,
+    generated_cylinder_parts,
+    sort_order_form_parts,
+)
+from .models_db import Customer, Order, Quote, QuoteLineItem, utc_now
 from .quote_numbering import generate_quote_number
 from .service import calculate_payload, decimal_to_json, quote_inputs_from_payload
 
 PRICING_VERSION = "v1.2"
+
+_CONTACT_BUSINESS_TERMS = {
+    "associates", "company", "construction", "consulting", "corp", "corporation",
+    "design", "enterprises", "group", "holdings", "inc", "incorporated", "industries",
+    "llc", "llp", "lp", "ltd", "manufacturing", "partners", "plc", "services",
+    "solutions", "supply", "systems", "the", "&",
+}
+_CONTACT_PERSON_FIRST_NAMES = {
+    "alex", "anna", "bob", "charles", "chris", "daniel", "david", "dr", "james",
+    "jane", "jennifer", "john", "jordan", "joseph", "joshua", "kane", "laura",
+    "lisa", "maria", "mary", "michael", "mike", "pat", "patrick", "paul", "robert",
+    "sarah", "stephanie", "susan", "thomas", "william",
+}
+
+
+def classify_contact_name(value: str | None) -> tuple[str | None, str | None]:
+    """Split a single imported contact label into company and optional POC fields."""
+    name = (value or "").strip()
+    if not name:
+        return None, None
+
+    words = name.lower().replace(",", " ").split()
+    if any(word in _CONTACT_BUSINESS_TERMS for word in words) or "&" in name:
+        return name, None
+
+    person_shape = 2 <= len(words) <= 4 and words[0].rstrip(".") in _CONTACT_PERSON_FIRST_NAMES
+    if person_shape:
+        return None, name
+
+    return name, None
+
+
+def sync_order_status(session: Session, quote_id: int, status: str) -> None:
+    order = session.execute(
+        select(Order).where(Order.quote_id == quote_id)
+    ).scalar_one_or_none()
+    if order is not None:
+        order.status = status
+        session.add(order)
 
 
 def _optional_str(value: Any, default: str | None = None) -> str | None:
@@ -76,13 +122,24 @@ def _validate_manual_line_items(items: Any) -> list[dict[str, Any]]:
     return out
 
 
-def upsert_customer(session: Session, name: str | None, address: str | None, phone: str | None, email: str | None = None, city_state_zip: str | None = None) -> None:
+def upsert_customer(
+    session: Session,
+    name: str | None,
+    address: str | None,
+    phone: str | None,
+    email: str | None = None,
+    city_state_zip: str | None = None,
+    company_name: str | None = None,
+    poc: str | None = None,
+) -> None:
     """Keep the saved customer directory current from a quote's presentation fields."""
     name = (name or "").strip()
     address = (address or "").strip() or None
     phone = (phone or "").strip() or None
     email = (email or "").strip() or None
     city_state_zip = (city_state_zip or "").strip() or None
+    company_name = (company_name or "").strip() or None
+    poc = (poc or "").strip() or None
     existing = session.execute(
         select(Customer).where(func.lower(Customer.name) == name.lower())
     ).scalar_one_or_none()
@@ -95,8 +152,22 @@ def upsert_customer(session: Session, name: str | None, address: str | None, pho
             existing.email = email
         if city_state_zip:
             existing.city_state_zip = city_state_zip
+        if company_name is not None:
+            existing.company_name = company_name
+        if poc is not None:
+            existing.poc = poc
     else:
-        session.add(Customer(name=name, address=address, phone=phone, email=email, city_state_zip=city_state_zip))
+        session.add(
+            Customer(
+                name=name,
+                company_name=company_name,
+                poc=poc,
+                address=address,
+                phone=phone,
+                email=email,
+                city_state_zip=city_state_zip,
+            )
+        )
 
 
 def create_quote_snapshot(
@@ -352,10 +423,58 @@ def _line_item_to_json(item: QuoteLineItem) -> dict[str, Any]:
     }
 
 
-def quote_to_json(quote: Quote) -> dict[str, Any]:
-    """Serialize a Quote and its line items for API responses."""
+def _order_form_parts(quote: Quote, *, apply_workbook_allocations: bool) -> list[dict[str, Any]]:
     inputs = quote.cylinder_inputs_snapshot or {}
     generated_parts = generated_cylinder_parts(inputs)
+    generated_parts = apply_fixed_allocations(
+        generated_parts,
+        quantity=max(1, int(quote.quantity or 1)),
+    )
+    special_parts = [
+        {
+            "part_number": part_number,
+            "description": f"Quoted special part (Qty {quantity})",
+            "cost": "0",
+            "on_hand": "0",
+            "allocated": decimal_to_json(quantity),
+            "allocation_category": "quantity_or_option_based",
+        }
+        for part_number, quantity in (inputs.get("special_parts") or {}).items()
+    ]
+    manual_parts = [
+        {
+            "part_number": item.reference_part_number or "",
+            "description": item.description or "",
+            "cost": decimal_to_json(item.unit_price),
+            "on_hand": "0",
+            "allocated": decimal_to_json(item.quantity),
+            "allocation_category": "quantity_or_option_based",
+        }
+        for item in quote.line_items
+    ]
+    order_form_parts = enrich_parts_with_inventory(
+        generated_parts + special_parts + manual_parts
+    )
+    if apply_workbook_allocations:
+        order_form_parts = apply_dynamic_allocations(
+            order_form_parts,
+            inputs,
+            quantity=max(1, int(quote.quantity or 1)),
+        )
+    order_form_parts = enrich_parts_with_inventory(order_form_parts, preserve_allocated=True)
+    order_form_parts = apply_allocated_costs(order_form_parts)
+    return sort_order_form_parts(order_form_parts)
+
+
+def quote_to_json(quote: Quote) -> dict[str, Any]:
+    """Serialize a Quote and its line items for general API responses."""
+    inputs = quote.cylinder_inputs_snapshot or {}
+    generated_parts = generated_cylinder_parts(inputs)
+    generated_parts = apply_fixed_allocations(
+        generated_parts,
+        quantity=max(1, int(quote.quantity or 1)),
+    )
+    order_form_parts = _order_form_parts(quote, apply_workbook_allocations=False)
     return {
         "id": quote.id,
         "quote_number": quote.quote_number,
@@ -375,6 +494,7 @@ def quote_to_json(quote: Quote) -> dict[str, Any]:
         "order_form_snapshot": quote.order_form_snapshot,
         "cylinder_inputs_snapshot": quote.cylinder_inputs_snapshot,
         "generated_parts": generated_parts,
+        "order_form_parts": order_form_parts,
         "price_breakdown_snapshot": quote.price_breakdown_snapshot,
         "manual_line_items": [_line_item_to_json(item) for item in quote.line_items],
         "created_by": quote.created_by.display_name if quote.created_by else None,
@@ -386,3 +506,13 @@ def quote_to_json(quote: Quote) -> dict[str, Any]:
         "emailed_at": quote.emailed_at.isoformat() if quote.emailed_at else None,
         "approved_at": quote.approved_at.isoformat() if quote.approved_at else None,
     }
+
+
+def quote_to_order_form_json(quote: Quote) -> dict[str, Any]:
+    """Serialize a Quote for the Order Form workflow."""
+    result = quote_to_json(quote)
+    result["order_form_parts"] = _order_form_parts(
+        quote,
+        apply_workbook_allocations=True,
+    )
+    return result

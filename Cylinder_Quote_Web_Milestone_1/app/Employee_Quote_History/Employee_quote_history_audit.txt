@@ -1,0 +1,368 @@
+EMPLOYEE QUOTE HISTORY PAGE
+360-DEGREE TECHNICAL AND STRUCTURAL AUDIT
+
+Audited file:
+  app/Employee_Quote_History/employee_quote_history.html
+
+Direct supporting files reviewed:
+  app/Employee_Quote_History/employee_quote_history.css
+  app/Employee_Quote_History/employee_quote_history.js
+  app/Employee_Quote_History/Employee_quote_history_search.py
+  app/models_db.py
+  app/db.py
+  app/web.py
+  tests/test_quote_history.py
+
+Audit scope and operating assumptions:
+- This is a standalone employee quote-history page. It is not routed through the legacy portal quote-history implementation.
+- The page is rendered by Flask/Jinja and receives a signed-in employee, a server-filtered row list, the current query, and an all-state flag.
+- Quote records and quote line items are stored in Quote.db through the application database session layer.
+- The page intentionally searches all quote records rather than restricting results to the signed-in employee.
+- No external network service, third-party browser framework, CDN, or remote asset is used by this page.
+
+======================================================================
+1. VISUAL AND STYLE LAYER
+======================================================================
+
+1.1 Document and page structure
+- The document uses a normal HTML5 document declaration, English language metadata, UTF-8 encoding, and a responsive viewport.
+- The body has the page class employee-quote-history-page. This is the root scope used by the local stylesheet.
+- The page is divided into four visual zones:
+  1. Header: employee name, centered page title, and Dashboard link.
+  2. Action row: New Quote control and See All or Employee Quote History link.
+  3. Search panel: label, text input, clear button, Search button, and suggestion panel.
+  4. Results region: quote table or empty state.
+- A hidden measurement-type modal is present at the end of the document and is displayed by JavaScript when New Quote is clicked.
+
+1.2 Layout systems and container boundaries
+- The header uses CSS Grid with three columns: 1fr, auto, and 1fr. This centers the title while keeping the employee name and Dashboard link at the sides.
+- The main shell uses a bounded responsive width of min(1200px, 96vw) and is centered with a 2rem vertical margin.
+- The action row uses Flexbox with space-between alignment and a 1rem gap.
+- The search input/button row uses Flexbox. The input grows with flex: 1 while the clear and submit buttons retain content-driven widths.
+- The results table is wrapped in an overflow-auto container. Its min-width is 780px, so narrow screens scroll horizontally rather than compressing table content into unreadable columns.
+- The suggestion list is absolutely positioned inside the relative search form and spans the form's inner width using left and right offsets of 1.4rem.
+- The modal uses fixed positioning, full-viewport inset, a translucent dark overlay, and Grid place-items:center for the dialog body.
+
+1.3 Typography
+- The global font stack is Arial, Helvetica, sans-serif.
+- The root font size is clamp(12px, 1.333vw, 16px). This allows viewport-dependent scaling but also means text size changes with browser width.
+- Buttons inherit the page font and use 1rem text, 700 font weight, and 1.2 line height.
+- The page title inherits browser heading weight/size because no explicit font size is assigned in the local stylesheet.
+- Suggestion rows use compact 1.25 line height. Quote number text is emphasized with a strong element.
+
+1.4 Color palette and visual language
+- Page background: light gray #f3f5f7.
+- Primary text: dark blue-gray #17202a.
+- Primary action/button palette: red gradients from #d92727 to #a80f0f, with dark red border/shadow values.
+- Link/accent red: #861313.
+- Header divider: #a41414.
+- Secondary button palette: white-to-light-gray gradient with gray border and shadow.
+- Table header: #e9ecef.
+- Borders: gray values ranging from #999 to #d5d9dc and #bcc2c7.
+- Status colors: yellow for pending, green for approved, and red/pink for denied and canceled.
+- The design is operational and form-oriented: strong red actions, white work surfaces, compact table rows, and restrained decoration.
+
+1.5 Spacing and sizing rules
+- Header padding is 0.75rem 2rem with a 72px minimum height.
+- Search panel padding is 1.4rem and uses an 8px border radius.
+- Table cells use 0.75rem padding.
+- Suggestion rows use 0.7rem 0.85rem with a 0.75rem column gap.
+- Primary buttons use 0.72rem 1rem padding; small buttons use 0.4rem 0.65rem.
+- The modal body uses 2rem padding and a minimum width of min(420px, 90vw).
+
+1.6 Responsive behavior
+- At max-width 650px, the header changes from three grid columns to one column and centers its content.
+- The action row changes from horizontal Flexbox layout to a vertical column.
+- Suggestion rows change from three columns to one column, allowing customer and model text to wrap.
+- The results table retains its 780px minimum width and is therefore horizontally scrollable on small screens.
+- There is no JavaScript resize listener. Responsive behavior is entirely CSS-driven, which is simple and predictable.
+
+1.7 Visual hierarchy and UX patterns
+- The centered title establishes page identity.
+- New Quote is the primary task action and is visually separated from the search workflow.
+- Search is presented before the table and supports both explicit submission and live suggestions.
+- Quote number is the strongest field in each suggestion; customer and model code provide disambiguating context.
+- Status is represented as a compact pill, preserving scanability in the results table.
+- The table's Open action is visually consistent with the primary button treatment.
+
+1.8 Visual findings
+- MEDIUM: The global font size uses viewport width through 1.333vw. This can make text scale unexpectedly on very wide or narrow displays and does not follow a fixed readable baseline.
+- LOW: The modal's visual style is defined, but the HTML does not identify the dialog semantically for assistive technologies.
+- LOW: The title uses the employee display name twice in the header, once as a side label and once in the h1. This is intentional context but creates redundant visual text.
+
+======================================================================
+2. INTERACTIVE AND FUNCTIONAL LAYER
+======================================================================
+
+2.1 Interactive elements
+- Dashboard anchor: navigates to /employee/dashboard.
+- New Quote button: opens the measurement-type modal.
+- See All / Employee Quote History anchor: changes the all=1 query flag or removes it.
+- Search input: accepts free-text quote search terms.
+- Clear button: empties the search input, hides suggestions, and returns focus to the input.
+- Search submit button: submits the form using GET.
+- Live suggestion links: navigate to /employee/quote-entry?quote_id=<id>.
+- Standard modal choice: navigates to the button's data-standard URL.
+- Metric modal choice: navigates to the button's data-metric URL.
+- Cancel modal button: hides the modal.
+- Table Open links: navigate directly to the employee quote-entry page for the quote ID.
+
+2.2 Page-load behavior
+- Flask renders the initial row list on the server.
+- The browser loads the local CSS route and local JavaScript route generated with the employee_quote_history blueprint.
+- JavaScript registers modal handlers, search handlers, and clear-button behavior immediately.
+- No initial client-side API call is made until the user enters at least two non-whitespace characters.
+
+2.3 Search input behavior
+- Every input event cancels the previous debounce timer.
+- The input is trimmed before evaluation.
+- Queries shorter than two characters hide and clear the suggestion list.
+- Queries of two or more characters wait 220ms, then request the local employee_quote_history_search endpoint.
+- The query is URL-encoded with encodeURIComponent.
+- Successful JSON responses are rendered into structured suggestion anchors.
+- A failed fetch or JSON/DOM operation is caught by the async try/catch and hides suggestions.
+- The search form itself remains available for explicit GET submission, which causes the server-rendered table to be filtered by the same query.
+
+2.4 Suggestion rendering
+- Existing suggestion children are removed before each render.
+- Each result creates an anchor containing:
+  - a strong quote number;
+  - a customer span;
+  - a model-code span.
+- Empty values use readable fallbacks: Quote, No customer, and No model code.
+- The suggestion panel is hidden when the result list is empty.
+- CSS supplies hover/focus background and accent-color changes.
+- Suggestion rows are keyboard-focusable as normal anchors, but the list is not exposed as an ARIA combobox/listbox.
+
+2.5 Modal state management
+- The modal is initially hidden through the hidden attribute.
+- Clicking any .new-quote button sets modal.hidden=false.
+- The modal's Standard and Metric onclick handlers are assigned at New Quote click time from data attributes.
+- Clicking .modal-close sets the closest modal hidden=true.
+- There is no Escape-key handler, outside-click handler, focus trap, or restoration of focus to the New Quote button.
+
+2.6 Server-side validation and authorization
+- The page route and live-search route use require_employee.
+- require_employee calls signed_in_employee, which resolves session user_id through the User database and requires an active user whose role is employee.
+- Unauthorized users are redirected to /employee/login.
+- Search matching is performed server-side; the browser is not trusted as a pricing or authorization authority.
+- Jinja autoescaping protects normal text interpolations in the HTML output.
+- Search query length is checked server-side for live suggestions, so a client cannot bypass the two-character rule merely by changing JavaScript.
+
+2.7 Interactive findings
+- HIGH: The See All / Employee Quote History toggle changes only the all query parameter. The backend currently sets show_all for template display but does not change search scope. Since the quote page already searches all Quote.db records, the toggle is functionally cosmetic and may mislead users into thinking two scopes exist.
+- MEDIUM: The JavaScript assumes quoteHistorySearch, clearQuoteHistorySearchButton, and searchSuggestions all exist. That is true for the current template, but a partial template render or future reuse would cause immediate null-reference failures.
+- MEDIUM: The fetch code does not check response.ok before parsing JSON. A server-side 401/500 HTML response is caught indirectly by JSON parsing, but no diagnostic or user-visible error state is shown.
+- MEDIUM: The live suggestion panel has no loading, error, result-count, or no-match message. It simply disappears, which is ambiguous to users.
+- LOW: The search input has no explicit type="search", no inputmode, and no aria-controls/aria-expanded relationship to the suggestion panel.
+- LOW: The modal has no role="dialog", aria-modal="true", accessible title association, Escape handling, or focus management.
+- LOW: The Search button and clear button labels are visually clear, but the clear button uses visible X text rather than a more descriptive visible label.
+
+======================================================================
+3. CONNECTIVITY AND DATA LAYER
+======================================================================
+
+3.1 Internal links and routes
+- CSS asset is generated by url_for('employee_quote_history.employee_quote_history_css').
+- JavaScript asset is generated by url_for('employee_quote_history.employee_quote_history_js').
+- Page navigation uses url_for for the quote-history page's See All links.
+- Dashboard is a hard-coded internal path: /employee/dashboard.
+- New Quote standard destination is a hard-coded internal path: /employee/quote-entry.
+- Metric destination is a hard-coded internal path: /metric-coming-soon.
+- Table and live-suggestion quote opening use /employee/quote-entry?quote_id=<id>.
+- Live search uses /employee_quote_history_search?q=<encoded-query>.
+- No external HTTP URLs are used by the page.
+
+3.2 Backend route map
+- GET /employee_quote_history/employee_quote_history.html renders the page.
+- GET /employee_quote_history_search returns JSON live suggestions.
+- GET /employee_quote_history.css serves the local stylesheet.
+- GET /employee_quote_history.js serves the local JavaScript.
+- The blueprint is registered independently in app/web.py and loads the Employee_Quote_History template directory through the Jinja loader.
+
+3.3 Database path and ORM integration
+- Employee_quote_history_search.py imports get_session, Quote, QuoteLineItem, and User from the application layer.
+- get_session selects the configured Quotes database engine. The default path is Databases/Quote.db and may be overridden with QUOTES_DATABASE_PATH.
+- QuoteLineItem is loaded with selectinload(Quote.line_items), allowing line-item descriptions, part references, quantities, prices, and notes to participate in search.
+- User data is read from the accounts database only for employee authorization. User metadata is not used to filter quote ownership.
+- The page reads Quote records and does not mutate Quote.db.
+
+3.4 Search data flow
+- Initial page request:
+  1. Session user_id is authorized.
+  2. q and all query parameters are read.
+  3. search_quotes loads all Quote rows ordered by created_at descending.
+  4. selectinload loads all related quote line items.
+  5. If q exists, each quote is converted into recursive searchable text.
+  6. Matching quotes are mapped to (quote, total, status) rows.
+  7. Jinja renders the table.
+- Live search request:
+  1. Browser sends q after the two-character threshold and 220ms debounce.
+  2. The endpoint calls search_quotes against Quote.db.
+  3. Matching quotes are mapped to id, quote_number, customer, and model_code.
+  4. JSON is returned and rendered as suggestion anchors.
+- The search text includes quote identifiers, status, presentation fields, pricing metadata, timestamps, snapshots, and line-item business fields.
+- The search excludes attribution and UI metadata keys including assigned_to, quoted_by, ordered_by, created_by, edited_by, approved_by, text_nodes, and textNodes after key normalization.
+
+3.5 Dynamic and static content zones
+- Dynamic server content: employee display name, title, query value, all-state controls, quote rows, totals, dates, statuses, quote IDs, and empty-state selection.
+- Dynamic client content: suggestion panel contents and modal visibility.
+- Static page content: labels, table headings, action labels, modal text, button fallback labels, and CSS rules.
+- Local assets: employee_quote_history.css and employee_quote_history.js.
+- External libraries/frameworks: none in the browser. Flask, Jinja, SQLAlchemy, and Python standard-library modules are used server-side.
+
+3.6 Connectivity findings
+- MEDIUM: Several internal destinations are hard-coded instead of generated with url_for. Blueprint or route changes can silently break Dashboard, New Quote, Open, and live-search navigation.
+- MEDIUM: The live-search endpoint returns an uncapped result list. This satisfies the no-cap business requirement but can create large JSON payloads and a large DOM for common queries as Quote.db grows.
+- HIGH: search_quotes loads every quote and all line items into application memory and recursively stringifies them for every request. This is simple and faithful to the full-database search requirement, but its time and memory cost grows linearly with database size and line-item volume.
+- LOW: CSS and JavaScript asset routes are public because they do not use require_employee. This is normally acceptable for non-sensitive static assets, but the route policy differs from the HTML and JSON routes.
+- LOW: The page has no explicit request cancellation for stale fetches. Debouncing reduces requests, but an earlier slower response could arrive after a newer query and replace newer suggestions. The current code does not compare the returned query with the current input.
+
+======================================================================
+4. ARCHITECTURE AND TECHNICAL PURPOSE
+======================================================================
+
+4.1 Core purpose
+- This page is an employee-facing read/search interface for saved quotes.
+- It provides a server-rendered historical quote table and a live full-database quote search experience.
+- It lets employees open a saved quote, start a new standard or metric quote, return to the employee dashboard, and switch the displayed history state.
+- It preserves Quote.db as the source of truth and keeps pricing snapshots and line-item content searchable without involving the order-history database.
+- It deliberately excludes employee attribution metadata from search so a quote is not returned merely because an employee name appears in ordered_by, assigned, creator, approver, or similar operational fields.
+
+4.2 Architectural boundaries
+- View layer: employee_quote_history.html.
+- Presentation layer: employee_quote_history.css.
+- Browser behavior layer: employee_quote_history.js.
+- HTTP/data-access layer: Employee_quote_history_search.py.
+- Persistence/model layer: app.db and models_db Quote/QuoteLineItem/User.
+- Application registration layer: app.web create_app.
+- Test layer: tests/test_quote_history.py and related pending-approval tests.
+- The page is locally owned and does not depend on portal templates, portal CSS, portal JavaScript, or the legacy portal quote-history route.
+
+4.3 Status and total business logic
+- status_label maps accepted, pending, and pending_approval to Pending Approval; approved to Approved; denied to Denied; and canceled to Canceled.
+- Unknown status values are converted to title-cased text, but the template assigns the pending CSS class to any status not explicitly Approved, Denied, or Canceled. An unknown status can therefore display with pending colors even when its text is different.
+- total_for checks quote_net_each, working_net_each, net_each, and total in that order and returns the first numeric value.
+- The result column is labeled Total even though the first available source may be a per-unit/net-each value. This should be verified against the quote pricing contract before changing the label or lookup order.
+
+4.4 Security and integrity posture
+- Server-side employee authorization protects the page and live-search data.
+- Quote values are rendered through Jinja, which escapes normal text output.
+- Search uses ORM selection rather than string-built SQL.
+- No arbitrary filesystem path is accepted from the browser.
+- No outbound network behavior is present in the page workflow.
+- The page is read-only with respect to Quote.db; opening a quote delegates to the separate quote-entry workflow.
+- The fallback Flask secret key is development-oriented and is outside this page's local code, but it remains a deployment concern for the application as a whole.
+
+4.5 Test coverage observed
+- Existing tests cover two-character versus one-character suggestion behavior.
+- Tests cover Quote.db suggestion fields and quote IDs.
+- Tests cover attribution exclusions, including assigned/quoted/ordered metadata and camelCase text-node metadata.
+- Tests cover an uncapped result set larger than 25 matches.
+- Tests cover searching visible quote data and live endpoint response shape.
+- Tests do not provide browser-level coverage for modal behavior, focus behavior, responsive layout, stale fetch ordering, hover/focus visuals, or accessibility semantics.
+- Tests do not currently prove the initial HTML route's cache headers, asset route content, unauthorized redirects, or all-state UI behavior.
+
+4.6 Prioritized technical findings
+HIGH
+1. Full-table recursive search is linear in all Quote.db records plus line items for every page and live-search request. This is acceptable for a small local database but is the main scalability bottleneck.
+2. The all-state toggle is presentation-only. It should either be removed or given a real scope distinction so users are not shown a control that implies behavior the backend does not implement.
+
+MEDIUM
+3. Hard-coded internal URLs reduce route refactor safety. Use url_for consistently for Dashboard, quote entry, metric placeholder, live search, and suggestion links.
+4. Unbounded live-search JSON and DOM rendering can become expensive for broad two-character queries. The no-cap requirement applies to result completeness, but the UI may need virtualization, paging, or an explicit large-result strategy as data grows.
+5. The client does not protect against stale asynchronous responses. AbortController or a monotonically increasing request token would prevent older responses from overwriting newer suggestions.
+6. Status fallback styling and total-column naming can misrepresent unusual status or pricing data and should be confirmed against business rules.
+
+LOW
+7. Add ARIA combobox/listbox semantics, result announcements, dialog semantics, Escape handling, focus trapping, and focus restoration.
+8. Add explicit fetch error/loading/no-result states.
+9. Add browser or component tests for the interactive and responsive layers.
+10. Consider a stable non-viewport-dependent base font size for consistent readability.
+
+4.7 Overall assessment
+- The page has a clear standalone architecture and successfully separates employee quote history from portal assets and routes.
+- Its strongest qualities are server-side authorization, Quote.db ownership, complete recursive search behavior, explicit metadata exclusions, and a simple local asset boundary.
+- Its main engineering risk is the deliberate in-memory full-database scan combined with an uncapped live response. That tradeoff matches the stated search requirement but should be monitored as Quote.db grows.
+- The page is suitable for the current local employee workflow. Before wider deployment, address route hard-coding, stale live-search responses, the cosmetic all-state toggle, accessibility semantics, and scalable search/result handling.
+
+Audit conclusion:
+The employee_quote_history.html page is a functional, locally owned Flask/Jinja quote-history interface with a coherent visual system and correct Quote.db search boundary. It is not portal-dependent. The principal issues are maintainability and scale risks rather than a broken core workflow.
+
+======================================================================
+5. QUOTE/ORDER DUPLICATION WORKFLOW ADDENDUM - 9/16/2026
+======================================================================
+
+5.1 Verified record boundaries
+- Employee Quote History reads Quote records from the quote database.
+- Employee Order History reads Order records from Databases/Order.db.
+- The intended relationship is one Order row linked to one Quote through
+  Order.quote_id. The two pages are therefore separate views of the workflow,
+  not two renderings of the same table.
+
+5.2 Verified acceptance path
+- The dashboard Accept action posts to
+  POST /employee/quotes/<quote_id>/accept in app/portal.py.
+- This route updates the existing Quote from new or pending_approval to
+  accepted, assigns the employee, and calls sync_order_status.
+- This route does not call POST /api/quotes, duplicate_quote(), or any other
+  quote-creation path. Acceptance alone does not allocate a new quote number.
+- After acceptance, the dashboard JavaScript redirects to
+  /employee/quote-entry?quote_id=<quote_id>&accepted=1. The accepted marker is
+  consumed and removed by employee_quote_form.js after the existing quote is
+  loaded.
+
+5.3 Verified order submission and approval paths
+- Order submission posts to
+  POST /api/quotes/<quote_id>/order in app/web.py. It updates the existing
+  Quote and creates an Order row only when no Order exists for that quote_id.
+  It then redirects the user to /order-form?order_id=<order row id>.
+- Approve Order posts to
+  POST /api/quotes/<quote_id>/order/approve. It updates the existing Quote to
+  approved, records approved_by_user_id and approved_at, and updates the
+  existing Order found by quote_id. It creates an Order only if that lookup
+  returns no row.
+- The approval route does not create a second Quote and does not allocate a
+  new quote number.
+
+5.4 Verified quote-number creation paths
+- POST /api/quotes creates a new Quote and allocates a new quote number.
+- POST /api/quotes/<quote_id>/duplicate deliberately creates a fresh copy and
+  allocates a new quote number.
+- Therefore, a pending quote B0916261229 and an approved quote B0916261230
+  with the same customer/model indicate that a create or duplicate request
+  occurred somewhere in the workflow. The acceptance and approval endpoints
+  do not explain the new quote number.
+
+5.5 Screenshot interpretation and required data check
+- The observed Quote History rows show separate Quote records: one pending
+  quote and one approved quote with different quote numbers.
+- The observed Order History rows show one populated approved row and one
+  empty accepted row with the same displayed Order ID. The page alone cannot
+  establish whether these are two physical Order rows or two records whose
+  snapshots display the same order number.
+- Before deleting data or changing code, inspect the affected rows by
+  Order.id, Order.quote_id, status, quote_number, and
+  order_form_snapshot.order_number. Also compare the associated Quote.id and
+  Quote.quote_number. No application or database data was changed during this
+  audit update.
+
+5.6 Definitive database result
+- Read-only inspection found two physical Quote rows and two physical Order
+  rows for the Bob's Bobs's cylinder: Quote id 3 / Order id 3 and Quote id 4 /
+  Order id 4.
+- Quote id 3 is B0916261229 with status `accepted`; Order id 3 is linked by
+  quote_id 3, also `accepted`, and contains order number J0916261229 plus only
+  a minimal snapshot.
+- Quote id 4 is B0916261230 with status `approved`; Order id 4 is linked by
+  quote_id 4, also `approved`, and contains the full cylinder snapshot. Its
+  stored order number is also J0916261229.
+- The duplicate is created in the employee Quote Form before Order Form
+  approval. `createNewOrder()` calls `saveQuote(true, true)`; the first true
+  sets `forceNew`, causing `saveQuote()` to send `POST /api/quotes` without an
+  existing quote ID. That creates Quote id 4 and its new quote number, after
+  which the form submits the new quote to `/api/quotes/<id>/order`.
+- The Order Form approval endpoint then correctly updates Quote id 4 and Order
+  id 4. It is not the source of the duplicate. Quote id 3 and Order id 3 are
+  left behind as accepted records, which is why both history pages show the
+  extra pending/accepted workflow.

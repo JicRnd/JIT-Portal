@@ -1,0 +1,536 @@
+EMPLOYEE QUOTE FORM - 360-DEGREE TECHNICAL AND STRUCTURAL AUDIT
+================================================================
+
+Audit target
+------------
+- Primary HTML page:
+	app/Employee_quote_form/employee_quote_forms.html
+- Dedicated stylesheet:
+	app/Employee_quote_form/employee_quote_form.css
+- Dedicated client script:
+	app/Employee_quote_form/employee_quote_form.js
+- Page-serving routes:
+	app/web.py:
+		GET /employee_quote_form/employee_quote_form.html
+		GET /employee/quote-form.js
+		GET /employee/quote-form.css
+- The employee route also renders this page for /employee/quote-entry when a
+	quote_id or draft query value is present.
+- This audit describes the current implementation. It does not propose or
+	apply code changes.
+
+Overall purpose
+---------------
+The page is an employee-facing, spreadsheet-style quote editor and review
+surface. It receives either a calculator draft through sessionStorage or a
+saved quote through an API request, renders the quote and engineering display
+values, allows controlled presentation and pricing edits, and sends employee
+actions back to the local Flask application for saving, holding, ordering,
+verification, or customer-email initiation.
+
+1. VISUAL AND STYLE LAYER
+=========================
+
+1.1 Page and container structure
+---------------------------------
+- html and body occupy the viewport and use a light gray page background
+	(#d8d8d8).
+- .quote-form-page is the page wrapper. It has a minimum viewport height,
+	bottom padding, and the Century Gothic font family.
+- .qf-toolbar is a sticky, full-width Flexbox toolbar. It is horizontally
+	laid out with nowrap behavior, scaled gaps and padding, a gray background,
+	a lower border, shadow, and z-index 5.
+- .excel-quote-sheet is the central quote canvas. It is white, bordered,
+	shadowed, centered, and constrained to 94vw with a 1400px maximum width.
+	Its internal working width is later forced to 816px by JavaScript and
+	visually scaled with CSS zoom.
+- The sheet contains these major boundaries:
+	- Header with logo and title.
+	- Customer fields and quote metadata tables.
+	- Main cylinder/pricing grid.
+	- Engineering repair/component panel.
+	- Dimension drawing and dimension inputs.
+	- Includes/comments area.
+	- Additional quoted items/manual line-item area.
+	- Special instructions area.
+	- Footer and terms/signature area.
+- A native dialog is defined after the sheet for email attachment choices.
+
+1.2 Grid and Flexbox layout
+----------------------------
+- .xq-header uses CSS Grid with three columns for logo, centered title, and
+	metadata space.
+- .xq-customer uses a 74fr/26fr two-column Grid. The left side contains a
+	90px label column and a flexible input column. The right side stacks two
+	metadata tables.
+- .xq-grid uses six percentage columns:
+	15%, 28%, 8%, 9.5%, 9%, and 30.5%.
+- The main grid uses fixed 25px rows for quote details and a final diagram row
+	sized with clamp(213px, 26.5vw, 274px).
+- Grid placement classes such as .row-series, .row-model, .row-bore,
+	.row-mount, .row-rod, .row-cushions, .row-ports, .row-stroke,
+	.row-thread, and .row-seals position the quote values.
+- The repair panel spans grid columns 3 through 7 and rows 5 through 13. It
+	is itself a Grid with a title row and repeated component rows.
+- The comments region spans columns 1 through 3 and rows 12 through 14. Its
+	internal rows reserve 70% for Includes and 30% for Comments.
+- The manual item header and rows use matching six-column CSS Grids.
+- Flexbox is used for toolbar controls, zoom controls, diagram alignment,
+	dimension groups, repair fields, and the footer signature.
+
+1.3 Typography and color system
+--------------------------------
+- The base body font is Arial, Helvetica, sans-serif.
+- The main page, sheet, form controls, dialog, and special-instruction text
+	primarily use Century Gothic with Arial fallback.
+- The main Quote Form heading uses Georgia, serif, at 30px and normal weight.
+- Most quote-sheet text is 14px with 1.2 line height.
+- Metadata uses 12px text. Small price and footer regions use 8px-13px text.
+- Main colors are black/dark text (#111), white sheet fields (#fff), light
+	grays (#d8d8d8, #929396, #f4f4f4, #f7f7f7), medium gray borders, dark navy
+	primary buttons (#000042), green verification success, and red mismatch.
+- Toolbar buttons use a light gray/white gradient except primary buttons,
+	which use dark navy. Hover and active states change background or translate
+	the button vertically.
+- Inputs have no browser outline by default. Focus changes the sheet input
+	background to gray (#929396) with white text.
+
+1.4 Responsive, print, and scaling behavior
+---------------------------------------------
+- At widths below 850px, the page becomes horizontally scrollable and the
+	sheet is left aligned instead of centered.
+- At widths below 650px, the toolbar status area keeps a 180px basis and the
+	zoom controls move to a later flex order.
+- The toolbar itself remains nowrap, so its many controls can exceed the
+	available width and be clipped by overflow:hidden.
+- JavaScript computes a width-fit scale against an 816px worksheet width and
+	applies the nonstandard CSS zoom property to the sheet. Toolbar controls
+	receive a separate --toolbar-scale variable.
+- Manual zoom ranges from 50% to 200% in 10% increments.
+- The resize listener schedules two requestAnimationFrame calls before
+	recalculating zoom.
+- Print CSS hides the toolbar, removes the sheet shadow, uses an 8.5in sheet,
+	and fixes the grid diagram height for letter portrait output.
+- The sheet has a min-height of 1056px, which is close to a letter-page visual
+	height but is not a complete print/layout contract on every browser.
+
+1.5 Visual hierarchy and UX patterns
+--------------------------------------
+- The sticky toolbar provides the primary workflow commands: create, zoom,
+	verify, save, email, hold, update, order, status, and dashboard return.
+- Customer identity and quote metadata appear before the main calculation.
+- The main grid prioritizes model identity, quantity, list price, discount,
+	net price, delivery options, and engineering data.
+- Manual items and special instructions appear after the calculated quote.
+- The visual language intentionally resembles a dense Excel quote form rather
+	than a modern card-based application.
+- The whole sheet is contenteditable, so the user can edit visible text and
+	presentation values in place. This supports the spreadsheet workflow but
+	also makes accidental structural edits possible.
+
+2. INTERACTIVE AND FUNCTIONAL LAYER
+====================================
+
+2.1 Interactive controls in the HTML
+--------------------------------------
+- Toolbar buttons:
+	- New Quote: navigates to /employee/quote-entry.
+	- Zoom out and Zoom in: change the client-side sheet zoom.
+	- Verify: recalculates the saved input snapshot and compares selected price
+		fields against the displayed server snapshot.
+	- Save: saves a new or existing quote using the current presentation fields.
+	- Email Customer: opens the attachment dialog.
+	- Hold: saves the current quote and sends it to the internal hold route.
+	- Update Now: saves the quote using the general save workflow.
+	- Order: saves and submits the quote for internal approval.
+	- Dashboard: returns to the employee dashboard; when a quote is loaded it
+		first attempts to hold the quote.
+- Customer/header inputs include customer, POC, address, phone/email, attention,
+	tag, PO number, terms, days, reference, and FOB.
+- Quote inputs include quantity and discount percentage.
+- Engineering/display inputs include repair component values, weight,
+	dimension fields, signature fields, and comments.
+- Manual line items are dynamically created with reference, description,
+	quantity, unit price, extended price, and remove controls.
+- Special instructions is a textarea.
+- The email dialog contains attachment checkboxes and Cancel/Continue actions.
+
+2.2 Initialization and state
+-----------------------------
+- Global state includes:
+	- currentQuote: the rendered quote object.
+	- isEditingExistingQuote: whether an existing customer quote is being edited.
+	- pendingQuotePayload: the calculator or saved-quote payload used for later
+		save operations.
+	- weightReference: rules loaded from sheet_h_engineering.json.
+	- quoteZoomLevel: current visual zoom from 0.5 to 2.0.
+- init() first wires event handlers, loads the local engineering JSON, then
+	chooses one of two loading paths:
+	- quote_id query parameter: GET /api/quotes/<id>.
+	- otherwise sessionStorage key jitQuoteDraft: either use an embedded draft or
+		POST it to /api/quote/draft.
+- After a draft or quote is available, renderQuotePreview() fills all dynamic
+	fields and applies any saved quote_form_edits.
+- If no sessionStorage draft exists and no saved quote ID exists, the page
+	redirects back to /employee/quote-entry.
+
+2.3 Rendering and client-side calculations
+-------------------------------------------
+- renderQuotePreview() writes customer values, model values, dimensions,
+	pricing values, engineering values, status, quote number, date, and manual
+	items into the page.
+- Series, mount, cushion, and seal codes are translated to display labels by
+	local JavaScript maps.
+- Push and pull forces are calculated locally from pressure, bore, and rod.
+- Weight is calculated from the loaded engineering JSON, with an H/HM fallback
+	table embedded in the script.
+- Repair kit and assembly display prices are calculated from large embedded
+	JavaScript price tables and the displayed discount.
+- Quantity and discount input events immediately update list, net, expedited,
+	emergency, and care-program display prices.
+- Manual item extended prices update on quantity/unit-price input.
+- The server remains the persistence and primary pricing boundary, but several
+	displayed engineering and delivery values are calculated in the browser.
+
+2.4 Save, hold, order, and verify behavior
+--------------------------------------------
+- buildSavePayload() reads editable header fields, discount, quantity,
+	comments, manual rows, and a serialized quote_form_edits snapshot.
+- saveQuote() uses POST /api/quotes for a new quote or PATCH
+	/api/quotes/<id> for an existing quote.
+- For an employee order, saveQuote() then POSTs
+	/api/quotes/<id>/order and redirects to the returned approval URL.
+- Employee Save uses its own save path and updates the URL with quote_id after
+	a successful new save.
+- Hold saves the quote first, then POSTs /api/quotes/<id>/order/hold and
+	redirects to the employee dashboard when invoked from the toolbar/dashboard
+	flow.
+- Verify posts the saved cylinder input snapshot to /api/calculate and checks
+	model code plus a selected list of price-breakdown fields. It reports a
+	success or mismatch message without changing the quote.
+- Email Customer extracts the first email address from the Phone/Email field
+	and opens a mailto URL after the dialog Continue action.
+
+2.5 Editing, focus, click, and resize behavior
+-----------------------------------------------
+- The sheet has contenteditable=true, allowing broad text editing anywhere in
+	the quote canvas.
+- Inputs and textareas use gray/white focus styling. Most fields are not
+	connected to explicit label-for attributes because the surrounding label
+	text is separate markup.
+- Toolbar buttons have hover gradients, active downward movement, and visible
+	keyboard focus outlines.
+- Manual remove removes the row and recreates a blank row if it was the last
+	row.
+- Dialog buttons call showModal(), close(), or continue to mailto handling.
+- Browser resize recalculates the worksheet and toolbar scales.
+
+2.6 Validation behavior
+------------------------
+- Quantity is clamped to at least 1 when prices are recalculated or saved.
+- Discount is parsed, clamped between 0 and 100 percent, and converted to a
+	decimal in the save payload.
+- Manual item rows without a description are omitted from the save payload.
+- The page displays API errors in previewErrorMessage but does not provide a
+	comprehensive field-level validation summary.
+- Server-side validation remains authoritative for quote creation, updates,
+	calculation, and order operations.
+
+3. CONNECTIVITY AND DATA LAYER
+==============================
+
+3.1 Internal routes and assets
+-------------------------------
+- HTML page route:
+	/employee_quote_form/employee_quote_form.html
+- Alternate page rendering:
+	/quote-entry?draft=1 or /quote-entry?quote_id=<id>
+- Employee page assets:
+	/employee/quote-form.css
+	/employee/quote-form.js
+- Image assets served by the local /images/<path:filename> route:
+	- quote_form_logo.png
+	- Quoteformdrawing.png
+- Engineering data asset:
+	/static/sheet_h_engineering.json
+- Dashboard navigation target:
+	/employee/dashboard
+- Quote entry navigation target:
+	/employee/quote-entry
+- Approval navigation target is returned by the server as approval_url.
+
+3.2 API calls made by this page
+--------------------------------
+- GET /api/quotes/<quote_id>
+	Loads a saved quote for editing.
+- POST /api/quote/draft
+	Recalculates a calculator payload and returns a quote draft.
+- POST /api/quotes
+	Creates a quote snapshot.
+- PATCH /api/quotes/<quote_id>
+	Updates an existing quote and saves presentation edits.
+- POST /api/quotes/<quote_id>/order
+	Submits the quote for employee/internal approval and returns an approval URL.
+- POST /api/quotes/<quote_id>/order/hold
+	Marks the internal quote as pending approval/held workflow state.
+- POST /api/calculate
+	Recalculates the cylinder input snapshot for Verify.
+- The script contains email/document-related element hooks, but this page does
+	not call the quote email or document API directly in the shown workflow.
+
+3.3 Data inputs and outputs
+----------------------------
+- Input sources:
+	- Server-rendered current employee name data attributes.
+	- URL quote_id and accepted query parameters.
+	- sessionStorage key jitQuoteDraft.
+	- GET quote JSON.
+	- Local engineering JSON.
+	- User-edited HTML fields and manual item rows.
+- Output destinations:
+	- Quote draft API.
+	- Quote create/update APIs.
+	- Hold/order APIs.
+	- Browser mail client through mailto.
+	- Browser navigation to dashboard or approval/order pages.
+- The browser does not connect directly to SQLite. Database access occurs in
+	Flask service/API handlers, which use the application quote and order stores.
+- Dynamic zones include all quote values, status, customer data, calculations,
+	manual items, verification messages, and error messages.
+- Static zones include labels, layout, drawing/logo assets, footer terms, and
+	embedded calculation/reference maps.
+
+3.4 External libraries and network boundaries
+-----------------------------------------------
+- No JavaScript framework, package import, CDN, or external library is used.
+- Browser-native APIs used include fetch, sessionStorage, URLSearchParams,
+	URL, requestAnimationFrame, dialog.showModal, DOM TreeWalker, and mailto.
+- The API requests are relative same-origin requests to the local Flask app.
+- mailto is the only explicit handoff outside the Flask API and depends on the
+	user's configured desktop/browser mail handler.
+
+4. ARCHITECTURE, TECHNICAL PURPOSE, AND RISKS
+==============================================
+
+4.1 Architectural role
+-----------------------
+- The HTML is a presentation shell and editable quote canvas.
+- The JavaScript is both view controller and a partial presentation-calculation
+	layer. It owns loading, rendering, edit capture, zoom, manual line items,
+	client-side display calculations, API requests, and navigation.
+- Flask owns template delivery, API routing, validation, quote persistence,
+	pricing-engine calculation, order transitions, and database access.
+- The quote snapshot is the principal boundary between the browser and server.
+- order_form_snapshot.quote_form_edits stores serialized visible text and input
+	values so employee presentation edits can be restored later.
+
+4.2 High-priority findings
+---------------------------
+- The page marks the entire quote sheet contenteditable. This enables the
+	intended spreadsheet-style editing, but it also permits accidental changes
+	to labels, structural text, pricing labels, footer text, and non-input
+	content. The capture mechanism stores text-node paths, so DOM structure
+	changes or browser editing mutations can make saved paths fragile.
+- The displayed expedited, emergency, care-program, repair-kit, assembly,
+	weight, and force values are calculated in JavaScript. Verify checks only a
+	selected set of price-breakdown fields and does not verify every displayed
+	engineering or delivery value. A displayed value can therefore diverge from
+	the authoritative server calculation without a verification mismatch.
+- The email attachment dialog presents Attach Quote Form and Attach Report
+	Image choices, but the Continue path only opens mailto using the extracted
+	email address. The selected checkboxes are not used to attach or transmit
+	files. This can mislead an employee about what the outgoing email contains.
+
+4.3 Medium-priority findings
+-----------------------------
+- The toolbar uses nowrap plus overflow:hidden. On narrow windows, controls
+	can be clipped instead of wrapping or becoming accessible through a scroll
+	affordance.
+- The sheet uses JavaScript CSS zoom rather than a transform or fully fluid
+	layout. CSS zoom support and print behavior vary by browser, and the fixed
+	816px virtual canvas can produce horizontal scrolling on small displays.
+- The stylesheet header says "Customer Quote Form stylesheet" even though it
+	belongs to the employee page. This is documentation drift inside the file,
+	not a runtime failure.
+- Several JavaScript hooks refer to optional elements not present in the current
+	HTML, including attachQuoteFormButton, attachReportImagesButton,
+	backToOrderEntryButton, pv_created_by, pv_dim_extra_1, and pv_dim_extra_2.
+	Most are null-guarded, so this is mainly maintenance noise; missing fields
+	can silently prevent intended behavior.
+- The form has no native form submission boundary and most fields have no
+	required constraints. Invalid or incomplete presentation data is discovered
+	mainly through API responses rather than local field feedback.
+- The page uses a cache-busting version query of v=9 for both CSS and JS. This
+	requires a manual version update when assets change or stale browser assets
+	may persist.
+
+4.4 Low-priority findings and edge cases
+-----------------------------------------
+- If jitQuoteDraft is missing, the page redirects rather than showing a local
+	explanation. This is appropriate for normal navigation but can be confusing
+	after sessionStorage is cleared or a tab is restored.
+- If the engineering JSON fails to load, the page falls back to embedded H/HM
+	weight data or displays N/A for unsupported combinations.
+- Email extraction uses the first address matching a simple regular expression;
+	multiple customer addresses or unusual valid email formats are not handled.
+- The mailto target is assembled from a user-editable Phone/Email field. The
+	regex limits the extracted value, but the field can contain arbitrary text.
+- Manual item rows allow zero quantity and zero unit price. Blank descriptions
+	are omitted, but zero-valued described rows can still be sent to the server.
+- The quote number shown for an unsaved draft is generated client-side from
+	customer initial and local time. The durable quote number is assigned by the
+	server when the quote is saved; the draft number is therefore only a display
+	preview.
+- The code has no direct page-specific test file references found under
+	tests/. Existing quote-draft and quote-preview tests exercise related API
+	behavior, but they do not fully exercise browser events, DOM editing,
+	responsive zoom, dialog behavior, or attachment semantics.
+
+4.5 Business workflow summary
+------------------------------
+1. The employee opens the page from employee quote entry or a saved quote.
+2. The page loads a draft from sessionStorage or loads a saved quote by ID.
+3. The browser renders customer data, cylinder data, pricing snapshots,
+	 engineering display values, manual items, and saved presentation edits.
+4. The employee may edit presentation fields, quantity, discount, comments,
+	 manual items, and visible quote text.
+5. Save creates or updates a local quote snapshot.
+6. Hold saves the quote and moves it to the internal pending-approval flow.
+7. Order saves the quote and submits it for internal approval.
+8. Verify compares a server recalculation to selected displayed price values.
+9. Email Customer opens the local mail client using the first extracted email.
+
+5. RUNTIME PROOF, COVERAGE, AND COMPLETENESS GAPS
+==================================================
+
+5.1 The central audit question
+-------------------------------
+For every user action and every displayed value, can we prove what happens in
+the browser, what request reaches Flask, what is stored in the database, and
+what the employee sees after reloading the page?
+
+The source review confirms intended paths and handlers, but source inspection
+alone cannot prove that the running application preserves the same behavior.
+The checks below are therefore required to close the audit.
+
+5.2 End-to-end behavior still requiring runtime proof
+------------------------------------------------------
+- New quote path: start with a blank employee quote, populate a valid
+	calculator draft, open the employee form, save it, refresh it, and confirm
+	that customer, cylinder, pricing, comments, manual items, and presentation
+	edits are unchanged.
+- Existing quote path: open a saved quote by quote_id, edit each editable
+	field category, save, reload, and compare the rendered values with the
+	saved database snapshot.
+- Customer contact path: select a customer with phone and email, confirm the
+	combined contact value reaches both quote-form variants, save it, reload it,
+	and confirm it remains unchanged.
+- Pricing path: change quantity, discount, accessories, modifications, and
+	manual items; compare browser values, Verify results, API values, and saved
+	values. Include zero, maximum, decimal, blank, and invalid input cases.
+- Workflow path: exercise Save, Hold, Update Now, Order, and Dashboard from
+	both a new quote and an existing quote. Confirm status, redirect destination,
+	database state, and duplicate-click behavior for each action.
+- Verification path: deliberately create a matching calculation, a changed
+	quantity, a changed discount, a changed model input, and a changed displayed
+	price. Confirm the correct success or mismatch result for each case.
+- Manual-item path: add, edit, remove, save, reload, and delete the final
+	manual row. Confirm blank descriptions are omitted and valid rows retain
+	reference, description, quantity, unit price, and extended price.
+- Email path: test a normal email, multiple emails, missing email, malformed
+	email, and selected/unselected attachment checkboxes. Confirm the actual
+	mailto target and document what is or is not attached.
+
+5.3 Security and authorization questions not proven by this page audit
+-----------------------------------------------------------------------
+- Can an employee load or modify another employee's quote by changing
+	quote_id in the URL or API request?
+- Does the server enforce employee/customer ownership and permitted status
+	transitions, or does it rely on hidden buttons and client-side state?
+- Can a client alter discount, list price, net price, model code, engineering
+	values, quote status, or approval fields and have those altered values
+	accepted by the server?
+- Are unauthenticated requests to every employee quote API rejected?
+- Are quote IDs, customer data, and contact information exposed in browser
+	storage, URLs, logs, or error responses?
+- Are all database writes parameterized and transactional when Save, Hold, and
+	Order are clicked more than once or at the same time in two browser tabs?
+
+5.4 Failure and recovery cases not proven
+-------------------------------------------
+- API response with a non-JSON body, HTTP 400, 401, 403, 404, 409, 422, 500,
+	or a network timeout.
+- Server restart or database lock during Save, Hold, Order, or Verify.
+- Browser refresh during an in-flight save and repeated clicks on the same
+	action button.
+- Missing sessionStorage, stale sessionStorage, malformed draft JSON, or a
+	quote deleted between page load and Save.
+- Missing logo, drawing, engineering JSON, stylesheet, or JavaScript asset.
+- Browser tab restored from history with an old quote_id or old draft.
+- Two tabs editing the same quote with conflicting presentation edits.
+- A quote containing unusually long customer names, addresses, comments,
+	manual descriptions, or special instructions.
+
+5.5 Accessibility and browser compatibility gaps
+--------------------------------------------------
+- Confirm keyboard-only navigation reaches every toolbar button, editable
+	field, manual-item control, and dialog control in a logical order.
+- Confirm focus remains visible after CSS zoom and while the toolbar is
+	horizontally clipped or scrolled.
+- Confirm screen readers receive useful names for inputs, buttons, dialog
+	controls, status messages, and error messages.
+- Confirm contenteditable regions have an understandable accessible role and
+	do not expose the entire worksheet as one ambiguous editable surface.
+- Confirm browser zoom at 200% does not hide controls or create overlapping
+	content.
+- Confirm Chrome/Edge, Firefox, and the supported print workflow render the
+	fixed worksheet, CSS zoom, dialog, and print rules consistently.
+
+5.6 Performance and operational gaps
+--------------------------------------
+- Measure first-load time, draft-load time, saved-quote-load time, and save
+	response time with a normal quote and a quote containing many manual rows.
+- Confirm the page does not register duplicate event handlers after repeated
+	initialization or browser back/forward navigation.
+- Confirm repeated resize events do not cause visible lag from zoom recalculation.
+- Confirm large editable quote text and repeated quote_form_edits snapshots do
+	not exceed request, database, or browser-storage limits.
+- Confirm server logs provide enough context to diagnose failed quote actions
+	without logging customer contact data or other sensitive quote contents.
+
+5.7 Test coverage still needed
+-------------------------------
+- Unit tests for contact extraction, display-label maps, quantity/discount
+	clamping, force/weight calculations, manual-item serialization, and
+	quote_form_edits capture/restore.
+- API tests for employee quote create, update, hold, order, verify, status
+	transitions, authorization, duplicate requests, and database snapshots.
+- Browser tests for draft loading, saved-quote loading, editing, save/reload,
+	manual rows, verification mismatch, dialog behavior, responsive layout,
+	keyboard navigation, and print output.
+- Regression tests proving that server-side pricing remains authoritative when
+	browser-supplied price or display fields are tampered with.
+- A traceable test matrix mapping each toolbar action and editable field to
+	its expected browser result, API request, persisted value, and reload result.
+
+5.8 Audit status after adding this layer
+------------------------------------------
+- Confirmed by source review: page structure, JavaScript handlers, relative API
+	routes, local assets, client/server boundaries, and known implementation risks.
+- Not confirmed by this static audit: live browser behavior, actual network
+	payloads, database snapshots after each action, authorization enforcement,
+	concurrent edits, failure recovery, accessibility, cross-browser behavior,
+	performance, and complete browser-level test coverage.
+- These are evidence gaps, not automatically confirmed defects. They should
+	be tested and recorded with the result before the audit is marked complete.
+
+Audit conclusion
+----------------
+The page has a clear Excel-replica purpose and a well-defined local Flask/API
+boundary. Its strongest design choice is keeping quote persistence and the
+authoritative calculation server-side while allowing employee presentation
+editing. The largest technical risks are the broad contenteditable surface,
+partial verification of browser-computed display values, and attachment dialog
+controls that do not currently affect the outgoing mailto action. The page has
+no external JavaScript dependencies and no direct database access from the
+browser.

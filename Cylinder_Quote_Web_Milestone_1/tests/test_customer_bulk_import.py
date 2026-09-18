@@ -13,6 +13,7 @@ except ModuleNotFoundError:  # pragma: no cover
 from app import create_app
 from app.db import get_session, init_db
 from app.models_db import Customer
+from app.quote_service import classify_contact_name
 
 
 @pytest.fixture
@@ -155,3 +156,33 @@ def test_bulk_import_rejects_unsupported_extension(temp_db):
     data = resp.get_json()
     assert data["ok"] is False
     assert "unsupported" in data["error"].lower()
+
+
+def test_contact_name_classifier_defaults_uncertain_names_to_company():
+    assert classify_contact_name("Alex Johnson") == (None, "Alex Johnson")
+    assert classify_contact_name("Alex Johnson LLC") == ("Alex Johnson LLC", None)
+    assert classify_contact_name("BrightPath Solutions") == ("BrightPath Solutions", None)
+    assert classify_contact_name("Northstar") == ("Northstar", None)
+
+
+def test_bulk_import_persists_company_and_optional_poc(temp_db):
+    client = temp_db.test_client()
+    rows = [
+        ["Company or Contact", "Address", "City, State, Zip", "Phone", "Email"],
+        ["Alex Johnson", "1 Main St", "Nashville, TN 37201", "555-0101", "alex@example.com"],
+        ["BrightPath Solutions", "2 Main St", "Nashville, TN 37201", "555-0102", "info@example.com"],
+    ]
+
+    response = client.post(
+        "/api/customers/bulk-import",
+        data={"file": (io.BytesIO(_csv_bytes(rows)), "classified.csv")},
+        headers=_headers(),
+    )
+
+    assert response.status_code == 200
+    with get_session() as session:
+        customers = {customer.name: customer for customer in session.query(Customer).all()}
+    assert customers["Alex Johnson"].company_name is None
+    assert customers["Alex Johnson"].poc == "Alex Johnson"
+    assert customers["BrightPath Solutions"].company_name == "BrightPath Solutions"
+    assert customers["BrightPath Solutions"].poc is None

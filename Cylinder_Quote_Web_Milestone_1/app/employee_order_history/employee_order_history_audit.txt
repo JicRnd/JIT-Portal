@@ -1,0 +1,609 @@
+EMPLOYEE ORDER HISTORY PAGE AUDIT
+================================
+
+Audited page:
+	app/employee_order_history/employee_order_history.html
+
+Related files reviewed:
+	app/employee_order_history/employee_order_history.css
+	app/employee_order_history/employee_order_history.js
+	app/employee_order_history/Employee_order_history_search.py
+	app/models_db.py
+	app/web.py
+	tests/test_quote_history.py
+	tests/test_pending_approval_queue.py
+
+Audit scope:
+	Visual and style layer
+	Interactive and functional layer
+	Connectivity and data layer
+	Architecture and technical purpose
+
+
+1. VISUAL AND STYLE LAYER
+==========================
+
+1.1 Layout structure
+--------------------
+
+The page is divided into these regions:
+
+	1. Header
+		 - Uses CSS Grid.
+		 - The grid has three columns: 1fr auto 1fr.
+		 - The employee name is on the left.
+		 - The page title is centered.
+		 - The Dashboard link is on the right.
+		 - The header has a white background and a red bottom border.
+
+	2. Main content shell
+		 - Uses a centered container.
+		 - Width is min(1200px, 96vw).
+		 - Top and bottom spacing is 2rem.
+
+	3. Page action row
+		 - Uses Flexbox.
+		 - Uses justify-content: space-between.
+		 - Contains the New Quote button on the left.
+		 - Contains See All or Employee Order History on the right.
+
+	4. Search form
+		 - The form is position: relative so the live suggestion panel can be
+			 positioned over the results area.
+		 - The search controls use Flexbox.
+		 - The input expands to fill available space.
+		 - The clear and submit buttons remain beside the input.
+
+	5. Results table
+		 - The table is inside a bordered, rounded wrapper.
+		 - The wrapper has overflow: auto.
+		 - The table has a minimum width of 780px.
+		 - On narrow screens, the table can scroll horizontally.
+
+	6. Quote measurement modal
+		 - The modal covers the viewport using position: fixed and inset: 0.
+		 - The modal content is centered with CSS Grid and place-items: center.
+		 - The modal is hidden using the native hidden attribute.
+
+1.2 Typography
+--------------
+
+	- Global font family: Arial, Helvetica, sans-serif.
+	- Global font size: clamp(12px, 1.333vw, 16px).
+	- Page title uses an h1.
+	- Modal title uses an h2.
+	- Search text is identified with a label.
+	- Table column labels use th elements.
+	- Buttons use bold inherited typography.
+
+1.3 Color palette
+-----------------
+
+	- Page background: #f3f5f7.
+	- Content surfaces: white.
+	- Primary actions: red gradient from #d92727 to #a80f0f.
+	- Primary button border and shadow: dark red.
+	- Main text: #17202a.
+	- Link color: #861313.
+	- Table header: #e9ecef.
+	- Table and panel borders: gray tones.
+	- Approved status: pale green background with dark green text.
+	- Pending status: pale yellow background with dark gold text.
+	- Denied status CSS exists as pale red, but the template currently does not
+		assign a denied-specific CSS class.
+
+1.4 Spacing and sizing
+----------------------
+
+	- Header padding: 0.75rem 2rem.
+	- Main shell margin: 2rem auto.
+	- Search form padding: 1.4rem.
+	- Table cell padding: 0.75rem.
+	- Action row gap: 1rem.
+	- Search control gap: 0.6rem.
+	- Buttons use padding instead of fixed height and width.
+
+1.5 Responsive behavior
+-----------------------
+
+At widths below 650px:
+
+	- Header changes from a three-column grid to one column.
+	- Header content becomes centered.
+	- Action buttons stack vertically.
+	- Suggestion rows change from three columns to one column.
+	- Customer and model suggestion text may wrap instead of being truncated.
+	- The table remains at least 780px wide and can require horizontal scrolling.
+
+1.6 Visual hierarchy and UX patterns
+-------------------------------------
+
+The visual hierarchy is:
+
+	1. Employee and page identity.
+	2. Main actions.
+	3. Search controls.
+	4. Order results.
+	5. Standard/metric quote selection modal.
+
+The page uses familiar operational interface patterns:
+
+	- Red buttons for primary actions.
+	- Neutral secondary button for clearing search.
+	- Status pills for quick scanning.
+	- Tabular history for comparison.
+	- Live search suggestions.
+	- Modal selection for standard versus metric quoting.
+
+1.7 Visual risks
+----------------
+
+	- The action-row rule uses clamp(10%, 1.25vw, 100%) for font-size. A
+		percentage font size is unusual and may behave inconsistently between
+		browsers.
+	- The table minimum width forces horizontal scrolling on small screens.
+	- No custom visible focus style is defined; the page relies on browser
+		defaults.
+	- The page title and employee name repeat the employee identity.
+	- The CSS defines a denied status style, but the template emits approved or
+		pending only. A denied order will therefore appear visually pending.
+
+
+2. INTERACTIVE AND FUNCTIONAL LAYER
+====================================
+
+2.1 Header Dashboard link
+-------------------------
+
+The header Dashboard anchor navigates directly to:
+
+	/employee/dashboard
+
+It has no JavaScript handler.
+
+2.2 New Quote button and modal
+-----------------------------
+
+Clicking the New Quote button:
+
+	1. Finds the quote modal.
+	2. Removes its hidden state.
+	3. Assigns the Standard button a navigation handler.
+	4. Assigns the Metric button a navigation handler.
+
+Standard navigation:
+
+	/employee/quote-entry
+
+Metric navigation:
+
+	/metric-coming-soon
+
+The Cancel button hides the modal.
+
+2.3 See All behavior
+--------------------
+
+When show_all is false:
+
+	- The page displays See All.
+	- The link points to the same page with ?all=1.
+
+When show_all is true:
+
+	- The page displays Employee Order History.
+	- The link points back to the page without all=1.
+
+The all parameter currently changes the button label and adds a hidden form
+field, but it does not change the database query or result scope.
+
+2.4 Search input and full-page submit
+-------------------------------------
+
+The input is:
+
+	id: orderHistorySearch
+	name: q
+	autocomplete: off
+
+The form uses a normal GET submission. The full page search is submitted as:
+
+	/employee_order_history/employee_order_history.html?q=<value>
+
+The browser is allowed to submit an empty or one-character full-page search.
+The two-character minimum applies to live suggestions, not the full form.
+
+2.5 Clear button
+-----------------
+
+Clicking the clear button:
+
+	1. Clears the search input.
+	2. Hides the suggestion panel.
+	3. Removes all suggestion elements.
+	4. Returns focus to the search input.
+
+2.6 Live suggestions
+--------------------
+
+On each input event:
+
+	1. The existing 220ms debounce timer is cleared.
+	2. The input is trimmed.
+	3. Queries shorter than two characters hide suggestions.
+	4. After 220ms, JavaScript calls the local suggestion endpoint.
+	5. The JSON response is converted into DOM elements.
+	6. The panel is hidden when there are no results.
+
+The endpoint called is:
+
+	/employee/order-history-search?q=<value>
+
+Each suggestion is an anchor with separate order-number, customer, and model
+code elements. Selecting a suggestion navigates to the main order-history page
+using the suggestion order number as the new q value.
+
+2.7 Hover, focus, click, and resize behavior
+---------------------------------------------
+
+	- Primary buttons move down slightly while active.
+	- Suggestion rows change background and text color on hover and focus.
+	- Suggestion anchors can be reached through normal Tab navigation.
+	- No custom keyboard arrow navigation exists for suggestions.
+	- The modal does not close on Escape.
+	- Clicking the modal backdrop does not close the modal.
+	- Focus is not moved into the modal when it opens.
+	- Media-query layout changes occur below 650px.
+
+2.8 Validation and state management
+------------------------------------
+
+Client-side validation/state:
+
+	- Live requests are suppressed below two characters.
+	- The debounce timer prevents a request on every keystroke.
+	- There is no required attribute or minlength attribute.
+	- There is no client-side validation for full form submission.
+
+Server-side validation/state:
+
+	- The page requires an authenticated active employee.
+	- The live suggestion endpoint requires an authenticated active employee.
+	- The live endpoint returns an empty result set below two characters.
+	- The full-page search reads q directly and searches the order database.
+
+2.9 Functional risks
+--------------------
+
+	- An older, slower fetch response can arrive after a newer response and
+		overwrite newer suggestions. There is no AbortController or request ID.
+	- JavaScript assumes all expected elements exist. A missing element can cause
+		initialization errors.
+	- The modal lacks dialog semantics, focus trapping, Escape handling, and
+		focus restoration.
+	- Suggestion navigation discards the original search term and always uses the
+		order number.
+	- A match caused by a part description or another snapshot value is not
+		identified to the user.
+	- The template treats every status other than approved as pending for CSS.
+
+
+3. CONNECTIVITY AND DATA LAYER
+==============================
+
+3.1 Internal links
+------------------
+
+The page uses these internal destinations:
+
+	- /employee/dashboard
+	- /employee/quote-entry
+	- /metric-coming-soon
+	- /employee_order_history/employee_order_history.html
+	- /employee/order-history-search?q=<query>
+	- /order-form?order_id=<id>
+
+There are no external URLs on the page.
+
+3.2 Asset dependencies
+----------------------
+
+The page loads two local blueprint-owned assets:
+
+	- /employee/order-history.css
+	- /employee/order-history.js
+
+They are served from:
+
+	app/employee_order_history/employee_order_history.css
+	app/employee_order_history/employee_order_history.js
+
+The page does not load portal CSS, portal JavaScript, CDNs, external fonts,
+third-party UI libraries, images, analytics, or external services.
+
+3.3 Blueprint and route ownership
+----------------------------------
+
+The standalone blueprint is employee_order_history_bp and is registered in
+app/web.py.
+
+The blueprint owns:
+
+	- The HTML page route.
+	- The predictive search API route.
+	- The local CSS route.
+	- The local JavaScript route.
+
+This page does not call the portal search endpoint.
+
+3.4 Authentication
+------------------
+
+The page and live search route use require_employee.
+
+Authentication behavior:
+
+	1. Read session user_id.
+	2. Open the account database session.
+	3. Load the User record.
+	4. Require an active employee role.
+	5. Redirect invalid users to /employee/login.
+
+The CSS and JavaScript asset routes are not employee-protected. They contain
+only static assets and no sensitive data.
+
+3.5 Database and model
+----------------------
+
+The backend uses:
+
+	- app.db.get_session
+	- app.models_db.Order
+	- app.models_db.User
+
+The Order model stores:
+
+	- id
+	- quote_id
+	- quote_number
+	- status
+	- order_form_snapshot
+	- created_at
+	- updated_at
+
+The order form snapshot is JSON and contains the customer, model, pricing,
+parts, order number, and other saved order data.
+
+3.6 Search behavior
+-------------------
+
+The backend loads Order rows ordered by created_at descending.
+
+It recursively searches:
+
+	- Order scalar fields.
+	- Dictionary keys.
+	- Dictionary values.
+	- Nested dictionaries.
+	- Nested lists, tuples, and sets.
+	- Order timestamps.
+	- Order-form snapshot values.
+
+The search excludes common attribution/presentation metadata keys:
+
+	- assigned_to
+	- assigned_employee
+	- ordered_by
+	- quoted_by
+	- created_by
+	- text_nodes
+
+The search intentionally has no result-count cap.
+
+3.7 Dynamic and static content
+------------------------------
+
+Dynamic content includes:
+
+	- Employee name.
+	- Page title.
+	- Search value.
+	- Order rows.
+	- Order number.
+	- Model code.
+	- Customer.
+	- Date.
+	- Total.
+	- Status.
+	- Open link.
+	- Live search suggestions.
+
+Static content includes:
+
+	- Page and column labels.
+	- Button labels.
+	- Modal labels.
+	- Placeholder text.
+	- CSS layout and visual rules.
+	- JavaScript event logic.
+
+3.8 API output
+--------------
+
+The live endpoint returns JSON in this general form:
+
+	{
+		"ok": true,
+		"results": [
+			{
+				"order_number": "J0915261039",
+				"customer": "bob",
+				"model_code": "H-MF1-5x12x2-1-NC-N-P-S"
+			}
+		]
+	}
+
+The main page route renders matching Order objects into server-side HTML.
+
+3.9 Data-layer risks
+--------------------
+
+	- The entire Order table is loaded into memory for every search.
+	- Every JSON snapshot is recursively traversed in Python.
+	- There is no database-side search index or pagination.
+	- Broad queries can return every order and produce a large JSON response and
+		large suggestion DOM.
+	- Dictionary keys are searchable, so searching for a field name such as
+		model_code can match many orders even when their values differ.
+	- Internal IDs, quote IDs, timestamps, statuses, and technical metadata are
+		searchable.
+	- The main table displays customer from ship_to_1 or bill_to_1 only, while
+		suggestions also fall back to quote_form_edits.inputs.pv_customer_name.
+		This can cause the same order to display different customer information in
+		the suggestions and the table.
+
+
+4. ARCHITECTURE AND TECHNICAL PURPOSE
+======================================
+
+4.1 Core purpose
+----------------
+
+This is an employee-facing saved-order history and search page.
+
+Its responsibilities are:
+
+	1. Authenticate an employee.
+	2. Read saved order snapshots from Order.db.
+	3. Display order history.
+	4. Search order information.
+	5. Provide predictive suggestions after the second character.
+	6. Open an existing order.
+	7. Start a new quote using standard or metric selection.
+
+4.2 Ownership boundaries
+------------------------
+
+	HTML:
+		employee_order_history.html
+
+	CSS:
+		employee_order_history.css
+
+	Client behavior:
+		employee_order_history.js
+
+	Flask routes and search logic:
+		Employee_order_history_search.py
+
+	ORM model:
+		Order in models_db.py
+
+	Blueprint registration:
+		web.py
+
+	Persistence:
+		Order.db through app.db
+
+The page is structurally separate from portal-owned search and styling.
+
+4.3 Architecture strengths
+--------------------------
+
+	- Local CSS and JavaScript ownership is clear.
+	- The page does not depend on portal assets or portal search APIs.
+	- Server-side employee authentication protects page and search data.
+	- Jinja escaping protects rendered database values from becoming raw HTML.
+	- The live suggestion renderer uses textContent rather than injecting result
+		values through innerHTML.
+	- Search behavior and database ownership are isolated in one blueprint.
+	- Existing tests cover broad snapshot matching, two-character suggestions,
+		cross-user visibility, and attribution-field exclusions.
+
+4.4 Highest-priority risks
+---------------------------
+
+	1. Unbounded in-memory search
+		 - It satisfies the current full-database requirement.
+		 - It will become a scalability problem as Order.db grows.
+
+	2. Live request race condition
+		 - Older responses can overwrite newer suggestions.
+
+	3. Incorrect denied status presentation
+		 - Denied orders can appear as Pending Approval.
+
+	4. Modal accessibility gaps
+		 - No focus trap, Escape handling, dialog role, or focus restoration.
+
+	5. Inconsistent customer extraction
+		 - The table and suggestions use different fallback fields.
+
+	6. Unused all-mode semantics
+		 - The UI implies a separate See All mode, but the backend query no longer
+			 changes based on all=1.
+
+	7. Broad search result rendering
+		 - A common query can create a very large suggestion panel and DOM tree.
+
+4.5 Performance profile
+------------------------
+
+For a small order database, the implementation is simple and adequate.
+
+For a larger database, each live search follows this sequence:
+
+	Input event
+		-> 220ms debounce
+		-> HTTP request
+		-> load every Order row
+		-> recursively inspect every snapshot
+		-> Python substring matching
+		-> serialize every matching result
+		-> create every suggestion DOM node
+
+Future scaling options would include indexed searchable fields, database-side
+full-text search, normalized order-search tables, pagination, virtualized
+rendering, request cancellation, and a bounded prediction window. Those would
+change the current no-cap search requirement and should only be introduced as
+an explicit product decision.
+
+4.6 Test coverage observed
+--------------------------
+
+Existing tests cover:
+
+	- Employee order-history page availability.
+	- Cross-user visibility of orders.
+	- Matching arbitrary snapshot values.
+	- The two-character live suggestion threshold.
+	- Excluding assigned and quote-attribution values.
+	- Rendering order-history results.
+
+Coverage gaps include:
+
+	- Invalid or inactive employee access.
+	- Denied status styling.
+	- Modal keyboard and focus behavior.
+	- Live request races.
+	- Responsive layout behavior.
+	- Very large result sets.
+	- Malformed or unexpected snapshot structures.
+	- Empty suggestion responses.
+	- Consistent customer fallback between table and suggestions.
+
+4.7 Overall assessment
+----------------------
+
+The page has a clear standalone architecture and successfully separates
+employee order history from portal-owned search and styling. The visual design
+is appropriate for an operational history screen, and the current search
+behavior intentionally searches all stored order information without a result
+count cap.
+
+The most important remaining concerns are the unbounded Python search, the
+customer-display mismatch, denied-status styling, live-response race handling,
+and incomplete modal accessibility behavior.
+
+No source files were changed as part of this audit. This file contains the
+audit report only.

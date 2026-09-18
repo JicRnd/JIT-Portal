@@ -403,17 +403,17 @@ def test_quote_history_includes_new_quotes(temp_db):
     _set_quote_created_at(pending["id"], datetime(2024, 1, 2))
 
     _login_client(client, creator)
-    response = client.get("/employee/quote-history")
+    response = client.get("/employee_quote_history/employee_quote_history.html")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "Open History Customer" in text
     assert "Blocked History Customer" in text
 
     _login_client(client, other)
-    response = client.get("/employee/quote-history")
+    response = client.get("/employee_quote_history/employee_quote_history.html")
     assert response.status_code == 200
-    assert "Open History Customer" not in response.get_data(as_text=True)
-    assert "Blocked History Customer" not in response.get_data(as_text=True)
+    assert "Open History Customer" in response.get_data(as_text=True)
+    assert "Blocked History Customer" in response.get_data(as_text=True)
 
 
 def test_order_history_includes_new_quotes(temp_db):
@@ -458,7 +458,7 @@ def test_employee_histories_are_capped_at_25_newest_quotes(temp_db):
         _set_quote_status(quote["id"], "approved")
 
     _login_client(client, creator)
-    for path in ("/employee_order_history/employee_order_history.html", "/employee/quote-history"):
+    for path in ("/employee_order_history/employee_order_history.html", "/employee_quote_history/employee_quote_history.html"):
         resp = client.get(path)
         assert resp.status_code == 200
         text = resp.get_data(as_text=True)
@@ -640,6 +640,33 @@ def test_accepted_then_approved_quote_appears_in_claimer_history(temp_db):
     assert quote["quote_number"] in text
 
 
+@pytest.mark.parametrize("access_level", ["standard", "admin"])
+def test_approved_order_leaves_pending_dashboard_queue(temp_db, access_level):
+    client = temp_db.test_client()
+    creator = _create_employee_user("creator")
+    approver = _create_employee_user(f"approver-{access_level}", access_level=access_level)
+
+    quote = _create_quote(client, creator.display_name, f"Approved {access_level} Customer")
+    _set_quote_status(quote["id"], "pending_approval")
+    _assign_quote(quote["id"], approver.id)
+
+    _login_client(client, approver)
+    approval = client.post(
+        f"/api/quotes/{quote['id']}/order/approve",
+        json={"order_form": {"order_number": f"J-{access_level}"}},
+    )
+    assert approval.status_code == 200
+    assert approval.get_json()["quote"]["status"] == "approved"
+
+    dashboard = client.get("/employee/dashboard")
+    assert dashboard.status_code == 200
+    pending_section = dashboard.get_data(as_text=True).split(
+        "<h2>Pending Approvals</h2>", 1
+    )[1].split("</section>", 1)[0]
+    assert f"Approved {access_level} Customer" not in pending_section
+    assert quote["quote_number"] not in pending_section
+
+
 def test_created_approved_quote_appears_in_creator_history(temp_db):
     """A quote created by an employee and later approved remains in that employee's history."""
     client = temp_db.test_client()
@@ -675,7 +702,7 @@ def test_accepted_unordered_quote_stays_pending_and_is_quote_history_only(temp_d
     assert "Accepted But Unordered" in dashboard_text
     assert "Pending Approvals" in dashboard_text
 
-    quote_history = client.get("/employee/quote-history")
+    quote_history = client.get("/employee_quote_history/employee_quote_history.html")
     assert quote_history.status_code == 200
     assert "Accepted But Unordered" in quote_history.get_data(as_text=True)
 
@@ -705,6 +732,25 @@ def test_admin_dashboard_renders_pending_approval_queue(temp_db):
     assert "<td>Pending Approval</td>" in pending_section
     assert "<td>Accepted</td>" not in pending_section
     assert "<td>Pending</td>" not in pending_section
+
+
+@pytest.mark.parametrize("access_level, dashboard_template_marker", [
+    ("standard", 'href="/order-form?quote_id='),
+    ("admin", 'href="/order-form?quote_id='),
+])
+def test_pending_approval_open_link_uses_order_form(temp_db, access_level, dashboard_template_marker):
+    client = temp_db.test_client()
+    creator = _create_employee_user("creator")
+    employee = _create_employee_user(f"reviewer-{access_level}", access_level=access_level)
+    quote = _create_quote(client, creator.display_name, f"Order Form {access_level} Customer")
+    _set_quote_status(quote["id"], "pending_approval")
+    _assign_quote(quote["id"], employee.id)
+
+    _login_client(client, employee)
+    response = client.get("/employee/dashboard")
+
+    assert response.status_code == 200
+    assert f'{dashboard_template_marker}{quote["id"]}' in response.get_data(as_text=True)
 
 
 def test_denied_order_is_stored_and_sorted_last_in_histories(temp_db):
@@ -741,7 +787,7 @@ def test_denied_order_is_stored_and_sorted_last_in_histories(temp_db):
         assert order.status == "denied"
 
     _login_client(client, employee)
-    for path in ("/employee_order_history/employee_order_history.html", "/employee/quote-history"):
+    for path in ("/employee_order_history/employee_order_history.html", "/employee_quote_history/employee_quote_history.html"):
         response = client.get(path)
         assert response.status_code == 200
         text = response.get_data(as_text=True)

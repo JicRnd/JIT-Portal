@@ -1,233 +1,358 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(12px, 1.333vw, 16px);
+  color: #17202a;
+  background: #f3f5f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: #861313;
+}
+
 .employee-quote-history-page {
-	width: 100%;
-	max-width: 100%;
-	overflow-x: hidden;
-	font-size: clamp(10%, 1.25vw, 100%);
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .employee_quote_history_button {
-	display: inline-block;
-	border: 1px solid #781010;
-	border-radius: 7px;
-	background: linear-gradient(#d92727, #a80f0f);
-	box-shadow: 0 3px 0 #6e0909;
-	color: #fff;
-	text-decoration: none;
-	font-family: inherit;
-	font-size: 1rem;
-	line-height: 1.2;
-	text-align: center;
-	font-weight: 700;
-	padding: 0.72rem 1rem;
-	cursor: pointer;
+  display: inline-block;
+  border: 1px solid #781010;
+  border-radius: 7px;
+  background: linear-gradient(#d92727, #a80f0f);
+  box-shadow: 0 3px 0 #6e0909;
+  color: #fff;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.2;
+  text-align: center;
+  font-weight: 700;
+  padding: 0.72rem 1rem;
+  cursor: pointer;
 }
 
 .employee_quote_history_button:active {
-	transform: translateY(2px);
-	box-shadow: 0 1px 0 #6e0909;
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #6e0909;
 }
 
 .employee_quote_history_button.secondary {
-	background: linear-gradient(#fff, #e8ebee);
-	border-color: #7d858c;
-	box-shadow: 0 3px 0 #737b82;
-	color: #17202a;
+  background: linear-gradient(#fff, #e8ebee);
+  border-color: #7d858c;
+  box-shadow: 0 3px 0 #737b82;
+  color: #17202a;
 }
 
 .employee_quote_history_button.small {
-	padding: 0.4rem 0.65rem;
+  padding: 0.4rem 0.65rem;
 }
 
 .employee-quote-history-page .employee-quote-history-header {
-	width: 100%;
-	display: grid;
-	grid-template-columns: minmax(10%, 1fr) minmax(10%, 2fr) minmax(10%, 1fr);
-	grid-template-rows: 1fr;
-	min-height: clamp(10%, 8vw, 72px);
-	gap: clamp(10%, 1.5vw, 1rem);
-	padding: clamp(10%, 1.5vw, 0.75rem) clamp(10%, 3vw, 2rem);
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 2rem;
+  background: #fff;
+  border-bottom: 4px solid #a41414;
 }
 
 .employee-quote-history-page .employee-quote-history-header h1 {
-	min-width: 10%;
-	max-width: 100%;
-	font-size: clamp(10%, 3vw, 1.5rem);
-	white-space: nowrap;
+  margin: 0;
+  text-align: center;
 }
 
-.employee-quote-history-page .employee-quote-history-shell,
-.employee-quote-history-page .employee_quote_history_wrapper {
-	width: 100%;
-	max-width: 100%;
+.employee-quote-history-page .employee-quote-history-header > a {
+  text-align: right;
 }
 
 .employee-quote-history-page .employee-quote-history-shell {
-	margin: clamp(10%, 3vw, 2rem) auto;
+  width: min(1200px, 96vw);
+  margin: 2rem auto;
 }
 
 .employee-quote-history-page .page-actions {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	gap: clamp(10%, 1.5vw, 1rem);
-	margin-bottom: clamp(10%, 2vw, 1.25rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
 }
 
-.employee-quote-history-page .page-actions > *,
-.employee-quote-history-page #quote_history_table .small-button {
-	flex: 1 1 10%;
-	min-width: 10%;
-	max-width: 100%;
-	min-height: clamp(10%, 4vw, 2.75rem);
-	padding: clamp(10%, 1.25vw, 0.72rem) clamp(10%, 1.5vw, 1rem);
-	font-size: clamp(10%, 1.25vw, 100%);
-	white-space: nowrap;
+.employee-quote-history-page .page-actions > * {
+  flex: 0 1 clamp(9rem, 18%, 12rem);
+  min-width: 0;
+  min-height: clamp(2.25rem, 4vw, 3rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: clamp(10px, 1.25vw, 16px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .employee-quote-history-page .employee_quote_history_wrapper {
-	overflow: hidden;
-	background: #fff;
-	border: 1px solid #aab0b5;
-	border-radius: clamp(10%, 1.25vw, 8px);
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #aab0b5;
+  border-radius: 8px;
 }
 
 .employee-quote-history-page .search-form {
-	position: relative;
-	width: 100%;
-	max-width: 100%;
-	background: #fff;
-	border: 1px solid #bcc2c7;
-	padding: clamp(10%, 2vw, 1.4rem);
-	border-radius: clamp(10%, 1.25vw, 8px);
-	font-size: clamp(10%, 1.25vw, 100%);
+  position: relative;
+  width: 100%;
+  background: #fff;
+  padding: clamp(0.8rem, 2%, 1.4rem);
+  border-radius: 8px;
+  border: 1px solid #bcc2c7;
 }
 
 .employee-quote-history-page .search-form label {
-	display: block;
-	font-weight: 700;
-	margin-bottom: clamp(10%, 0.75vw, 0.5rem);
-	white-space: nowrap;
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
 .employee-quote-history-page .search-form > div:first-of-type {
-	display: flex;
-	gap: clamp(10%, 1vw, 0.6rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(0.35rem, 1%, 0.6rem);
+  width: 100%;
 }
 
 .employee-quote-history-page .search-form input {
-	flex: 1 1 10%;
-	width: 100%;
-	min-width: 10%;
-	padding: clamp(10%, 1.25vw, 0.8rem);
-	font-size: clamp(10%, 1.25vw, 100%);
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  font: inherit;
+  padding: clamp(0.55rem, 1.5%, 0.8rem);
+}
+
+.employee-quote-history-page .search-form #clearQuoteHistorySearchButton {
+  flex: 0 0 clamp(2.25rem, 8%, 3rem);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.employee-quote-history-page .search-form button[type="submit"] {
+  flex: 0 0 clamp(5rem, 12%, 7rem);
 }
 
 .employee-quote-history-page #quote_history_table {
-	width: 100%;
-	min-width: 10%;
-	max-width: 100%;
-	border-collapse: collapse;
-	table-layout: fixed;
-	font-size: clamp(10%, 1.25vw, 100%);
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  min-width: 100%;
+  font-size: clamp(10px, 1.15vw, 16px);
 }
 
 .employee-quote-history-page #quote_history_table th,
 .employee-quote-history-page #quote_history_table td {
-	width: 10%;
-	max-width: 100%;
-	padding: clamp(10%, 1.25vw, 0.75rem);
-	border-bottom: 1px solid #d5d9dc;
-	text-align: left;
-	font-size: clamp(10%, 1.25vw, 100%);
-	white-space: nowrap;
+  padding: clamp(0.35rem, 1%, 0.75rem);
+  border-bottom: 1px solid #d5d9dc;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.employee-quote-history-page #quote_history_table th:nth-child(1),
+.employee-quote-history-page #quote_history_table td:nth-child(1) {
+  width: 11%;
+}
+
+.employee-quote-history-page #quote_history_table th:nth-child(2),
+.employee-quote-history-page #quote_history_table td:nth-child(2) {
+  width: 18%;
+}
+
+.employee-quote-history-page #quote_history_table th:nth-child(3),
+.employee-quote-history-page #quote_history_table td:nth-child(3) {
+  width: 18%;
+}
+
+.employee-quote-history-page #quote_history_table th:nth-child(4),
+.employee-quote-history-page #quote_history_table td:nth-child(4) {
+  width: 12%;
+}
+
+.employee-quote-history-page #quote_history_table th:nth-child(5),
+.employee-quote-history-page #quote_history_table td:nth-child(5) {
+  width: 9%;
+}
+
+.employee-quote-history-page #quote_history_table th:nth-child(6),
+.employee-quote-history-page #quote_history_table td:nth-child(6) {
+  width: 14%;
+}
+
+.employee-quote-history-page #quote_history_table th:last-child,
+.employee-quote-history-page #quote_history_table td:last-child {
+  width: 18%;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.employee-quote-history-page #quote_history_table td:last-child form,
+.employee-quote-history-page #quote_history_table td:last-child .open-quote {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.employee-quote-history-page #quote_history_table .small {
+  padding: clamp(0.2rem, 0.6vw, 0.4rem) clamp(0.3rem, 0.7vw, 0.65rem);
+  font-size: clamp(9px, 0.95vw, 1rem);
 }
 
 .employee-quote-history-page #quote_history_table th {
-	background: #e9ecef;
+  background: #e9ecef;
 }
 
 .employee-quote-history-page .status {
-	display: inline-block;
-	max-width: 100%;
-	border-radius: 999px;
-	padding: clamp(10%, 1.25vw, 0.65rem);
-	font-size: clamp(10%, 1.25vw, 100%);
-	font-weight: 700;
-	white-space: nowrap;
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.3rem 0.65rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .employee-quote-history-page .status.pending {
-	background: #fff1b8;
-	color: #604900;
+  background: #fff1b8;
+  color: #604900;
 }
 
 .employee-quote-history-page .status.approved {
-	background: #d9f1d2;
-	color: #215716;
+  background: #d9f1d2;
+  color: #215716;
 }
 
-.employee-quote-history-page .status.denied {
-	background: #ffd9d9;
-	color: #8b1e1e;
-}
-
-.employee-quote-history-page .quote-modal > div {
-	width: min(420px, 90%);
-	min-width: 10%;
-	max-width: 100%;
-	padding: clamp(10%, 3vw, 2rem);
-	font-size: clamp(10%, 1.25vw, 100%);
-}
-
-.employee-quote-history-page .suggestions {
-	position: absolute;
-	left: clamp(10%, 2vw, 1.4rem);
-	right: clamp(10%, 2vw, 1.4rem);
-	top: clamp(10%, 9vw, 92px);
-	background: #fff;
-	border: 1px solid #999;
-	z-index: 5;
-}
-
-@media (max-width: 650px) {
-	.employee-quote-history-page .employee-quote-history-header {
-		grid-template-columns: minmax(10%, 1fr) minmax(10%, 2fr) minmax(10%, 1fr);
-		grid-template-rows: 1fr;
-	}
-
-	.employee-quote-history-page .page-actions {
-		flex-direction: row;
-	}
+.employee-quote-history-page .status.denied,
+.employee-quote-history-page .status.canceled {
+  background: #ffd9d9;
+  color: #8b1e1e;
 }
 
 .employee-quote-history-page .empty-state {
-	padding: clamp(10%, 5vw, 4rem);
-	text-align: center;
-	background: #fff;
-	border: 1px dashed #999;
-	border-radius: clamp(10%, 1.25vw, 8px);
+  padding: 4rem;
+  text-align: center;
+  background: #fff;
+  border: 1px dashed #999;
+  border-radius: 8px;
+}
+
+.employee-quote-history-page .suggestions {
+  position: absolute;
+  left: 1.4rem;
+  right: 1.4rem;
+  top: 92px;
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+  box-shadow: 0 8px 18px #17202a33;
+  max-height: min(60vh, 420px);
+  overflow-y: auto;
+  z-index: 5;
+}
+
+.employee-quote-history-page .quote-history-suggestion {
+  display: grid;
+  grid-template-columns: minmax(145px, 0.9fr) minmax(150px, 1.2fr) minmax(220px, 2fr);
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid #d5d9dc;
+  color: #17202a;
+  text-decoration: none;
+  line-height: 1.25;
+}
+
+.employee-quote-history-page .quote-history-suggestion:last-child {
+  border-bottom: 0;
+}
+
+.employee-quote-history-page .quote-history-suggestion:hover,
+.employee-quote-history-page .quote-history-suggestion:focus {
+  background: #f3f5f7;
+  color: #861313;
+}
+
+.employee-quote-history-page .quote-history-suggestion-number {
+  color: #861313;
+}
+
+.employee-quote-history-page .quote-history-suggestion-customer,
+.employee-quote-history-page .quote-history-suggestion-model {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .employee-quote-history-page .quote-modal {
-	position: fixed;
-	inset: 0;
-	background: #0009;
-	display: grid;
-	place-items: center;
-	z-index: 50;
+  position: fixed;
+  inset: 0;
+  background: #0009;
+  display: grid;
+  place-items: center;
+  z-index: 50;
 }
 
 .employee-quote-history-page .quote-modal[hidden] {
-	display: none;
+  display: none;
 }
 
 .employee-quote-history-page .quote-modal > div {
-	background: #fff;
-	border-radius: clamp(10%, 1.5vw, 10px);
-	width: min(420px, 90%);
-	min-width: 10%;
-	max-width: 100%;
-	padding: clamp(10%, 3vw, 2rem);
-	font-size: clamp(10%, 1.25vw, 100%);
-	text-align: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 2rem;
+  min-width: min(420px, 90vw);
+  text-align: center;
+}
+
+.employee-quote-history-page .quote-modal .employee_quote_history_button {
+  margin: 0.45rem;
+}
+
+.employee-quote-history-page .quote-modal .text-button {
+  display: block;
+  margin: 1rem auto 0;
+}
+
+@media (max-width: 650px) {
+  .employee-quote-history-page .employee-quote-history-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .employee-quote-history-page .employee-quote-history-header > a {
+    text-align: center;
+  }
+
+  .employee-quote-history-page .page-actions {
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .employee-quote-history-page .quote-history-suggestion {
+    grid-template-columns: minmax(145px, 0.9fr) minmax(150px, 1.2fr) minmax(220px, 2fr);
+    gap: 0.75rem;
+  }
+
+  .employee-quote-history-page .quote-history-suggestion-customer,
+  .employee-quote-history-page .quote-history-suggestion-model {
+    white-space: nowrap;
+  }
 }

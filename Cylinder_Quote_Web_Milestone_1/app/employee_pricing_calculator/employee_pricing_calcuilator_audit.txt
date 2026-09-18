@@ -1,0 +1,474 @@
+
+EMPLOYEE PRICING CALCULATOR - 360-DEGREE TECHNICAL AND STRUCTURAL AUDIT
+=======================================================================
+
+Scope and evidence
+------------------
+
+This is a read-only audit of the active employee calculator path as found on
+2026-09-15. No application code was changed as part of this report.
+
+The project table of contents identifies the active implementation as:
+
+- Browser entry: /employee/quote-entry for signed-in employees.
+- Route owner: app/portal.py, function employee_quote_entry().
+- Employee wrapper: app/Employee_/employee_calculator.html.
+- Shared calculator template: app/templates/index.html.
+- JavaScript: app/static/app.js.
+- Base calculator CSS: app/static/styles.css.
+- Calculator CSS additions: app/static/pricing_calculator.css.
+- Server API and app factory: app/web.py.
+- Pricing and draft service: app/service.py.
+- Authoritative engine: cylinder_quote_engine/.
+- Normalized runtime data: data/ and pricing_data/.
+
+The employee wrapper sets portal_mode to employee and includes index.html. The
+same shared calculator is also used for the customer mode, with mode-specific
+labels, prefill values, and redirects. The target directory itself contains
+the audit file rather than an independent calculator implementation.
+
+
+1. VISUAL AND STYLE LAYER
+=========================
+
+1.1 Page shell and layout structure
+-----------------------------------
+
+- The document is a full-viewport OrderEntry-style form inside
+	.orderentry-window.
+- The active CSS establishes a fixed 1360px design width. The window is
+	absolutely positioned at the top-left and receives a uniform CSS transform
+	scale() calculated by JavaScript.
+- The title bar is a horizontal flex container. It contains the title, a
+	Dashboard link, and a decorative close glyph. The close glyph is not an
+	interactive control.
+- The customer block uses CSS Grid with a label column and a flexible control
+	column. The customer input and combo-arrow button are a nested two-column
+	grid.
+- The cylinder definition row is a ten-column CSS Grid for Series, Mount,
+	Bore, Stroke, Rod, Style, Cushion, Ports, Seal, and DRE.
+- The middle area is a two-column Grid, nominally 46% and 54%. The left side
+	contains the Specials/Options/Smart Options tab panel. The right side
+	contains catalog special parts and the manual line-item editor.
+- The bottom area repeats the 46%/54% Grid. The left side contains Rod End and
+	Cap End accessories. The right side contains pressure, force, tie-rod, and
+	pricing controls.
+- The engineering panel is a single-column Grid with an absolutely positioned
+	Quote button and a decorative vertical separator. The pricing block is
+	intentionally offset away from the Quote button.
+- The result dialog uses native HTML dialog semantics, a two-column result
+	grid, a details/summary pricing breakdown, and a warning list.
+- Parts and manual rows use fixed or minimum Grid tracks. Long descriptions can
+	consume flexible tracks, while numeric controls retain stable widths.
+
+1.2 Typography, palette, and visual language
+---------------------------------------------
+
+- Typography is Arial, Helvetica, sans-serif. There are no webfont downloads
+	or external font dependencies.
+- The palette is a legacy desktop-form treatment: pale aqua/teal form
+	background, light gray panels and title bar, dark blue headings, yellow
+	option labels, light blue emphasis labels, white controls, and dark gray
+	borders.
+- CSS variables include --aqua, --aqua2, --panel, --border, --yellow,
+	--blue, --ink, and --title. Some colors are still repeated as literals,
+	especially border and background values.
+- Controls generally use square corners or a small 3px radius on the Dashboard
+	link. Borders, inset shadows, and double borders reinforce the spreadsheet
+	or Windows UserForm visual metaphor.
+- Typography hierarchy is created mostly through bold labels, larger title-bar
+	text, blue emphasis labels, yellow option-name chips, and readonly calculated
+	values. The hierarchy is functional rather than editorial.
+- The visual language favors dense scanning and familiar field order over
+	modern card-based composition. There are no images, icons, or external media
+	on the calculator page.
+
+1.3 Responsive behavior
+-----------------------
+
+- JavaScript measures the rendered design box and computes one scale factor:
+	min(available viewport width / design width, available viewport height /
+	design height). It centers the scaled form with a 10px edge allowance.
+- Resize and load events queue a requestAnimationFrame recalculation. A
+	ResizeObserver also watches the form shell when supported.
+- Scaling is uniform, so fonts, controls, spacing, and tab geometry shrink or
+	grow together. This preserves the intended OrderEntry proportions.
+- The CSS contains a max-width media query at 1050px. In the final override,
+	body remains overflow:hidden and the window loses its earlier min-width,
+	leaving JavaScript scaling as the primary small-screen behavior.
+- The form is designed as a desktop surface, not a reflowed mobile form. At
+	very small viewports controls may become visually small and difficult to
+	operate even though they remain inside the viewport.
+- The fixed 1360px design height is inferred from the untransformed layout at
+	runtime. Changes to font metrics, browser zoom, loaded content, or dialog
+	state can affect measurements and therefore scale.
+
+1.4 UX patterns and visual hierarchy
+-------------------------------------
+
+- Startup is intended to be blank for the calculator fields, with optional
+	customer and promo prefill supplied through body data attributes.
+- Field order mirrors the legacy Excel OrderEntry workflow: customer, cylinder
+	specification, specials/options, parts, accessories, engineering values,
+	discount and price, then Quote.
+- Related options are grouped behind tabs to keep the dense form manageable.
+- Catalog-driven values use select controls; numeric quantities use number
+	inputs; readonly fields expose derived price, force, and cost values.
+- The primary action is the large Quote button. Dashboard is secondary
+	navigation. The result dialog is a secondary confirmation/readout after
+	server calculation.
+- Yellow labels and blue calculated-value labels distinguish input choices from
+	computed or legacy-highlighted information.
+
+
+2. INTERACTIVE AND FUNCTIONAL LAYER
+====================================
+
+2.1 Interactive controls
+------------------------
+
+- Dashboard link: navigates to the employee dashboard through a server-rendered
+	endpoint URL.
+- Customer name input: supports typing, HTML datalist suggestions, and a
+	visually adjacent combo-arrow button. The arrow has no click handler and is
+	effectively decorative.
+- Customer address input: accepts free text and can be populated from an exact
+	customer suggestion match when the address is blank.
+- Cylinder selects and inputs: Series, Mount, Bore, Rod, Style, Cushion, Ports,
+	Seal, Stroke, and DRE. Series cascades Mount and Bore; Bore cascades Rod.
+- Specials tab buttons: switch between Specials, Options, and Smart Options.
+- Options and Smart Options selects: represent Y/N boolean modifiers.
+- Catalog special-parts rows: six rows are generated dynamically with catalog
+	part select, readonly description and price, and quantity input.
+- Manual item editor: supports reference, description, quantity, unit price,
+	readonly extended price, note, add-row, and remove-row controls.
+- Rod End and Cap End tabs: switch accessory groups. Accessory quantities use
+	data-accessory names for payload construction.
+- Pressure, XI (MT4), force display, tie-rod diameter, length, and cost
+	controls: pressure and XI are displayed inputs, but the current payload path
+	does not include all of these values in the pricing payload.
+- Coupon code and Apply: normalizes codes to uppercase and applies either the
+	hard-coded 20OFF code or an employee/customer assigned promo code.
+- Discount: numeric input constrained in HTML to 0 through 99, step 1.
+- Net Each and Profit: readonly display values updated by live calculation.
+- Quote submit: disables itself, changes text to Opening..., posts a draft, and
+	redirects to the employee Quote Form.
+- Result dialog: displays model and pricing values, expands a breakdown, lists
+	compatibility warnings, and closes through a dialog form button. The current
+	employee flow redirects to the Quote Form after draft creation, so this
+	dialog is primarily the direct calculation result path rather than the
+	normal Quote-button destination.
+
+2.2 Event and state flow
+------------------------
+
+- Global state consists primarily of catalog, customerSuggestions,
+	customerSearchTimer, liveCalcTimer, pending browser values, and the
+	JIT_SELECTED_CUSTOMER_CONTACT window property.
+- init() wires tabs, fetches /api/catalog, fills catalog-backed selects, builds
+	special-part rows and one blank manual row, populates tie-rod options, resets
+	the form, and enables customer autocomplete.
+- Series change rebuilds Mount and Bore. Bore change rebuilds Rod. Previous
+	Mount selection is retained only when still valid for the new Series.
+- DRE input is uppercased, filtered to Y, and limited to one character.
+- Whole-number fields are rounded on input for rod extension, extra thread,
+	legacy add-money, and discount. Other number inputs retain browser/native
+	behavior until server validation.
+- Tab clicks remove active classes from sibling tabs/panels and activate the
+	selected panel using its data-tab value.
+- Any form input or change schedules liveRecalculate after 300ms. If the core
+	specification is incomplete, Net Each and Profit are reset to $0.00.
+- liveRecalculate posts the current payload to /api/calculate and updates only
+	Net Each and Profit from the response. Transient failures are intentionally
+	ignored, leaving the previous display in place unless the form became
+	incomplete.
+- Customer input searches after 250ms. The search uses /api/customers/search,
+	fills the datalist, and sets a selected contact only for an exact lower-case
+	name match.
+- Manual extended price is calculated in the browser as quantity multiplied by
+	unit price for display. The server recomputes and validates the same value
+	during draft construction.
+- Quote submission posts the full draft payload to /api/quote/draft. On
+	success, the employee path stores both browser payload and server draft in
+	sessionStorage under jitQuoteDraft, then navigates to
+	/employee/quote-entry?draft=1.
+- Window resize, load, ResizeObserver notifications, and an initial queued
+	frame all invoke the proportional scaling routine.
+
+2.3 Validation rules and behavior
+----------------------------------
+
+Browser-side rules:
+
+- Series, Mount, Bore, and Stroke are marked required. Rod, Style and other
+	controls are dynamically populated or optional at the HTML layer.
+- Stroke and most quantity fields have min=0 and integer step attributes.
+- Manual description is required by the browser-side payload collector in the
+	sense that blank descriptions are omitted. A nonblank manual row with zero
+	quantity or zero price is still sent and is rejected server-side because
+	quantity must be greater than zero.
+- Coupon codes are checked only against 20OFF and the assigned code known to
+	the page. An invalid code displays a message but does not call the server.
+- Required native form validation may prevent submit before the submit handler
+	runs. Server validation remains authoritative.
+
+Server-side rules:
+
+- app/service.py requires series, bore, rod_diameter, mount, and stroke.
+- Decimal parsing validates numeric fields; booleans are normalized from common
+	truthy values; catalog and engine lookup errors become HTTP 400 responses.
+- /api/quote/draft recalculates through Pricing Engine v1.2, validates manual
+	items, trims/truncates presentation text, and returns a nonpersistent draft.
+- Manual quantity must be greater than zero and unit price must be nonnegative.
+- The browser's displayed price is never the pricing authority. The server
+	recalculates both live and draft results.
+
+2.4 Hover, click, focus, and resize behavior
+---------------------------------------------
+
+- Buttons show pointer cursors and most have no custom hover state. Quote and
+	history-style buttons translate one pixel on :active.
+- Selects show full value-description text on mousedown/focus and collapse the
+	selected style value on change/blur for model-code consistency.
+- Focus has no explicit visible outline override, so browser default focus
+	rendering supplies the primary focus indication.
+- Dashboard and other links use normal browser navigation.
+- Resize uses requestAnimationFrame throttling and uniform transform scaling.
+
+
+3. CONNECTIVITY AND DATA LAYER
+==============================
+
+3.1 Internal links and assets
+-----------------------------
+
+HTML assets loaded by the calculator:
+
+- /static/styles.css
+- /static/pricing_calculator.css
+- /static/app.js with a mode-dependent cache-busting query string
+- /static/portal_quote_bridge.js
+- A server-rendered Dashboard URL
+- Customer mode additionally loads the customer quote-form CSS route.
+
+There are no external script, stylesheet, font, image, CDN, or analytics
+dependencies in index.html. The browser uses built-in Fetch, sessionStorage,
+HTML dialog, datalist, ResizeObserver, and requestAnimationFrame APIs.
+
+3.2 API calls and backend ownership
+------------------------------------
+
+- GET /api/catalog: app/web.py returns catalog series, mounts, dimensions,
+	cushions, ports, seals, rod styles, special parts, descriptions, and prices.
+- GET /api/customers/search?q=: app/web.py searches local SQLAlchemy Customer
+	records and returns up to ten customer suggestions.
+- POST /api/calculate: app/web.py calls calculate_payload(), which converts
+	browser JSON to QuoteInputs, invokes Pricing Engine v1.2, adds profit, and
+	adds dimension output.
+- POST /api/quote/draft: app/web.py calls build_quote_draft(), which repeats
+	authoritative calculation, validates manual items, sanitizes presentation
+	fields, and returns a nonpersistent quote draft.
+- GET /employee/quote-entry: app/portal.py gates the page to employees and
+	serves the calculator unless draft or quote_id is supplied.
+- GET /employee/quote-entry?draft=1: serves employee_quote_forms.html, which
+	consumes the sessionStorage handoff and becomes the next workflow surface.
+
+3.3 Data inputs and outputs
+---------------------------
+
+Browser input payload includes core cylinder inputs, discount, DRE, modifiers,
+accessory quantities, catalog special parts, customer presentation fields, and
+manual_items. The payload also contains some UI fields or displayed values that
+are not all consumed by the pricing service.
+
+The server calculation output includes model_code, list/net/expedited/emergency
+prices, price components, warnings, profit, and dimensions. The draft output
+wraps this as price_breakdown and adds cylinder_inputs, manual_items,
+presentation, timestamp, and pricing_engine_version.
+
+The standard live calculation path does not persist to SQLite. Persistence
+starts later when the Quote Form calls the quote APIs. The calculator itself
+uses sessionStorage only for the employee draft handoff.
+
+3.4 Dynamic versus static zones
+--------------------------------
+
+Static server-rendered zones: title, labels, field groups, tabs, accessory
+labels, pricing labels, and dialog structure.
+
+Dynamic browser zones: catalog select options, dependent Mount/Bore/Rod options,
+special-part rows, manual rows, customer datalist, coupon status, price values,
+profit, model result, warnings, and proportional placement/scaling.
+
+Dynamic server-backed zones: catalog contents, customer suggestions, pricing
+results, dimensions, warnings, and draft snapshot.
+
+No outbound external network call is made by the calculator path. All fetch
+requests shown above target the local Flask application.
+
+
+4. ARCHITECTURE AND TECHNICAL PURPOSE
+======================================
+
+4.1 Core purpose and business logic
+------------------------------------
+
+The page is an employee-facing cylinder quote calculator preserving an Excel
+OrderEntry workflow in HTML. It collects a cylinder configuration and optional
+modifications/accessories, applies discount and special-part inputs, calculates
+authoritative pricing through Pricing Engine v1.2, and hands the validated
+result to an editable Employee Quote Form.
+
+The intended architecture is:
+
+		Employee OrderEntry HTML
+				-> local Flask APIs
+				-> app.service.py normalization and validation
+				-> cylinder_quote_engine Pricing Engine v1.2
+				-> normalized local pricing and dimension data
+				-> nonpersistent draft
+				-> Employee Quote Form
+				-> later quote persistence APIs
+
+The calculator deliberately does not save a quote, email a customer, generate
+a PDF, approve an order, or transmit data to an external system.
+
+4.2 Architectural strengths
+----------------------------
+
+- Pricing authority is server-side for both live display and draft creation.
+- The pricing engine is isolated behind app.service.py instead of being
+	reimplemented in browser JavaScript.
+- Catalog options are loaded from the server rather than duplicated wholesale
+	in the template.
+- Manual line items are kept separate from catalog special parts and are
+	revalidated server-side.
+- Quote draft creation is documented and tested as nonpersistent.
+- The fixed geometry plus uniform scaling preserves the legacy workflow's
+	spatial relationships.
+- The active route distinguishes calculator mode from quote-form mode through
+	an explicit draft/quote_id transition.
+
+4.3 Potential bugs, edge cases, and risks
+------------------------------------------
+
+Priority: High
+
+- Route/template naming drift is visible in the focused test suite. The route
+	and table of contents use app/Employee_/employee_calculator.html, while one
+	test failure reported that employee_calculator.html could not be resolved.
+	The active wrapper exists, but this indicates a template-loader or test
+	environment mismatch that can break page rendering in some paths.
+- The quote persistence status default in app/models_db.py is "new", while the
+	focused preview test expects a newly created quote to be "draft". This is an
+	observable contract mismatch between model behavior and test/workflow
+	expectations.
+- The calculator posts customer_contact as an empty string in draftPayload(),
+	even though autocomplete stores a phone value in
+	window.JIT_SELECTED_CUSTOMER_CONTACT. The contact discovered by customer
+	search therefore appears to be discarded during the draft handoff.
+
+Priority: Medium
+
+- The customer combo-arrow button has no behavior, so it looks like a dropdown
+	affordance but does not open suggestions. Users must type into the input.
+- The result dialog's showResult() function exists, but the submit path redirects
+	directly to the Quote Form after /api/quote/draft. This creates a potentially
+	stale or unreachable dialog surface unless another caller invokes showResult.
+- The browser accepts manual quantity and price blanks as numeric zero during
+	row display. A nonblank description with blank quantity reaches the server
+	and fails only after Quote is clicked, which is valid but late feedback.
+- liveRecalculate ignores failed responses and network exceptions. A displayed
+	Net Each or Profit value can remain from an earlier valid configuration after
+	a later request fails, unless the form becomes incomplete and explicitly
+	resets it.
+- Multiple rapid input changes can produce overlapping fetch requests. There is
+	no AbortController or response sequence guard, so a slower older response
+	could overwrite a newer displayed price.
+- Customer autocomplete performs a request for each debounced term but does not
+	verify that a response still matches the latest input. A delayed response can
+	repopulate stale suggestions.
+- The UI exposes Pressure, XI (MT4), tie-rod diameter, tie-rod length, and
+	calculated tie-rod cost, but the app.service.py payload model does not list
+	these fields as pricing inputs. Their displayed values may not affect the
+	quote result, which can confuse users if they expect engineering controls to
+	change price.
+- Coupon discount is applied in the browser by changing discount_pct. The
+	server receives the resulting percentage, but the server does not appear to
+	receive the coupon code itself. Auditability of why a discount was applied is
+	therefore limited to the resulting discount value.
+- The hard-coded browser COUPON_DISCOUNTS map contains 20OFF, while assigned
+	promotions are injected into body data attributes. Client-visible promo rules
+	are not a security boundary; server-side authorization and discount limits
+	must remain authoritative in the pricing and quote services.
+- The fixed 1360px layout can become hard to read at low-height or small-width
+	viewports because the entire form scales down instead of reflowing.
+- CSS is split between styles.css and pricing_calculator.css, and the latter
+	intentionally overrides earlier rules. This preserves historical geometry but
+	increases maintenance risk because final behavior requires reading both files
+	in cascade order.
+
+Priority: Low
+
+- The close glyph is purely decorative and may imply a window-close action that
+	does not exist.
+- The page uses Arial and a legacy gradient/panel palette, which is consistent
+	with the Excel replica but gives limited typographic differentiation.
+- The calculator initializes catalog data and then resets the form. A catalog
+	request failure leaves a generic error message and may leave partially
+	initialized controls without a retry action.
+- Native dialog support is assumed. The code checks showModal before calling
+	it, but it does not provide a full fallback for browsers without dialog.
+- The target filename contains the spelling "calcuilator". It is harmless at
+	runtime but makes discovery and future automation less predictable.
+
+4.4 Performance observations
+-----------------------------
+
+- Catalog loading is one initial local request and is not repeated during
+	normal selection changes.
+- Live recalculation is debounced by 300ms, which limits request volume but does
+	not cancel already-running requests.
+- Customer search is debounced by 250ms and limited server-side to ten rows.
+- Each live calculation invokes the complete server pricing engine, so typing
+	across several fields can still create substantial backend work on a slow
+	machine.
+- DOM updates are modest: six generated special-part rows, a usually small
+	manual-item list, and a short warning list. No large client-side framework is
+	loaded.
+- requestAnimationFrame and ResizeObserver avoid synchronous resize thrashing,
+	but the observer watches a transformed element whose dimensions can be
+	sensitive to layout changes; any future content growth should be checked for
+	repeated resize scheduling.
+
+4.5 Existing verification signal
+---------------------------------
+
+The focused baseline command was:
+
+		.venv\\Scripts\\python.exe -m pytest tests/test_quote_draft.py tests/test_quote_preview_flow.py -q
+
+Observed result: 10 passed and 2 failed before this audit report was written.
+The failures were:
+
+1. test_quote_preview_flow_create_get_patch_preserves_breakdown expected a
+	 newly created quote status of "draft" but received "new".
+2. test_index_page_renders_calculator_and_employee_quote_preview reported that
+	 the employee_calculator.html template could not be found.
+
+The report records these failures as existing audit findings. No attempt was
+made to fix, normalize, or otherwise alter the implementation.
+
+
+Audit conclusion
+---------------
+
+The employee calculator is a deliberately dense, legacy-oriented single-page
+OrderEntry surface with a clear server-authoritative pricing boundary and a
+well-defined handoff into the employee Quote Form. Its largest structural risks
+are contract drift between route/template/test expectations, loss of selected
+customer contact during draft construction, stale asynchronous display values,
+and engineering controls whose visible values are not part of the pricing
+payload. The visual implementation is coherent with its Excel replica goal,
+but its fixed scaled canvas should be treated as a desktop interaction model
+rather than a true responsive reflow layout.

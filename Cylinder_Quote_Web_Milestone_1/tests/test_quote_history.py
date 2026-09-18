@@ -72,6 +72,13 @@ def _set_quote_meta(quote_id, *, status=None, created_at=None):
         session.commit()
 
 
+def _set_quote_approved_at(quote_id, approved_at):
+    with get_session() as session:
+        quote = session.get(Quote, quote_id)
+        quote.approved_at = approved_at
+        session.commit()
+
+
 def _login_client(client, user: User):
     with client.session_transaction() as session:
         session["user_id"] = user.id
@@ -243,6 +250,7 @@ def test_employee_order_history_suggests_from_any_snapshot_value(temp_db):
 
 def test_employee_order_history_ignores_assigned_and_quoted_by_values(temp_db):
     client = temp_db.test_client()
+    quote = _create_quote(client, "creator", "Visible Customer")
     employee = User(
         display_name="Searching Employee",
         role="employee",
@@ -252,7 +260,7 @@ def test_employee_order_history_ignores_assigned_and_quoted_by_values(temp_db):
     with get_session() as session:
         session.add(employee)
         session.add(Order(
-            quote_id=9001,
+            quote_id=quote["id"],
             quote_number="JIGNORE-001",
             status="approved",
             order_form_snapshot={
@@ -279,6 +287,276 @@ def test_employee_order_history_ignores_assigned_and_quoted_by_values(temp_db):
     visible = client.get("/employee/order-history-search?q=VISIBLE")
     assert visible.status_code == 200
     assert visible.get_json()["results"][0]["order_number"] == "JIGNORE-001"
+
+
+def test_employee_quote_history_suggests_from_quote_database(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="Searching Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.commit()
+        session.refresh(employee)
+
+    quote = _create_quote(client, "creator", "Quote Search Customer")
+    _login_client(client, employee)
+
+    too_short = client.get("/employee_quote_history_search?q=Q")
+    assert too_short.status_code == 200
+    assert too_short.get_json()["results"] == []
+
+    suggestions = client.get("/employee_quote_history_search?q=Qu")
+    assert suggestions.status_code == 200
+    assert suggestions.get_json()["results"] == [{
+        "id": quote["id"],
+        "quote_number": quote["quote_number"],
+        "customer": "Quote Search Customer",
+        "model_code": quote["model_code"],
+    }]
+
+
+def test_employee_quote_history_lists_pending_before_approved_newest_first(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="History Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.commit()
+        session.refresh(employee)
+
+    pending_old = _create_quote(client, "creator", "Pending Old")
+    _set_quote_meta(
+        pending_old["id"], status="pending_approval", created_at=datetime(2026, 9, 10)
+    )
+    pending_new = _create_quote(client, "creator", "Pending New")
+    _set_quote_meta(
+        pending_new["id"], status="accepted", created_at=datetime(2026, 9, 12)
+    )
+    approved_old = _create_quote(client, "creator", "Approved Old")
+    _set_quote_meta(
+        approved_old["id"], status="approved", created_at=datetime(2026, 9, 11)
+    )
+    _set_quote_approved_at(approved_old["id"], datetime(2026, 9, 14))
+    approved_new = _create_quote(client, "creator", "Approved New")
+    _set_quote_meta(
+        approved_new["id"], status="approved", created_at=datetime(2026, 9, 13)
+    )
+    _set_quote_approved_at(approved_new["id"], datetime(2026, 9, 15))
+
+    _login_client(client, employee)
+    response = client.get("/employee_quote_history/employee_quote_history.html")
+
+    assert response.status_code == 200
+    text = response.get_data(as_text=True)
+    order = [
+        text.index("Pending New"),
+        text.index("Pending Old"),
+        text.index("Approved New"),
+        text.index("Approved Old"),
+    ]
+    assert order == sorted(order)
+
+
+def test_employee_quote_history_delete_soft_deletes_quote(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="Deleting Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.commit()
+        session.refresh(employee)
+
+    quote = _create_quote(client, "creator", "Delete Quote Customer")
+    _login_client(client, employee)
+
+    response = client.post(
+        f"/employee_quote_history/{quote['id']}/delete",
+    )
+
+    assert response.status_code == 302
+    with get_session() as session:
+        deleted_quote = session.get(Quote, quote["id"])
+        assert deleted_quote.status == "canceled"
+        assert deleted_quote.deleted_by_user_id == employee.id
+        assert deleted_quote.deleted_at is not None
+
+
+def test_employee_order_history_delete_moves_order_to_trash_and_restores(temp_db):
+    client = temp_db.test_client()
+    quote = _create_quote(client, "creator", "Delete Order Customer")
+    employee = User(
+        display_name="Deleting Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.add(Order(
+            quote_id=quote["id"],
+            quote_number="JDELETE-001",
+            status="approved",
+            order_form_snapshot={"order_number": "JDELETE-001"},
+        ))
+        session.commit()
+        session.refresh(employee)
+        order = session.query(Order).filter_by(quote_id=quote["id"]).one()
+        order_id = order.id
+
+    _login_client(client, employee)
+    response = client.post(f"/employee/order-history/{order_id}/delete")
+
+    assert response.status_code == 302
+    with get_session() as session:
+        deleted_order = session.get(Order, order_id)
+        assert deleted_order is not None
+        assert deleted_order.status == "canceled"
+        assert deleted_order.deleted_status == "approved"
+        assert deleted_order.deleted_by_user_id == employee.id
+        assert deleted_order.deleted_at is not None
+
+    trash = client.get("/employee_order_history/employee_order_history.html?trash=1")
+    assert trash.status_code == 200
+    assert "JDELETE-001" in trash.get_data(as_text=True)
+
+    restored = client.post(f"/employee/order-history/{order_id}/restore")
+    assert restored.status_code == 302
+    with get_session() as session:
+        restored_order = session.get(Order, order_id)
+        assert restored_order.status == "approved"
+        assert restored_order.deleted_status is None
+        assert restored_order.deleted_at is None
+
+
+def test_employee_quote_history_delete_moves_quote_to_trash_and_restores(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="Restoring Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.commit()
+        session.refresh(employee)
+
+    quote = _create_quote(client, "creator", "Restore Quote Customer")
+    _set_quote_meta(quote["id"], status="draft")
+    _login_client(client, employee)
+
+    deleted = client.post(f"/employee_quote_history/{quote['id']}/delete")
+    assert deleted.status_code == 302
+
+    active = client.get("/employee_quote_history/employee_quote_history.html")
+    assert "Restore Quote Customer" not in active.get_data(as_text=True)
+    trash = client.get("/employee_quote_history/employee_quote_history.html?trash=1")
+    assert "Restore Quote Customer" in trash.get_data(as_text=True)
+
+    restored = client.post(f"/employee_quote_history/{quote['id']}/restore")
+    assert restored.status_code == 302
+    with get_session() as session:
+        restored_quote = session.get(Quote, quote["id"])
+        assert restored_quote.status == "draft"
+        assert restored_quote.deleted_status is None
+        assert restored_quote.deleted_at is None
+
+
+def test_employee_quote_history_ignores_attribution_and_has_no_result_cap(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="Searching Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.commit()
+        session.refresh(employee)
+
+    first_quote = _create_quote(client, "creator", "Visible Quote Customer")
+    with get_session() as session:
+        quote = session.get(Quote, first_quote["id"])
+        quote.order_form_snapshot = {
+            "assigned_to": "ONLY-ASSIGNED-VALUE",
+            "quoted_by": "ONLY-QUOTED-VALUE",
+            "created_by": "ONLY-CREATED-VALUE",
+            "description": "VISIBLE-QUOTE-DATA",
+        }
+        session.commit()
+
+    with get_session() as session:
+        session.add_all([
+            Quote(
+                quote_number=f"TEST-COMMON-{index:02d}",
+                status="draft",
+                customer_name=f"Common Quote Customer {index}",
+                created_by_user_id=1,
+                created_at=datetime.utcnow() - timedelta(seconds=index),
+            )
+            for index in range(29)
+        ])
+        session.commit()
+
+    _login_client(client, employee)
+
+    ignored = client.get("/employee_quote_history_search?q=ONLY")
+    assert ignored.status_code == 200
+    assert ignored.get_json()["results"] == []
+
+    visible = client.get("/employee_quote_history_search?q=VISIBLE")
+    assert visible.status_code == 200
+    assert len(visible.get_json()["results"]) == 1
+
+    uncapped = client.get("/employee_quote_history_search?q=Common")
+    assert uncapped.status_code == 200
+    assert len(uncapped.get_json()["results"]) == 29
+
+
+def test_employee_quote_history_does_not_search_order_attribution(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="Searching Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.commit()
+        session.refresh(employee)
+
+    unrelated = _create_quote(client, "creator", "Unrelated Customer")
+    visible = _create_quote(client, "creator", "Kane Whiteside")
+    with get_session() as session:
+        unrelated_quote = session.get(Quote, unrelated["id"])
+        unrelated_quote.order_form_snapshot = {
+            "ordered_by": "Kane Whiteside",
+            "quote_form_edits": {
+                "textNodes": [{"value": "Kane Whiteside"}],
+            },
+        }
+        session.commit()
+
+    _login_client(client, employee)
+    response = client.get("/employee_quote_history_search?q=kane")
+
+    assert response.status_code == 200
+    results = response.get_json()["results"]
+    assert [result["id"] for result in results] == [visible["id"]]
 
 
 def test_filter_by_quote_number_partial(temp_db):

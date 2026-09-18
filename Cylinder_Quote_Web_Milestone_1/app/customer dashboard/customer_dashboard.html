@@ -6,7 +6,7 @@
     name="viewport"
     content="width=device-width,initial-scale=1"
   >
-  <title>JIT {{ user.display_name }}'s Dashboard</title>
+  <title>JIT {{ dashboard_customer_name if employee_view else user.display_name }}'s Dashboard</title>
   <link
     rel="stylesheet"
     href="{{ url_for('static', filename='portal_common.css') }}"
@@ -18,14 +18,15 @@
 </head>
 <body>
   <header class="portal-header">
-    <div>{{ user.display_name }}</div>
-    <h1>JIT {{ user.display_name }}'s Dashboard</h1>
-    <a href="{{ url_for('portal.logout') }}">Log Out</a>
+    <div>{{ 'Employee View' if employee_view else user.display_name }}</div>
+    <h1>JIT {{ dashboard_customer_name if employee_view else user.display_name }}'s Dashboard</h1>
+    <a href="{{ url_for('portal.employee_dashboard') if employee_view else url_for('portal.logout') }}">{{ 'Back to Dashboard' if employee_view else 'Log Out' }}</a>
   </header>
 
   <main class="portal-shell">
     <div class="page-actions">
       <div class="dashboard-actions">
+        {% if not employee_view %}
         <button
           class="portal-button new-quote"
           data-standard="{{ url_for('portal.customer_quote_entry') }}"
@@ -41,10 +42,11 @@
         >
           Contact JIT
         </a>
+        {% endif %}
       </div>
     </div>
 
-    {% set quote_form_url=url_for('portal.customer_quote_form') %}
+    {% set quote_form_url=url_for('employee_quote_form_page') if employee_view else url_for('portal.customer_quote_form') %}
 
 {% if rows %}
   <div class="table-wrap">
@@ -95,7 +97,7 @@
             <td>
               <a
                 class="small-button"
-                href="{{ quote_form_url }}?quote_number={{ quote.quote_number|urlencode }}"
+                href="{{ quote_form_url }}?{{ 'quote_id=' ~ quote.id if employee_view else 'quote_number=' ~ quote.quote_number|urlencode }}"
               >
                 Open
               </a>

@@ -106,8 +106,7 @@ html, body {
 }
 
 .excel-quote-sheet {
-  width: 94vw;
-  max-width: 1400px;
+  width: min(1180px, 100%);
   min-height: 1056px;
   margin: 20px auto 30px;
   padding: 24px;

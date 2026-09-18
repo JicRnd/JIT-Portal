@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+from pathlib import Path
 
 from app import create_app
 from app.db import get_session, init_db
@@ -166,3 +167,98 @@ def test_customer_lookup_returns_company_poc_address_city_and_notes(temp_db):
     )
     assert updated.status_code == 200
     assert updated.get_json()["customer"]["notes"] == "Updated customer note."
+
+
+def test_customer_search_matches_name_fields_at_word_starts(temp_db):
+    client = temp_db.test_client()
+    with get_session() as session:
+        customer = Customer(
+            company_name="Northwind Cylinders",
+            name="Northwind Legacy",
+            poc="Pat Contact",
+            address="742 Cedar Avenue",
+            city_state_zip="Springfield, TN 37172",
+            shipping_address="Dock 4 Receiving",
+            phone="555-0198",
+            email="orders@northwind.example",
+            notes="Call after 2 PM for receiving.",
+        )
+        session.add(customer)
+        session.commit()
+
+    for query in ("north", "Cyl", "Con"):
+        response = client.get(f"/api/customers/search?q={query}", headers=_headers())
+        assert response.status_code == 200
+        assert [row["name"] for row in response.get_json()["customers"]] == [
+            "Northwind Legacy"
+        ]
+
+    for query in ("wind", "orthwind", "at Con", "edar", "field", "ock", "019", "northwind.example", "receiving"):
+        response = client.get(f"/api/customers/search?q={query}", headers=_headers())
+        assert response.status_code == 200
+        assert response.get_json()["customers"] == []
+
+
+def test_customer_search_surfaces_keep_two_character_trigger():
+    app_root = Path(__file__).parents[1]
+    required_guard = 'if (term.length < 2)'
+    for relative_path in (
+        "app/static/app.js",
+        "app/Employee_dashboard/employee_dashboard.html",
+        "app/Admin_Dashboard/Admin_dashboard.html",
+    ):
+        source = (app_root / relative_path).read_text(encoding="utf-8")
+        assert required_guard in source
+
+
+def test_employee_can_create_company_only_contact_without_poc(temp_db):
+    client = temp_db.test_client()
+
+    response = client.post(
+        "/api/customers",
+        json={
+            "company_name": "Company Only Contact",
+            "address": "1 Main Street",
+            "city_state_zip": "Nashville, TN 37201",
+            "phone": "555-0100",
+            "email": "company@example.com",
+        },
+        headers=_headers(),
+    )
+
+    assert response.status_code == 201
+    customer = response.get_json()["customer"]
+    assert customer["company_name"] == "Company Only Contact"
+    assert customer["poc"] is None
+    assert customer["address"] == "1 Main Street"
+
+
+def test_employee_can_open_customer_dashboard_history_view(temp_db):
+    client = temp_db.test_client()
+    with get_session() as session:
+        employee = User(
+            display_name="Lookup Employee",
+            username="lookup-employee",
+            role="employee",
+            access_level="standard",
+            is_active=True,
+        )
+        customer = Customer(
+            name="BrightPath Solutions",
+            company_name="BrightPath Solutions",
+            address="2 Main Street",
+        )
+        session.add_all([employee, customer])
+        session.commit()
+        employee_id = employee.id
+        customer_id = customer.id
+
+    with client.session_transaction() as session:
+        session["user_id"] = employee_id
+        session["role"] = "employee"
+
+    response = client.get(f"/employee/customer-dashboard/{customer_id}")
+
+    assert response.status_code == 200
+    assert b"JIT BrightPath Solutions's Dashboard" in response.data
+    assert b"Back to Dashboard" in response.data
