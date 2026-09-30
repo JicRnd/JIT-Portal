@@ -4,7 +4,7 @@ import csv
 import io
 import logging
 import os
-import re
+import time as time_module
 from datetime import datetime, time
 from pathlib import Path
 
@@ -16,11 +16,14 @@ except ModuleNotFoundError:  # pragma: no cover - optional until requirements in
 try:
     from flask import (
         Flask,
+        flash,
         jsonify,
+        redirect,
         render_template,
         request,
         send_file,
         send_from_directory,
+        url_for,
     )
 except ModuleNotFoundError as exc:  # pragma: no cover - developer environment may not have Flask installed
     raise RuntimeError("Flask is required for the web layer. Install with: pip install -r requirements.txt") from exc
@@ -29,7 +32,8 @@ from sqlalchemy import func, or_, select
 from sqlalchemy.orm import selectinload
 from jinja2 import ChoiceLoader, FileSystemLoader
 
-from .catalog import build_catalog
+from .Pricing.metric_catalog import build_catalog as build_metric_catalog
+from .Pricing.standard_catalog import build_catalog as build_standard_catalog
 from .component_bom import enrich_parts_with_inventory
 from .current_user import get_or_create_current_user
 from .data1_service import (
@@ -40,7 +44,6 @@ from .data1_service import (
 from .db import get_session, init_db
 from .email_service import (
     email_log_to_json,
-    send_order_approval_email,
     send_quote_email,
     validate_recipients,
 )
@@ -57,18 +60,28 @@ from .quote_service import (
     get_quote,
     quote_to_order_form_json,
     quote_to_json,
+    _order_form_parts,
     sync_order_status,
     update_quote_edits,
     upsert_customer,
     classify_contact_name,
 )
-from .service import build_quote_draft, calculate_payload, make_engine
+from .service import (
+    METRIC_SERIES,
+    build_metric_quote_draft,
+    build_quote_draft,
+    calculate_metric_payload,
+    calculate_payload,
+    make_engine,
+)
 
 logger = logging.getLogger(__name__)
 
 
 def create_app() -> Flask:
     app = Flask(__name__, template_folder="templates", static_folder="static")
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
+    app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
     app.jinja_loader = ChoiceLoader([
         app.jinja_loader,
         FileSystemLoader(Path(__file__).resolve().parent),
@@ -83,6 +96,7 @@ def create_app() -> Flask:
         FileSystemLoader(Path(__file__).resolve().parent / "Employee_Quote_History"),
         FileSystemLoader(Path(__file__).resolve().parent / "Quote_Form"),
         FileSystemLoader(Path(__file__).resolve().parent / "Parts_catalog_page"),
+        FileSystemLoader(Path(__file__).resolve().parent / "Pricing"),
         FileSystemLoader(Path(__file__).resolve().parent / "Landing_page"),
         FileSystemLoader(Path(__file__).resolve().parent / "Landing_page" / "Employee_signup"),
         FileSystemLoader(Path(__file__).resolve().parent / "Landing_page" / "Customer_signup"),
@@ -96,10 +110,17 @@ def create_app() -> Flask:
     init_db()
     root = Path(__file__).resolve().parents[1]
     engine = make_engine(root)
-    catalog = build_catalog(engine.data)
+    app.extensions["pricing_engine"] = engine
+    catalog = build_standard_catalog(engine.data)
+    metric_catalog = build_metric_catalog(engine.data)
 
     # Register portal and employee-history blueprints independently.
-    from .portal import portal_bp
+    from .portal import (
+        pending_quote_requires_accept,
+        portal_bp,
+        require_role,
+        signed_in_user,
+    )
     app.register_blueprint(portal_bp)
 
     from .employee_order_history.Employee_order_history_search import employee_order_history_bp
@@ -109,10 +130,17 @@ def create_app() -> Flask:
     app.register_blueprint(employee_quote_history_bp)
 
     @app.get("/employee_quote_form/employee_quote_form.html")
+    @require_role("employee")
     def employee_quote_form_page():
-        current_user = get_or_create_current_user(request)
+        current_user = signed_in_user()
+        quote_id = request.args.get("quote_id")
+        if quote_id:
+            with get_session() as db:
+                if pending_quote_requires_accept(db, quote_id, current_user):
+                    flash("Accept the pending quote before opening it.", "error")
+                    return redirect(url_for("portal.employee_dashboard"))
         return render_template(
-            "employee_quote_forms.html",
+            "employee_quote_form.html",
             current_user_name=getattr(current_user, "display_name", "") or "",
         )
 
@@ -122,9 +150,11 @@ def create_app() -> Flask:
         # A quote_id (opening a saved quote) or draft flag (from the "Quote" button)
         # goes straight to the dedicated Quote Form page instead of the calculator.
         if request.args.get("quote_id") or request.args.get("draft"):
-            return render_template(
-                "employee_quote_forms.html",
-                current_user_name=getattr(current_user, "display_name", "") or "",
+            return redirect(
+                url_for(
+                    "employee_quote_form_page",
+                    **request.args.to_dict(flat=True),
+                )
             )
         return render_template(
             "employee_calculator.html",
@@ -162,6 +192,7 @@ def create_app() -> Flask:
         return render_template(
             "order_form.html",
             quote_id=quote_id,
+            order_id=order_id,
         )
 
     @app.get("/order-form.css")
@@ -227,7 +258,22 @@ def create_app() -> Flask:
     @app.get("/api/catalog")
     def get_catalog():
         response_catalog = dict(catalog)
-        database_parts = quote_special_parts(row["part_number"] for row in engine.data.special_parts)
+        database_parts = quote_special_parts(response_catalog.get("special_parts", []))
+        if database_parts:
+            response_catalog["special_parts"] = [row["part_number"] for row in database_parts]
+            response_catalog["special_part_details"] = {
+                row["part_number"]: {
+                    "description": row["description"],
+                    "price": row["sell_price"],
+                }
+                for row in database_parts
+            }
+        return jsonify(response_catalog)
+
+    @app.get("/api/metric/catalog")
+    def get_metric_catalog():
+        response_catalog = dict(metric_catalog)
+        database_parts = quote_special_parts(response_catalog.get("special_parts", []))
         if database_parts:
             response_catalog["special_parts"] = [row["part_number"] for row in database_parts]
             response_catalog["special_part_details"] = {
@@ -292,8 +338,7 @@ def create_app() -> Flask:
         query = (request.args.get("q") or "").strip()
         if not query:
             return jsonify({"ok": True, "customers": []})
-        search_pattern = f"%{query}%"
-        word_start_pattern = re.compile(rf"(?<!\w){re.escape(query)}", re.IGNORECASE)
+        search_pattern = f"{query}%"
         with get_session() as session:
             candidates = session.execute(
                 select(Customer)
@@ -301,26 +346,28 @@ def create_app() -> Flask:
                     or_(
                         Customer.company_name.ilike(search_pattern),
                         Customer.name.ilike(search_pattern),
-                        Customer.poc.ilike(search_pattern),
                     )
                 )
                 .order_by(Customer.name)
             ).scalars().all()
-            matches = [
-                customer
-                for customer in candidates
-                if any(
-                    word_start_pattern.search(value or "")
-                    for value in (
-                        customer.company_name,
-                        customer.name,
-                        customer.poc,
-                    )
-                )
-            ]
+            normalized_query = query.casefold()
+
+            def customer_match_priority(customer):
+                company_name = (customer.company_name or "").strip().casefold()
+                legacy_name = (customer.name or "").strip().casefold()
+                if company_name.startswith(normalized_query):
+                    return 0
+                if legacy_name.startswith(normalized_query):
+                    return 1
+                return 2
+
+            candidates.sort(key=lambda customer: (
+                customer_match_priority(customer),
+                (customer.name or "").casefold(),
+            ))
             return jsonify({
                 "ok": True,
-                "customers": [_customer_payload(session, c) for c in matches],
+                "customers": [_customer_payload(session, c) for c in candidates],
             })
 
     @app.get("/api/customers/all")
@@ -503,6 +550,17 @@ def create_app() -> Flask:
             return jsonify({"ok": False, "error": str(exc)}), 400
         return jsonify({"ok": True, "result": result})
 
+    @app.post("/api/metric/calculate")
+    def metric_calculate():
+        payload = request.get_json(silent=True)
+        if payload is None:
+            return jsonify({"ok": False, "error": "Expected application/json request body"}), 400
+        try:
+            result = calculate_metric_payload(engine, payload)
+        except (ValueError, LookupError, KeyError) as exc:
+            return jsonify({"ok": False, "error": str(exc)}), 400
+        return jsonify({"ok": True, "result": result})
+
     @app.post("/api/quote/draft")
     def quote_draft():
         payload = request.get_json(silent=True)
@@ -510,6 +568,17 @@ def create_app() -> Flask:
             return jsonify({"ok": False, "error": "Expected application/json request body"}), 400
         try:
             result = build_quote_draft(engine, payload)
+        except (ValueError, LookupError, KeyError) as exc:
+            return jsonify({"ok": False, "error": str(exc)}), 400
+        return jsonify({"ok": True, "draft": result})
+
+    @app.post("/api/metric/quote/draft")
+    def metric_quote_draft():
+        payload = request.get_json(silent=True)
+        if payload is None:
+            return jsonify({"ok": False, "error": "Expected application/json request body"}), 400
+        try:
+            result = build_metric_quote_draft(engine, payload)
         except (ValueError, LookupError, KeyError) as exc:
             return jsonify({"ok": False, "error": str(exc)}), 400
         return jsonify({"ok": True, "draft": result})
@@ -529,7 +598,7 @@ def create_app() -> Flask:
             except (ValueError, LookupError, KeyError) as exc:
                 session.rollback()
                 return jsonify({"ok": False, "error": str(exc)}), 400
-            result = quote_to_json(quote)
+            result = quote_to_json(quote, include_order_form_parts=False)
 
         return jsonify({"ok": True, "quote": result})
 
@@ -640,6 +709,8 @@ def create_app() -> Flask:
     @app.get("/api/quotes/<int:quote_id>")
     def get_quote_route(quote_id: int):
         current_user = get_or_create_current_user(request)
+        started = time_module.perf_counter()
+        lightweight = request.args.get("lightweight") == "1"
 
         with get_session() as session:
             quote = get_quote(session, quote_id)
@@ -652,8 +723,21 @@ def create_app() -> Flask:
             ):
                 quote.customer_update_pending = False
                 session.commit()
-            result = quote_to_order_form_json(quote)
+            try:
+                result = (
+                    quote_to_json(quote, include_order_form_parts=False)
+                    if lightweight
+                    else quote_to_order_form_json(quote)
+                )
+            except RuntimeError as exc:
+                logger.exception("Order Form cache unavailable for quote %s", quote_id)
+                return jsonify({"ok": False, "error": str(exc)}), 500
 
+        logger.info(
+            "Order Form API timing quote=%s total=%.3fs",
+            quote_id,
+            time_module.perf_counter() - started,
+        )
         return jsonify({"ok": True, "quote": result})
 
     @app.get("/api/quotes/by-number/<path:quote_number>")
@@ -673,7 +757,7 @@ def create_app() -> Flask:
             ):
                 quote.customer_update_pending = False
                 session.commit()
-            result = quote_to_json(quote)
+            result = quote_to_json(quote, include_order_form_parts=False)
 
         return jsonify({"ok": True, "quote": result})
 
@@ -897,9 +981,9 @@ def create_app() -> Flask:
 
     @app.post("/api/quotes/<int:quote_id>/order")
     def submit_order_for_approval(quote_id: int):
+        started = time_module.perf_counter()
         payload = request.get_json(silent=True) or {}
         current_user = get_or_create_current_user(request)
-        recipient = (os.environ.get("ORDER_APPROVAL_RECIPIENT") or "kane@jitindustries.com").strip()
 
         with get_session() as session:
             quote = get_quote(session, quote_id)
@@ -921,6 +1005,13 @@ def create_app() -> Flask:
             saved_order_form["order_created_at"] = order_timestamp.isoformat()
             saved_order_form["order_date"] = order_timestamp.strftime("%m/%d/%Y, %I:%M %p")
             saved_order_form["person_of_contact"] = quote.person_of_contact
+            cached_parts = (quote.order_form_snapshot or {}).get("order_form_parts")
+            saved_order_form["order_form_parts"] = (
+                cached_parts
+                if isinstance(cached_parts, list)
+                else _order_form_parts(quote, apply_workbook_allocations=True)
+            )
+            parts_elapsed = time_module.perf_counter() - started
             quote.order_form_snapshot = saved_order_form
 
             quote.status = (
@@ -950,23 +1041,24 @@ def create_app() -> Flask:
             configured_base = (os.environ.get("ORDER_APPROVAL_BASE_URL") or "").strip().rstrip("/")
             base_url = configured_base or request.url_root.rstrip("/")
             approval_url = f"{base_url}/order-form?order_id={order_row.id}"
-            email_log = send_order_approval_email(
-                quote, approval_url, recipient, sent_by_user=current_user
+            logger.info(
+                "Order submission timing quote=%s parts_cache=%.3fs",
+                quote_id,
+                parts_elapsed,
             )
-            session.add(email_log)
-            if email_log.status == "sent":
-                quote.emailed_by_user_id = current_user.id
-                quote.emailed_at = utc_now()
             session.commit()
+            logger.info(
+                "Order submission complete quote=%s total=%.3fs",
+                quote_id,
+                time_module.perf_counter() - started,
+            )
 
             return jsonify({
                 "ok": True,
-                "quote": quote_to_order_form_json(quote),
+                "quote": quote_to_json(quote, include_order_form_parts=False),
                 "order_id": order_row.id,
                 "order_number": saved_order_form["order_number"],
                 "approval_url": approval_url,
-                "approval_recipient": recipient,
-                "email_log": email_log_to_json(email_log),
             })
 
     @app.post("/api/quotes/<int:quote_id>/order/hold")
@@ -1036,10 +1128,43 @@ def create_app() -> Flask:
             session.add(order_row)
 
             session.commit()
-            return jsonify({"ok": True, "quote": quote_to_order_form_json(quote)})
+            return jsonify({"ok": True, "quote": quote_to_json(quote)})
+
+    @app.post("/api/quotes/<int:quote_id>/order/snapshot")
+    def save_order_form_snapshot(quote_id: int):
+        payload = request.get_json(silent=True) or {}
+        order_form = payload.get("order_form")
+        if not isinstance(order_form, dict):
+            return jsonify({"ok": False, "error": "order_form must be an object"}), 400
+
+        current_user = get_or_create_current_user(request)
+        with get_session() as session:
+            quote = get_quote(session, quote_id)
+            if quote is None:
+                return jsonify({"ok": False, "error": "Quote not found"}), 404
+
+            quote.order_form_snapshot = order_form
+            quote.edited_by_user_id = current_user.id
+            quote.edited_at = utc_now()
+            session.add(quote)
+
+            order_row = session.execute(
+                select(Order).where(Order.quote_id == quote.id)
+            ).scalar_one_or_none()
+            if order_row is not None:
+                order_row.order_form_snapshot = order_form
+                session.add(order_row)
+
+            session.commit()
+            return jsonify({"ok": True})
 
     @app.post("/api/quotes/<int:quote_id>/order/deny")
     def deny_internal_order(quote_id: int):
+        payload = request.get_json(silent=True) or {}
+        order_form = payload.get("order_form")
+        if order_form is not None and not isinstance(order_form, dict):
+            return jsonify({"ok": False, "error": "order_form must be an object"}), 400
+
         current_user = get_or_create_current_user(request)
         with get_session() as session:
             quote = get_quote(session, quote_id)
@@ -1051,11 +1176,20 @@ def create_app() -> Flask:
                     "error": "Only pending approval orders can be denied",
                 }), 409
 
+            if order_form:
+                quote.order_form_snapshot = order_form
             quote.status = "denied"
             quote.edited_by_user_id = current_user.id
             quote.edited_at = utc_now()
             sync_order_status(session, quote.id, "denied")
             session.add(quote)
+
+            order_row = session.execute(
+                select(Order).where(Order.quote_id == quote.id)
+            ).scalar_one_or_none()
+            if order_row is not None and order_form:
+                order_row.order_form_snapshot = order_form
+                session.add(order_row)
 
             session.commit()
             return jsonify({"ok": True, "quote": quote_to_order_form_json(quote)})

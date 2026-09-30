@@ -1,0 +1,15 @@
+bucket,series,bore_min,bore_max,min_inclusive,max_inclusive,mounts,source_cells
+T5,H,1.5,1.5,true,true,MP1,Acc!T5
+T6,H,1.51,2.6,false,false,MP1,Acc!T6
+T7,H,3.25,3.25,true,true,MP1,Acc!T7
+T8,H,4,4,true,true,MP1|MP2,Acc!T8
+T9,H,5,5,true,true,MF1|MP1|MP2,Acc!T9
+T10,H,6,6,true,true,MP1|MP2,Acc!T10
+T11,H,7,7,true,true,MP1|MP2,Acc!T11
+T12,H,8,8,true,true,MP1|MP2,Acc!T12
+T5,A,0,2.6,false,false,MP1,Acc!T5
+T6,A,2.6,5.1,false,false,MP1,Acc!T6
+T7,A,5.1,8.1,false,false,MP1,Acc!T7
+T5,LH,0,2.6,false,false,MP1,Acc!T5
+T6,LH,2.6,5.1,false,false,MP1,Acc!T6
+T7,LH,5.1,8.1,false,false,MP1,Acc!T7

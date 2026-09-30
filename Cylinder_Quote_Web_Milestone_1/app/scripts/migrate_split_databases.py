@@ -331,10 +331,10 @@ def migrate() -> dict[str, Any]:
 
     # Create new databases.
     contacts_engine = create_engine_for_db(
-        databases_path() / "Employee_Contacts.db", EmployeeContactsBase
+        databases_path() / "Emplopyee_contacts-databases" / "Employee_Contacts.db", EmployeeContactsBase
     )
-    quote_engine = create_engine_for_db(databases_path() / "Quote.db", QuoteBase)
-    order_engine = create_engine_for_db(databases_path() / "Order.db", OrderBase)
+    quote_engine = create_engine_for_db(databases_path() / "quoting-databases" / "Quote.db", QuoteBase)
+    order_engine = create_engine_for_db(databases_path() / "order-databases" / "Order.db", OrderBase)
 
     ContactsSession = sessionmaker(bind=contacts_engine)
     QuoteSession = sessionmaker(bind=quote_engine)

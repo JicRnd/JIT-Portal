@@ -107,8 +107,8 @@ def main() -> None:
 
     source = sqlite3.connect(f"file:{INSTANCE_DB}?mode=ro", uri=True)
     source.row_factory = sqlite3.Row
-    accounts = sqlite3.connect(DATABASES / "User_accounts.db")
-    application = sqlite3.connect(DATABASES / "Application.db")
+    accounts = sqlite3.connect(DATABASES / "user_accounts-databases" / "User_accounts.db")
+    application = sqlite3.connect(DATABASES / "Application-databases" / "Application.db")
     try:
         user_count = merge_users(source, accounts)
         ai_counts = copy_ai_tables(source, application)

@@ -100,14 +100,21 @@ def search_orders(
 	query: str,
 	limit: int | None = None,
 	include_deleted: bool = False,
+	user_id: int | None = None,
 ) -> list[Order]:
-	"""Search every stored value in every order from Order.db."""
+	"""Search orders belonging to quotes visible to the signed-in employee."""
 	query = (query or "").strip().casefold()
-	quote_ids = set(db.execute(
-		select(Quote.id).where(
-			Quote.deleted_at.is_not(None) if include_deleted else Quote.deleted_at.is_(None)
+	quote_visibility = None
+	if user_id is not None:
+		quote_visibility = (
+			(Quote.created_by_user_id == user_id)
+			| (Quote.assigned_employee_user_id == user_id)
+			| (Quote.approved_by_user_id == user_id)
 		)
-	).scalars())
+	quote_filter = Quote.deleted_at.is_not(None) if include_deleted else Quote.deleted_at.is_(None)
+	if quote_visibility is not None:
+		quote_filter = quote_filter & quote_visibility
+	quote_ids = set(db.execute(select(Quote.id).where(quote_filter)).scalars())
 	orders = db.execute(
 		select(Order).where(
 			Order.deleted_at.is_not(None) if include_deleted else Order.deleted_at.is_(None)
@@ -124,13 +131,18 @@ def search_orders(
 	return orders if limit is None else orders[:limit]
 
 
-def order_search_results(db, query: str, limit: int | None = None) -> list[dict[str, str]]:
+def order_search_results(
+	db,
+	query: str,
+	limit: int | None = None,
+	user_id: int | None = None,
+) -> list[dict[str, str]]:
 	"""Format Order.db matches for the employee history results popup."""
 	if len((query or "").strip()) < 2:
 		return []
 
 	results = []
-	for order in search_orders(db, query, limit):
+	for order in search_orders(db, query, limit, user_id=user_id):
 		snapshot = order.order_form_snapshot or {}
 		quote_form_inputs = (snapshot.get("quote_form_edits") or {}).get("inputs") or {}
 		results.append({
@@ -155,7 +167,12 @@ def employee_order_history_page():
 	trash = request.args.get("trash") == "1"
 
 	with get_session() as db:
-		rows = search_orders(db, query, include_deleted=trash)
+		rows = search_orders(
+			db,
+			query,
+			include_deleted=trash,
+			user_id=user.id if not query and not show_all else None,
+		)
 
 	response = make_response(render_template(
 		"employee_order_history.html",

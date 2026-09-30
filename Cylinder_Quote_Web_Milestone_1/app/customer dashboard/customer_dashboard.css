@@ -31,6 +31,15 @@ th {
   background: #e9ecef;
 }
 
+.customer-quote-actions {
+  white-space: nowrap;
+}
+
+.customer-quote-delete-form {
+  display: inline;
+  margin-left: 0.4rem;
+}
+
 .status {
   display: inline-block;
   border-radius: 999px;

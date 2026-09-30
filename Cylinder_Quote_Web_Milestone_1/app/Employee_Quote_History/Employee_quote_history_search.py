@@ -158,12 +158,25 @@ def search_quotes(
     query: str,
     limit: int | None = None,
     include_deleted: bool = False,
+    user_id: int | None = None,
 ) -> list[Quote]:
-    """Search every stored quote and line item in Quote.db."""
+    """Search quotes visible to the signed-in employee."""
     query = (query or "").strip().casefold()
+    visibility = None
+    if user_id is not None:
+        visibility = (
+            (Quote.created_by_user_id == user_id)
+            | (Quote.assigned_employee_user_id == user_id)
+            | (Quote.approved_by_user_id == user_id)
+        )
     quotes = db.execute(
         select(Quote).where(
-            Quote.deleted_at.is_not(None) if include_deleted else Quote.deleted_at.is_(None)
+            (Quote.deleted_at.is_not(None) if include_deleted else Quote.deleted_at.is_(None))
+            if visibility is None
+            else (
+                (Quote.deleted_at.is_not(None) if include_deleted else Quote.deleted_at.is_(None))
+                & visibility
+            )
         )
         .options(selectinload(Quote.line_items))
         .order_by(Quote.created_at.desc())
@@ -189,7 +202,12 @@ def employee_quote_history_page():
     with get_session() as db:
         rows = [
             (quote, total_for(quote), status_label(quote.status))
-            for quote in search_quotes(db, query, include_deleted=trash)
+            for quote in search_quotes(
+                db,
+                query,
+                include_deleted=trash,
+                user_id=user.id if not query and not show_all else None,
+            )
         ]
         status_order = {
             "accepted": 0,

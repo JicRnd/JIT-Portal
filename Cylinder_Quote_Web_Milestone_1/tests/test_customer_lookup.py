@@ -59,15 +59,15 @@ def test_search_returns_member_and_customer_status(temp_db):
         session.add(member_user)
         session.commit()
 
-    resp = client.get("/api/customers/search?q=Co", headers=_headers())
+    resp = client.get("/api/customers/search?q=Member", headers=_headers())
     assert resp.status_code == 200
     data = resp.get_json()
     assert data["ok"] is True
     customers = {c["name"]: c for c in data["customers"]}
     assert customers["Member Co"]["status"] == "Member"
     assert customers["Member Co"]["email"] == "member@example.com"
-    assert customers["Visitor Co"]["status"] == "Customer"
-    assert customers["Blank Email Co"]["status"] == "Customer"
+    assert "Visitor Co" not in customers
+    assert "Blank Email Co" not in customers
 
 
 def test_patch_updates_customer_and_rejects_blank_name(temp_db):
@@ -169,7 +169,7 @@ def test_customer_lookup_returns_company_poc_address_city_and_notes(temp_db):
     assert updated.get_json()["customer"]["notes"] == "Updated customer note."
 
 
-def test_customer_search_matches_name_fields_at_word_starts(temp_db):
+def test_customer_search_matches_customer_name_prefix_only(temp_db):
     client = temp_db.test_client()
     with get_session() as session:
         customer = Customer(
@@ -186,22 +186,47 @@ def test_customer_search_matches_name_fields_at_word_starts(temp_db):
         session.add(customer)
         session.commit()
 
-    for query in ("north", "Cyl", "Con"):
+    for query in ("north", "NORTH"):
         response = client.get(f"/api/customers/search?q={query}", headers=_headers())
         assert response.status_code == 200
         assert [row["name"] for row in response.get_json()["customers"]] == [
             "Northwind Legacy"
         ]
 
-    for query in ("wind", "orthwind", "at Con", "edar", "field", "ock", "019", "northwind.example", "receiving"):
+    for query in ("Cyl", "Con", "wind", "orthwind", "at Con", "edar", "field", "ock", "019", "northwind.example", "receiving"):
         response = client.get(f"/api/customers/search?q={query}", headers=_headers())
         assert response.status_code == 200
         assert response.get_json()["customers"] == []
 
 
+def test_customer_search_prioritizes_company_and_poc_prefixes(temp_db):
+    client = temp_db.test_client()
+    with get_session() as session:
+        session.add_all([
+            Customer(company_name="AI&John-Patterson", name="AI&John-Patterson"),
+            Customer(
+                company_name="Alexander's Machine Shop",
+                name="Alexander's Machine Shop",
+                poc="Jones Burro",
+            ),
+            Customer(company_name="JOGalloup", name="JOGalloup"),
+            Customer(company_name="John H Cater Co", name="John H Cater Co"),
+        ])
+        session.commit()
+
+    for query, expected in (
+        ("J", ["JOGalloup", "John H Cater Co"]),
+        ("Jo", ["JOGalloup", "John H Cater Co"]),
+        ("Joh", ["John H Cater Co"]),
+    ):
+        response = client.get(f"/api/customers/search?q={query}", headers=_headers())
+        assert response.status_code == 200
+        assert [row["company_name"] for row in response.get_json()["customers"]] == expected
+
+
 def test_customer_search_surfaces_keep_two_character_trigger():
     app_root = Path(__file__).parents[1]
-    required_guard = 'if (term.length < 2)'
+    required_guard = 'if (term.length < 1)'
     for relative_path in (
         "app/static/app.js",
         "app/Employee_dashboard/employee_dashboard.html",

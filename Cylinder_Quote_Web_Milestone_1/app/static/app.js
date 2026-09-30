@@ -1,6 +1,10 @@
 let catalog = null;
 const $ = id => document.getElementById(id);
 const PORTAL_MODE = document.body.dataset.portalMode || 'employee';
+const METRIC_MODE = document.body.dataset.metricMode === 'true';
+const CATALOG_ENDPOINT = METRIC_MODE ? '/api/metric/catalog' : '/api/catalog';
+const CALCULATE_ENDPOINT = METRIC_MODE ? '/api/metric/calculate' : '/api/calculate';
+const DRAFT_ENDPOINT = METRIC_MODE ? '/api/metric/quote/draft' : '/api/quote/draft';
 const CURRENT_USER_NAME = (document.body.dataset.currentUserName || '').trim();
 const PREFILL_CUSTOMER_NAME = (document.body.dataset.prefillCustomerName || '').trim();
 const PREFILL_CUSTOMER_ADDRESS = (document.body.dataset.prefillCustomerAddress || '').trim();
@@ -8,19 +12,53 @@ const ASSIGNED_PROMO_CODE = (document.body.dataset.assignedPromoCode || '').toUp
 const ASSIGNED_PROMO_DISCOUNT = document.body.dataset.assignedDiscountPercent ? Number(document.body.dataset.assignedDiscountPercent) : null;
 
 function fillSelect(el, values, labeler = x => x, includeBlank = false) {
-  el.innerHTML = '';
+  const isInput = el.tagName === 'INPUT';
+  const previous = isInput ? el.value : '';
+  const target = isInput ? $(el.getAttribute('list')) : el;
+  if (!target) return;
+  target.innerHTML = '';
   if (includeBlank) {
     const blank = document.createElement('option');
     blank.value = '';
     blank.textContent = '';
-    el.appendChild(blank);
+    target.appendChild(blank);
   }
   values.forEach(v => {
     const opt = document.createElement('option');
     if (typeof v === 'object') { opt.value = v.value; opt.textContent = v.label; }
     else { opt.value = v; opt.textContent = labeler(v); }
-    el.appendChild(opt);
+    target.appendChild(opt);
   });
+  if (isInput) {
+    const available = values.map(v => typeof v === 'object' ? v.value : v);
+    el.value = available.some(value => String(value) === previous) ? previous : '';
+  }
+}
+function fillMetricStyleOptions() {
+  const el = $('rod_style');
+  const target = el ? $(el.getAttribute('list')) : null;
+  if (!target) return;
+  target.innerHTML = '';
+  const blank = document.createElement('option');
+  blank.value = '';
+  blank.textContent = '';
+  target.appendChild(blank);
+  (catalog.rod_styles || []).forEach(style => {
+    const label = String(style.label || style.value);
+    const option = document.createElement('option');
+    option.value = label;
+    option.textContent = label;
+    target.appendChild(option);
+  });
+}
+function normalizeMetricStyleInput() {
+  const el = $('rod_style');
+  if (!el || el.tagName !== 'INPUT') return;
+  const typed = el.value.trim();
+  const selected = (catalog.rod_styles || []).find(style =>
+    String(style.value) === typed || String(style.label) === typed
+  );
+  if (selected) el.value = String(selected.value);
 }
 function fmtMoney(v) {
   const n = Number(v);
@@ -140,7 +178,7 @@ function wireCustomerAutocomplete() {
     applyMatchedCustomerContact();
     clearTimeout(customerSearchTimer);
     const term = input.value.trim();
-    if (term.length < 2) { customerSuggestions = []; window.JIT_SELECTED_CUSTOMER_CONTACT = ''; return; }
+    if (term.length < 1) { customerSuggestions = []; window.JIT_SELECTED_CUSTOMER_CONTACT = ''; return; }
     customerSearchTimer = setTimeout(() => searchCustomers(term), 250);
   });
 }
@@ -315,6 +353,7 @@ function showResult(r) {
   const dlg=$('quoteResultDialog'); if (dlg.showModal) dlg.showModal();
 }
 let liveCalcTimer = null;
+let liveCalcController = null;
 // Recalculates Net Each / Profit live as the cylinder spec (model code) is filled in, without opening the Quote dialog.
 async function liveRecalculate() {
   const p = payload();
@@ -323,10 +362,14 @@ async function liveRecalculate() {
     $('profit_display').value = '$0.00';
     return;
   }
+  if (liveCalcController) liveCalcController.abort();
+  const requestController = new AbortController();
+  liveCalcController = requestController;
   try {
-    const res = await fetch('/api/calculate', {
+    const res = await fetch(CALCULATE_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      signal: requestController.signal,
       body: JSON.stringify(p)
     });
     const body = await res.json();
@@ -334,7 +377,11 @@ async function liveRecalculate() {
     const r = body.result;
     $('quote_net_each').value = fmtMoney(r.quote_net_each);
     $('profit_display').value = fmtMoney(r.profit);
-  } catch (e) { /* ignore transient errors while the user is still typing */ }
+  } catch (e) {
+    if (e.name !== 'AbortError') { /* ignore transient errors while the user is still typing */ }
+  } finally {
+    if (liveCalcController === requestController) liveCalcController = null;
+  }
 }
 function scheduleLiveRecalculate() {
   clearTimeout(liveCalcTimer);
@@ -343,10 +390,17 @@ function scheduleLiveRecalculate() {
 async function init() {
   wireTabs();
   try {
-    const res=await fetch('/api/catalog'); if(!res.ok) throw new Error('Catalog request failed'); catalog=await res.json();
+    const res=await fetch(CATALOG_ENDPOINT); if(!res.ok) throw new Error('Catalog request failed'); catalog=await res.json();
     fillSelect($('series'),Object.keys(catalog.series),x=>x,true);
-    fillSelect($('cushion'),catalog.cushions,x=>x,true); fillSelect($('port_code'),catalog.port_codes,x=>x||'',true); fillSelect($('seal_code'),catalog.seal_codes,x=>x||'',true); fillSelect($('rod_style'),catalog.rod_styles,x=>x,true);
-    setupShortDisplaySelect($('rod_style'));
+    fillSelect($('cushion'),catalog.cushions,x=>x,true); fillSelect($('port_code'),catalog.port_codes,x=>x||'',true); fillSelect($('seal_code'),catalog.seal_codes,x=>x||'',true);
+    if ($('rod_style').tagName === 'INPUT') {
+      fillMetricStyleOptions();
+      $('rod_style').addEventListener('change', normalizeMetricStyleInput);
+      $('rod_style').addEventListener('blur', normalizeMetricStyleInput);
+    } else {
+      fillSelect($('rod_style'),catalog.rod_styles,x=>x,true);
+      setupShortDisplaySelect($('rod_style'));
+    }
     $('series').addEventListener('change',()=>{updateMountsForSeries();updateBores();}); $('bore').addEventListener('change',updateRods);
     $('dre_input').addEventListener('input',()=>{$('dre_input').value=$('dre_input').value.toUpperCase().replace(/[^Y]/g,'').slice(0,1);});
     updateMountsForSeries(); updateBores(); buildSpecialRows(); buildOrderEntryManualItems(); populateTieRodOptions(); resetQuoteForm(); wireWholeNumberInputs(); wireCustomerAutocomplete();
@@ -410,12 +464,14 @@ $('quoteForm').addEventListener('change', scheduleLiveRecalculate);
 
 $('quoteForm').addEventListener('submit', async e => {
   e.preventDefault();
+  clearTimeout(liveCalcTimer);
+  if (liveCalcController) liveCalcController.abort();
   $('errorMessage').textContent = '';
   $('calculateButton').disabled = true;
   $('calculateButton').textContent = 'Opening...';
   try {
     const payload = draftPayload();
-    const res = await fetch('/api/quote/draft', {
+    const res = await fetch(DRAFT_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -434,7 +490,7 @@ $('quoteForm').addEventListener('submit', async e => {
       payload,
       draft: body.draft
     }));
-    window.location.assign(`/${PORTAL_MODE}/quote-entry?draft=1`);
+    window.location.assign('/employee_quote_form/employee_quote_form.html?draft=1');
     return;
   } catch (e) {
     $('errorMessage').textContent = e.message;

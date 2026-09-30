@@ -3,9 +3,38 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from cylinder_quote_engine import QuoteInputs, QuotePricingEngine, excel_roundup
+from cylinder_quote_engine.data import PricingData
 
 DATA = Path(__file__).resolve().parents[1] / 'data'
 E = QuotePricingEngine(DATA)
+
+def test_row_rates_use_unit_specific_series_pricing_workbooks():
+    pricing_data = PricingData(DATA)
+    standard_source = next(
+        row for row in pricing_data.standard_series_pricing
+        if row['series_family'] == 'H'
+        and row['bore'] == '1.5'
+        and row['rod_diameter'] == '0.625'
+    )
+    metric_source = next(
+        row for row in pricing_data.metric_series_pricing
+        if row['series_family'] == 'IH'
+        and row['bore'] == '25'
+        and row['rod_diameter'] == '12'
+    )
+    pricing_data.series_row_rates = [
+        dict(standard_source, stroke_rate='999', cushion_per_end='999'),
+    ]
+
+    standard_row = pricing_data.find_series_row('H', D('1.5'), D('0.625'))
+    metric_row = pricing_data.find_series_row('IH', D('25'), D('12'))
+
+    assert standard_row['stroke_unit'] == 'inch'
+    assert standard_row['stroke_rate'] == standard_source['stroke_rate']
+    assert standard_row['cushion_per_end'] == standard_source['cushion_per_end']
+    assert metric_row['stroke_unit'] == 'mm'
+    assert metric_row['stroke_rate'] == metric_source['stroke_rate']
+    assert metric_row['cushion_per_end'] == metric_source['cushion_per_end']
 
 def test_excel_roundup_legacy_stroke_behavior():
     assert excel_roundup(D('12.01'), D('0.1')) == D('13')

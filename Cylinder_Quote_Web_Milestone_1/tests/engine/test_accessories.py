@@ -37,6 +37,12 @@ def test_clevis_and_sa_pivot_bucket_active_and_inactive():
     assert E.calculate(q(mount='MX0',accessory_quantities={'Clevis Bracket':D('1')})).accessories == D('0')
     assert E.calculate(q(mount='MP1',accessory_quantities={'SA - Pivot Pin':D('2')})).accessories == D('40')
 
+def test_h_mf1_clevis_bracket_uses_workbook_part_and_price():
+    qq = q(series='H', bore=D('5'), rod_diameter=D('2'), mount='MF1', stroke=D('12'), accessory_quantities={'Clevis Bracket':D('1')})
+    result = E.calculate(qq)
+    assert result.accessories == D('500')
+    assert E.accessory_parts(qq) == [{'label': 'Clevis Bracket', 'quantity': '1', 'part_number': 'CB175', 'unit_price': '500'}]
+
 def test_rod_boot_legacy_quantity_behavior():
     assert E.calculate(q(standard_rod_boot_qty=D('1'))).accessories == D('535')
     assert E.calculate(q(standard_rod_boot_qty=D('2'))).accessories == D('655')

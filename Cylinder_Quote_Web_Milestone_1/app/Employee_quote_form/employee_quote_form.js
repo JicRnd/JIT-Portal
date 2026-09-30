@@ -1,4 +1,10 @@
-/* Employee Quote Form page logic. */
+/* =========================================================
+  EMPLOYEE QUOTE FORM PAGE LOGIC
+  ========================================================= */
+
+/* =========================================================
+  CONFIGURATION AND STATE
+  ========================================================= */
 const $ = id => document.getElementById(id);
 const PORTAL_MODE = 'employee';
 const CURRENT_USER_NAME = (document.body.dataset.currentUserName || '').trim();
@@ -30,10 +36,10 @@ function formatQuoteDate(iso) {
   if (!iso) return '—';
   try {
     const d = new Date(iso);
-    const month = d.toLocaleString('en-US', { month: 'short' });
-    const hh = String(d.getHours()).padStart(2, '0');
-    const mm = String(d.getMinutes()).padStart(2, '0');
-    return `${month}-${d.getDate()} (${hh}:${mm})`;
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const year = String(d.getFullYear() % 100).padStart(2, '0');
+    return `${month}/${day}/${year}`;
   } catch { return iso; }
 }
 function emailFromText(text) {
@@ -160,23 +166,28 @@ const INCLUDES_YES_NO_OPTIONS = [
   ['valve_manifold', 'Valve Manifold']
 ];
 
-function selectedIncludes(inputs, manualItems) {
+function selectedIncludes(inputs, manualItems, accessoryParts = []) {
   const items = [];
-  const addItem = (label, quantity) => {
+  const addItem = (label, quantity, partNumber = '') => {
     const numericQuantity = Number(quantity);
-    if (Number.isFinite(numericQuantity) && numericQuantity > 0) items.push({ label, quantity: numericQuantity });
+    if (Number.isFinite(numericQuantity) && numericQuantity > 0) items.push({ label, quantity: numericQuantity, partNumber });
   };
   INCLUDES_NUMBER_OPTIONS.forEach(([key, label]) => addItem(label, inputs[key]));
   INCLUDES_YES_NO_OPTIONS.forEach(([key, label]) => {
     if (String(inputs[key] || '').toUpperCase() === 'Y' || inputs[key] === true) addItem(label, 1);
   });
-  Object.entries(inputs.accessory_quantities || {}).forEach(([label, quantity]) => addItem(label, quantity));
+  const accessoryPartNumbers = Object.fromEntries(accessoryParts.map(item => [item.label, item.part_number]));
+  Object.entries(inputs.accessory_quantities || {}).forEach(([label, quantity]) => addItem(label, quantity, accessoryPartNumbers[label]));
   Object.entries(inputs.special_parts || {}).forEach(([label, quantity]) => addItem(label, quantity));
   (manualItems || []).forEach(item => {
     if (item.description) addItem(item.description, item.quantity || 1);
   });
   return items;
 }
+
+/* =========================================================
+  QUOTE RENDERING AND EDITABLE LINE ITEMS
+  ========================================================= */
 
 function renderQuotePreview(quote) {
   currentQuote = quote;
@@ -194,7 +205,6 @@ function renderQuotePreview(quote) {
   $('pv_created_at').textContent = formatQuoteDate(quote.created_at);
   $('pv_customer_name').value = quote.customer_name || '';
   $('pv_customer_address').value = quote.customer_address || '';
-  $('pv_person_of_contact').value = quote.person_of_contact || '';
   $('pv_customer_contact').value = quote.customer_contact || '';
   $('pv_customer_attn').value = quote.customer_attn || '';
   $('pv_comments').value = quote.comments || '';
@@ -228,13 +238,13 @@ function renderQuotePreview(quote) {
   $('pv_cushion').textContent = labelFor(CUSHION_LABELS, inputs.cushion);
   $('pv_port_code').textContent = inputs.port_code || '—';
   $('pv_seal_code').textContent = labelFor(SEAL_LABELS, inputs.seal_code);
-  $('pv_discount').value = (Number(quote.discount || 0) * 100).toFixed(1);
+  $('pv_discount').value = Math.round(Number(quote.discount || 0) * 100);
   $('pv_quantity').value = Math.max(1, Math.floor(Number(quote.quantity || 1)));
 
   const manualDescriptions = (quote.manual_line_items || []).map(x => x.description).filter(Boolean);
   const selectedSpecialParts = Object.entries(inputs.special_parts || {}).map(([part, qty]) => `${part} (Qty ${qty})`);
   const includesList = [...manualDescriptions, ...selectedSpecialParts];
-  renderIncludes(inputs, quote.manual_line_items || []);
+  renderIncludes(inputs, quote.manual_line_items || [], quote.price_breakdown_snapshot?.accessory_parts || []);
 
   const pressure = ['H','HM','MH','IH','IMH','IHM'].includes(series) ? 3000 : (series === 'LH' ? 1500 : 100);
   const forces = computePushPull(pressure, inputs.bore, inputs.rod_diameter, ['IH','IMH','IHM'].includes(series));
@@ -276,16 +286,28 @@ function renderQuotePreview(quote) {
   const glandPartPrefix = polySeal ? 'KHG' : 'KHGL';
   const pistonPartPrefix = polySeal ? 'KHP' : 'KHPL';
   const putText = (id, value) => { const el=$(id); if(el) el.textContent=value; };
-  putText('pv_repair_rod_label', rodSuffix && rodPrices ? `Hyd Rod ${polySeal ? 'Poly' : 'Low Friction'} Seal Kit ${rodPartPrefix}${rodSuffix}` : 'Hyd Rod Seal Kit');
+  const metricRodSealValue = quote.price_breakdown_snapshot?.recommended_rod_seal_price;
+  const metricRodSealPrice = metricRodSealValue == null ? null : Number(metricRodSealValue);
+  const metricSeries = ['IH','IHM','IMH'].includes(series);
+  const rodSealPrice = metricSeries
+    ? (Number.isFinite(metricRodSealPrice) ? metricRodSealPrice : null)
+    : (rodSuffix && rodPrices ? rodPrices[rodSuffix] : null);
+  putText('pv_repair_rod_label', metricSeries
+    ? (rodSealPrice === null ? 'Metric Rod Seal Kit' : `Metric ${polySeal ? 'Poly' : 'Low Friction'} Rod Seal Kit`)
+    : (rodSuffix && rodPrices ? `Hyd Rod ${polySeal ? 'Poly' : 'Low Friction'} Seal Kit ${rodPartPrefix}${rodSuffix}` : 'Hyd Rod Seal Kit'));
   putText('pv_repair_piston_label', boreSuffix && pistonPrices ? `Hyd Piston ${polySeal ? 'Poly' : 'Low Friction'} Seal Kit ${pistonPartPrefix}${boreSuffix}` : 'Hyd Piston Seal Kit');
   putText('pv_repair_gland_label', rodSuffix && glandPrices ? `Hyd Gland ${polySeal ? 'Poly' : 'Low Friction'} Seal Kit ${glandPartPrefix}${rodSuffix}` : 'Hyd Gland Seal Kit');
-  putInput('pv_repair_rod_kit', rodSuffix && rodPrices ? fmtRoundedMoney(rodPrices[rodSuffix] * discountFactor) : 'N/A');
+  putInput('pv_repair_rod_kit', rodSealPrice === null ? 'N/A' : fmtRoundedMoney(rodSealPrice * discountFactor));
   putInput('pv_repair_gland_kit', rodSuffix && glandPrices ? fmtRoundedMoney(glandPrices[rodSuffix] * discountFactor) : 'N/A');
   putInput('pv_repair_piston_kit', boreSuffix && pistonPrices ? fmtRoundedMoney(pistonPrices[boreSuffix] * discountFactor) : 'N/A');
+  const metricAssemblyValue = quote.price_breakdown_snapshot?.recommended_assembly_price;
+  const metricAssemblyPrice = metricAssemblyValue == null ? null : Number(metricAssemblyValue);
   const assemblyRule = ['H','HM'].includes(series) ? H_ASSEMBLY_PRICE[`${bore}|${rod}`] : null;
   const assemblyLength = stroke + Number(inputs.rod_extension || 0) + Number(inputs.extra_thread || 0);
   const assemblyBase = assemblyRule ? (String(inputs.cushion || '').toUpperCase() === 'NC' ? assemblyRule[0] : assemblyRule[1]) : 0;
-  const assemblyPrice = assemblyRule ? excelRoundUpPositive((assemblyBase + assemblyRule[2] * assemblyLength) * discountFactor) : null;
+  const assemblyPrice = ['IH','IHM','IMH'].includes(series)
+    ? (Number.isFinite(metricAssemblyPrice) ? metricAssemblyPrice : null)
+    : (assemblyRule ? excelRoundUpPositive((assemblyBase + assemblyRule[2] * assemblyLength) * discountFactor) : null);
   putInput('pv_repair_assembly', assemblyPrice === null ? 'N/A' : fmtRoundedMoney(assemblyPrice));
 
   const bd = quote.price_breakdown_snapshot || {};
@@ -316,7 +338,6 @@ function renderQuotePreview(quote) {
   renderManualItems(quote.manual_line_items || []);
   applyQuoteFormEdits((quote.order_form_snapshot || {}).quote_form_edits);
   $('previewErrorMessage').textContent = '';
-  applyQuoteZoomAfterLayout();
 }
 
 function renderManualItems(items) {
@@ -398,7 +419,11 @@ function applyQuoteFormEdits(edits) {
   const root = $('employeeQuoteSheet');
   if (!root || !edits) return;
 
-  (edits.text_nodes || []).forEach(item => {
+  const hasLegacyHeaderFields = (edits.text_nodes || []).some(item =>
+    ['POC:', 'Tag:', 'PO Number:'].includes(item.value)
+  );
+  const textNodes = hasLegacyHeaderFields ? [] : (edits.text_nodes || []);
+  textNodes.forEach(item => {
     if (!Array.isArray(item.path) || typeof item.value !== 'string') return;
     const node = nodeAtPath(root, item.path);
     if (node && node.nodeType === Node.TEXT_NODE) node.nodeValue = item.value;
@@ -419,7 +444,6 @@ function buildSavePayload() {
     ...pendingQuotePayload,
     customer_name: $('pv_customer_name').value,
     customer_address: $('pv_customer_address').value,
-    person_of_contact: $('pv_person_of_contact').value,
     customer_contact: $('pv_customer_contact').value,
     reference_notes: pendingQuotePayload.reference_notes || currentQuote.reference_notes || '',
     comments: $('pv_comments').value,
@@ -440,17 +464,21 @@ async function readApiResponse(response, action) {
   return response.json();
 }
 
-function renderIncludes(inputs, manualItems) {
+function renderIncludes(inputs, manualItems, accessoryParts = []) {
   const container = $('pv_includes');
-  const items = selectedIncludes(inputs, manualItems);
+  const items = selectedIncludes(inputs, manualItems, accessoryParts);
   container.replaceChildren();
-  items.forEach(({ label: itemLabel, quantity }) => {
+  items.forEach(({ label: itemLabel, quantity, partNumber: itemPartNumber }) => {
     const line = document.createElement('div');
-    line.textContent = `${itemLabel} - ${quantity}`;
+    line.textContent = `${itemLabel} - ${quantity}${itemPartNumber ? ` (Part # ${itemPartNumber})` : ''}`;
     container.appendChild(line);
   });
   container.hidden = items.length === 0;
 }
+
+/* =========================================================
+  QUOTE API ACTIONS
+  ========================================================= */
 
 async function updateQuote(event) {
   event.preventDefault();
@@ -474,7 +502,6 @@ async function updateQuote(event) {
       ...pendingQuotePayload,
       customer_name: $('pv_customer_name').value,
       customer_address: $('pv_customer_address').value,
-      person_of_contact: $('pv_person_of_contact').value,
       customer_contact: $('pv_customer_contact').value,
       reference_notes: pendingQuotePayload.reference_notes || currentQuote.reference_notes || '',
       comments: $('pv_comments').value,
@@ -526,7 +553,6 @@ async function createNewOrder(event) {
       ...pendingQuotePayload,
       customer_name: $('pv_customer_name').value,
       customer_address: $('pv_customer_address').value,
-      person_of_contact: $('pv_person_of_contact').value,
       customer_contact: $('pv_customer_contact').value,
       reference_notes: pendingQuotePayload.reference_notes || currentQuote.reference_notes || '',
       comments: $('pv_comments').value,
@@ -697,42 +723,13 @@ async function verifyQuote() {
   }
 }
 
-let quoteZoomLevel = 1;
-const QUOTE_ZOOM_MIN = 0.5;
-const QUOTE_ZOOM_MAX = 2;
-const QUOTE_ZOOM_STEP = 0.1;
-const QUOTE_TOOLBAR_WIDTH = 1600;
+/* =========================================================
+  RESPONSIVE LAYOUT
+  ========================================================= */
 
-function applyQuoteZoom() {
-  const page = document.querySelector('.quote-form-page');
-  const sheet = document.querySelector('.excel-quote-sheet');
-  const toolbar = document.querySelector('.qf-toolbar');
-  const level = $('quoteZoomLevel');
-  if (!page || !sheet) return;
-
-  const edge = 14;
-  const worksheetWidth = 816;
-  const availableWidth = Math.max(1, page.clientWidth - edge * 2);
-  const widthFitScale = availableWidth / worksheetWidth;
-  const effectiveScale = widthFitScale * quoteZoomLevel;
-  sheet.style.width = `${worksheetWidth}px`;
-  sheet.style.zoom = String(effectiveScale);
-  if (toolbar) {
-    const toolbarScale = Math.min(1.25, Math.max(0.3, page.clientWidth / QUOTE_TOOLBAR_WIDTH)) * quoteZoomLevel;
-    toolbar.style.setProperty('--toolbar-scale', String(toolbarScale));
-  }
-  if (level) level.textContent = `${Math.round(quoteZoomLevel * 100)}%`;
-}
-
-function applyQuoteZoomAfterLayout() {
-  requestAnimationFrame(() => requestAnimationFrame(applyQuoteZoom));
-}
-
-function changeQuoteZoom(direction) {
-  const next = quoteZoomLevel + direction * QUOTE_ZOOM_STEP;
-  quoteZoomLevel = Math.min(QUOTE_ZOOM_MAX, Math.max(QUOTE_ZOOM_MIN, Math.round(next * 10) / 10));
-  applyQuoteZoom();
-}
+/* =========================================================
+  EVENT LISTENERS AND INITIALIZATION
+  ========================================================= */
 
 function wireQuoteFormEvents() {
   $('saveQuoteButton').addEventListener('click', updateQuote);
@@ -760,9 +757,8 @@ function wireQuoteFormEvents() {
   $('addManualItemButton').addEventListener('click', () => addManualItemRow());
   const backToOrderEntryButton = $('backToOrderEntryButton');
   if (backToOrderEntryButton) {
-    backToOrderEntryButton.addEventListener('click', () => { window.location.assign(`/${PORTAL_MODE}/quote-entry`); });
+    backToOrderEntryButton.addEventListener('click', () => { window.location.assign('/quote-entry'); });
   }
-  $('newQuoteButton').addEventListener('click', () => { window.location.assign(`/${PORTAL_MODE}/quote-entry`); });
   const employeeDashboardButton = $('employeeDashboardButton');
   if (employeeDashboardButton) {
     employeeDashboardButton.addEventListener('click', async event => {
@@ -771,12 +767,6 @@ function wireQuoteFormEvents() {
       if (await holdQuote()) window.location.assign(employeeDashboardButton.href);
     });
   }
-
-  const quoteZoomOutButton = $('quoteZoomOutButton');
-  const quoteZoomInButton = $('quoteZoomInButton');
-  if (quoteZoomOutButton) quoteZoomOutButton.addEventListener('click', () => changeQuoteZoom(-1));
-  if (quoteZoomInButton) quoteZoomInButton.addEventListener('click', () => changeQuoteZoom(1));
-  window.addEventListener('resize', applyQuoteZoomAfterLayout);
 }
 
 function buildQuoteLikeFromDraft(draft, payload) {
@@ -814,7 +804,7 @@ function buildQuoteLikeFromDraft(draft, payload) {
 }
 
 async function loadExistingQuote(quoteId) {
-  const loadRes = await fetch('/api/quotes/' + encodeURIComponent(quoteId));
+  const loadRes = await fetch('/api/quotes/' + encodeURIComponent(quoteId) + '?lightweight=1');
   const loadBody = await loadRes.json();
   if (!loadRes.ok || !loadBody.ok || !loadBody.quote) {
     throw new Error(loadBody.error || 'Quote not found');
@@ -841,7 +831,7 @@ async function loadExistingQuote(quoteId) {
 async function loadDraftQuote() {
   const draftJson = sessionStorage.getItem('jitQuoteDraft');
   if (!draftJson) {
-    window.location.replace(`/${PORTAL_MODE}/quote-entry`);
+    window.location.replace('/quote-entry');
     return;
   }
   sessionStorage.removeItem('jitQuoteDraft');
@@ -891,3 +881,4 @@ async function init() {
 }
 
 init();
+

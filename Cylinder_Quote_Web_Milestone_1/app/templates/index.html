@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ 'JIT Cylinder Calculator' if portal_mode|default('employee') == 'customer' else 'JIT Crew Pricing Calculator' }}</title>
+  <title>{{ 'JIT Cylinder Calculator' if portal_mode|default('employee') == 'customer' else 'JIT Crew Pricing Calculator' }} - {{ 'Metric' if metric_mode|default(false) else 'Standard' }}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='pricing_calculator.css') }}">
   {% if portal_mode|default('employee') == 'customer' %}
   <link rel="stylesheet" href="{{ url_for('portal.customer_quote_css') }}">
   {% endif %}
 </head>
-<body class="{{ portal_mode|default('employee') }}-mode" data-portal-mode="{{ portal_mode|default('employee') }}" data-current-user-name="{{ current_user_name|default('') }}" data-prefill-customer-name="{{ prefill_customer_name|default('') }}" data-prefill-customer-address="{{ prefill_customer_address|default('') }}" data-assigned-promo-code="{{ assigned_promo_code|default('') }}" data-assigned-discount-percent="{{ assigned_discount_percent if assigned_discount_percent is not none else '' }}">
+<body class="{{ portal_mode|default('employee') }}-mode" data-portal-mode="{{ portal_mode|default('employee') }}" data-metric-mode="{{ 'true' if metric_mode|default(false) else 'false' }}" data-current-user-name="{{ current_user_name|default('') }}" data-prefill-customer-name="{{ prefill_customer_name|default('') }}" data-prefill-customer-address="{{ prefill_customer_address|default('') }}" data-assigned-promo-code="{{ assigned_promo_code|default('') }}" data-assigned-discount-percent="{{ assigned_discount_percent if assigned_discount_percent is not none else '' }}">
   <main class="orderentry-window" aria-label="JIT Crew Pricing Calculator">
     <div class="window-titlebar">
-      <strong>{{ 'JIT Cylinder Calculator' if portal_mode|default('employee') == 'customer' else 'JIT Crew Pricing Calculator' }}</strong>
+      <strong>{{ 'JIT Cylinder Calculator' if portal_mode|default('employee') == 'customer' else 'JIT Crew Pricing Calculator' }} - {{ 'Metric' if metric_mode|default(false) else 'Standard' }}</strong>
       <a id="dashboardButton" class="dashboard-button" href="{{ url_for('portal.customer_dashboard') if portal_mode|default('employee') == 'customer' else url_for('portal.employee_dashboard') }}">Dashboard</a>
       <span class="window-close" aria-hidden="true">×</span>
     </div>
@@ -31,18 +31,28 @@
         <input id="customer_address" type="text" autocomplete="{{ 'on' if portal_mode|default('employee') == 'employee' else 'off' }}" value="{{ prefill_customer_address|default('') }}">
       </section>
 
-      <section class="cylinder-row" aria-label="Cylinder definition">
-        <label class="c-series">Series<select id="series" required></select></label>
-        <label class="c-mount">Mount<select id="mount" required></select></label>
-        <label class="c-bore">Bore<select id="bore" required></select></label>
+      <section class="model_code_builder" aria-label="Cylinder definition">
+        <label class="c-series">Series{% if metric_mode|default(false) %}<input id="series" list="seriesOptions" autocomplete="off" required>{% else %}<select id="series" required></select>{% endif %}</label>
+        <label class="c-mount">Mount{% if metric_mode|default(false) %}<input id="mount" list="mountOptions" autocomplete="off" required>{% else %}<select id="mount" required></select>{% endif %}</label>
+        <label class="c-bore">Bore{% if metric_mode|default(false) %}<input id="bore" list="boreOptions" autocomplete="off" required>{% else %}<select id="bore" required></select>{% endif %}</label>
         <label class="c-stroke">Stroke<input id="stroke" type="number" min="0" step="1" value="" required></label>
-        <label class="c-rod">Rod<select id="rod_diameter" required></select></label>
-        <label class="c-style">Style<select id="rod_style" required></select></label>
-        <label class="c-cushion">Cushion<select id="cushion"></select></label>
-        <label class="c-ports">Ports<select id="port_code"></select></label>
-        <label class="c-seal">Seal<select id="seal_code"></select></label>
+        <label class="c-rod">Rod{% if metric_mode|default(false) %}<input id="rod_diameter" list="rodOptions" autocomplete="off" required>{% else %}<select id="rod_diameter" required></select>{% endif %}</label>
+        <label class="c-style">Style{% if metric_mode|default(false) %}<input id="rod_style" list="styleOptions" autocomplete="off" required>{% else %}<select id="rod_style" required></select>{% endif %}</label>
+        <label class="c-cushion">Cushion{% if metric_mode|default(false) %}<input id="cushion" list="cushionOptions" autocomplete="off">{% else %}<select id="cushion"></select>{% endif %}</label>
+        <label class="c-ports">Ports{% if metric_mode|default(false) %}<input id="port_code" list="portOptions" autocomplete="off">{% else %}<select id="port_code"></select>{% endif %}</label>
+        <label class="c-seal">Seal{% if metric_mode|default(false) %}<input id="seal_code" list="sealOptions" autocomplete="off">{% else %}<select id="seal_code"></select>{% endif %}</label>
         <label class="c-dre">DRE (Y)<input id="dre_input" type="text" maxlength="1" autocomplete="off"></label>
       </section>
+      {% if metric_mode|default(false) %}
+      <datalist id="seriesOptions"></datalist>
+      <datalist id="mountOptions"></datalist>
+      <datalist id="boreOptions"></datalist>
+      <datalist id="rodOptions"></datalist>
+      <datalist id="styleOptions"></datalist>
+      <datalist id="cushionOptions"></datalist>
+      <datalist id="portOptions"></datalist>
+      <datalist id="sealOptions"></datalist>
+      {% endif %}
 
       <section class="middle-area">
         <div class="options-panel legacy-panel">

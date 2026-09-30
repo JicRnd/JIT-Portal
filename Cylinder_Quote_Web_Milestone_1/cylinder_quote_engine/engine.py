@@ -228,12 +228,15 @@ class QuotePricingEngine:
     def _accessory_bucket(self, q: QuoteInputs):
         """Reproduce Acc!T5:T12 series/bore/mount bucket selection."""
         s=q.series.upper(); b=q.bore; m=q.mount.upper()
+        parsed_bucket = self.data.find_accessory_bucket(s, b, m)
+        if parsed_bucket:
+            return parsed_bucket
         if s == 'H':
             if b == D('1.5') and m == 'MP1': return 'T5'
             if b > D('1.51') and b < D('2.6') and m == 'MP1': return 'T6'
             if b == D('3.25') and m == 'MP1': return 'T7'
             if b == D('4') and m in {'MP1','MP2'}: return 'T8'
-            if b == D('5') and m in {'MP1','MP2'}: return 'T9'
+            if b == D('5') and m in {'MF1','MP1','MP2'}: return 'T9'
             if b == D('6') and m in {'MP1','MP2'}: return 'T10'
             if b == D('7') and m in {'MP1','MP2'}: return 'T11'
             if b == D('8') and m in {'MP1','MP2'}: return 'T12'
@@ -294,6 +297,41 @@ class QuotePricingEngine:
             else:
                 warnings.append('Standard Rod Boot has no active legacy rate for this rod diameter; contributes 0.')
         return total
+
+    def accessory_parts(self, q: QuoteInputs) -> list[dict[str, str]]:
+        parts = []
+        thread = self._rod_thread(q)
+        bucket = self._accessory_bucket(q)
+        thread_direct = {'Rod Clevis','Rod Eye','Self-Aligning Male Eye','SA - Clevis Bracket','Alignment Coupler','Male Rod Eye'}
+        thread_group = {'Eye Bracket','Pivot Pin'}
+        rod_direct = {'Safety Coupler'}
+        rod_legacy = {'Rod Stud','Jam Nut'}
+        for name, quantity in q.accessory_quantities.items():
+            qty = dec(quantity)
+            if qty <= 0:
+                continue
+            canonical = 'Rod Eye' if name == 'Female Rod Eye' else name
+            row = None
+            if canonical in thread_direct and thread:
+                row = self.data.find_accessory('thread', thread, canonical)
+            elif canonical in thread_group and thread:
+                row = self.data.find_accessory('thread_group', thread, canonical)
+            elif canonical in rod_direct:
+                row = self.data.find_accessory('rod_diameter', fmt_code_number(q.rod_diameter), canonical)
+            elif canonical in rod_legacy:
+                row = self.data.find_accessory('rod_diameter_legacy', fmt_code_number(q.rod_diameter), canonical)
+            elif canonical in {'Clevis Bracket','SA - Pivot Pin'} and bucket:
+                row = self.data.find_accessory('bore_mount_bucket', bucket, canonical)
+            elif canonical == 'Weld Plate':
+                row = self.data.find_accessory('rod_diameter', fmt_code_number(q.rod_diameter), canonical)
+            if row:
+                parts.append({
+                    'label': str(name),
+                    'quantity': format(qty, 'f'),
+                    'part_number': str(row['part_number']),
+                    'unit_price': format(dec(row['price']), 'f'),
+                })
+        return parts
 
     def _special_parts_total(self, q: QuoteInputs) -> Decimal:
         total = D('0')

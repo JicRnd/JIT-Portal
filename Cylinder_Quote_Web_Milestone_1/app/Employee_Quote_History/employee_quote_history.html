@@ -25,8 +25,8 @@
     <div class="page-actions">
       <button
         class="employee_quote_history_button new-quote"
-        data-standard="/employee/quote-entry"
-        data-metric="/metric-coming-soon"
+        data-standard="/quote-entry"
+        data-metric="/employee/metric-quote-entry"
       >
         + New Quote
       </button>
@@ -38,21 +38,12 @@
         Order History
       </a>
 
-      {% if show_all %}
-        <a
-          class="employee_quote_history_button small"
-          href="{{ url_for('employee_quote_history.employee_quote_history_page') }}"
-        >
-          Employee Quote History
-        </a>
-      {% else %}
-        <a
-          class="employee_quote_history_button small"
-          href="{{ url_for('employee_quote_history.employee_quote_history_page', all='1') }}"
-        >
-          See All
-        </a>
-      {% endif %}
+      <a
+        class="employee_quote_history_button small"
+        href="{{ url_for('employee_quote_history.employee_quote_history_page', all='1') }}"
+      >
+        See All
+      </a>
 
       {% if trash %}
         <a
@@ -121,7 +112,6 @@
           <th>Quote ID</th>
           <th>Model Code</th>
           <th>Customer</th>
-          <th>Date</th>
           <th>Total</th>
           <th>Status</th>
           <th></th>
@@ -134,14 +124,6 @@
             <td>{{ quote.quote_number }}</td>
             <td>{{ quote.model_code or '—' }}</td>
             <td>{{ quote.customer_name or '—' }}</td>
-
-            <td>
-              {{
-                quote.created_at.strftime('%b %d, %Y %I:%M %p')
-                if quote.created_at
-                else '—'
-              }}
-            </td>
 
             <td>${{ '%.2f'|format(total) }}</td>
 
@@ -173,7 +155,7 @@
               {% else %}
                 <a
                   class="employee_quote_history_button small open-quote"
-                  href="/employee/quote-entry?quote_id={{ quote.id }}"
+                  href="{{ url_for('employee_quote_form_page', quote_id=quote.id) }}"
                 >
                   Open Quote
                 </a>

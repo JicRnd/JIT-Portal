@@ -7,11 +7,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 
 CHECKS = [
-    ("Databases/Employee_Contacts.db", "customers"),
-    ("Databases/Quote.db", "quotes"),
-    ("Databases/Quote.db", "quote_line_items"),
-    ("Databases/Quote.db", "quote_documents"),
-    ("Databases/Order.db", "orders"),
+    ("Databases/Emplopyee_contacts-databases/Employee_Contacts.db", "customers"),
+    ("Databases/quoting-databases/Quote.db", "quotes"),
+    ("Databases/quoting-databases/Quote.db", "quote_line_items"),
+    ("Databases/quoting-databases/Quote.db", "quote_documents"),
+    ("Databases/order-databases/Order.db", "orders"),
 ]
 
 

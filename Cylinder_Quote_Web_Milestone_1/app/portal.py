@@ -51,6 +51,14 @@ from .pricing_catalog_service import (
     update_pricing_text,
     update_pricing_amount,
 )
+from .pricing_csv_service import (
+    PricingCsvError,
+    list_pricing_csvs,
+    list_runtime_series_pricing_files,
+    read_pricing_file,
+    save_pricing_csv,
+    save_pricing_xlsx,
+)
 from .inventory_service import (
     InventoryImportError,
     inventory_rows_json,
@@ -284,6 +292,8 @@ def login(role):
 
                 if role == "customer":
                     endpoint = "portal.customer_dashboard"
+                elif user.access_level == "admin":
+                    endpoint = "portal.admin_dashboard"
                 else:
                     endpoint = "portal.employee_dashboard"
 
@@ -543,7 +553,10 @@ def customer_dashboard():
     with get_session() as db:
         quotes = db.execute(
             select(Quote)
-            .where(_customer_quote_filter(user))
+            .where(
+                _customer_quote_filter(user),
+                Quote.deleted_at.is_(None),
+            )
             .order_by(
                 case((Quote.status == "canceled", 1), else_=0),
                 Quote.created_at.desc(),
@@ -640,9 +653,83 @@ def employee_dashboard_css():
     )
 
 
+@portal_bp.get("/employee/dashboard.js")
+def employee_dashboard_js():
+    return send_from_directory(
+        Path(__file__).resolve().parent / "Employee_dashboard",
+        "employee_dashboard.js",
+    )
+
+
+@portal_bp.get("/admin/dashboard")
+@require_admin
+def admin_dashboard():
+    return _render_dashboard("Admin_dashboard.html")
+
+
+@portal_bp.get("/admin/pricing-adjustments")
+@require_admin
+def pricing_adjustments():
+    user = signed_in_user()
+    selected_filename = (request.args.get("file") or "").strip()
+    selected = None
+    if selected_filename:
+        try:
+            selected = read_pricing_file(selected_filename)
+        except PricingCsvError as exc:
+            flash(str(exc), "error")
+    return render_template(
+        "pricing_adjustments.html",
+        user=user,
+        files=list_pricing_csvs(),
+        runtime_files=list_runtime_series_pricing_files(),
+        selected=selected,
+        selected_filename=selected_filename,
+    )
+
+
+@portal_bp.get("/admin/pricing-adjustments.css")
+@require_admin
+def pricing_adjustments_css():
+    return send_from_directory(
+        Path(__file__).resolve().parent / "Pricing",
+        "pricing_adjustments.css",
+    )
+
+
+@portal_bp.post("/admin/pricing-adjustments/save")
+def save_pricing_adjustments():
+    user = signed_in_user()
+    if not user or user.role != "employee" or (user.access_level or "").strip().lower() != "admin":
+        return jsonify({
+            "ok": False,
+            "error": "Admin access required. Sign in with an active admin account and reload this page.",
+        }), 403
+
+    payload = request.get_json(silent=True) or {}
+    try:
+        save_function = save_pricing_xlsx if str(payload.get("filename") or "").lower().endswith(".xlsx") else save_pricing_csv
+        result = save_function(
+            payload.get("filename"),
+            payload.get("headers") or [],
+            payload.get("rows") or [],
+            actor=getattr(user, "username", None) or getattr(user, "display_name", "admin"),
+        )
+    except PricingCsvError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), exc.status_code
+    return jsonify({"ok": True, **result})
+
+
 @portal_bp.get("/employee/dashboard")
 @require_role("employee")
 def employee_dashboard():
+    user = signed_in_user()
+    if user.access_level == "admin":
+        return redirect(url_for("portal.admin_dashboard", **request.args.to_dict(flat=True)))
+    return _render_dashboard("employee_dashboard.html")
+
+
+def _render_dashboard(dashboard_template):
     user = signed_in_user()
     query = (
         request.args.get("q") or ""
@@ -808,12 +895,6 @@ def employee_dashboard():
                 .limit(50)
             ).scalars().all()
 
-    dashboard_template = (
-        "Admin_dashboard.html"
-        if user.access_level == "admin"
-        else "employee_dashboard.html"
-    )
-
     return render_template(
         dashboard_template,
         user=user,
@@ -901,6 +982,49 @@ def delete_pending_quote(quote_id: int):
     return redirect(url_for("portal.employee_dashboard"))
 
 
+@portal_bp.post("/customer/quotes/<int:quote_id>/delete")
+@require_role("customer")
+def delete_customer_quote(quote_id: int):
+    """Soft-delete a quote owned by the signed-in customer."""
+    user = signed_in_user()
+
+    with get_session() as db:
+        quote = db.get(Quote, quote_id)
+        if (
+            quote is None
+            or quote.deleted_at is not None
+            or not _customer_owns_quote(user, quote)
+        ):
+            return jsonify({
+                "ok": False,
+                "error": "Quote not found",
+            }), 404
+
+        deleted_at = utc_now()
+        quote.deleted_status = quote.status
+        quote.status = "canceled"
+        quote.deleted_by_user_id = user.id
+        quote.deleted_at = deleted_at
+        quote.edited_by_user_id = user.id
+        quote.edited_at = deleted_at
+        order = db.execute(
+            select(Order).where(Order.quote_id == quote.id)
+        ).scalar_one_or_none()
+        if order is not None:
+            order.deleted_status = order.status
+        sync_order_status(db, quote.id, "canceled")
+        if order is not None:
+            order.status = "canceled"
+            order.deleted_by_user_id = user.id
+            order.deleted_at = deleted_at
+            db.add(order)
+
+        db.add(quote)
+        db.commit()
+
+    return redirect(url_for("portal.customer_dashboard"))
+
+
 @portal_bp.get("/customer/quote-entry")
 @require_role("customer")
 def customer_quote_entry():
@@ -910,6 +1034,22 @@ def customer_quote_entry():
     return render_template(
         "customer_calculator.html",
         portal_mode="customer",
+        current_user_name=user.display_name if user else "",
+        prefill_customer_name=user.company_name or user.display_name or "",
+        prefill_customer_address=user.billing_address or user.shipping_address or "",
+        assigned_promo_code=user.assigned_promo_code or "",
+        assigned_discount_percent=user.assigned_discount_percent,
+    )
+
+
+@portal_bp.get("/customer/metric-quote-entry")
+@require_role("customer")
+def customer_metric_quote_entry():
+    user = signed_in_user()
+    return render_template(
+        "customer_calculator.html",
+        portal_mode="customer",
+        metric_mode=True,
         current_user_name=user.display_name if user else "",
         prefill_customer_name=user.company_name or user.display_name or "",
         prefill_customer_address=user.billing_address or user.shipping_address or "",
@@ -936,27 +1076,14 @@ def legacy_customer_quote_form():
     return redirect(url_for("portal.customer_quote_form", **request.args.to_dict(flat=True)))
 
 
-@portal_bp.get("/employee/quote-entry")
+@portal_bp.get("/employee/metric-quote-entry")
 @require_role("employee")
-def employee_quote_forms():
+def employee_metric_quote_entry():
     user = signed_in_user()
-    # A quote_id (opening a saved quote) or draft flag (from the "Quote" button)
-    # goes straight to the dedicated Quote Form page instead of the calculator.
-    quote_id = request.args.get("quote_id")
-    if quote_id:
-        with get_session() as db:
-            if pending_quote_requires_accept(db, quote_id, user):
-                flash("Accept the pending quote before opening it.", "error")
-                return redirect(url_for("portal.employee_dashboard"))
-
-    if quote_id or request.args.get("draft"):
-        return render_template(
-            "employee_quote_forms.html",
-            current_user_name=user.display_name if user else "",
-        )
     return render_template(
         "employee_calculator.html",
         portal_mode="employee",
+        metric_mode=True,
         current_user_name=user.display_name if user else "",
     )
 
@@ -1173,7 +1300,7 @@ def update_customer_account_status(user_id: int):
 
 
 @portal_bp.get("/parts-catalog")
-@require_admin
+@require_role("employee")
 def parts_catalog():
     user = signed_in_user()
     return render_template(

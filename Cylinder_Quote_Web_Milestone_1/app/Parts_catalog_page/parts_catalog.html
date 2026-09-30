@@ -128,7 +128,6 @@
                 <button id="bulk-price-btn" type="button" class="btn btn-sm btn-primary">Bulk Price Update</button>
                 <button id="templates-btn" type="button" class="btn btn-sm btn-outline-primary">Templates</button>
                 <button id="inventory-btn" type="button" class="btn btn-sm btn-outline-primary">Inventory</button>
-                <button id="bulk-inventory-btn" type="button" class="btn btn-sm btn-outline-primary">Update Inventory Bulk</button>
                 <button id="inventory-manager-btn" type="button" class="btn btn-sm btn-outline-primary">Inventory Manager</button>
                 <button id="selection-mode-btn" type="button" class="btn btn-sm btn-outline-secondary">Select</button>
                 <span id="selection-count" class="text-muted small">0 selected</span>
@@ -142,8 +141,8 @@
             </tbody></table></div>
         </section>
         <section class="tab-pane fade" id="base">
-            <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><thead class="table-dark"><tr><th>Series</th><th>Bore</th><th>Rod</th><th>Mount Group</th><th>Base Price</th><th>Cushion Base</th><th>Per Unit</th><th>Cushion / End</th><th>Unit</th><th>Source</th></tr></thead><tbody>
-            {% for row in base_prices %}<tr><td>{{ row.series or '' }}</td><td>{{ format_measurement(row.bore, row.unit) }}</td><td>{{ format_measurement(row.rod, row.unit) }}</td><td>{{ row.mount_group or '' }}</td><td>{{ price_cell('base_assembly_prices', row, 'base_price') }}</td><td>{{ price_cell('base_assembly_prices', row, 'cushion_base') }}</td><td>{{ price_cell('base_assembly_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td>{{ price_cell('base_assembly_prices', row, 'cushion_per_end') }}</td><td>{{ row.unit or '' }}</td><td>{{ row.source_sheet }}:{{ row.source_row }}</td></tr>{% endfor %}
+            <div class="catalog-scroll"><table class="table table-sm table-hover catalog-table"><colgroup><col style="width:5%"><col style="width:5%"><col style="width:5%"><col style="width:30%"><col style="width:12%"><col style="width:12%"><col style="width:12%"><col style="width:7%"><col style="width:12%"></colgroup><thead class="table-dark"><tr><th>Series</th><th>Bore</th><th>Rod</th><th>Mount Group</th><th>Base Price</th><th>Per Unit</th><th>Cushion / End</th><th>Unit</th><th>Source</th></tr></thead><tbody>
+            {% for row in base_prices %}<tr><td>{{ row.series or '' }}</td><td>{{ format_measurement(row.bore, row.unit) }}</td><td>{{ format_measurement(row.rod, row.unit) }}</td><td>{{ row.mount_group or '' }}</td><td>{{ price_cell('base_assembly_prices', row, 'base_price') }}</td><td>{{ price_cell('base_assembly_prices', row, 'per_unit_price', format_price_unit(row.unit)) }}</td><td>{{ price_cell('base_assembly_prices', row, 'cushion_per_end') }}</td><td>{{ row.unit or '' }}</td><td>{{ row.source_sheet }}:{{ row.source_row }}</td></tr>{% endfor %}
             </tbody></table></div>
         </section>
         <section class="tab-pane fade" id="assembly">
@@ -225,27 +224,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="modal fade" id="bulk-inventory-modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Update Inventory Bulk</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p id="bulk-inventory-scope" class="small text-muted"></p>
-                <label class="form-label" for="bulk-inventory-value">Inventory quantity</label>
-                <input id="bulk-inventory-value" class="form-control" type="number" min="0" step="1" required>
-                <div id="bulk-inventory-error" class="text-danger small mt-2"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button id="bulk-inventory-apply-btn" type="button" class="btn btn-primary">Update Inventory</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="modal fade" id="inventory-manager-modal" tabindex="-1" aria-hidden="true">
@@ -835,8 +813,6 @@
     const bulkButton = document.getElementById('bulk-price-btn');
     const selectionModeButton = document.getElementById('selection-mode-btn');
     const inventoryButton = document.getElementById('inventory-btn');
-    const bulkInventoryButton = document.getElementById('bulk-inventory-btn');
-    const bulkInventoryModal = new bootstrap.Modal(document.getElementById('bulk-inventory-modal'));
     const inventoryManagerModal = new bootstrap.Modal(document.getElementById('inventory-manager-modal'));
     const assignFamilyButton = document.getElementById('family-assign-btn');
     const bulkModal = new bootstrap.Modal(document.getElementById('bulk-modal'));
@@ -1326,20 +1302,6 @@
         input.addEventListener('keydown', onKeyDown);
     });
 
-    bulkInventoryButton.addEventListener('click', () => {
-        const ids = selectedIds();
-        const error = document.getElementById('bulk-inventory-error');
-        error.textContent = '';
-        if (!ids.length) {
-            error.textContent = 'Click Select, then check at least one part.';
-            document.getElementById('bulk-inventory-scope').textContent = 'No parts selected.';
-        } else {
-            document.getElementById('bulk-inventory-scope').textContent = `Updates ${ids.length} selected part(s).`;
-        }
-        document.getElementById('bulk-inventory-value').value = '';
-        bulkInventoryModal.show();
-    });
-
     document.getElementById('inventory-manager-btn').addEventListener('click', () => {
         document.getElementById('inventory-import-status').textContent = '';
         inventoryManagerModal.show();
@@ -1418,34 +1380,6 @@
 
     document.getElementById('inventory-preview-btn').addEventListener('click', () => sendInventoryFile(URLS.inventoryPreview));
     document.getElementById('inventory-apply-btn').addEventListener('click', () => sendInventoryFile(URLS.inventoryApply));
-
-    document.getElementById('bulk-inventory-apply-btn').addEventListener('click', async () => {
-        const ids = selectedIds();
-        const value = document.getElementById('bulk-inventory-value').value.trim();
-        const error = document.getElementById('bulk-inventory-error');
-        if (!ids.length || value === '' || !/^\d+$/.test(value)) {
-            error.textContent = 'Select at least one part and enter a whole-number inventory quantity.';
-            return;
-        }
-        const response = await fetch(URLS.bulkInventory, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ids, inventory: value })
-        });
-        const data = await response.json();
-        if (!response.ok || !data.ok) {
-            error.textContent = data.error || 'Unable to update inventory.';
-            return;
-        }
-        data.updated.forEach((updated) => {
-            const cell = inlineEditableCell(updated.id, 'inventory');
-            if (cell) {
-                cell.textContent = updated.inventory;
-                cell.dataset.value = updated.inventory;
-            }
-        });
-        bulkInventoryModal.hide();
-    });
 
     // --- Part family settings (admin only) ---
     const familyModal = new bootstrap.Modal(document.getElementById('family-modal'));

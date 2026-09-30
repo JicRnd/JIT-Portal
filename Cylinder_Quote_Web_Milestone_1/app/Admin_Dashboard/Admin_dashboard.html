@@ -13,30 +13,42 @@
   >
 </head>
 <body>
-  <header class="portal-header">
+  <header class="admin-dashboard-header">
     <div>{{ user.display_name }} · Admin</div>
     <h1>JIT {{ user.display_name }}'s Dashboard</h1>
+    <div class="header-right">
+      <div class="header-stats">
+        <div class="header-stats-month">{{ current_month_label }}</div>
+        <div class="header-stats-grid">
+          <span>Quoted</span>
+          <span>Approved</span>
+          <strong>{{ quotes_this_month }}</strong>
+          <strong>{{ approved_orders_count_this_month }}</strong>
+        </div>
+      </div>
+      <a href="{{ url_for('portal.logout') }}">Log Out</a>
+    </div>
   </header>
 
-  <main class="portal-shell">
+  <main class="admin-dashboard-shell">
     <div class="dashboard-actions">
       <button
-        class="portal-button new-quote"
-        data-standard="{{ url_for('employee_quote_form_page') }}"
-        data-metric="{{ url_for('portal.metric_coming_soon') }}"
+        class="admin-dashboard-button new-quote"
+        data-standard="/quote-entry"
+        data-metric="{{ url_for('portal.employee_metric_quote_entry') }}"
       >
         + New Quote
       </button>
 
       <a
-        class="portal-button secondary"
+        class="admin-dashboard-button secondary"
         href="{{ url_for('employee_quote_history.employee_quote_history_page') }}"
       >
         Quote History
       </a>
 
       <a
-        class="portal-button secondary"
+        class="admin-dashboard-button secondary"
         href="{{ url_for('employee_order_history.employee_order_history_page') }}"
       >
         Order History
@@ -44,7 +56,7 @@
 
       <button
         id="customerLookupButton"
-        class="portal-button secondary"
+        class="admin-dashboard-button secondary"
         type="button"
       >
         Customers
@@ -52,7 +64,7 @@
      
       <button
         id="manageUsersButton"
-        class="portal-button secondary"
+        class="admin-dashboard-button secondary"
         type="button"
         data-customer-url="{{ url_for('portal.customer_accounts') }}"
         data-employee-url="{{ url_for('portal.manage_users') }}"
@@ -60,7 +72,9 @@
         Manage Users
       </button>
 
-      <a class="portal-button secondary" href="{{ url_for('portal.parts_catalog') }}">Parts Catalog</a>
+      <a class="admin-dashboard-button secondary" href="{{ url_for('portal.parts_catalog') }}">Parts Catalog</a>
+
+      <a class="admin-dashboard-button secondary" href="{{ url_for('portal.pricing_adjustments') }}">Adjust Pricing</a>
       
     </div>
 
@@ -91,7 +105,7 @@
                   <td>{{ item.created_at.strftime('%b %d, %Y') if item.created_at else '—' }}</td>
                   <td>
                     <button
-                      class="small-button accept-pending-button"
+                      class="admin-dashboard-small-button accept-pending-button"
                       data-accept-url="{{ url_for('portal.accept_pending_quote', quote_id=item.id) }}"
                       type="button"
                     >Accept</button>
@@ -110,7 +124,7 @@
                   <td>
                     <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">
                       <button
-                        class="small-button details-pending-user-button"
+                        class="admin-dashboard-small-button details-pending-user-button"
                         type="button"
                         data-user-role="{{ pending_user.role }}"
                         data-user-name="{{ pending_user.display_name }}"
@@ -126,13 +140,13 @@
                         Details
                       </button>
                       <form method="post" action="{{ url_for('portal.approve_user', user_id=pending_user.id, decision='approve') }}">
-                        <button class="small-button" type="submit">Accept</button>
+                        <button class="admin-dashboard-small-button" type="submit">Accept</button>
                       </form>
                       <form method="post" action="{{ url_for('portal.approve_user', user_id=pending_user.id, decision='hold') }}">
-                        <button class="small-button" type="submit">Hold</button>
+                        <button class="admin-dashboard-small-button" type="submit">Hold</button>
                       </form>
                       <form method="post" action="{{ url_for('portal.approve_user', user_id=pending_user.id, decision='deny') }}">
-                        <button class="small-button" type="submit">Deny</button>
+                        <button class="admin-dashboard-small-button" type="submit">Deny</button>
                       </form>
                     </div>
                   </td>
@@ -142,7 +156,15 @@
           </table>
         </div>
       {% else %}
-        <div class="empty-state">No new requests requiring acceptance.</div>
+        <div class="table-wrap">
+          <table id="newAcceptQueueTable">
+            <tbody>
+              <tr>
+                <td colspan="7"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       {% endif %}
     </section>
 
@@ -150,39 +172,30 @@
       <h2>Pending Approvals</h2>
 
       {% if pending_queue %}
-        <div class="table-wrap">
+        <div class="pending-table-wrapper">
           <table id="pendingQueueTable" class="pending-approvals-table">
             <thead>
               <tr>
-                <th>Quote #</th>
-                <th>Name</th>
-                <th>Model Code</th>
-                <th>Status</th>
-                <th>Submitted</th>
-                <th></th>
+                <th class="quote-number-column">Quote #</th>
+                <th class="customer-name-column">Name</th>
+                <th class="model-code-column">Model Code</th>
+                <th class="status-column">Status</th>
+                <th class="actions-column"></th>
               </tr>
             </thead>
 
             <tbody>
               {% for item in pending_queue %}
                 <tr data-pending-id="{{ item.id }}">
-                  <td>{{ item.quote_id or '—' }}</td>
-                  <td>{{ item.customer_name|title if item.customer_name else '—' }}</td>
-                  <td>{{ item.model_code or '—' }}</td>
-                  <td>{{ item.status_label }}</td>
+                  <td class="quote-number-column">{{ item.quote_id or '—' }}</td>
+                  <td class="customer-name-column">{{ item.customer_name|title if item.customer_name else '—' }}</td>
+                  <td class="model-code-column">{{ item.model_code or '—' }}</td>
+                  <td class="status-column">{{ 'Pending' if item.status_label == 'Pending Approval' else item.status_label }}</td>
 
-                  <td>
-                    {{
-                      item.created_at.strftime('%m/%d/%y - %I:%M%p').replace(' - 0', ' - ').lower()
-                      if item.created_at
-                      else '—'
-                    }}
-                  </td>
-
-                  <td>
-                    <a class="small-button open-quote" href="{{ url_for('employee_quote_form_page', quote_id=item.id) }}">Open Quote</a>
+                  <td class="actions-column">
+                    <a class="open-quote-button open-quote" href="{{ url_for('employee_quote_form_page', quote_id=item.id) }}">Open Quote</a>
                     <form method="post" action="{{ url_for('portal.delete_pending_quote', quote_id=item.id) }}" style="display:inline;">
-                      <button class="small-button" type="submit">Delete</button>
+                      <button class="delete-quote-button" type="submit">Delete</button>
                     </form>
                   </td>
                 </tr>
@@ -226,7 +239,7 @@
                   </td>
                   <td>
                     <a
-                      class="small-button"
+                      class="admin-dashboard-small-button"
                       href="{{ url_for('employee_quote_form_page', quote_id=item.id) }}"
                     >
                       View
@@ -256,14 +269,14 @@
 
         <button
           id="clearDashboardSearchButton"
-          class="portal-button secondary"
+          class="admin-dashboard-button secondary"
           type="button"
           aria-label="Clear search"
         >
           X
         </button>
 
-        <button class="portal-button" type="submit">
+        <button class="admin-dashboard-button" type="submit">
           Search
         </button>
       </div>
@@ -301,8 +314,8 @@
 
                   <td>
                     <a
-                      class="small-button"
-                      href="{{ url_for('portal.employee_dashboard') }}?q={{ customer.name|urlencode }}"
+                      class="admin-dashboard-small-button"
+                      href="{{ url_for('portal.admin_dashboard') }}?q={{ customer.name|urlencode }}"
                     >
                       View Quotes
                     </a>
@@ -358,7 +371,7 @@
 
             <td>
               <a
-                class="small-button open-quote"
+                class="admin-dashboard-small-button open-quote"
                 href="{{ url_for('employee_quote_form_page', quote_id=quote.id) }}"
               >
                 Open Quote
@@ -382,7 +395,7 @@
     <form method="dialog" style="padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.9rem;">
       <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem; border-bottom:1px solid #e5e7eb; padding-bottom:0.6rem; margin-bottom:0.15rem;">
         <h3 style="margin:0; font-size:1.15rem; color:#1f2937;">Account Details</h3>
-        <button class="small-button" type="submit">Close</button>
+        <button class="admin-dashboard-small-button" type="submit">Close</button>
       </div>
       <div style="display:grid; gap:0.7rem; font-size:0.95rem; color:#262b30;">
         <div style="display:grid;grid-template-columns:140px 1fr;gap:0.5rem;padding:0.45rem 0.55rem;background:#f8fafc;border:1px solid #edf2f7;border-radius:8px;"><strong>Role:</strong><span id="pendingUserRole">—</span></div>
@@ -403,11 +416,11 @@
     <div>
       <h2>Select Measurement Type</h2>
 
-      <button class="portal-button standard-choice">
+      <button class="admin-dashboard-button standard-choice">
         Standard
       </button>
 
-      <button class="portal-button secondary metric-choice">
+      <button class="admin-dashboard-button secondary metric-choice">
         Metric
       </button>
 
@@ -421,8 +434,8 @@
     <div class="dialog-content">
       <h2>Manage User Accounts</h2>
       <div class="dialog-actions">
-        <button id="customerAccountsChoice" class="portal-button" type="button">Customer Accounts</button>
-        <button id="employeeAccountsChoice" class="portal-button secondary" type="button">Employee Accounts</button>
+        <button id="customerAccountsChoice" class="admin-dashboard-button" type="button">Customer Accounts</button>
+        <button id="employeeAccountsChoice" class="admin-dashboard-button secondary" type="button">Employee Accounts</button>
         <button id="manageUsersCancel" class="text-button" type="button">Cancel</button>
       </div>
     </div>
@@ -438,35 +451,35 @@
         <div style="display:flex; gap:0.5rem;">
           <button
             id="addContactButton"
-            class="portal-button secondary"
+            class="admin-dashboard-button secondary"
             type="button"
           >
             Add Contact
           </button>
           <button
             id="addAccountButton"
-            class="portal-button secondary"
+            class="admin-dashboard-button secondary"
             type="button"
           >
             New Account
           </button>
           <button
             id="addBulkContactsButton"
-            class="portal-button secondary"
+            class="admin-dashboard-button secondary"
             type="button"
           >
             Add Bulk Contacts
           </button>
           <button
             id="seeAllContactsButton"
-            class="portal-button secondary"
+            class="admin-dashboard-button secondary"
             type="button"
           >
             See All
           </button>
           <button
             id="clearCustomerSearchButton"
-            class="portal-button secondary"
+            class="admin-dashboard-button secondary"
             type="button"
           >
             Clear
@@ -515,7 +528,7 @@
       </div>
 
       <button
-        class="portal-button secondary"
+        class="admin-dashboard-button secondary"
         value="close"
         style="align-self:flex-start;"
       >
@@ -586,14 +599,14 @@
       <div style="display:flex; gap:0.5rem;">
         <button
           id="customerEditSaveButton"
-          class="portal-button"
+          class="admin-dashboard-button"
           type="button"
         >
           Save
         </button>
 
         <button
-          class="portal-button secondary"
+          class="admin-dashboard-button secondary"
           value="cancel"
         >
           Cancel
@@ -612,8 +625,8 @@
       <h2 style="margin:0; font-size:1.2rem;">Customer Notes</h2>
       <textarea id="customerNotesText" rows="8" style="padding:0.4rem; width:100%;"></textarea>
       <div style="display:flex; gap:0.5rem;">
-        <button id="customerNotesSaveButton" class="portal-button" type="button">Save</button>
-        <button class="portal-button secondary" value="cancel">Cancel</button>
+        <button id="customerNotesSaveButton" class="admin-dashboard-button" type="button">Save</button>
+        <button class="admin-dashboard-button secondary" value="cancel">Cancel</button>
       </div>
       <div id="customerNotesMessage" style="font-size:0.9rem; min-height:1.2rem; color:#c00;"></div>
     </form>
@@ -649,7 +662,7 @@
       <div>
         <button
           id="bulkImportListButton"
-          class="portal-button secondary"
+          class="admin-dashboard-button secondary"
           type="button"
         >
           Import List
@@ -659,7 +672,7 @@
 
       <button
         id="bulkContactsUploadButton"
-        class="portal-button"
+        class="admin-dashboard-button"
         type="button"
         style="display:none;"
       >
@@ -669,7 +682,7 @@
       <div id="bulkContactsStatus" style="font-size:0.9rem; min-height:1.2rem;"></div>
 
       <button
-        class="portal-button secondary"
+        class="admin-dashboard-button secondary"
         value="close"
         style="align-self:flex-start;"
       >
@@ -759,7 +772,7 @@
         const notesTd = document.createElement("td");
         const notesButton = document.createElement("button");
         notesButton.type = "button";
-        notesButton.className = "portal-button secondary small-button";
+        notesButton.className = "admin-dashboard-button secondary admin-dashboard-small-button";
         notesButton.textContent = "Notes";
         notesButton.addEventListener("click", () => openNotes(c));
         notesTd.appendChild(notesButton);
@@ -767,7 +780,7 @@
 
         const dashboardTd = document.createElement("td");
         const dashboardLink = document.createElement("a");
-        dashboardLink.className = "portal-button secondary small-button";
+        dashboardLink.className = "admin-dashboard-button secondary admin-dashboard-small-button";
         dashboardLink.style.textDecoration = "none";
         dashboardLink.textContent = "Dashboard";
         dashboardLink.href = "{{ url_for('portal.employee_customer_dashboard', customer_id=0) }}".replace("/0", `/${encodeURIComponent(c.id)}`);
@@ -777,7 +790,7 @@
         const editTd = document.createElement("td");
         const editButton = document.createElement("button");
         editButton.type = "button";
-        editButton.className = "portal-button secondary small-button";
+        editButton.className = "admin-dashboard-button secondary admin-dashboard-small-button";
         editButton.textContent = "Edit";
         editButton.addEventListener("click", () => openEdit(c));
         editTd.appendChild(editButton);
@@ -786,7 +799,7 @@
         const deleteTd = document.createElement("td");
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
-        deleteButton.className = "portal-button secondary small-button";
+        deleteButton.className = "admin-dashboard-button secondary admin-dashboard-small-button";
         deleteButton.textContent = "Delete";
         deleteButton.addEventListener("click", () => deleteCustomer(c));
         deleteTd.appendChild(deleteButton);
@@ -795,7 +808,7 @@
         const signupTd = document.createElement("td");
         if (c.status === "Customer") {
           const signupLink = document.createElement("a");
-          signupLink.className = "portal-button small-button";
+          signupLink.className = "admin-dashboard-button admin-dashboard-small-button";
           signupLink.style.textDecoration = "none";
           signupLink.textContent = "Sign Up";
           const signupUrl = new URL("{{ url_for('portal.customer_signup') }}", window.location.origin);
@@ -931,7 +944,7 @@
     input.addEventListener("input", () => {
       clearTimeout(timer);
       const term = input.value.trim();
-      if (term.length < 2) {
+      if (term.length < 1) {
         tbody.innerHTML = "";
         currentCustomers = [];
         return;

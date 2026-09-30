@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import logging
+import time
 from dataclasses import asdict
 from decimal import Decimal, InvalidOperation
+from pathlib import Path
 from typing import Any
 
 from sqlalchemy.exc import IntegrityError
@@ -20,9 +23,17 @@ from .component_bom import (
 )
 from .models_db import Customer, Order, Quote, QuoteLineItem, utc_now
 from .quote_numbering import generate_quote_number
-from .service import calculate_payload, decimal_to_json, quote_inputs_from_payload
+from .service import (
+    calculate_metric_assembly_price,
+    calculate_metric_rod_seal_price,
+    calculate_payload,
+    decimal_to_json,
+    quote_inputs_from_payload,
+)
 
 PRICING_VERSION = "v1.2"
+_ACCESSORY_ENGINE = QuotePricingEngine(Path(__file__).resolve().parents[1] / "data")
+logger = logging.getLogger(__name__)
 
 _CONTACT_BUSINESS_TERMS = {
     "associates", "company", "construction", "consulting", "corp", "corporation",
@@ -261,6 +272,27 @@ def create_quote_snapshot(
     return quote
 
 
+
+def _manual_items_snapshot(quote: Quote) -> list[tuple[Any, ...]]:
+    return [
+        (
+            item.reference_part_number,
+            item.description,
+            decimal_to_json(item.quantity),
+            decimal_to_json(item.unit_price),
+        )
+        for item in quote.line_items
+    ]
+
+
+def _warm_order_form_snapshot(quote: Quote) -> list[dict[str, Any]]:
+    parts = _order_form_parts(quote, apply_workbook_allocations=True)
+    snapshot = dict(quote.order_form_snapshot or {})
+    snapshot["order_form_parts"] = parts
+    quote.order_form_snapshot = snapshot
+    return parts
+
+
 def get_quote(session: Session, quote_id: int) -> Quote | None:
     """Retrieve a saved quote with line items eagerly loaded."""
     return session.execute(
@@ -288,6 +320,10 @@ def update_quote_edits(
     quote = get_quote(session, quote_id)
     if quote is None:
         raise ValueError("Quote not found")
+
+    previous_inputs = quote.cylinder_inputs_snapshot
+    previous_quantity = quote.quantity
+    previous_manual_items = _manual_items_snapshot(quote)
 
     if "customer_name" in payload:
         quote.customer_name = _optional_str(payload["customer_name"])
@@ -349,6 +385,15 @@ def update_quote_edits(
         quote.customer_update_pending = True
 
     upsert_customer(session, quote.customer_name, quote.customer_address, phone=quote.customer_contact)
+    current_manual_items = _manual_items_snapshot(quote)
+    cache_missing = not isinstance((quote.order_form_snapshot or {}).get("order_form_parts"), list)
+    parts_changed = (
+        previous_inputs != quote.cylinder_inputs_snapshot
+        or previous_quantity != quote.quantity
+        or previous_manual_items != current_manual_items
+    )
+    if cache_missing or parts_changed:
+        _warm_order_form_snapshot(quote)
     return quote
 
 
@@ -425,7 +470,9 @@ def _line_item_to_json(item: QuoteLineItem) -> dict[str, Any]:
 
 def _order_form_parts(quote: Quote, *, apply_workbook_allocations: bool) -> list[dict[str, Any]]:
     inputs = quote.cylinder_inputs_snapshot or {}
+    started = time.perf_counter()
     generated_parts = generated_cylinder_parts(inputs)
+    generated_elapsed = time.perf_counter() - started
     generated_parts = apply_fixed_allocations(
         generated_parts,
         quantity=max(1, int(quote.quantity or 1)),
@@ -455,26 +502,89 @@ def _order_form_parts(quote: Quote, *, apply_workbook_allocations: bool) -> list
     order_form_parts = enrich_parts_with_inventory(
         generated_parts + special_parts + manual_parts
     )
+    initial_inventory_elapsed = time.perf_counter() - started - generated_elapsed
+    dynamic_started = time.perf_counter()
     if apply_workbook_allocations:
         order_form_parts = apply_dynamic_allocations(
             order_form_parts,
             inputs,
             quantity=max(1, int(quote.quantity or 1)),
         )
+    dynamic_elapsed = time.perf_counter() - dynamic_started
+    final_started = time.perf_counter()
     order_form_parts = enrich_parts_with_inventory(order_form_parts, preserve_allocated=True)
     order_form_parts = apply_allocated_costs(order_form_parts)
-    return sort_order_form_parts(order_form_parts)
+    result = sort_order_form_parts(order_form_parts)
+    logger.info(
+        "Order Form parts timing quote=%s workbook_allocations=%s generated=%.3fs initial_inventory=%.3fs dynamic_allocations=%.3fs finalization=%.3fs total=%.3fs rows=%s",
+        quote.id,
+        apply_workbook_allocations,
+        generated_elapsed,
+        initial_inventory_elapsed,
+        dynamic_elapsed,
+        time.perf_counter() - final_started,
+        time.perf_counter() - started,
+        len(result),
+    )
+    return result
 
 
-def quote_to_json(quote: Quote) -> dict[str, Any]:
+def quote_to_json(quote: Quote, *, include_order_form_parts: bool = True) -> dict[str, Any]:
     """Serialize a Quote and its line items for general API responses."""
     inputs = quote.cylinder_inputs_snapshot or {}
+    breakdown = dict(quote.price_breakdown_snapshot or {})
+    if (
+        str(inputs.get("series") or "").upper() in {"IH", "IHM", "IMH"}
+        and "recommended_assembly_price" not in breakdown
+    ):
+        try:
+            breakdown["recommended_assembly_price"] = decimal_to_json(
+                calculate_metric_assembly_price(quote_inputs_from_payload(inputs))
+            )
+        except (ValueError, LookupError, KeyError):
+            breakdown["recommended_assembly_price"] = None
+    if (
+        str(inputs.get("series") or "").upper() in {"IH", "IHM", "IMH"}
+        and "recommended_rod_seal_price" not in breakdown
+    ):
+        try:
+            breakdown["recommended_rod_seal_price"] = decimal_to_json(
+                calculate_metric_rod_seal_price(quote_inputs_from_payload(inputs))
+            )
+        except (ValueError, LookupError, KeyError):
+            breakdown["recommended_rod_seal_price"] = None
+    try:
+        accessory_parts = breakdown.get("accessory_parts")
+        if not isinstance(accessory_parts, list):
+            accessory_parts = _ACCESSORY_ENGINE.accessory_parts(
+                quote_inputs_from_payload(inputs)
+            )
+        breakdown["accessory_parts"] = enrich_parts_with_inventory(
+            [
+                {
+                    **part,
+                    "description": part.get("label") or "",
+                    "on_hand": part.get("on_hand") or "0",
+                    "allocated": part.get("quantity") or "0",
+                }
+                for part in accessory_parts
+            ]
+        )
+        for part, enriched in zip(accessory_parts, breakdown["accessory_parts"]):
+            part["on_hand"] = enriched.get("on_hand", "0")
+        breakdown["accessory_parts"] = accessory_parts
+    except (KeyError, LookupError, ValueError):
+        breakdown["accessory_parts"] = []
     generated_parts = generated_cylinder_parts(inputs)
     generated_parts = apply_fixed_allocations(
         generated_parts,
         quantity=max(1, int(quote.quantity or 1)),
     )
-    order_form_parts = _order_form_parts(quote, apply_workbook_allocations=False)
+    order_form_parts = (
+        _order_form_parts(quote, apply_workbook_allocations=False)
+        if include_order_form_parts
+        else []
+    )
     return {
         "id": quote.id,
         "quote_number": quote.quote_number,
@@ -495,7 +605,7 @@ def quote_to_json(quote: Quote) -> dict[str, Any]:
         "cylinder_inputs_snapshot": quote.cylinder_inputs_snapshot,
         "generated_parts": generated_parts,
         "order_form_parts": order_form_parts,
-        "price_breakdown_snapshot": quote.price_breakdown_snapshot,
+        "price_breakdown_snapshot": breakdown,
         "manual_line_items": [_line_item_to_json(item) for item in quote.line_items],
         "created_by": quote.created_by.display_name if quote.created_by else None,
         "edited_by": quote.edited_by.display_name if quote.edited_by else None,
@@ -510,9 +620,19 @@ def quote_to_json(quote: Quote) -> dict[str, Any]:
 
 def quote_to_order_form_json(quote: Quote) -> dict[str, Any]:
     """Serialize a Quote for the Order Form workflow."""
+    started = time.perf_counter()
     result = quote_to_json(quote)
-    result["order_form_parts"] = _order_form_parts(
-        quote,
-        apply_workbook_allocations=True,
+    cached_parts = (quote.order_form_snapshot or {}).get("order_form_parts")
+    cache_hit = isinstance(cached_parts, list)
+    result["order_form_parts"] = (
+        cached_parts
+        if cache_hit
+        else _order_form_parts(quote, apply_workbook_allocations=True)
+    )
+    logger.info(
+        "Order Form serialization timing quote=%s cache_hit=%s total=%.3fs",
+        quote.id,
+        cache_hit,
+        time.perf_counter() - started,
     )
     return result

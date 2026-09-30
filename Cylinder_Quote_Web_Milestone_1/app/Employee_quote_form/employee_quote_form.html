@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>JIT Employee Quote Form</title>
-  <link rel="stylesheet" href="{{ url_for('employee_quote_form_css', v='9') }}">
+  <link rel="stylesheet" href="{{ url_for('employee_quote_form_css', v='13') }}">
 </head>
 <body class="employee-mode"
       data-portal-mode="employee"
@@ -13,54 +13,55 @@
       data-prefill-customer-address="{{ prefill_customer_address|default('') }}">
   <main class="quote-form-page">
     <div class="qf-toolbar">
-      <button type="button" id="newQuoteButton" class="preview-btn primary">New Quote</button>
-      <span class="quote-zoom-controls" aria-label="Quote Form zoom controls">
-        <button type="button" id="quoteZoomOutButton" class="preview-btn zoom-icon-btn" aria-label="Zoom Quote Form out"><span aria-hidden="true">&#128269;</span><span aria-hidden="true">&minus;</span></button>
-        <output id="quoteZoomLevel" class="quote-zoom-level" aria-live="polite">100%</output>
-        <button type="button" id="quoteZoomInButton" class="preview-btn zoom-icon-btn" aria-label="Zoom Quote Form in"><span aria-hidden="true">&#128269;</span><span aria-hidden="true">+</span></button>
-      </span>
-      <button type="button" id="verifyQuoteButton" class="preview-btn">Verify</button>
-      <button type="button" id="employeeSaveButton" class="preview-btn">Save</button>
-      <button type="button" id="emailCustomerButton" class="preview-btn">Email Customer</button>
-      <button type="button" id="holdQuoteButton" class="preview-btn">Hold</button>
-      <button type="button" id="saveQuoteButton" class="preview-btn primary" onclick="event.stopPropagation()">Update Now</button>
-      <button type="button" id="newOrderButton" class="preview-btn primary" onclick="event.stopPropagation()">Order</button>
-      <span class="qf-toolbar-meta"><strong id="pv_status">&mdash;</strong></span>
-      <span id="verifyMessage" class="verify-message" role="status" aria-live="polite"></span>
-      <span id="previewErrorMessage" class="error" role="alert"></span>
-      <a href="{{ url_for('portal.employee_dashboard') }}" id="employeeDashboardButton" class="preview-btn qf-toolbar-dashboard">Dashboard</a>
+      <div class="dashboard-actions">
+        <button type="button" id="verifyQuoteButton" class="preview-btn">Verify</button>
+        <button type="button" id="employeeSaveButton" class="preview-btn">Save</button>
+        <button type="button" id="emailCustomerButton" class="preview-btn">Email Customer</button>
+        <button type="button" id="holdQuoteButton" class="preview-btn">Hold</button>
+        <button type="button" id="saveQuoteButton" class="preview-btn primary" onclick="event.stopPropagation()">Update Now</button>
+        <button type="button" id="newOrderButton" class="preview-btn primary" onclick="event.stopPropagation()">Order</button>
+        <span class="qf-toolbar-meta"><strong id="pv_status">&mdash;</strong></span>
+        <a href="{{ url_for('portal.employee_dashboard') }}" id="employeeDashboardButton" class="qf-toolbar-dashboard">Dashboard</a>
+      </div>
+      <div class="qf-toolbar-status">
+        <span id="verifyMessage" class="verify-message" role="status" aria-live="polite"></span>
+        <span id="previewErrorMessage" class="error" role="alert"></span>
+      </div>
     </div>
 
     <div id="employeeQuoteSheet" class="excel-quote-sheet" aria-label="Cylinder Quote Form" contenteditable="true" spellcheck="false">
-      <header class="xq-header">
-        <div class="xq-logo-wrap">
-          <img class="xq-logo" src="{{ url_for('quote_image', filename='quote_form_logo.png') }}" alt="JIT Cylinders">
+      <header class="employee_quote_form_header">
+        <div class="logo_column">
+          <div class="xq-logo-wrap">
+            <img class="xq-logo" src="{{ url_for('quote_image', filename='quote_form_logo.png') }}" alt="JIT Cylinders">
+          </div>
         </div>
-        <h1>Quote Form</h1>
-      </header>
 
-      <section class="xq-customer">
-        <div class="xq-customer-fields">
-          <label>Customer</label><input id="pv_customer_name" type="text" autocomplete="off">
-          <label>POC:</label><input id="pv_person_of_contact" type="text" autocomplete="off">
-          <label>Address:</label><input id="pv_customer_address" type="text" autocomplete="off">
-          <label>Phone/Email:</label><input id="pv_customer_contact" type="text" autocomplete="off">
-          <label>Attn:</label><input id="pv_customer_attn" type="text" autocomplete="off">
-          <label>Tag:</label><input id="pv_tag" type="text" autocomplete="off">
-          <label>PO Number:</label><input id="pv_po_number" type="text" autocomplete="off">
+        <div class="customer_field_column">
+          <h1>Quote Form</h1>
+
+          <section class="customer_field_wrapper">
+            <div class="xq-customer-fields">
+              <label>Customer</label><input id="pv_customer_name" type="text" autocomplete="off">
+              <label>Address:</label><input id="pv_customer_address" type="text" autocomplete="off">
+              <label>Phone/Email:</label><input id="pv_customer_contact" type="text" autocomplete="off">
+              <label>Attn:</label><input id="pv_customer_attn" type="text" autocomplete="off">
+            </div>
+          </section>
         </div>
-        <div class="xq-meta-stack">
-          <table class="xq-meta-table xq-quote-meta">
-            <tr><th>Quote</th><td id="pv_quote_number">&mdash;</td></tr>
+
+        <div class="quote_column">
+          <table class="xq-meta-table quote-info-table">
+            <tr><th>Quote#</th><td id="pv_quote_number">&mdash;</td></tr>
             <tr><th>Date</th><td id="pv_created_at">&mdash;</td></tr>
             <tr><th>Terms</th><td><input id="pv_terms" value="Net 30" aria-label="Terms"></td></tr>
-          </table>
-          <table class="xq-meta-table xq-side-table">
+            <tr><td class="quote-info-blank" colspan="2">&nbsp;</td></tr>
             <tr><th>Days:</th><td><input id="pv_days" type="number" min="0" value="30" aria-label="Quoted delivery days"></td></tr>
+            <tr><th>Ref:</th><td><input id="pv_reference" type="text" aria-label="Reference"></td></tr>
             <tr><th>FOB</th><td><input id="pv_fob" value="Hartselle, AL" aria-label="FOB location"></td></tr>
           </table>
         </div>
-      </section>
+      </header>
 
       <section class="xq-grid">
         <div class="xq-head xq-desc-head">Description</div>
@@ -181,6 +182,6 @@
     </form>
   </dialog>
 
-  <script src="{{ url_for('employee_quote_form_js', v='9') }}"></script>
+  <script src="{{ url_for('employee_quote_form_js', v='11') }}"></script>
 </body>
 </html>

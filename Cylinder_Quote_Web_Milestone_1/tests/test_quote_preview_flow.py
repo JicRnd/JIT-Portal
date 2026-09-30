@@ -62,6 +62,17 @@ def _headers(user: str = "test-user"):
     return {"X-User-Name": user}
 
 
+def _login_employee(client):
+    with get_session() as session:
+        employee = User(display_name="Preview Employee", role="employee", is_active=True)
+        session.add(employee)
+        session.commit()
+        employee_id = employee.id
+    with client.session_transaction() as session:
+        session["user_id"] = employee_id
+        session["role"] = "employee"
+
+
 def test_quote_preview_flow_create_get_patch_preserves_breakdown(temp_db):
     """End-to-end API flow used by the Quote Preview screen.
 
@@ -266,7 +277,13 @@ def test_index_page_renders_calculator_and_employee_quote_preview(temp_db):
     text = resp.get_data(as_text=True)
     assert "Quote" in text
 
+    _login_employee(client)
     preview_resp = client.get("/quote-entry?draft=1")
+    assert preview_resp.status_code == 302
+    assert preview_resp.headers["Location"].endswith(
+        "/employee_quote_form/employee_quote_form.html?draft=1"
+    )
+    preview_resp = client.get(preview_resp.headers["Location"])
     assert preview_resp.status_code == 200
     preview_text = preview_resp.get_data(as_text=True)
     assert "Quote Form" in preview_text
@@ -293,7 +310,8 @@ def test_index_page_renders_calculator_and_employee_quote_preview(temp_db):
 def test_quote_form_page_omits_internal_note_controls(temp_db):
     """The dedicated quote form no longer exposes internal note/show toggles for manual items."""
     client = temp_db.test_client()
-    resp = client.get("/quote-entry?draft=1")
+    _login_employee(client)
+    resp = client.get("/employee_quote_form/employee_quote_form.html?draft=1")
     assert resp.status_code == 200
     text = resp.get_data(as_text=True)
     assert "Internal note" not in text

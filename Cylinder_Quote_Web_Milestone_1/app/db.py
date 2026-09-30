@@ -12,35 +12,35 @@ Base = declarative_base()
 # Non-business application telemetry is isolated from the five business
 # databases. The runtime never uses the legacy instance database.
 DEFAULT_DATABASE_PATH = str(
-    Path(__file__).resolve().parents[1] / "Databases" / "Application.db"
+    Path(__file__).resolve().parents[1] / "Databases" / "Application-databases" / "Application.db"
 )
 
 # All employee/customer account and login records live in their own dedicated
 # SQLite file, separate from quotes/customers, so account data stays isolated.
 DEFAULT_ACCOUNTS_DATABASE_PATH = str(
-    Path(__file__).resolve().parents[1] / "Databases" / "User_accounts.db"
+    Path(__file__).resolve().parents[1] / "Databases" / "user_accounts-databases" / "User_accounts.db"
 )
 
 DEFAULT_CONTACTS_DATABASE_PATH = str(
-    Path(__file__).resolve().parents[1] / "Databases" / "Employee_Contacts.db"
+    Path(__file__).resolve().parents[1] / "Databases" / "Emplopyee_contacts-databases" / "Employee_Contacts.db"
 )
 
 # Saved quotes/orders and everything tied to them live in their own dedicated
 # SQLite file, separate from accounts/customers.
 DEFAULT_QUOTES_DATABASE_PATH = str(
-    Path(__file__).resolve().parents[1] / "Databases" / "Quote.db"
+    Path(__file__).resolve().parents[1] / "Databases" / "quoting-databases" / "Quote.db"
 )
 
 # Order-form snapshots saved by the Order Now action live in their own
 # dedicated SQLite file.
 DEFAULT_ORDERS_DATABASE_PATH = str(
-    Path(__file__).resolve().parents[1] / "Databases" / "Order.db"
+    Path(__file__).resolve().parents[1] / "Databases" / "order-databases" / "Order.db"
 )
 
 # Imported pricing-catalog data is intentionally isolated from quote snapshots,
 # orders, accounts, and the protected calculator's normalized source files.
 DEFAULT_PRICING_DATABASE_PATH = str(
-    Path(__file__).resolve().parents[1] / "Databases" / "Pricing.db"
+    Path(__file__).resolve().parents[1] / "Databases" / "Pricing-databases" / "Pricing.db"
 )
 
 DEFAULT_INVENTORY_DATABASE_PATH = str(

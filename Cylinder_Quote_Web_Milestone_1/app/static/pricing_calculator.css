@@ -1,3 +1,4 @@
+.parts-list{display:flex;flex-direction:column;gap:4px;overflow:hidden}
 :root{
   --aqua:#c9ffff;
   --aqua2:#baf8f8;
@@ -13,8 +14,9 @@ html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:
 body{padding:8px}
 button,input,select{font:inherit;color:#111}
 .orderentry-window{width:min(100%,1360px);margin:0 auto;background:linear-gradient(#d7ffff,#c1fbfb);border:2px solid #888;box-shadow:0 1px 4px rgba(0,0,0,.25)}
-.window-titlebar{height:46px;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#f1f6f8,#dce8ed);border-bottom:1px solid #8d8d8d;color:var(--title);font-size:22px}
-.dashboard-button{margin-right:10px;padding:4px 10px;font-size:14px;font-weight:700;color:#111;text-decoration:none;background:#e9e9e9;border:1px solid #8e8e8e;border-radius:3px}
+.window-titlebar{height:46px;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#f1f6f8,#dce8ed);border-bottom:1px solid #8d8d8d;color:var(--title);font-size:clamp(125%, 150%, 175%)}
+.window-titlebar strong{font-size:clamp(100%, 110%, 120%)}
+.dashboard-button{display:inline-flex;align-items:center;justify-content:center;width:clamp(5%, 7%, 9%);height:clamp(65%, 80%, 95%);margin-left:auto;margin-right:clamp(2%, 3%, 4%);padding:clamp(0.5%, 0.8%, 1.2%) clamp(1%, 1.5%, 2%);font-size:clamp(90%, 100%, 110%);font-weight:700;color:#861313;text-decoration:none;background:transparent;border:0;border-radius:3px}
 .window-close{font-size:30px;font-weight:400;color:#111;line-height:1}
 .orderentry-form{padding:16px 18px 10px}
 .customer-area{display:grid;grid-template-columns:105px 1fr;gap:10px 10px;align-items:center;margin-bottom:12px}
@@ -25,11 +27,11 @@ button,input,select{font:inherit;color:#111}
 .combo-arrow{border:1px solid #8e8e8e;background:#e9e9e9;padding:0;font-size:13px}
 input,select{height:38px;border:1px solid #8b8b8b;border-radius:0;background:#fff;padding:4px 8px;box-shadow:inset 1px 1px 2px rgba(0,0,0,.16)}
 select{padding-right:2px}
-.cylinder-row{display:grid;grid-template-columns:1.05fr 1.08fr 1.08fr 1.08fr 1.08fr 1.08fr 1.08fr 1.08fr 1.08fr .8fr;gap:10px;align-items:end;margin:6px 0 14px}
-.cylinder-row label{display:flex;flex-direction:column;gap:4px;text-align:center;font-size:17px;font-weight:700}
-.cylinder-row label input,.cylinder-row label select{width:100%}
+.model_code_builder{display:grid;grid-template-columns:1.05fr 1.08fr 1.08fr 1.08fr 1.08fr 1.08fr 1.08fr 1.08fr 1.08fr .8fr;gap:10px;align-items:end;margin:6px 0 14px}
+.model_code_builder label{display:flex;flex-direction:column;gap:4px;text-align:center;font-size:17px;font-weight:700}
+.model_code_builder label input,.model_code_builder label select{width:100%}
 .c-dre{margin-left:14px}
-.middle-area{display:grid;grid-template-columns:46% 54%;gap:18px;align-items:start}
+.middle-area{display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:18px;align-items:start}
 .legacy-panel{border:1px solid #8e8e8e;background:#ededed;min-height:310px;position:relative}
 .tabs{display:flex;position:relative;top:-1px;left:-1px}
 .tab{min-width:145px;height:38px;padding:5px 14px;border:1px solid #8e8e8e;border-bottom:0;background:#efefef;font-size:17px;font-weight:700;cursor:pointer;color:#111;border-radius:0}
@@ -48,7 +50,7 @@ select{padding-right:2px}
 .parts-header{font-size:17px;font-weight:700;text-align:center;margin-bottom:8px}
 .part-row{margin-bottom:8px}
 .part-row input,.part-row select{height:38px;width:100%}
-.bottom-area{display:grid;grid-template-columns:46% 54%;gap:18px;margin-top:14px;align-items:start}
+.bottom-area{display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:18px;margin-top:14px;align-items:start}
 .accessory-panel{min-height:320px}
 .accessory-tab-grid{grid-template-columns:1fr 1fr;gap:10px 35px;padding-top:26px}
 .accessory-tab-grid.active{display:grid}
@@ -72,7 +74,7 @@ select{padding-right:2px}
 .quote-dialog::backdrop{background:rgba(0,0,0,.38)}
 .quote-dialog-inner{padding:0 16px 16px}
 .dialog-title{margin:0 -16px 14px;padding:8px 12px;background:#e7eef2;border-bottom:1px solid #999;color:#0c2b6f;font-size:19px;font-weight:700}
-.dialog-model{display:grid;grid-template-columns:90px 1fr;gap:10px;margin-bottom:12px}.dialog-model span{font-weight:700}.dialog-model strong{overflow-wrap:anywhere}
+.dialog-model{display:grid;grid-template-columns:90px 1fr;gap:10px;margin-bottom:12px}.dialog-model span{font-weight:700}
 .dialog-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dialog-grid>div{border:1px solid #999;background:#fff;padding:8px}.dialog-grid span{display:block;font-size:12px;font-weight:700}.dialog-grid strong{font-size:18px}
 .quote-dialog details{margin-top:12px}.breakdown-list{margin:8px 0}.breakdown-list div{display:flex;justify-content:space-between;border-bottom:1px solid #bbb;padding:5px}.breakdown-list dd{margin:0;font-weight:700}
 .warnings{background:#fff7cc;border:1px solid #c9b761;padding:9px;margin-top:10px}.dialog-close{display:block;margin:14px 0 0 auto;padding:7px 20px}
@@ -120,13 +122,105 @@ body{
 .engineering-panel::after{
   content:"";
   position:absolute;
-  right:188px;
+  right:clamp(25%, 31.5%, 35%);
   bottom:38px;
   width:1px;
   height:118px;
   background:#999;
   opacity:.7;
+  display:none;
 }
+
+.accessory-panel {
+  transform: translateY(clamp(-35%, -29.5%, -25%));
+}
+
+.parts-panel {
+  padding-top: 0;
+}
+
+.parts-panel .part-row input,
+.parts-panel .part-row select {
+  height: 40px;
+}
+
+/* Keep engineering controls inside the responsive calculator shell. */
+.engineering-panel {
+    width: clamp(10%, 100%, 100%);
+    min-width: 0;
+}
+
+.engineering-panel .blue-label {
+  background: transparent;
+}
+
+.legacy-panel .legacy-option-row span,
+.legacy-panel .yes-no-grid span {
+  background: transparent;
+}
+
+.tie-row .wide {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  text-align: right;
+  padding-right: 0;
+  transform: translateY(clamp(0%, 20%, 25%));
+}
+
+.pressure-row {
+    width: clamp(10%, 100%, 100%);
+}
+
+.pressure-row label {
+  width: clamp(10%, 55%, 60%);
+    grid-template-columns: auto clamp(10%, 35%, 45%);
+  text-align: right;
+}
+
+.pressure-row select {
+    width: clamp(10%, 100%, 100%);
+    min-width: 0;
+}
+
+.force-row {
+    width: clamp(10%, 90%, 90%);
+  grid-template-columns: clamp(10%, 32.4%, 35%) clamp(10%, 15%, 20%) clamp(10%, 42.6%, 48%);
+    gap: clamp(1%, 2%, 3%);
+  margin-left: 0;
+}
+
+.force-row .blue-label {
+  justify-self: end;
+  text-align: right;
+  padding-right: 0;
+}
+
+.force-row input {
+    width: clamp(10%, 100%, 100%);
+    min-width: 0;
+}
+
+.tie-row {
+    width: clamp(10%, 90%, 90%);
+  grid-template-columns: clamp(10%, 32.4%, 35%) clamp(10%, 17.6%, 20%) clamp(10%, 20%, 22%) clamp(10%, 20%, 22%);
+    gap: clamp(1%, 2%, 3%);
+  margin-left: 0;
+}
+
+.tie-row select,
+.tie-row input {
+    width: clamp(10%, 100%, 100%);
+    min-width: 0;
+}
+
+.pricing-rows label .blue-label {
+  text-align: right;
+  padding-right: 0;
+}
+
 @media(max-width:1050px){
   body{overflow:hidden}
   .orderentry-window{min-width:0}

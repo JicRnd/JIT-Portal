@@ -208,6 +208,49 @@ def test_employee_order_history_search_scans_all_orders(temp_db):
     assert "JSEARCH-001" in history.get_data(as_text=True)
 
 
+def test_employee_order_history_see_all_scans_all_orders_without_relabeling_page(temp_db):
+    client = temp_db.test_client()
+    approver = User(
+        display_name="Approving Employee",
+        role="employee",
+        access_level="admin",
+        is_active=True,
+    )
+    searcher = User(
+        display_name="Searching Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add_all([approver, searcher])
+        session.commit()
+        session.refresh(approver)
+        session.refresh(searcher)
+
+    quote = _create_quote(client, "creator", "See All Customer")
+    _set_quote_meta(quote["id"], status="pending_approval")
+    _login_client(client, approver)
+    approved = client.post(
+        f"/api/quotes/{quote['id']}/order/approve",
+        json={"order_form": {"order_number": "JSEEALL-001"}},
+    )
+    assert approved.status_code == 200
+
+    _login_client(client, searcher)
+    history = client.get(
+        "/employee_order_history/employee_order_history.html?all=1"
+    )
+
+    assert history.status_code == 200
+    text = history.get_data(as_text=True)
+    assert "JSEEALL-001" in text
+    assert "See All" in text
+    assert "Order History" not in text.split("<div class=\"page-actions\">", 1)[1].split(
+        "</div>", 1
+    )[0]
+
+
 def test_employee_order_history_suggests_from_any_snapshot_value(temp_db):
     client = temp_db.test_client()
     employee = User(
@@ -363,6 +406,64 @@ def test_employee_quote_history_lists_pending_before_approved_newest_first(temp_
         text.index("Approved Old"),
     ]
     assert order == sorted(order)
+
+
+def test_employee_quote_history_see_all_lists_all_quotes_without_relabeling_page(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="History Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.commit()
+        session.refresh(employee)
+
+    _create_quote(client, "creator", "Unassigned Quote Customer")
+    _login_client(client, employee)
+
+    response = client.get(
+        "/employee_quote_history/employee_quote_history.html?all=1"
+    )
+
+    assert response.status_code == 200
+    text = response.get_data(as_text=True)
+    assert "Unassigned Quote Customer" in text
+    actions = text.split('<div class="page-actions">', 1)[1].split(
+        "</div>", 1
+    )[0]
+    assert "See All" in actions
+    assert "Employee Quote History" not in actions
+
+
+def test_employee_quote_history_trash_returns_to_quote_history(temp_db):
+    client = temp_db.test_client()
+    employee = User(
+        display_name="History Employee",
+        role="employee",
+        access_level="employee",
+        is_active=True,
+    )
+    with get_session() as session:
+        session.add(employee)
+        session.commit()
+        session.refresh(employee)
+
+    _login_client(client, employee)
+    response = client.get(
+        "/employee_quote_history/employee_quote_history.html?trash=1"
+    )
+
+    assert response.status_code == 200
+    text = response.get_data(as_text=True)
+    actions = text.split('<div class="page-actions">', 1)[1].split(
+        "</div>", 1
+    )[0]
+    assert "Quote History" in actions
+    assert "Trash" not in actions
+    assert 'href="/employee_quote_history/employee_quote_history.html"' in actions
 
 
 def test_employee_quote_history_delete_soft_deletes_quote(temp_db):

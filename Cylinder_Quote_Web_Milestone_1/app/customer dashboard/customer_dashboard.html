@@ -30,7 +30,7 @@
         <button
           class="portal-button new-quote"
           data-standard="{{ url_for('portal.customer_quote_entry') }}"
-          data-metric="{{ url_for('portal.metric_coming_soon') }}"
+          data-metric="{{ url_for('portal.customer_metric_quote_entry') }}"
         >
           + New Quote
         </button>
@@ -94,13 +94,27 @@
               </span>
             </td>
 
-            <td>
+            <td class="customer-quote-actions">
               <a
                 class="small-button"
                 href="{{ quote_form_url }}?{{ 'quote_id=' ~ quote.id if employee_view else 'quote_number=' ~ quote.quote_number|urlencode }}"
               >
                 Open
               </a>
+              {% if not employee_view %}
+              <form
+                class="customer-quote-delete-form"
+                method="post"
+                action="{{ url_for('portal.delete_customer_quote', quote_id=quote.id) }}"
+              >
+                <button
+                  class="small-button"
+                  type="submit"
+                >
+                  Delete
+                </button>
+              </form>
+              {% endif %}
             </td>
           </tr>
         {% endfor %}

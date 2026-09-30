@@ -3,7 +3,9 @@ from pathlib import Path
 
 import pytest
 
-from app.catalog import build_catalog
+from app.Pricing.metric_catalog import build_catalog as build_metric_catalog
+from app.Pricing.standard_catalog import build_catalog as build_standard_catalog
+from cylinder_quote_engine.data import PricingData
 from app.service import calculate_payload, make_engine, quote_inputs_from_payload
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,9 +44,27 @@ def test_engine_calculation_round_trip():
 
 def test_catalog_has_primary_routes():
     engine = make_engine(ROOT)
-    c = build_catalog(engine.data)
-    for series in ["H", "A", "MH", "IH", "IMH", "VA"]:
-        assert series in c["series"]
+    standard_catalog = build_standard_catalog(engine.data)
+    metric_catalog = build_metric_catalog(engine.data)
+    for series in ["H", "A", "MH", "VA"]:
+        assert series in standard_catalog["series"]
+    for series in ["IH", "IMH"]:
+        assert series in metric_catalog["series"]
+
+
+def test_catalog_modules_use_associated_workbook_fixtures():
+    fixture_data = PricingData(ROOT / "tests" / "data")
+    standard_catalog = build_standard_catalog(fixture_data)
+    metric_catalog = build_metric_catalog(fixture_data)
+
+    assert list(standard_catalog["series"]) == ["H", "A", "LH", "MH", "HM", "VA", "W"]
+    assert list(metric_catalog["series"]) == ["IH", "IHM", "IMH"]
+    assert standard_catalog["stroke_unit"] == "in"
+    assert metric_catalog["stroke_unit"] == "mm"
+    assert "IH" not in standard_catalog["series"]
+    assert "H" not in metric_catalog["series"]
+    assert standard_catalog["series"]["H"]["2"]["1"]
+    assert metric_catalog["series"]["IH"]["25"]["12"]
 
 
 def test_calculate_payload_includes_dimensions():

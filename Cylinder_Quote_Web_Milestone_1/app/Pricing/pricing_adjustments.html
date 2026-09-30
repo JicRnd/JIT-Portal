@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adjust Pricing</title>
+  <link rel="stylesheet" href="{{ url_for('portal.pricing_adjustments_css') }}">
+</head>
+<body>
+  <header class="pricing-adjustments-header">
+    <span>{{ user.display_name }} - admin</span>
+    <h1>Adjust Pricing</h1>
+    <a href="{{ url_for('portal.admin_dashboard') }}">Dashboard</a>
+  </header>
+
+  <main class="pricing-adjustments-shell">
+    <section class="pricing-file-picker" aria-labelledby="pricing-file-picker-title">
+      <h2 id="pricing-file-picker-title">Pricing Files</h2>
+      <h3>Edit Pricing Workbooks</h3>
+      <div class="pricing-file-list">
+        {% for file in runtime_files %}
+          <a class="pricing-file-link{% if file.filename == selected_filename %} selected{% endif %}"
+             href="{{ url_for('portal.pricing_adjustments', file=file.filename) }}">
+            <strong>{{ file.filename }}</strong>
+            <span>{{ file.row_count }} rows · {{ file.editable_columns|length }} editable columns · {{ file.description }}</span>
+          </a>
+        {% endfor %}
+        {% for file in files %}
+          <a class="pricing-file-link{% if file.filename == selected_filename %} selected{% endif %}"
+             href="{{ url_for('portal.pricing_adjustments', file=file.filename) }}">
+            <strong>{{ file.filename }}</strong>
+            <span>{{ file.row_count }} rows · {{ file.editable_columns|length }} editable columns</span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    {% if selected %}
+      <section class="pricing-table-section" aria-labelledby="pricing-table-title">
+        <div class="pricing-table-heading">
+          <div>
+            <h2 id="pricing-table-title">{{ selected.filename }}</h2>
+            {% if selected.is_mirror %}
+              <p>Change values, then save the editable mirror. The protected runtime workbook remains unchanged.</p>
+            {% else %}
+              <p>Change values, then save the file. New quotes will use saved values immediately.</p>
+            {% endif %}
+          </div>
+          <span id="pricing-save-status" role="status"></span>
+        </div>
+        <form id="pricing-file-form" data-save-url="{{ url_for('portal.save_pricing_adjustments') }}">
+          <input type="hidden" name="filename" value="{{ selected.filename }}">
+          <input type="hidden" name="headers" value='{{ selected.headers|tojson }}'>
+          <div class="pricing-table-wrapper">
+            <table class="pricing-table">
+              <thead>
+                <tr>
+                  <th>Row</th>
+                  {% for header in selected.display_headers %}
+                    <th{% if header in selected.editable_columns %} class="editable-header"{% endif %}>{{ selected.display_labels[header] }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in selected.rows %}
+                  {% set row_index = loop.index0 %}
+                  <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    {% for header in selected.display_headers %}
+                      <td>
+                        {% if header in selected.editable_columns %}
+                          {% set is_currency = (selected.filename in ['series_pricing.csv', 'standard_series_pricing.xlsx', 'metric_series_pricing.xlsx'] and header in ['base_price', 'stroke_rate', 'cushion_per_end']) or (selected.filename in ['rod_boot_rates.csv', 'rod_boot_rates.xlsx'] and header in ['base_price', 'per_stroke_rate']) %}
+                          <input
+                            {% if is_currency %}type="text" inputmode="decimal" data-currency="whole-dollar"{% else %}type="number" step="any" min="0"{% endif %}
+                            name="row_{{ row_index }}_{{ header }}"
+                            value="{{ row[header] }}"
+                            data-row="{{ row_index }}"
+                            data-header="{{ header }}"
+                            {% if is_currency %}aria-label="{{ selected.display_labels[header] }} currency value"{% endif %}
+                          >
+                        {% else %}
+                          <span>{{ row[header] }}</span>
+                          <input type="hidden" value="{{ row[header] }}" data-row="{{ row_index }}" data-header="{{ header }}">
+                        {% endif %}
+                      </td>
+                    {% endfor %}
+                    {% for header in selected.headers if header not in selected.display_headers %}
+                      <input type="hidden" value="{{ row[header] }}" data-row="{{ row_index }}" data-header="{{ header }}">
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <button class="save-pricing-button" type="submit">Save Pricing Workbook</button>
+        </form>
+      </section>
+    {% endif %}
+  </main>
+  <script>
+    const form = document.getElementById('pricing-file-form');
+    const currencyInputs = form ? form.querySelectorAll('[data-currency="whole-dollar"]') : [];
+    const formatWholeDollar = (value) => {
+      const numericValue = Number(String(value).replace(/[$,]/g, '').trim());
+      return Number.isFinite(numericValue) ? `$${Math.round(numericValue).toLocaleString('en-US')}` : value;
+    };
+    const rawNumericValue = (value) => String(value).replace(/[$,]/g, '').trim();
+
+    currencyInputs.forEach((input) => {
+      input.value = formatWholeDollar(input.value);
+      input.addEventListener('focus', () => {
+        input.value = rawNumericValue(input.value);
+        input.select();
+      });
+      input.addEventListener('blur', () => {
+        input.value = formatWholeDollar(input.value);
+      });
+    });
+
+    if (form) {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const status = document.getElementById('pricing-save-status');
+        const headers = JSON.parse(form.elements.headers.value);
+        const rows = Array.from({ length: {{ selected.rows|length }} }, () => Object.fromEntries(headers.map((header) => [header, ''])));
+        form.querySelectorAll('[data-row][data-header]').forEach((input) => {
+          rows[Number(input.dataset.row)][input.dataset.header] = input.dataset.currency === 'whole-dollar'
+            ? rawNumericValue(input.value)
+            : input.value;
+        });
+        const response = await fetch(form.dataset.saveUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: form.elements.filename.value, headers, rows })
+        });
+        const result = await response.json().catch(() => ({ ok: false, error: 'The save request did not return a valid response.' }));
+        status.textContent = result.ok ? `Saved ${result.changed_cells} changed value(s).` : result.error;
+        status.className = result.ok ? 'success' : 'error';
+      });
+    }
+  </script>
+</body>
+</html>

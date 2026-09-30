@@ -215,6 +215,48 @@ def test_customer_dashboard_open_uses_dedicated_customer_quote_form_route(temp_d
     assert "Quoted by" not in form_text
 
 
+def test_customer_can_soft_delete_owned_dashboard_quote(temp_db):
+    client = temp_db.test_client()
+    customer = _create_customer_user("Delete Dashboard Quote")
+    quote = _create_quote(client, customer.display_name, customer.display_name)
+
+    _login_client(client, customer)
+    dashboard = client.get("/customer/dashboard")
+    assert quote["quote_number"] in dashboard.get_data(as_text=True)
+    assert f"/customer/quotes/{quote['id']}/delete" in dashboard.get_data(as_text=True)
+
+    response = client.post(f"/customer/quotes/{quote['id']}/delete")
+
+    assert response.status_code == 302
+    assert response.headers["Location"].endswith("/customer/dashboard")
+    with get_session() as session:
+        saved_quote = session.get(Quote, quote["id"])
+        assert saved_quote is not None
+        assert saved_quote.status == "canceled"
+        assert saved_quote.deleted_status == "new"
+        assert saved_quote.deleted_by_user_id == customer.id
+        assert saved_quote.deleted_at is not None
+
+    dashboard = client.get("/customer/dashboard")
+    assert quote["quote_number"] not in dashboard.get_data(as_text=True)
+
+
+def test_customer_cannot_delete_another_customers_quote(temp_db):
+    client = temp_db.test_client()
+    owner = _create_customer_user("Quote Owner")
+    other_customer = _create_customer_user("Other Customer")
+    quote = _create_quote(client, owner.display_name, owner.display_name)
+
+    _login_client(client, other_customer)
+    response = client.post(f"/customer/quotes/{quote['id']}/delete")
+
+    assert response.status_code == 404
+    with get_session() as session:
+        saved_quote = session.get(Quote, quote["id"])
+        assert saved_quote.status == "new"
+        assert saved_quote.deleted_at is None
+
+
 def test_unclaimed_pending_quote_appears_system_wide(temp_db):
     """A pending quote created by one employee shows in the queue for any employee."""
     client = temp_db.test_client()
@@ -349,7 +391,7 @@ def test_pending_approval_types_use_new_labels(temp_db):
     _set_quote_status(assigned_quote["id"], "pending_approval")
     _assign_quote(assigned_quote["id"], employee.id)
     _login_client(client, employee)
-    response = client.get("/employee/dashboard")
+    response = client.get("/admin/dashboard")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "NEW - Quote" in text
@@ -384,7 +426,9 @@ def test_pending_account_requests_are_capped_at_25(temp_db):
         session.commit()
 
     _login_client(client, employee)
-    response = client.get("/employee/dashboard")
+    response = client.get(
+        "/admin/dashboard" if access_level == "admin" else "/employee/dashboard"
+    )
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert text.count("NEW - Customer Request") == 25
@@ -477,12 +521,12 @@ def test_pending_quote_must_be_accepted_before_opening(temp_db):
     _set_quote_status(quote["id"], "pending_approval")
 
     _login_client(client, viewer)
-    blocked = client.get(f"/employee/quote-entry?quote_id={quote['id']}")
+    blocked = client.get(f"/employee_quote_form/employee_quote_form.html?quote_id={quote['id']}")
     assert blocked.status_code == 302
     assert blocked.headers["Location"].endswith("/employee/dashboard")
 
     client.post(f"/employee/quotes/{quote['id']}/accept")
-    opened = client.get(f"/employee/quote-entry?quote_id={quote['id']}")
+    opened = client.get(f"/employee_quote_form/employee_quote_form.html?quote_id={quote['id']}")
     assert opened.status_code == 200
     assert "Quote Form" in opened.get_data(as_text=True)
 
@@ -568,7 +612,7 @@ def test_viewing_pending_quote_does_not_claim_or_change_status(temp_db):
     _set_quote_status(quote["id"], "pending_approval")
 
     _login_client(client, viewer)
-    blocked = client.get(f"/employee/quote-entry?quote_id={quote['id']}")
+    blocked = client.get(f"/employee_quote_form/employee_quote_form.html?quote_id={quote['id']}")
     assert blocked.status_code == 302
 
     with get_session() as session:
@@ -720,7 +764,7 @@ def test_admin_dashboard_renders_pending_approval_queue(temp_db):
     _assign_quote(quote["id"], admin.id)
 
     _login_client(client, admin)
-    response = client.get("/employee/dashboard")
+    response = client.get("/admin/dashboard")
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert "Pending Approvals" in text
@@ -732,6 +776,28 @@ def test_admin_dashboard_renders_pending_approval_queue(temp_db):
     assert "<td>Pending Approval</td>" in pending_section
     assert "<td>Accepted</td>" not in pending_section
     assert "<td>Pending</td>" not in pending_section
+
+
+def test_dashboard_url_is_distinct_for_admin_and_standard_employee(temp_db):
+    client = temp_db.test_client()
+    admin = _create_employee_user("admin-url", access_level="admin")
+    employee = _create_employee_user("employee-url", access_level="standard")
+
+    _login_client(client, admin)
+    admin_response = client.get("/admin/dashboard")
+    employee_path_response = client.get("/employee/dashboard")
+
+    assert admin_response.status_code == 200
+    assert employee_path_response.status_code == 302
+    assert employee_path_response.headers["Location"].endswith("/admin/dashboard")
+
+    _login_client(client, employee)
+    standard_response = client.get("/employee/dashboard")
+    admin_path_response = client.get("/admin/dashboard")
+
+    assert standard_response.status_code == 200
+    assert admin_path_response.status_code == 302
+    assert admin_path_response.headers["Location"].endswith("/employee/login")
 
 
 @pytest.mark.parametrize("access_level, dashboard_template_marker", [
@@ -747,7 +813,9 @@ def test_pending_approval_open_link_uses_order_form(temp_db, access_level, dashb
     _assign_quote(quote["id"], employee.id)
 
     _login_client(client, employee)
-    response = client.get("/employee/dashboard")
+    response = client.get(
+        "/admin/dashboard" if access_level == "admin" else "/employee/dashboard"
+    )
 
     assert response.status_code == 200
     assert f'{dashboard_template_marker}{quote["id"]}' in response.get_data(as_text=True)

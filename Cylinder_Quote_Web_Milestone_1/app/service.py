@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 from dataclasses import asdict
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
@@ -13,6 +14,49 @@ from cylinder_quote_engine.engine import excel_roundup
 from dimensions.cylinder_dimension_tables import get_cylinder_dimensions
 
 D = Decimal
+
+METRIC_SERIES = ("IH", "IHM", "IMH")
+METRIC_ASSEMBLY_PRICING_PATH = (
+    Path(__file__).resolve().parents[1] / "pricing_data" / "jit_base_and_assembly_pricing_clean.csv"
+)
+_METRIC_ROD_SEAL_PRICES = {
+    "12": {"P": D("47"), "L": D("51")},
+    "14": {"P": D("47"), "L": D("51")},
+    "18": {"P": D("47"), "L": D("51")},
+    "22": {"P": D("50"), "L": D("55")},
+    "25": {"P": D("50"), "L": D("55")},
+    "28": {"P": D("50"), "L": D("55")},
+    "32": {"P": D("69"), "L": D("76")},
+    "36": {"P": D("69"), "L": D("76")},
+    "40": {"P": D("69"), "L": D("76")},
+    "45": {"P": D("69"), "L": D("76")},
+    "50": {"P": D("80"), "L": D("88")},
+    "56": {"P": D("80"), "L": D("88")},
+    "63": {"P": D("92"), "L": D("101")},
+    "70": {"P": D("129"), "L": D("142")},
+    "80": {"P": D("129"), "L": D("142")},
+    "90": {"P": D("148"), "L": D("163")},
+    "100": {"P": D("185"), "L": D("204")},
+    "110": {"P": D("220"), "L": D("242")},
+    "125": {"P": D("275"), "L": D("303")},
+    "140": {"P": D("413"), "L": D("454")},
+    "160": {"P": D("825"), "L": D("908")},
+    "180": {"P": D("825"), "L": D("908")},
+    "200": {"P": D("1238"), "L": D("1362")},
+    "220": {"P": D("1238"), "L": D("1362")},
+}
+
+
+def _load_metric_assembly_pricing() -> tuple[dict[str, str], ...]:
+    with METRIC_ASSEMBLY_PRICING_PATH.open(encoding="utf-8-sig", newline="") as source:
+        return tuple(
+            row
+            for row in csv.DictReader(source)
+            if row.get("pricing_type") == "piston_rod_assembly" and row.get("unit") == "mm"
+        )
+
+
+_METRIC_ASSEMBLY_PRICING = _load_metric_assembly_pricing()
 
 
 def compute_profit(working_net_each: Decimal) -> Decimal:
@@ -167,13 +211,66 @@ def _calculate_dimensions(series: str, bore: Decimal, stroke: Decimal) -> dict[s
     return {k: decimal_to_json(v) for k, v in dims.items()}
 
 
+def calculate_metric_assembly_price(inputs: QuoteInputs) -> Decimal | None:
+    series = inputs.series.upper()
+    if series not in METRIC_SERIES:
+        return None
+
+    row = next(
+        (
+            candidate
+            for candidate in _METRIC_ASSEMBLY_PRICING
+            if series in (candidate.get("series") or "").split("/")
+            and _decimal(candidate.get("bore"), "assembly bore") == inputs.bore
+            and _decimal(candidate.get("rod"), "assembly rod") == inputs.rod_diameter
+        ),
+        None,
+    )
+    if row is None:
+        return None
+
+    base_field = "base_price" if inputs.cushion.upper() == "NC" else "cushion_base"
+    base_price = _decimal(row.get(base_field), f"assembly {base_field}")
+    per_unit_price = _decimal(row.get("per_unit_price"), "assembly per_unit_price")
+    assembly_length = inputs.stroke + inputs.rod_extension + inputs.extra_thread
+    return excel_roundup(
+        (base_price + per_unit_price * assembly_length) * (D("1") - inputs.discount),
+        0,
+    )
+
+
+def calculate_metric_rod_seal_price(inputs: QuoteInputs) -> Decimal | None:
+    if inputs.series.upper() not in METRIC_SERIES:
+        return None
+    rod_key = format(inputs.rod_diameter.normalize(), "f")
+    seal_code = inputs.seal_code.upper()
+    return _METRIC_ROD_SEAL_PRICES.get(rod_key, {}).get(seal_code)
+
+
 def calculate_payload(engine: QuotePricingEngine, payload: dict[str, Any]) -> dict[str, Any]:
     inputs = quote_inputs_from_payload(payload)
     result = engine.calculate(inputs)
     out = {k: decimal_to_json(v) for k, v in asdict(result).items()}
+    out["accessory_parts"] = engine.accessory_parts(inputs)
     out["profit"] = decimal_to_json(compute_profit(result.working_net_each))
     out["dimensions"] = _calculate_dimensions(inputs.series, inputs.bore, inputs.stroke)
+    if inputs.series.upper() in METRIC_SERIES:
+        out["recommended_assembly_price"] = decimal_to_json(calculate_metric_assembly_price(inputs))
+        out["recommended_rod_seal_price"] = decimal_to_json(calculate_metric_rod_seal_price(inputs))
     return out
+
+
+def _validate_metric_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    if not isinstance(payload, dict):
+        raise ValueError("request body must be a JSON object")
+    series = str(payload.get("series") or "").strip().upper()
+    if series not in METRIC_SERIES:
+        raise ValueError("Metric calculator only supports IH, IHM, and IMH series")
+    return payload
+
+
+def calculate_metric_payload(engine: QuotePricingEngine, payload: dict[str, Any]) -> dict[str, Any]:
+    return calculate_payload(engine, _validate_metric_payload(payload))
 
 
 CYLINDER_INPUT_FIELDS = {
@@ -291,6 +388,10 @@ def build_quote_draft(engine: QuotePricingEngine, payload: dict[str, Any]) -> di
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "pricing_engine_version": "Pricing Engine v1.2",
     }
+
+
+def build_metric_quote_draft(engine: QuotePricingEngine, payload: dict[str, Any]) -> dict[str, Any]:
+    return build_quote_draft(engine, _validate_metric_payload(payload))
 
 
 def make_engine(project_root: Path) -> QuotePricingEngine:

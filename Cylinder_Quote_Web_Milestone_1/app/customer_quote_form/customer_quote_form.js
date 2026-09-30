@@ -29,10 +29,7 @@ function formatQuoteDate(iso) {
   if (!iso) return '—';
   try {
     const d = new Date(iso);
-    const month = d.toLocaleString('en-US', { month: 'short' });
-    const hh = String(d.getHours()).padStart(2, '0');
-    const mm = String(d.getMinutes()).padStart(2, '0');
-    return `${month}-${d.getDate()} (${hh}:${mm})`;
+    return `${d.getMonth() + 1}/${d.getDate()}/${String(d.getFullYear()).slice(-2)}`;
   } catch { return iso; }
 }
 function excelRoundUpPositive(value) {
@@ -529,18 +526,8 @@ const QUOTE_ZOOM_MAX = 2;
 const QUOTE_ZOOM_STEP = 0.1;
 
 function applyQuoteZoom() {
-  const page = document.querySelector('.quote-form-page');
-  const sheet = document.querySelector('.excel-quote-sheet');
+  // Sheet sizing is owned by the fluid clamp()-based CSS; no inline width/zoom override.
   const level = $('quoteZoomLevel');
-  if (!page || !sheet) return;
-
-  const edge = 14;
-  const worksheetWidth = 816;
-  const availableWidth = Math.max(1, page.clientWidth - edge * 2);
-  const widthFitScale = availableWidth / worksheetWidth;
-  const effectiveScale = widthFitScale * quoteZoomLevel;
-  sheet.style.width = `${worksheetWidth}px`;
-  sheet.style.zoom = String(effectiveScale);
   if (level) level.textContent = `${Math.round(quoteZoomLevel * 100)}%`;
 }
 
@@ -565,7 +552,8 @@ function wireQuoteFormEvents() {
   const verifyQuoteButton = $('verifyQuoteButton');
   if (verifyQuoteButton) verifyQuoteButton.addEventListener('click', verifyQuote);
   $('addManualItemButton').addEventListener('click', () => addManualItemRow());
-  $('newQuoteButton').addEventListener('click', () => { window.location.assign(`/${PORTAL_MODE}/quote-entry`); });
+  const newQuoteButton = $('newQuoteButton');
+  if (newQuoteButton) newQuoteButton.addEventListener('click', () => { window.location.assign(`/${PORTAL_MODE}/quote-entry`); });
 
   const quoteZoomOutButton = $('quoteZoomOutButton');
   const quoteZoomInButton = $('quoteZoomInButton');

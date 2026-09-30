@@ -32,7 +32,7 @@ function renderQuoteHistorySuggestions(results) {
   results.forEach((quote) => {
     const link = document.createElement("a");
     link.className = "quote-history-suggestion";
-      link.href = `/employee/quote-entry?quote_id=${encodeURIComponent(quote.id || "")}`;
+      link.href = `/employee_quote_form/employee_quote_form.html?quote_id=${encodeURIComponent(quote.id || "")}`;
 
     const quoteNumber = document.createElement("strong");
     quoteNumber.className = "quote-history-suggestion-number";

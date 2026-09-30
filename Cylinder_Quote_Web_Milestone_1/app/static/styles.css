@@ -1,3 +1,4 @@
+html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#e8e8e8;overflow:hidden}
 :root{
   --aqua:#c9ffff;
   --aqua2:#baf8f8;
@@ -9,7 +10,7 @@
   --title:#0c2b6f;
 }
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#e8e8e8;overflow:hidden}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#e8e8e8}
 body{padding:0;position:relative}
 button,input,select{font:inherit;color:#111}
 .orderentry-window{margin:0;position:absolute;left:0;top:0;transform-origin:top left;background:linear-gradient(#d7ffff,#c1fbfb);border:2px solid #888;box-shadow:0 1px 4px rgba(0,0,0,.25)}

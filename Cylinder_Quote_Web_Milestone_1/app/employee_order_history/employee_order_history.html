@@ -25,8 +25,8 @@
     <div class="page-actions">
       <button
         class="employee_order_history_button new-quote"
-        data-standard="/employee/quote-entry"
-        data-metric="/metric-coming-soon"
+        data-standard="/quote-entry"
+        data-metric="/employee/metric-quote-entry"
       >
         + New Quote
       </button>
@@ -38,21 +38,12 @@
         Quote History
       </a>
 
-      {% if show_all %}
-        <a
-          class="employee_order_history_button small"
-          href="{{ url_for('employee_order_history.employee_order_history_page') }}"
-        >
-          Order History
-        </a>
-      {% else %}
-        <a
-          class="employee_order_history_button small"
-          href="{{ url_for('employee_order_history.employee_order_history_page', all='1') }}"
-        >
-          See All
-        </a>
-      {% endif %}
+      <a
+        class="employee_order_history_button small"
+        href="{{ url_for('employee_order_history.employee_order_history_page', all='1') }}"
+      >
+        See All
+      </a>
 
       {% if trash %}
         <a
@@ -143,7 +134,12 @@
               }}
             </td>
 
-            <td>${{ '%.2f'|format(snapshot.get('order_total')|float) }}</td>
+            {% set saved_total = snapshot.get('order_total') or '' %}
+            {% set parsed_total = saved_total|string|replace('$', '')|replace(',', '')|float %}
+            {% set net_each = snapshot.get('net_each')|string|replace('$', '')|replace(',', '')|float %}
+            {% set quantity = snapshot.get('quantity')|float or 1 %}
+            {% set net_total = parsed_total or (net_each * quantity) %}
+            <td>${{ '%.2f'|format(net_total) }}</td>
 
             <td>
               <span class="status {{

@@ -121,7 +121,9 @@ def format_measurement(value, unit: str | None) -> str:
     except InvalidOperation:
         return text
     if unit_label == "mm":
-        number = f"{amount:f}".rstrip("0").rstrip(".")
+        number = f"{amount:f}"
+        if "." in number:
+            number = number.rstrip("0").rstrip(".")
     else:
         decimal_places = max(2, min(4, -amount.as_tuple().exponent))
         number = f"{amount:.{decimal_places}f}".rstrip("0").rstrip(".")

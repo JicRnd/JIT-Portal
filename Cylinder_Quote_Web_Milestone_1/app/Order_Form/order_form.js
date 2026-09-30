@@ -8,7 +8,6 @@
   const denyButton = document.getElementById('denyOrderButton');
   const holdButton = document.getElementById('holdOrderButton');
   const dashboardButton = document.getElementById('employeeDashboardButton');
-  const cancelButton = document.getElementById('cancelOrderButton');
   const emailCustomerButton = document.getElementById('emailCustomerButton');
   const emailAttachmentDialog = document.getElementById('emailAttachmentDialog');
   const continueEmailButton = document.getElementById('continueEmailButton');
@@ -29,11 +28,6 @@
   let weightReference = [];
 
   const money = n => Number(n || 0).toFixed(2);
-  const amount = value => Number(String(value ?? '').replace(/[$,]/g, '')) || 0;
-  const currency = value => {
-    if (String(value ?? '').trim() === '') return '';
-    return `$${amount(value).toFixed(2)}`;
-  };
   const localDate = iso => {
     const d = iso ? new Date(iso) : new Date();
     return Number.isNaN(d.getTime()) ? String(iso || '') : d.toLocaleString('en-US');
@@ -100,11 +94,6 @@
     if (!Number.isFinite(number)) return String(raw || '').trim();
     return number.toFixed(decimals).replace(/\.0+$|(?<=\.[0-9]*?)0+$/, '').replace(/\.$/, '');
   }
-  function displayAllocated(item) {
-    const category = String(item.allocation_category || '').toLowerCase();
-    const decimals = category === 'length_based' ? 3 : 0;
-    return displayNumber(item.allocated, decimals);
-  }
   function engineeringOutputs(inputs, tieRod) {
     const series = String(inputs.series || '').toUpperCase();
     const engineeringSeries = series === 'LH' ? 'A' : series;
@@ -149,25 +138,6 @@
       torque,
       weight: weightRule && Number.isFinite(stroke) ? weightRule[0] + weightRule[1] * stroke : ''
     };
-  }
-  function applyRodLengthToParts(parts, rodLength) {
-    const lengthValue = Number(rodLength);
-    if (!Number.isFinite(lengthValue)) return parts;
-    return parts.map(item => {
-      if (String(item.description || '').trim().toLowerCase() !== 'rod') return item;
-      const currentAllocated = Number(item.allocated);
-      const unitPrice = item.unit_price != null
-        ? Number(item.unit_price)
-        : (currentAllocated ? amount(item.cost) / currentAllocated : NaN);
-      if (!Number.isFinite(unitPrice)) return item;
-      return {
-        ...item,
-        allocated: displayNumber(lengthValue, 3),
-        allocation_category: 'length_based',
-        cost: money(unitPrice * lengthValue),
-        unit_price: unitPrice
-      };
-    });
   }
   function parseTieRodReference(payload) {
     mt4Reference = Array.isArray(payload && payload.mt4_rules) ? payload.mt4_rules : [];
@@ -276,39 +246,16 @@
   function addPartRow(item = {}) {
     const row = document.createElement('div');
     row.className = 'part-row';
-    const partNumber = String(item.part_number || '').trim();
     ['part_number','description','cost','on_hand','allocated'].forEach(key => {
       const input = document.createElement('input');
       input.dataset.partField = key;
-      const rawValue = value(item, key, '');
-      if (key === 'cost') {
-        const allocated = Number(item.allocated || 1);
-        const fallbackUnitPrice = allocated ? Number(rawValue || 0) / allocated : 0;
-        const hasPrice = item.unit_price != null || String(rawValue).trim() !== '' || partNumber || String(item.description || '').trim() !== '';
-        if (hasPrice) input.dataset.unitPrice = String(value(item, 'unit_price', fallbackUnitPrice));
-      }
-      input.value = partNumber && key === 'allocated' && (rawValue === '' || Number(rawValue) === 0)
-        ? '1'
-        : key === 'allocated'
-          ? displayAllocated(item)
-        : key === 'cost'
-          ? currency(rawValue)
-          : rawValue;
+      input.value = value(item, key, key === 'cost' || key === 'on_hand' || key === 'allocated' ? '0' : '');
       if (key === 'cost' || key === 'on_hand' || key === 'allocated') input.inputMode = 'decimal';
       input.setAttribute('aria-label', key.replaceAll('_', ' '));
       row.appendChild(input);
     });
     partsHost.appendChild(row);
     return row;
-  }
-
-  function recalculatePartCosts() {
-    partsHost.querySelectorAll('.part-row').forEach(row => {
-      const cost = row.querySelector('[data-part-field="cost"]');
-      const allocated = row.querySelector('[data-part-field="allocated"]');
-      if (!cost || !allocated || cost.dataset.unitPrice == null || cost.dataset.unitPrice === '') return;
-      cost.value = currency(Number(cost.dataset.unitPrice) * Number(allocated.value || 0));
-    });
   }
 
   function isBlankPartRow(row) {
@@ -366,7 +313,7 @@
     const qty = Number(get('quantity').value || 0);
     const net = Number(get('net_each').value || 0);
     get('order_total').value = money(qty * net);
-    const partsTotal = [...partsHost.querySelectorAll('[data-part-field="cost"]')].reduce((sum, input) => sum + amount(input.value), 0);
+    const partsTotal = [...partsHost.querySelectorAll('[data-part-field="cost"]')].reduce((sum, input) => sum + Number(input.value || 0), 0);
     get('parts_total').value = money(partsTotal);
     get('parts_ratio').value = `${Math.round(qty * net ? partsTotal / (qty * net) * 100 : 0)}%`;
   }
@@ -437,8 +384,7 @@
       button.addEventListener('click', () => {
         insertPartAfterLastEntry({
           part_number: part.part_number, description: part.description || '',
-          cost: part.sell_price || part.unit_cost || '0',
-          on_hand: part.on_hand || '0', allocated: part.allocated || '1'
+          cost: part.sell_price || part.unit_cost || '0', on_hand: '0', allocated: '1'
         });
         closeAddPart();
       });
@@ -472,7 +418,10 @@
     const inputs = quote.cylinder_inputs_snapshot || {};
     const bd = quote.price_breakdown_snapshot || {};
     const address = splitAddress(quote.customer_name, quote.customer_address);
-    const generatedParts = (quote.generated_parts || []).map(item => ({...item}));
+    const generatedParts = (quote.generated_parts || []).map(item => ({
+      ...item,
+      allocated: String(Math.max(1, Number(quote.quantity || 1)))
+    }));
     const specialParts = Object.entries(inputs.special_parts || {}).map(([part, qty]) => ({
       part_number: part, description: `Quoted special part (Qty ${qty})`, cost: '0', on_hand: '0', allocated: String(qty || 0)
     }));
@@ -494,10 +443,6 @@
     const rodStopTube = [value(inputs, 'stop_tube'), value(inputs, 'extra_thread')]
       .filter(item => item != null && String(item).trim() !== '' && Number(item) !== 0)
       .join(' + ');
-    const orderParts = Array.isArray(quote.order_form_parts)
-      ? quote.order_form_parts
-      : [...generatedParts, ...manualParts, ...specialParts];
-    const correctedOrderParts = applyRodLengthToParts(orderParts, engineering.rodLength);
     return {
       quote_number: quote.quote_number || '', ordered_by: quote.created_by || '', order_number: '', order_date: localDate(quote.created_at), terms: 'NET 30',
       ship_to_1: address[0], ship_to_2: address[1], ship_to_3: address[2], ship_to_4: address[3],
@@ -511,7 +456,7 @@
       stroke: value(inputs, 'stroke'), rod_thread: describedRodThread(value(inputs, 'rod_diameter'), value(inputs, 'rod_style')), seals: describedCode(SEAL_LABELS, value(inputs, 'seal_code')),
       includes, rod_clevis: String(value(inputs, 'rod_clevis', 0)), pivot_pin: String(value(inputs, 'pivot_pin', 0)),
       parts_total: '0.00',
-      parts: correctedOrderParts,
+      parts: [...generatedParts, ...manualParts, ...specialParts],
       testing: [
         {part:'Rod',bore_diameter:boreRod,length:engineering.rodLength || value(inputs,'stroke'),thread:describedRodThread(value(inputs,'rod_diameter'), value(inputs,'rod_style')),stop_tube_et:rodStopTube || '-'},
         {part:'Tie Rod',bore_diameter:tieRodOutputsData ? displayNumber(tieRodOutputsData.bore_diameter) : '',length:engineering.tieRodLength || value(inputs,'tie_rod_length'),thread:tieRodThread,stop_tube_et:engineering.torque ? `Torque= ${engineering.torque} Ft/Lbs` : (mount === 'MT4' ? value(inputs,'stop_tube') : '-')},
@@ -540,26 +485,12 @@
     testingRows.forEach(addTestingRow);
     while (testingHost.children.length < 3) addTestingRow();
     setStatus(quote.status);
-    recalculatePartCosts();
     recalculate();
     renderBarcode(data.order_number || quote.quote_number);
   }
 
   form.addEventListener('input', event => {
-    if (event.target.matches('[data-part-field="part_number"]')) {
-      const row = event.target.closest('.part-row');
-      const partNumber = event.target.value.trim();
-      const allocated = row.querySelector('[data-part-field="allocated"]');
-      if (!partNumber) {
-        row.querySelectorAll('input').forEach(input => { input.value = ''; });
-      } else if (!allocated.value || Number(allocated.value) === 0) {
-        allocated.value = '1';
-      }
-    }
-    if (event.target.matches('[data-part-field="allocated"]')) {
-      recalculatePartCosts();
-      recalculate();
-    } else if (event.target.matches('[data-field="quantity"],[data-field="net_each"],[data-part-field="cost"]')) recalculate();
+    if (event.target.matches('[data-field="quantity"],[data-field="net_each"],[data-part-field="cost"]')) recalculate();
   });
 
   emailCustomerButton.addEventListener('click', openEmailAttachmentDialog);
@@ -612,11 +543,6 @@
     window.location.assign(dashboardButton.href);
   });
 
-  cancelButton.addEventListener('click', () => {
-    if (!window.confirm('Cancel editing this order? Unsaved changes will be discarded.')) return;
-    window.location.assign('/employee/dashboard');
-  });
-
   addPartButton.addEventListener('click', openAddPart);
   closeAddPartModal.addEventListener('click', closeAddPart);
   addPartModal.addEventListener('click', event => { if (event.target === addPartModal) closeAddPart(); });
@@ -637,7 +563,7 @@
       if (!response.ok || !body.ok) throw new Error(body.error || 'Approval failed');
       setStatus(body.quote.status);
       setMessage(`Order ${body.quote.quote_number} approved and saved.`);
-      window.location.assign('/employee_quote_history/employee_quote_history.html');
+      window.location.assign('/employee/dashboard');
       return;
     } catch (error) {
       approveButton.disabled = false;
@@ -674,7 +600,8 @@
       const body = await response.json();
       if (!response.ok || !body.ok) throw new Error(body.error || 'Order not found');
       loadedQuote = body.quote;
-      await Promise.all([loadTieRodReference(), loadHEngineeringReference()]);
+      await loadTieRodReference();
+      await loadHEngineeringReference();
       render(body.quote);
     } catch (error) {
       setMessage(error.message || 'Order could not be loaded.', true);
